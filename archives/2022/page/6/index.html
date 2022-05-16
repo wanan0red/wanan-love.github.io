@@ -591,13 +591,13 @@
 	<article class="post card bg-white shadow-sm border-0 ">
 	<header class="post-header text-center">
 		
-		<a class="post-title" href="/ctf/sql%E6%B3%A8%E5%85%A5/sql/sql-sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">sql注入系统学习</a>
+		<a class="post-title" href="/ctf/sql%E6%B3%A8%E5%85%A5/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CFlatScience/">攻防世界FlatScience</a>
 		<div class="post-meta">
 			
 						
 						<div class="post-meta-detail post-meta-detail-time">
 							<i class="fa fa-clock-o" aria-hidden="true"></i>
-							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-3-11 14:20:28">2022-3-9 19:00
+							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-3-14 19:34:02">2022-3-9 19:00
 							</time>
 						</div>
 					
@@ -624,7 +624,7 @@
 						
 						<div class="post-meta-detail post-meta-detail-words">
 							<i class="fa fa-file-word-o" aria-hidden="true"></i>
-							1.2k 字
+							1.4k 字
 						</div>
 					
 						
@@ -632,7 +632,7 @@
 						
 						<div class="post-meta-detail post-meta-detail-readingtime">
 							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
-							4 分钟
+							6 分钟
 						</div>
 					
 		</div>
@@ -642,13 +642,18 @@
 	<div class="post-content">
 		
 			
-				sql注入系统学习寻找及确认sql注入于参数后面加一个单引号’and于or加法和减法数字型不需要单引号时
+				sqlite 注入引发的pdf爬取与sha1密码爆破打开没有发现什么有用信息,扫一下后台目录
+python dirsearch.py -u http://111.200.241.244:52362/
 
-利用sql注入识别数据库asp和.net    Microsoft SQL Server
-PHP            Mysql.PostgreSQL
-java        Oracle.Mysql
 
-基于错误识别数据库需要一条详细的报错...
+挨个访问一下发现有
+
+在admin.php页面发现
+
+不可能注入成功
+login.php登录试试发现输入单引号有报错
+
+可以得到是sqlite数据...
 			
 		
 	</div>
@@ -811,6 +816,77 @@ def fuzz(location):
 	<article class="post card bg-white shadow-sm border-0 ">
 	<header class="post-header text-center">
 		
+		<a class="post-title" href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cics-05/">攻防世界ics-05</a>
+		<div class="post-meta">
+			
+						
+						<div class="post-meta-detail post-meta-detail-time">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-3-11 14:23:28">2022-3-9 19:00
+							</time>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-categories">
+							<i class="fa fa-bookmark-o" aria-hidden="true"></i>
+							<a class="post-meta-detail-catagory-link" href="/categories/ctf/">ctf</a>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa-book" aria-hidden="true"></i>
+							<span id="busuanzi_container_page_pv">
+								阅读<span id="busuanzi_value_page_pv"></span>次
+							</span>
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-words">
+							<i class="fa fa-file-word-o" aria-hidden="true"></i>
+							1.5k 字
+						</div>
+					
+						
+							<div class="post-meta-devide">|</div>
+						
+						<div class="post-meta-detail post-meta-detail-readingtime">
+							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
+							7 分钟
+						</div>
+					
+		</div>
+		
+	</header>
+
+	<div class="post-content">
+		
+			
+				攻防世界ics-05(preg_replace()函数 &#x2F;e 漏洞)查阅资料发现这里是一个文件包含漏洞
+http://111.200.241.244:60854/index.php?page=index.php
+
+使用php:&#x2F;&#x2F;filter协议用于读取源码, php:&#x2F;&#x2F;input用于执行php代...
+			
+		
+	</div>
+
+	
+		<div class="post-tags">
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			<a class="tag badge badge-secondary post-meta-detail-tag -none-link" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界</a>
+		</div>
+	
+</article>
+
+
+	<article class="post card bg-white shadow-sm border-0 ">
+	<header class="post-header text-center">
+		
 		<a class="post-title" href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cfakebook/">攻防世界fakebook</a>
 		<div class="post-meta">
 			
@@ -868,77 +944,6 @@ python sqlmap.py -r C:\Users\14980\Desktop\text1.txt --level 4  --dbs --batch
 查看一下源码,在扫描一下目录
 
 发现这些挨个访问看看在robots....
-			
-		
-	</div>
-
-	
-		<div class="post-tags">
-			<i class="fa fa-tags" aria-hidden="true"></i>
-			<a class="tag badge badge-secondary post-meta-detail-tag -none-link" href="/tags/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/" rel="tag">攻防世界</a>
-		</div>
-	
-</article>
-
-
-	<article class="post card bg-white shadow-sm border-0 ">
-	<header class="post-header text-center">
-		
-		<a class="post-title" href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cics-05/">攻防世界ics-05</a>
-		<div class="post-meta">
-			
-						
-						<div class="post-meta-detail post-meta-detail-time">
-							<i class="fa fa-clock-o" aria-hidden="true"></i>
-							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-3-11 14:23:28">2022-3-9 19:00
-							</time>
-						</div>
-					
-						
-							<div class="post-meta-devide">|</div>
-						
-						<div class="post-meta-detail post-meta-detail-categories">
-							<i class="fa fa-bookmark-o" aria-hidden="true"></i>
-							<a class="post-meta-detail-catagory-link" href="/categories/ctf/">ctf</a>
-						</div>
-					
-						
-							<div class="post-meta-devide">|</div>
-						
-						<div class="post-meta-detail post-meta-detail-words">
-							<i class="fa fa-book" aria-hidden="true"></i>
-							<span id="busuanzi_container_page_pv">
-								阅读<span id="busuanzi_value_page_pv"></span>次
-							</span>
-						</div>
-					
-						
-							<div class="post-meta-devide">|</div>
-						
-						<div class="post-meta-detail post-meta-detail-words">
-							<i class="fa fa-file-word-o" aria-hidden="true"></i>
-							1.5k 字
-						</div>
-					
-						
-							<div class="post-meta-devide">|</div>
-						
-						<div class="post-meta-detail post-meta-detail-readingtime">
-							<i class="fa fa-hourglass-end" aria-hidden="true"></i>
-							7 分钟
-						</div>
-					
-		</div>
-		
-	</header>
-
-	<div class="post-content">
-		
-			
-				攻防世界ics-05(preg_replace()函数 &#x2F;e 漏洞)查阅资料发现这里是一个文件包含漏洞
-http://111.200.241.244:60854/index.php?page=index.php
-
-使用php:&#x2F;&#x2F;filter协议用于读取源码, php:&#x2F;&#x2F;input用于执行php代...
 			
 		
 	</div>

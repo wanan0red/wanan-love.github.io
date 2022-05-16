@@ -15,7 +15,7 @@
 <meta property="og:description" content="bugctf 的noteasytrick&lt;?php error_reporting(0); ini_set(&quot;display_errors&quot;,&quot;Off&quot;); class Jesen &amp;#123;     public $filename;     public $content;     public $me;      function __wake">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-09T11:00:36.000Z">
-<meta property="article:modified_time" content="2022-04-11T14:09:38.233Z">
+<meta property="article:modified_time" content="2022-05-16T13:47:59.541Z">
 <meta property="article:author" content="wanan">
 <meta property="article:tag" content="bugctf">
 <meta name="twitter:card" content="summary">
@@ -613,7 +613,7 @@
 						
 						<div class="post-meta-detail post-meta-detail-time">
 							<i class="fa fa-clock-o" aria-hidden="true"></i>
-							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-4-11 22:09:38">2022-3-9 19:00
+							<time title="发布于 2022-3-9 19:00:36 | 编辑于 2022-5-16 21:47:59">2022-3-9 19:00
 							</time>
 						</div>
 					
@@ -698,10 +698,10 @@ if(!isset($_POST[&#39;a&#39;]))&#123;
 
 &#125;
 </code></pre>
-<p>需要绕过wakeup的执行</p>
+<p>需要绕过wakeup的执行.</p>
 <pre><code class="php">if(!file_get_contents(&quot;./sandbox/lock.lock&quot;))
 </code></pre>
-<p>这里需要进行绕过而file_get_contents()读到文件则返回读到的数据,而没有读到则返回false,而这里包含一个取反函数所以就只能读不到,这里将设法将其删除.</p>
+<p>这里需要进行绕过而file_get_contents()读到文件则返回读到的数据,而没有读到则返回false,而这里包含一个取反函数所以就只能读不到,这里将设法将其删除. </p>
 <p>这里首先访问.&#x2F;sandbox&#x2F;lock.lock文件发现存在</p>
 <p>这里了解到可以利用 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/w0s1np/p/14641597.html">ZipArchive</a> 的open方法进行删除这里的原因是由于原先wakeup的调用本来就为Ctf类的open方法而这里就找到了<a target="_blank" rel="noopener" href="https://www.cnblogs.com/w0s1np/p/14641597.html">ZipArchive</a> 的open方法经过实验这里open总共有两个参数第二个参数的是要传入一个预定义常量而8的预定义常量含义大概是将文件进行关闭,防止产生报错.而不使用参数经过实验好像也可删除文件.</p>
 <p>之后得到脚本</p>
@@ -906,7 +906,7 @@ i...',
 	</div>
 
 
-<div class="post-navigation card shadow-sm"><div class="post-navigation-item post-navigation-pre"><span class="page-navigation-extra-text"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>上一篇</span><a href="/ctf/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C/comprehensive-%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwtf.sh-150/" rel="prev"> 攻防世界wtf.sh-150</a></div><div class="post-navigation-item post-navigation-next"><span class="page-navigation-extra-text">下一篇 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span><a href="/ctf/%E5%85%B6%E4%BB%96/comprehensive-bugctf%E7%9A%84noteasytrick/" rel="next"> bugctf的noteasytrick</a></div></div>
+<div class="post-navigation card shadow-sm"><div class="post-navigation-item post-navigation-pre"><span class="page-navigation-extra-text"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>上一篇</span><a href="/ctf/%E5%85%B6%E4%BB%96/comprehensive-bugctf%E7%9A%84noteasytrick/" rel="prev"> bugctf的noteasytrick</a></div><div class="post-navigation-item post-navigation-next"><span class="page-navigation-extra-text">下一篇 <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></span><a href="/ctf/sql%E6%B3%A8%E5%85%A5/sql/sql-sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/" rel="next"> sql注入系统学习</a></div></div>
 
 
 
