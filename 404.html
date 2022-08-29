@@ -48,7 +48,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-08-29 15:25:19'
+  postUpdate: '2022-08-29 17:08:18'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/j
       for (let i = 0; i < array.length; i++) {
         result += '<div class=\'aside-list-item\'>'
 
-        if (true) {
+        if (false) {
           const name = 'src'
           result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
         }
@@ -205,13 +205,13 @@ document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/j
   }
 
   const getComment = () => {
-    const serverURL = 'https://asus8JcG.api.lncldglobal.com'
+    const serverURL = 'https://RjFSSKpe.api.lncldglobal.com'
 
     var settings = {
       "method": "GET",
       "headers": {
-        "X-LC-Id": 'asus8JcGdNbQh5ny8fjmPPaP-gzGzoHsz',
-        "X-LC-Key": 'MLcrx5xD02qmvoD2scddcUwW',
+        "X-LC-Id": 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+        "X-LC-Key": '8qrAyIwMaJTebKjjzPnV0SFT',
         "Content-Type": "application/json"
       },
     }
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/j
             'date': e.updatedAt,
           }
         })
-        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 10/(60*24))
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 1/(60*24))
         generateHtml(valineArray)
       }).catch(e => {
         const $dom = document.querySelector('#card-newest-comments .aside-list')
