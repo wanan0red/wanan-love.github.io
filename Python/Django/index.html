@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Django学习 | wanan</title><meta name="keywords" content="Python,框架,Django"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Django什么是ORMORM即对象关系映射,他是一种基于关系型数据库的程序技术,ORM允许使用类和对象对数据库进行操作,提高了对数据库的控制,避免了直接使用sql语句对数据库进行操作.  orm把类映射成数据库中的表,把类的一个实例对象映射成了数据库中的数据行,把类的属性映射成了表中的字段,通过对象的操作对应到数据库表的操作,实现了对象到sql,sql到对象的准换过程  模型类 模型类本质上属于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django学习">
+<meta property="og:url" content="https://www.wanan.red/Python/Django/index.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="Django什么是ORMORM即对象关系映射,他是一种基于关系型数据库的程序技术,ORM允许使用类和对象对数据库进行操作,提高了对数据库的控制,避免了直接使用sql语句对数据库进行操作.  orm把类映射成数据库中的表,把类的一个实例对象映射成了数据库中的数据行,把类的属性映射成了表中的字段,通过对象的操作对应到数据库表的操作,实现了对象到sql,sql到对象的准换过程  模型类 模型类本质上属于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg">
+<meta property="article:published_time" content="2022-08-30T05:41:12.414Z">
+<meta property="article:modified_time" content="2022-08-30T06:44:51.162Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="框架">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/Python/Django/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-e6YD56vlMd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Django学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-30 14:44:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">54</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Django学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-30T05:41:12.414Z" title="发表于 2022-08-30 13:41:12">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-30T06:44:51.162Z" title="更新于 2022-08-30 14:44:51">2022-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/Django%E5%AD%A6%E4%B9%A0/">Django学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>27分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Django学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h1><h2 id="什么是ORM"><a href="#什么是ORM" class="headerlink" title="什么是ORM"></a>什么是ORM</h2><p>ORM即对象关系映射,他是一种基于关系型数据库的程序技术,ORM允许使用类和对象对数据库进行操作,提高了对数据库的控制,避免了直接使用sql语句对数据库进行操作.</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220419145755689.png" alt="image-20220419145755689"></p>
+<p>orm把类映射成数据库中的表,把类的一个实例对象映射成了数据库中的数据行,把类的属性映射成了表中的字段,通过对象的操作对应到数据库表的操作,实现了对象到sql,sql到对象的准换过程</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220419150017360.png" alt="image-20220419150017360"></p>
+<p>模型类</p>
+<p>模型类本质上属于一个python类,只不过在django中称为模型类,他是有django.db.models.Model派生出的子类,在Django中模型类是数据交互的接口,一个模型类代表数据库中的一张数据表,模型类中每一个类属性都代表数据表中的一个字段</p>
+<p>定义数据表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">class UserInfo(models.Model):</span><br><span class="line">    name = models.CharField(max_length=100)</span><br><span class="line">    password = models.CharField(max_length=100)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用from django.db improt models导入了models模块</li>
+<li>使用class关键字对userinfo表进行类定义,并继承了models模块中的model类</li>
+<li>数据表中的字段name和password是userinfo类的属性,name和password字段类型都是charfiled,字段长度都是100</li>
+</ul>
+<p>orm管理器对象</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UserInfo.objects.create(name=&#x27;jar&#x27;,password=&#x27;aaa&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>objects是管理器对象,数据库的增删查改可以用他来实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Obj = UserInfo(name=&quot;jar&quot;,password=&quot;aaa&quot;)</span><br><span class="line">Obj.name=&quot;john&quot;</span><br><span class="line">Obj.save()</span><br></pre></td></tr></table></figure>
+
+<p>创建userinfo实例对象调用save()保存</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UserInfo.objects.all()#查询表中的所有记录</span><br><span class="line">UserInfo.objects.filter(name_contains=&#x27;j&#x27;)#查询表中name含有“j”的所有记录,被使用较多</span><br><span class="line">UserInfo.objects.get(name=&quot;john&quot;)#有且只有一个查询结果，如果超出一个或者没有,则抛出异常</span><br><span class="line">UserInfo.objects.get(name=&quot;john&quot;).delete()#删除名字为john的记录</span><br><span class="line">UserInfo.objects.get(name=&quot;john&quot;).update(name=&#x27;TOM&#x27;)#更新数据表的name为TOM</span><br></pre></td></tr></table></figure>
+
+<h2 id="auth模块"><a href="#auth模块" class="headerlink" title="auth模块"></a>auth模块</h2><p>auth 模块定义了一张名叫 auth_user 的数据表，该表是 auth 模块的内建用户表，开发者调用 auth 模块的相应接口生成此表，auth_user 表的字段以及字段类型</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/image-20220419151300105.png" alt="image-20220419151300105"></p>
+<p>现在新建一张auth_user用户表,并为此表添加一个新用户user.首先用如下方式引入auth模块的User方法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.contrib.auth.models import User</span><br></pre></td></tr></table></figure>
+
+<p>通过下面的方法创建新用户User</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user = User.objects.create_user(username=&#x27;c语言中文网&#x27;,password=&#x27;123456&#x27;,email=&#x27;664104694@qq.com&#x27;)</span><br><span class="line">save()#调用该方法保存数据 </span><br></pre></td></tr></table></figure>
+
+<p>同时也可以使用如下方法修改密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user.set_password(password=&#x27;12345abc&#x27;)#会对原密码进行修改</span><br></pre></td></tr></table></figure>
+
+<p>auth模块也提供了认证用户功能,可以用下面的方式引入后使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.contrib.auth improt authenticate</span><br></pre></td></tr></table></figure>
+
+<p>然后使用关键字传参的方式来传递用户凭证,从而达到用户认证的目的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user = authenticate(user=&#x27;wanan&#x27;,password=&#x27;wanan&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>auth应用模块的其他作用</p>
+<p>auth模块还实现一些其他功能</p>
+<ul>
+<li>用户的登录(login) 退出(logout)功能 封装在django.contrib.auth里面</li>
+<li>用户权限系统封装在django.contrib.auth.models.Permiassion中,可以对用户的权限进行增加 修改 删除</li>
+<li>用户组可以用过 from django.contrib.auth.models.Group 导入后来创建组或者删除组</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user.user_permission.add(permission)#给某个用户权限的添加权限</span><br><span class="line">group = Group.objects.create(name=group_name)#添加新的用户组</span><br><span class="line">group.save() #保存新建好的用户组</span><br><span class="line">group.delete()#删除用户组</span><br></pre></td></tr></table></figure>
+
+<p>auth模块提供的主要功能</p>
+<ul>
+<li>实现并维护了用户与用户组的增加 删除 更改功能</li>
+<li>实现了用户权限与用户组权限的删除 增加 更改</li>
+<li>实现了可以自定义用户权限和用户组权限功能</li>
+</ul>
+<h2 id="了解Django后台管理功能"><a href="#了解Django后台管理功能" class="headerlink" title="了解Django后台管理功能"></a>了解Django后台管理功能</h2><p>使用下面的命令来创建超级用户</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+
+<p>通过此命令来设置用户名 密码和邮箱</p>
+<h2 id="视图函数"><a href="#视图函数" class="headerlink" title="视图函数"></a>视图函数</h2><p>视图函数是一个python函数或者类,开发者主要通过编写视图函数来实现业务逻辑,视图函数首先接受来自浏览器或者客户端的请求,并最终返回响应,视图函数返回的响应可以是html文件.也可以是http协议中的303重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.http import Httpesponse</span><br><span class="line">def Hello_my_django(request):</span><br><span class="line">	return HttpResponse(&#x27;&lt;html&gt;&lt;body&gt;Hello my Django&lt;/body&gt;&lt;/html&gt;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>httpResponse视图响应类型,从django.http模块中导入HttpResponse.它规定登录视图函数至少有一个参数,第一个参数必须是request,request 是HttpRequest请求类型的对象,它携带了浏览器的请求信息,所以视图函数的第一个参数必须为request.return视图响应,视图函数要返回响应内容,这里的响应内容是我们用HTML标签编写的,把它作为HttpRespose的对象返回给浏览器</p>
+<h2 id="模板系统"><a href="#模板系统" class="headerlink" title="模板系统"></a>模板系统</h2><p>虽然上面的函数能够顺利完成响应任务,没有使用模板.</p>
+<p>当创建好易购django项目后,我们可以在项目的同级目录下创建一个templates文件夹,对它进行简单的配置之后,这个文件夹将被Django自动识别</p>
+<p>我们的templates文件夹中新建一个HTML文件,并且将此文件命名为hello.html,然后在文件中书写</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;html&gt;&lt;body&gt;&#123;&#123;vaule&#125;&#125;&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>写视图函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line">def hello_my_diango(request):</span><br><span class="line">    return render(request,&#x27;hello.html&#x27;,&#123;&quot;value&quot;:&quot;hell my Django&quot;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>模板传参</p>
+<p>htllo.hmtl文件中的是一个模板的变量,视图函数必须把数据形成字典的形式才可以传递给模板,这就是”模板传参”</p>
+<p>render方法</p>
+<p>render是view层加载模板的一种方法,它封装在django.shortcuts模块中,render方法使用起来非常方便,它首先加载模板,然后将加载完成的模板响应给浏览器</p>
+<h2 id="django路由系统应用"><a href="#django路由系统应用" class="headerlink" title="django路由系统应用"></a>django路由系统应用</h2><p>一个用户像web站点发送请求,是用过url实现的,当web服务器端接受到用户请求后,它又是怎么处理的呢,</p>
+<p>django.conf.urls中封装了路由模块,先进的django项目中提供了urls.py(创建项目后自动生成的配置文件)路由配置文件,urls.py文件中定义了一个urlpayyerns的列表,他是url()实现对象组成的列表,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.conf.urls import url</span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(&#x27;^admin/&#x27;,amdin.site.urls),</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>后台admin管理系统的路由就定义在了列表的第一个位置,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url(regex,view,name=None)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>regex,匹配请求路径,用正则表达式表示</li>
+<li>view,指定regex匹配路径所对应的视图函数的名称</li>
+<li>name,是给url地址起一个别名,在模板反向解析的时候使用</li>
+</ul>
+<p>配置第一个url实现页面访问</p>
+<p>在 urls.py 的同级目录下，新建 views.py 文件，把它作为编写视图函数的 View 层，然后在 views.py 中编写如下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.http import HttpResponse</span><br><span class="line">def page_view(request):</span><br><span class="line">    html=&#x27;&lt;h1&gt;欢迎来到，C语言中文网，网址是http://c.biancheng.net&lt;/h&gt;&#x27;</span><br><span class="line">    return HttpResponse(html)</span><br></pre></td></tr></table></figure>
+
+<p>假如现在有一个名叫 “myject”的 Django 项目，首先需要在 urls.py 文件中导入 views.py， 这么做的目的是把 URL 与视图层进行绑定，然后在 urls.py 的 urlpatterns 中编写如下代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from django.conf.urls import url</span><br><span class="line">from django.contrib import admin</span><br><span class="line">from myject import views</span><br><span class="line">urlpatterns = [</span><br><span class="line">    url(r&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">    url(r&#x27;^page$/&#x27;,views.page_view),]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>代码前三行对应的是url模块,admin模块,以及视图层views做了导包</li>
+<li>路由地址被定义为page,也就是在本机浏览器地址栏输入<code>http://127.0.0.1:8000/page </code>进行访问views.page_view将 page&#x2F; 路径与对应的视图函数进行了关联</li>
+</ul>
+<p>正则与正则分组使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url(r&#x27;^page(\d+)&#x27;,view.page_view)</span><br></pre></td></tr></table></figure>
+
+<p>同时也可以使用正则分组的方式匹配地址</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">r&#x27;^(\d+)/(\w&#123;3&#125;)/(\d+)&#x27; 匹配类似于 http://127.0.0.1:8000/521/Django/1314的地址</span><br></pre></td></tr></table></figure>
+
+<p>正则捕获组使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">url(r&#x27;^person/(?P&lt;name&gt;\w+)/(?P&lt;age&gt;\d&#123;1,2&#125;)&#x27;,views.person_view)</span><br></pre></td></tr></table></figure>
+
+<p>在视图函数层，用函数关键字传参的方法，将 name 与 age 传递给视图函数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def person_view(request,name,age):</span><br><span class="line">    s = &#x27;姓名： &#x27; + name</span><br><span class="line">    s += &#x27; 年龄: &#x27; + age</span><br><span class="line">    return HttpResponse(s)</span><br></pre></td></tr></table></figure>
+
+<p>一个分组表示一个参数,多个参数需要使用多个分组,并且使用&#x2F;隔开</p>
+<h2 id="dojango项目配置文件"><a href="#dojango项目配置文件" class="headerlink" title="dojango项目配置文件"></a>dojango项目配置文件</h2><p><strong>magngae.py文件</strong></p>
+<p>一级目录中的manage,py文件是管理django项目的重要命令行工具.它主要用户启动项目 创建应用和完成数据库迁移等</p>
+<p><strong>_<em>init</em>_.py</strong></p>
+<p>二级子目录中的_<em>init</em>_.py文件用于表示当前所在目录是一个python包,如果在此文件中,通过import导入其他方法或者包会被Django自动识别</p>
+<p><strong>settings.py文件</strong></p>
+<p>settings.py文件是Djangp项目的重要配置文件项目启动时,settings.py配置文件会被自动调用,而他定义的一些全局为Django运行提供参数,在此配置文件中,也可以自定义一些变量,用于全局作用域的数据传递</p>
+<p><strong>urls.py文件</strong></p>
+<p>urls.py文件用于记录Django项目中的url映射关系,他是属于项目的基础路由配置文件,路由系统就是在这个文件中完成相应的配置的,项目中的动态路径必须先经过该文件匹配,才能实现web站点上资源的访问功能</p>
+<p><strong>wsgi.py</strong>是wsgi(web server gateway  interface)服务器程序的入口文件,主要用于启动应用程序负责网络通讯部分的实现,只有在项目部署的时候才会用到他</p>
+<h2 id="settings-py文件"><a href="#settings-py文件" class="headerlink" title="settings.py文件"></a>settings.py文件</h2><p><strong>base_dir</strong></p>
+<p>他用于绑定当前项目的bookstore所在的绝对路径,项目中的所有文件都需要依赖此路径,绑定路径的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BASE_DIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br></pre></td></tr></table></figure>
+
+<p>__file__是python的语法,显示当前文件的位置,os.path.abspath(__file__)方法返回当前文件的绝对路径</p>
+<p><strong>SECRET_KEY</strong></p>
+<p>这个变量的本质是一个加密的盐,它一般配合加密算法Hash MD5一起使用.例如用户密码的加密或者简历会话时用到的sessionid都需要使用SECRET_KEY 在实际的开发中,一般将它保存在系统的环境变量中以企鹅包加密盐的安全</p>
+<p><strong>DEBUG</strong></p>
+<p>用于配置Django项目的启用模式</p>
+<ul>
+<li>DUBUG &#x3D; True用于在开发环境中使用,属于调试模式,在项目的运行中会暴露一些错误信息以方便调试</li>
+<li>DEBUG &#x3D; False用于线上环境，表示不启用调试模式</li>
+</ul>
+<p><strong>ALLOWED_HOSTS</strong></p>
+<p>用于配置能够访问当前站点的域名,当DEBUG &#x3D;Fales时必须填写</p>
+<ul>
+<li>[] 空列表,表示只有127.0.0.1可以访问</li>
+<li>[‘*’] 表示任何网络都能访问</li>
+<li>[‘192.168.1.3’, ‘192.168.3.3’] 表示只有当前两个主机能访问当前项目</li>
+</ul>
+<p><strong>INSTALLED_APPS</strong></p>
+<p>这个参数是指当前项目中用来安装的应用的列表,dgango把默认自带的应用都放在了这个列表里面,比如admin后台应用,auth用户管理系统等,</p>
+<p>比如公司要单独开发一个后台管理系统，就可以把第一项 admin 注释掉。开发时自己编写的应用都必须在这个变量表中进行注册才能生效。所以这个列表需要经常的改动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;django.contrib.admin&#x27;,</span><br><span class="line">    &#x27;django.contrib.auth&#x27;,</span><br><span class="line">    &#x27;django.contrib.contenttypes&#x27;,</span><br><span class="line">    &#x27;django.contrib.sessions&#x27;,</span><br><span class="line">    &#x27;django.contrib.messages&#x27;,</span><br><span class="line">    &#x27;django.contrib.staticfiles&#x27;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>MIDDLEWARE</strong></p>
+<p>它用于注册中间件，我们在《Django中间》中进行了介绍，Django 默认加载了一些中间件。例如，用于处理会话的 SessionMiddleware 等，同样我们可以对这些中间件进行添加或者注释。 </p>
+<p><strong>ROOT_URLCONF</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ROOT_URLCONF = &#x27;BookStore.urls&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>它指定了当前项目的根url,是django路由系统的入口</p>
+<p> <strong>TEMPLATES</strong></p>
+<p>它用于指定模板的配置信息,列表中每一个元素都是一个字典,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&#x27;BACKEND&#x27;:&#x27;django.template.backends.django.DjangoTemplates&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>WSGI_APPLICATION</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WSGI_APPLICATION = &#x27;BookStore.wsgi.application&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>项目部署时,django内置的服务器将使用wsgi应用程序对象的完整python路径</p>
+<p><strong>DATABASES</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DATABASES = &#123; &#x27;default&#x27;: &#123; &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;, &#x27;NAME&#x27;: os.path.join(BASE_DIR, &#x27;db.sqlite3&#x27;), &#125; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>它用于指定数据库的配置信息,这里默认配置是django的sqlite3</p>
+<p><strong>AUTH_PASSWORD_VALIDATORS</strong></p>
+<p>这是一个支持插拔的密码验证器，且可以一次性配置多个，Django 通过这些内置组件来避免用户设置的密码等级不足的问题。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">AUTH_PASSWORD_VALIDATORS = [</span><br><span class="line">    &#123;</span><br><span class="line">        &#x27;NAME&#x27;: &#x27;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        &#x27;NAME&#x27;: &#x27;django.contrib.auth.password_validation.MinimumLengthValidator&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        &#x27;NAME&#x27;: &#x27;django.contrib.auth.password_validation.CommonPasswordValidator&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        &#x27;NAME&#x27;: &#x27;django.contrib.auth.password_validation.NumericPasswordValidator&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>LANGUAGE_CODE和TIME_ZONE</strong></p>
+<p>分别代表语言配置项和当前服务端时区的配置项，我们常用的配置如下所示：</p>
+<pre><code>LANGUAGE_CODE 取值是英文：&#39;en-us&#39;或者中文：&#39;zh-Hans&#39;；
+TIME_ZONE 取值是世界时区 &#39;UTC&#39; 或中国时区 &#39;Asia/Shanghai&#39;。
+</code></pre>
+<p><strong>USE_118N和USE_L10N</strong></p>
+<p>项目开发完成后，可以选择向不同国家的用户提供服务，那么就需要支持国际化和本地化。USE_118N 和 USE_L10N 这两个变量值表示是否需要开启国际化和本地化功能。默认开启的状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">提示：USE_I18N = True 与 USE_L10N = True 其的 I18N 指的是国际化英文缩写，L10N 指的是本地化英文缩写。</span><br></pre></td></tr></table></figure>
+
+<p><strong>USE_TZ&#x3D;True</strong></p>
+<p>它指对时区的处理方式，当设置为 True 的时候，存储到数据库的时间是世界时间 ‘UTC’</p>
+<p><strong>STATIC_URL&#x3D; ‘&#x2F;static&#x2F;‘</strong></p>
+<p>它指的是静态资源的存放位置，静态资源包括 CSS、JS、Images。比如我们要在项目中添加一些图片，通常这些静态图片被存放在新建的 static 目录下，这样就实现了通过 STATIC_URL&#x3D; ‘&#x2F;static&#x2F;‘ 路径对静态资源的访问。</p>
+<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>一个app就是一个python包,通常一个app可以包含模型 视图模板和url配置文件,可以被应用到多个django项目中,因为他们的本质就是可被重用的python软件包</p>
+<p>创建一个app</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python manage.py startapp index</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├─ admin.py</span><br><span class="line">├─ apps.py</span><br><span class="line">├─ models.py</span><br><span class="line">├─ tests.py</span><br><span class="line">├─ views.py</span><br><span class="line">├─__init__.py</span><br><span class="line">│</span><br><span class="line">└─ migrations</span><br><span class="line">       ├─__init__.py</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">- admin.py 用于将model定义的数据表注册到管理后台,是django admin应用的配置文件</span><br><span class="line">- apps.py用于应用程序本身的属性配置文件</span><br><span class="line">- models.py用于定义应用中所需要的数据表</span><br><span class="line">- tests.py文件用于编写当前应用陈旭的单元测试</span><br><span class="line">- views.py用来定义视图处理函数的文件</span><br><span class="line">- 一级目录下的\__init__.py文件标识index应用是一个python软件包</span><br><span class="line">- migrations目录用于存储数据库迁移时产生的文件</span><br><span class="line"></span><br><span class="line">应用的添加</span><br><span class="line"></span><br><span class="line">INSTALLED_APPS 做了介绍，把我们创建的应用添加到这个列表</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;django.contrib.admin&#x27;,</span><br><span class="line">    &#x27;django.contrib.auth&#x27;,</span><br><span class="line">    &#x27;django.contrib.contenttypes&#x27;,</span><br><span class="line">    &#x27;django.contrib.sessions&#x27;,</span><br><span class="line">    &#x27;django.contrib.messages&#x27;,</span><br><span class="line">    &#x27;django.contrib.staticfiles&#x27;,</span><br><span class="line">    &#x27;index&#x27;,</span><br><span class="line">]</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">用如上的方法添加完成后,</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">提示：添加应用到 settings.py 中，这个操作看似非常简单，但是初学者却容易忽略或者忘记，所以大家在学习 Django 的过程中一定要注意细节。</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">## 模板加载与响应</span><br><span class="line"></span><br><span class="line">模板的配置</span><br><span class="line"></span><br><span class="line">在settins.py中有一个templates变量</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">    TEMPLATES = [</span><br><span class="line">        &#123;</span><br><span class="line">            &#x27;BACKEND&#x27;: &#x27;django.template.backends.django.DjangoTemplates&#x27;,</span><br><span class="line">            &#x27;DIRS&#x27;: [],  #指定模板文件的存放路径</span><br><span class="line">            &#x27;APP_DIRS&#x27;: True, #搜索APP里面的所有templates目录</span><br><span class="line">            &#x27;OPTIONS&#x27;: &#123;</span><br><span class="line">                &#x27;context_processors&#x27;: [  #context_processors 用于配置模板上下文处理器</span><br><span class="line">                    &#x27;django.template.context_processors.debug&#x27;,</span><br><span class="line">                    &#x27;django.template.context_processors.request&#x27;,</span><br><span class="line">                    &#x27;django.contrib.auth.context_processors.auth&#x27;,</span><br><span class="line">                    &#x27;django.contrib.messages.context_processors.messages&#x27;,</span><br><span class="line">                ],</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">- BACKED:bjango默认设置,指定了要是用的模板引擎的python路径</span><br><span class="line">- DIRS 一个目录列表,指定模板文件的存放路径,可以是一个或者多个.模板引擎将按照列表中定义的顺序查找模板文件</span><br><span class="line">- APP_DIRS 一个布尔值,默认为True 表示会在安装应用中的templates目录中搜索所有模板文件</span><br><span class="line">- OPTIONS 指定额外的选项,不同的模板引擎有着不同的可选参数,例如content_pricessors用于配置模板上下文处理器,在使requestcontext时将看到他们的作用</span><br><span class="line"></span><br><span class="line">修改settings配置文件</span><br><span class="line"></span><br><span class="line">修改 settings.py 文件，设置 TEMPLATES 的 DIRS 值来指定模板的搜索目录为“templates”</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">&#x27;DIRS&#x27;: [os.path.join(BASE_DIR, &#x27;templates&#x27;)]</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">模板的加载与响应方式</span><br><span class="line"></span><br><span class="line">通过loader获取模板,通过httpresponse进行响应</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">from django.template import loader</span><br><span class="line"># 1.通过loader加载模板</span><br><span class="line">t = loader.get_template(&quot;模板文件名&quot;)</span><br><span class="line"># 2.将t转换成HTML字符串</span><br><span class="line">html = t.render(字典数据)</span><br><span class="line"># 3.用响应对象将转换的字符串内容返回给浏览器</span><br><span class="line">return HttpResponse(html)</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">通过render方法直接加载并响应模板</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">from django.shortcuts import render</span><br><span class="line">return render(request,&#x27;模板文件名&#x27;, 字典数据)</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="orm进阶应用"><a href="#orm进阶应用" class="headerlink" title="orm进阶应用"></a>orm进阶应用</h2><h3 id="定义数据表"><a href="#定义数据表" class="headerlink" title="定义数据表"></a>定义数据表</h3><p>下面我们使用orm定义index应用所需要的数据表,首先找到models.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Book</span>(models.Model): <span class="comment">#创建book表</span></span><br><span class="line">    title = models.CharField(max_length=<span class="number">30</span>,unique=<span class="literal">True</span>,verbose_name=<span class="string">&#x27;书名&#x27;</span>)</span><br><span class="line">    public = models.CharField(max_length=<span class="number">50</span>,verbose_name=<span class="string">&#x27;出版社&#x27;</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">7</span>,decimal_places=<span class="number">2</span>,verbose_name=<span class="string">&#x27;定价&#x27;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">default_price</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;$30&#x27;</span></span><br><span class="line">    retail_price = models.DecimalField(max_digits=<span class="number">7</span>,decimal_places=<span class="number">2</span>,verbose_name=<span class="string">&#x27;零售价&#x27;</span>,default=default_price)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;title:%s pub:%s price:%s&quot;</span> % (self.title, self.public, self.price)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Author</span>(models.Model):<span class="comment">#创建作者表</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">30</span>,verbose_name=<span class="string">&#x27;姓名&#x27;</span>)</span><br><span class="line">    email = models.EmailField(verbose_name=<span class="string">&#x27;邮箱&#x27;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;作者：%s&#x27;</span>%(self.name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(models.Model):</span><br><span class="line">    username = models.CharField(max_length=<span class="number">24</span>,verbose_name=<span class="string">&#x27;用户注册&#x27;</span>)</span><br><span class="line">    password = models.CharField(max_length=<span class="number">24</span>,verbose_name=<span class="string">&#x27;密码&#x27;</span>)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>通过上面的代码,我们定义了一个名叫Book的数据表,数据表由以下字段构成书名（title）、出版社（public）、价格（price）、零售价（retail_price），而且对每个字段都做添加了相应的字段属性以及字段选项。</p>
+<h3 id="filed的通用字段选项"><a href="#filed的通用字段选项" class="headerlink" title="filed的通用字段选项"></a>filed的通用字段选项</h3><p>model中添加的字段都是field类型的实例,不同的field类型可能会支持不同的字段选项,但是也有很多字段选项是通用的,即可以用任何一种field类型中,这里介绍以下常用且重要的通用字段选项,他们都有对应的默认值,这些字段选项都是可选的</p>
+<p><strong>blank</strong></p>
+<p>默认值是False,设置为True时,字段可以为空,设置为false时,字段是必须填写的,如果是字符型字段charfield和textfield,他们使用空字符串来存储空值的.</p>
+<p><strong>unique</strong></p>
+<p>默认值是false,他是一个数据库级别的选项,规定该字段在表中必须是唯一的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">数据库层面对待唯一性约束会创建唯一性索引,所以,如果一个字段数额孩子unique=true就不需要对这个字段加上索引选项了.</span><br></pre></td></tr></table></figure>
+
+<p><strong>null</strong></p>
+<p>默认为false,如果此选项为false建议加入default选项来设置默认子,如果设置为true,表示改列值允许为空.日期型,时间型以及数字型字段不接受空字符串,所以当设置integerfield,datetimefield型字段可以为空时,需要将blank与null均设置为true才可以的,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">对于charfiled和textfiled这样的字符串类型,null字段应该设置为false,如果为true,对于空数据就会有两种概念</span><br></pre></td></tr></table></figure>
+
+<p><strong>db_index</strong></p>
+<p>默认值是false,如果设置为true,django则会为该字段创建数据库索引,如果该字段经常作为查询的条件,那么就需要设置db_index选项,从而加快数据的检索速度</p>
+<p><strong>db_column</strong></p>
+<p>这个选项用于设置数据库表字段的名称,如果没有指定,django默认使用model中字段的名称</p>
+<p><strong>default</strong></p>
+<p>用于给字段设置默认值,这个选项可以设置为一个值或者是一个可以调用的对象,但不能是可变的对象,不同字段类型的默认值也不同,比如booleandiled布尔类型default值为ture或者false,主要使用场景是当一个字段的值被用户省略时,后台服务器自动为该字段的设置默认值</p>
+<p><strong>primary_key</strong></p>
+<p>默认值是false,如果设置为true,表示该字段为主键,在django中默认id为主键,也就是说即使你的数据表中没有创建id字段,django也会自动为你创建id字段并将其设置为主键,如果你在表中设置了其他字段为主键时,那么django将取消为id字段设置为主键</p>
+<p><strong>choices</strong></p>
+<p>这个选项用于给字段设置可以选择的值,他是一个可以迭代的对象,即列表或者元组,其中每一个元组都是一个二元组(a,b)的形式,a是用来选择的对象,b是对a的描述信息,</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserInfo</span>(models.Model):</span><br><span class="line">    <span class="comment">#定义chocies参数的对应关系,以元组或者列表的形式进行描述:   </span></span><br><span class="line">    choices = (</span><br><span class="line">        (<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;男性&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;女性&#x27;</span>),</span><br><span class="line">    )</span><br><span class="line">    gender = models.CharField(max_length=<span class="number">2</span>,choices= choices,default=<span class="string">&#x27;male&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>verbose_name</strong></p>
+<p>设置此字段在admin后台管理系统界面上的显示名称,如果没有设置改字段,django将会之间展示字段名并且将字段名中的下划线转变成空格</p>
+<h2 id="Meta元数据类属性解析"><a href="#Meta元数据类属性解析" class="headerlink" title="Meta元数据类属性解析"></a>Meta元数据类属性解析</h2><h3 id="meta内部类"><a href="#meta内部类" class="headerlink" title="meta内部类"></a>meta内部类</h3><p>每一个模型类(Model)下都会有一个子类meta,这个子类就是定义元数据的地方,meta类封装了一些数据库的信息,称为model的元数据,django会将meta中的元数据选项定义附加到model中,常见的元数据定义有db_table(数据表名),abstract(抽象类) ,ordering(字段排序)等,meta作为内部类,它定义的元数据可以让admin管理后台对人更加友好.</p>
+<p>meta定义的元数据相当于model的配置信息,所以我们可以根据自己的需求进行选择行的添加.当没有需要的时候也可以不定义meta,增时候django会应用默认的meta元数据</p>
+<h3 id="meta类元数据"><a href="#meta类元数据" class="headerlink" title="meta类元数据"></a>meta类元数据</h3><p><strong>abstract</strong></p>
+<p>一个布尔类型的变量,这个属性是定义当前的模型是不是一个抽象类,所谓抽象类是不会对应数据库的表的.一般我们用他来归纳一些公共属性的字段,然后继承他的子类可以继承这些字段.如果abstract &#x3D;True这个model就是一个抽象类</p>
+<p><strong>ordering</strong></p>
+<p>用于执行获取对象列表时的排序规则,它是一个字符串的列表或者元组对象,它的使用格式是由代表字段的字符串和一个表明降序的 - 构成.当字段名前面没有- 时,将默认使用升序排列,使用?将会随机排列.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ordering[<span class="string">&#x27;add_time&#x27;</span>] <span class="comment">#按照升序排序</span></span><br><span class="line">ordering[<span class="string">&#x27;-add_time&#x27;</span>] <span class="comment">#按照降序</span></span><br><span class="line">ordering[<span class="string">&#x27;?add_time&#x27;</span>] <span class="comment">#随机排序</span></span><br><span class="line"><span class="comment">#同时指定多个字段来进行排序</span></span><br><span class="line">ordering[<span class="string">&#x27;add_time&#x27;</span>,<span class="string">&#x27;-last_login_time&#x27;</span>]<span class="comment">#先按升序,在按降序</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>verbose_name_plural</strong></p>
+<p>这个元数据主要用在管理后台的展示上面,verbose_name_plural是模型类的复数名,如果不设置的话,django会使用小写的模型名作为默认值,并且在结尾加上s.通过此项元数据设置可以去掉s</p>
+<p><strong>db_table</strong></p>
+<p>这个字段用于指定数据表的名称,通常没有特别的需求,将按照django默认的规则生成model对应的数据库表名.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#定义改model在数据库中的表名</span></span><br><span class="line">db_table = <span class="string">&quot;Students&quot;</span></span><br><span class="line"><span class="comment">#使用自定义的表名,可以通过以下属性</span></span><br><span class="line">table_name = <span class="string">&#x27;my_owner_table&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>app_lable</strong></p>
+<p>这个选项只在一种使用情形,就是你的模型不在默认的应用程序包下的models.py文件中,这个时候需要指定你这个模型是那个应用程序的app_label &#x3D; ‘app_name’</p>
+<p><strong>managed</strong></p>
+<p>他是一个布尔类型的变量,默认为true,代表django会管理数据的生命周期,即使用django提供的syncdb和reset命令可以完成创建和删除数据表,如果为False,则不会对此模型执行数据库表的创建或者删除操作,比如数据表之间存在manytomany的关系,在指定为managed&#x3D;false的情况下django不会自动创建中间数据表,需要我们自己手动创建.</p>
+<p><strong>indexs</strong></p>
+<p>他是一个列表类型的元数据项,用来定义model的索引,列表中的每一个元素都是index类型的实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">index引自 django.db.models.indexes.index</span><br></pre></td></tr></table></figure>
+
+<p><strong>default_permissions</strong></p>
+<p>django默认会给每一个定义的model设置三个权限即添加删除更改,它使用的格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">default_permissions = (&#x27;add&#x27;,&#x27;change&#x27;,&#x27;delete&#x27;,&#x27;view&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>permissions</strong></p>
+<p>除了django默认给model添加的三个权限之外,还可以通过permissions给model添加额外的权限,不过permissions是一个包含二元组的元组,或者列表,所以使用的时候要注意格式,即</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">permiassions=[(&#x27;have_read_permission&#x27;,&#x27;有读的权限&#x27;)]</span><br></pre></td></tr></table></figure>
+
+<p><strong>unique_together</strong></p>
+<p>这个选项用于下面的情形,当你需要通过两个字段保持唯一性时使用.比如用户的名称和身份证号码,两者的组合必须是惟一的,那么需要这样设置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">unique_togeher=((&#x27;first_name&#x27;,&#x27;last_name&#x27;),)</span><br></pre></td></tr></table></figure>
+
+<p>一个manytomanyfield不能包含在unique_togeher中,如果你需要验证manytomanyfield字段的唯一验证,尝试使用through属性进行关联.</p>
+<p><strong>proxy</strong></p>
+<p>默认值为flase,如果设置成ture则表示为基类父类的代理模式,主要是用于创建父模型的代理模型</p>
+<p><strong>db_tablespace</strong></p>
+<p>表空间,用于优化数据库性能,</p>
+<p><strong>get_lastest_by</strong></p>
+<p>指定一个datafield或者datetimefield字段的名称,即model的属性名称</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">get_lastest_by=&#x27;order_date&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这个设置让你在使用模型管理器的lastest()方法时,默认使用order_date指定字段来排序</p>
+<h2 id="model三种继承模型的详解"><a href="#model三种继承模型的详解" class="headerlink" title="model三种继承模型的详解"></a>model三种继承模型的详解</h2><p>django中的每一个model都是一个python类,model继承自django.db.models.model,通过类之间的继承,django会对自定义的model自动添加了两个属性分别是id和objects</p>
+<p>在mdoel不指定主键的情况下,django会通过autofiled字段类型将id设置为默认自增主键,</p>
+<h3 id="bojects查询管理器"><a href="#bojects查询管理器" class="headerlink" title="bojects查询管理器"></a>bojects查询管理器</h3><p>object是manager类的实例对象,被称为查询管理器,是数据库查询的入口,每一个django model都至少有一个manager实例,可以通过自定义创建manager以实现对数据库的定制访问,这里我们讲到manager类,它也同样定义在models模块中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">django.db.models.Manager</span><br></pre></td></tr></table></figure>
+
+<h3 id="model的继承模型"><a href="#model的继承模型" class="headerlink" title="model的继承模型"></a>model的继承模型</h3><p>django model的继承与python类的继承是一样的,只是django要求所有自定义的model都必须继承自django.db.models.Model,在django中model之间有三种继承模型,他们分别是抽象基类,多表继承以及代理模型</p>
+<p><strong>抽象基类</strong></p>
+<p>抽象类继承的作用是将子表中通用的字段聚合在一起,并将这些字段统一定义在抽象基类中,避免于重复定义这些字段.抽象基类的定义通过在模型的meta中定义属性abstract&#x3D;True来实现.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AbstractBase</span>(models.Model):</span><br><span class="line">    <span class="built_in">id</span> = models.AutoField()</span><br><span class="line">    content = models.CharField(max_length=<span class="number">100</span>)</span><br><span class="line">    username = models.CharField(max_length=<span class="number">80</span>)</span><br><span class="line">    nowday = models.DateTimeField()</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Meta</span>: </span><br><span class="line">        abstract = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SomeThing</span>(<span class="title class_ inherited__">AbstractBase</span>):</span><br><span class="line">    testexams = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SomeComment</span>(<span class="title class_ inherited__">AbstractBase</span>):</span><br><span class="line">    level = models.CharField(max_length=<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里的三个类映射到数据库后,但会被定义为两个数据表,分别是SomeThing 与 SomeComment他们都继承自AbstractBase,且继承了父表中的所有字段值,同时自身又定义了一个新的字段,所以,他们对应的字段分别</p>
+<ul>
+<li>SomeThing 数据表：有 id、content、username、nowday、testexams 等 5 个字段；</li>
+<li>SomeComment 数据表：有 id、content、username、nowday、level 等 5 个字段。</li>
+</ul>
+<p>关于model的元数据继承关系</p>
+<ul>
+<li>抽象基类中定义的元数据,子类中没有定义,子类会继承基类中的元数据</li>
+<li>抽象基类中定义的元数据,子类也定义了,子类优先级更高</li>
+<li>子类可以定义自己的元数据,即不出现在抽象基类中的元数据</li>
+</ul>
+<p>在定义抽象基类时,需要注意,如果定义了foreignkey或者manytomanyfield类型的字段,并且设置了related_name或者related_query_name参数,由于继承关系,子类也会拥有同样字段,所以在子类中的反向名称和查询名称是唯一的</p>
+<p><strong>多表继承</strong></p>
+<p>这是django支持的第二种继承方式,因为每一个类都是一个完整的model,而不属于抽象基类,所以父model和子model都有数据库表,而且django默认都会给和字表和父表之间自动创建一个onetoonefield数据表关,并且改字段将作为字表的主键.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">a</span>(<span class="title class_ inherited__">A</span>):</span><br><span class="line">	testname = models.charFiled(max_length=<span class="number">255</span>,help_text=<span class="string">&quot;测试&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果你想指定链接父类的属性名称,你可以创建你自己的onetoonefield字段,并且设置parent_link&#x3D;True从而使用该字段链接父类</p>
+<p>多表继承与抽象基类有一个显著的不同点是meta内部类的继承,子类不会继承父类的meta定义,但是,有两个meta元数据项比较列,他们是ordering和get_lastest_by,他们是会被子类继承的,所以,如果不想让他们影响子类的行为,应该覆盖着两个元选项,比如父类有了排序设置,而你并不像让子类有任何排序设置,你可以使用如下方式来禁用子类的排序</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ChildModelName(ParentModelName):</span><br><span class="line">	class Meta:</span><br><span class="line">		ordering = []字表不会排序</span><br></pre></td></tr></table></figure>
+
+<p><strong>代理模型</strong></p>
+<p>代理模型用来给父model添加一些方法或者修改器meta选项,但是父model的字段定义不会被修改,我们可以理解为对原父model进行了copy,而被copy出来的model就叫父model的代理模型,但是这个代理模型又有其自己的特点,这相当于python面向对象中的类继承与多态</p>
+<p>这里需要注意的是代理模型不会在数据库汇总创建新的数据表,它将使用父model的数据表,即对代理模型的CURD操作将会作用到原始的model中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BookExtend</span>(<span class="title class_ inherited__">Book</span>):</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Meta</span>:</span><br><span class="line">        ordering=[<span class="string">&#x27;id&#x27;</span>]<span class="comment">#定义meta选项顺序排序按照id字段</span></span><br><span class="line">        proxy = <span class="literal">True</span> <span class="comment">#设置代理模型</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;title&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加完上述代码，然后执行数据库迁移操作。通过查看 MySQL 数据库可以看到并没有新建 BookExtend 数据表</p>
+<h2 id="实现数据表数据插入"><a href="#实现数据表数据插入" class="headerlink" title="实现数据表数据插入"></a>实现数据表数据插入</h2><h3 id="save-方法创建model实例"><a href="#save-方法创建model实例" class="headerlink" title="save()方法创建model实例"></a>save()方法创建model实例</h3><p>django为创建model实例提供了两种方法,一种是直接调用model的save方法,另一种是用过对象管理器(objicts manager)的create方法,这两种方法都可以实现创建model实例对象,</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">book = Book(title=&quot;python&quot;, public=&#x27;a&#x27;, price=&#x27;59.00&#x27;, retail_price=&#x27;59&#x27;)  # 创建book实例</span><br><span class="line">book.save()  # 调用save方法进行保存</span><br></pre></td></tr></table></figure>
+
+<p>每创建一条数据都需要调用一个save()方法,save()方法还可以保存已有对象更改后的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">book.title=&#x27;java&#x27;</span><br><span class="line">book.save()</span><br></pre></td></tr></table></figure>
+
+<h3 id="create方法创建model实例"><a href="#create方法创建model实例" class="headerlink" title="create方法创建model实例"></a>create方法创建model实例</h3><p>还可以使用管理器对象提供的create()方法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Book.objects.create(title=&#x27;java&#x27;,public=&#x27;a&#x27;,price=&#x27;20&#x27;,r)</span><br></pre></td></tr></table></figure>
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E6%A1%86%E6%9E%B6/">框架</a><a class="post-meta__tags" href="/tags/Django/">Django</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/PHP/PHP%E7%9F%A5%E8%AF%86/"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">PHP知识</div></div></a></div><div class="next-post pull-right"><a href="/Python/Python(CTF)/"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python(CTF)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Python/Flask/" title="flask学习"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-22</div><div class="title">flask学习</div></div></a></div><div><a href="/Python/Python(CTF)/" title="Python(CTF)"><img class="cover" src="https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">Python(CTF)</div></div></a></div><div><a href="/Python/pyenv%E4%BD%BF%E7%94%A8/" title="Pyenv使用"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-30</div><div class="title">Pyenv使用</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Django"><span class="toc-number">1.</span> <span class="toc-text">Django</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFORM"><span class="toc-number">1.1.</span> <span class="toc-text">什么是ORM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#auth%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">auth模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3Django%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD"><span class="toc-number">1.3.</span> <span class="toc-text">了解Django后台管理功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">视图函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.</span> <span class="toc-text">模板系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#django%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">django路由系统应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dojango%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">dojango项目配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#settings-py%E6%96%87%E4%BB%B6"><span class="toc-number">1.8.</span> <span class="toc-text">settings.py文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="toc-number">1.9.</span> <span class="toc-text">创建应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orm%E8%BF%9B%E9%98%B6%E5%BA%94%E7%94%A8"><span class="toc-number">1.10.</span> <span class="toc-text">orm进阶应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="toc-number">1.10.1.</span> <span class="toc-text">定义数据表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filed%E7%9A%84%E9%80%9A%E7%94%A8%E5%AD%97%E6%AE%B5%E9%80%89%E9%A1%B9"><span class="toc-number">1.10.2.</span> <span class="toc-text">filed的通用字段选项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meta%E5%85%83%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%B1%9E%E6%80%A7%E8%A7%A3%E6%9E%90"><span class="toc-number">1.11.</span> <span class="toc-text">Meta元数据类属性解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#meta%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.11.1.</span> <span class="toc-text">meta内部类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meta%E7%B1%BB%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">1.11.2.</span> <span class="toc-text">meta类元数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#model%E4%B8%89%E7%A7%8D%E7%BB%A7%E6%89%BF%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.12.</span> <span class="toc-text">model三种继承模型的详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bojects%E6%9F%A5%E8%AF%A2%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">1.12.1.</span> <span class="toc-text">bojects查询管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#model%E7%9A%84%E7%BB%A7%E6%89%BF%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.12.2.</span> <span class="toc-text">model的继承模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5"><span class="toc-number">1.13.</span> <span class="toc-text">实现数据表数据插入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#save-%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BAmodel%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.13.1.</span> <span class="toc-text">save()方法创建model实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BAmodel%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.13.2.</span> <span class="toc-text">create方法创建model实例</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/Python/Django/'
+    this.page.identifier = '/Python/Django/'
+    this.page.title = 'Django学习'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
