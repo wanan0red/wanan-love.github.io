@@ -1,0 +1,862 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Docker学习 | wanan</title><meta name="keywords" content="Docekr"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="架构 镜像:docker镜像,就相当于是一个root文件系统,比如官方镜像像ubuntu就包含了一套完整的ubuntu最小系统的root文件系统 容器:镜像和容器的关系,就像是面向对象程序设计中的类和实例一样,镜像是静态的定义,容器是镜像运行时的实体.容器可以被创建 启动 停止 删除和暂停等 仓库:仓库可以被看一个代码控制中心,用来保存镜像  docker使用客户端 服务器架构模式,使用远程api">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习">
+<meta property="og:url" content="https://www.wanan.red/6782be63.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="架构 镜像:docker镜像,就相当于是一个root文件系统,比如官方镜像像ubuntu就包含了一套完整的ubuntu最小系统的root文件系统 容器:镜像和容器的关系,就像是面向对象程序设计中的类和实例一样,镜像是静态的定义,容器是镜像运行时的实体.容器可以被创建 启动 停止 删除和暂停等 仓库:仓库可以被看一个代码控制中心,用来保存镜像  docker使用客户端 服务器架构模式,使用远程api">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg">
+<meta property="article:published_time" content="2022-10-18T15:01:57.594Z">
+<meta property="article:modified_time" content="2022-11-25T09:32:40.257Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="Docekr">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/6782be63"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-e6YD56vlMd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?882501b6f459073168e4d14d5e29d5e2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Docker学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-25 17:32:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">74</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">61</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Docker学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-18T15:01:57.594Z" title="发表于 2022-10-18 23:01:57">2022-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-25T09:32:40.257Z" title="更新于 2022-11-25 17:32:40">2022-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/Docker%E5%AD%A6%E4%B9%A0/">Docker学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>30分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Docker学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><ul>
+<li>镜像:docker镜像,就相当于是一个root文件系统,比如官方镜像像ubuntu就包含了一套完整的ubuntu最小系统的root文件系统</li>
+<li>容器:镜像和容器的关系,就像是面向对象程序设计中的类和实例一样,镜像是静态的定义,容器是镜像运行时的实体.容器可以被创建 启动 停止 删除和暂停等</li>
+<li>仓库:仓库可以被看一个代码控制中心,用来保存镜像</li>
+</ul>
+<p>docker使用客户端 服务器架构模式,使用远程api来管理和创建docker容器.docker容器通过docker镜像来创建</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker镜像(images)</td>
+<td>docker镜像是用于创建docker容器的模板,比如ubuntu系统</td>
+</tr>
+<tr>
+<td>docker容器(container)</td>
+<td>容器是独立运行的一个或一组应用,是镜像运行的实体</td>
+</tr>
+<tr>
+<td>docker客户端(client)</td>
+<td>docker客户端通过命令行或者其他工具使用docker sdk与docker的守护进行通信</td>
+</tr>
+<tr>
+<td>docker主机(host)</td>
+<td>一个物理或者虚拟的机器用于执行docker守护进程和容器</td>
+</tr>
+<tr>
+<td>docker registry</td>
+<td>docker仓库用来保存镜像,可以理解为代码控制中的代码仓库,docker hub提供了庞大的镜像集合供使用.一个docekr registry中可以包含多个仓库,每个仓库可以包含多个标签,每个标签对应一个镜像,通常,一个仓库会包含同一个软件不同版本的进行,而标签就常用于对应该软件的各个版本.我们可以通过[仓库名]:[标签]的格式来指定具体是这个软件那个版本的镜像.如果不给出标签,将以latest作为默认标签</td>
+</tr>
+<tr>
+<td>docker machine</td>
+<td>docker machine是一个简化docekr安装的命令行工具,通过一个简单的命令行即可在对应的平台上安装docker比如virtualbox digital ocean microsoft azure</td>
+</tr>
+</tbody></table>
+<h1 id="docker使用"><a href="#docker使用" class="headerlink" title="docker使用"></a>docker使用</h1><h2 id="docker-helloworld"><a href="#docker-helloworld" class="headerlink" title="docker helloworld"></a>docker helloworld</h2><p>docker允许你在容器内运行应用程序.在容器内运行一个应用程序并输出helloworld</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run ubuntu:15.10 /bin/echo &quot;Hello world&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021457214.png" alt="image-20220402145734140"></p>
+<ul>
+<li>docker:docker的二进制执行文件</li>
+<li>run:与前面的docker组合来运行一个容器</li>
+<li>ubuntu15.10:指定要运行的镜像,docker首先从本地主机上查找镜像是否存在,如果不存在,docker就会从镜像仓库docker hub下载公共镜像</li>
+<li>&#x2F;bin&#x2F;echo “hello world”:在启动的容器里面执行的命令</li>
+</ul>
+<p>以上命令的含义:docker以一个ubuntu15.10镜像创建一个新容器,然后再容器里面执行 &#x2F;bin&#x2F;echo “helloworld”,然后输出结果</p>
+<h2 id="交互式容器"><a href="#交互式容器" class="headerlink" title="交互式容器"></a>交互式容器</h2><p>通过docker的两个参数-i -t ,让docker运行的容器实现对话能力</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t ubuntu:15.10 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021505272.png" alt="image-20220402150556224"></p>
+<ul>
+<li><p>-t :在新容器内指定一个伪终端,或者终端</p>
+</li>
+<li><p>-i :允许你对容器内的标准输入(STDIN)进行交互</p>
+</li>
+<li><p>cat &#x2F;proc&#x2F;version 查看当前系统的版本信息</p>
+</li>
+</ul>
+<p>运行exit命令或者ctrl+d来退出容器</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021507410.png" alt="image-20220402150721370"></p>
+<h2 id="后台启动容器"><a href="#后台启动容器" class="headerlink" title="后台启动容器"></a>后台启动容器</h2><p>创建一个以进程方式运行的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d ubuntu:15.10 /bin/sh -c &quot;while true;do echo hello world;sleep 1; done&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021510353.png" alt="image-20220402151020314"></p>
+<p>这个长字符串叫做容器的id,对每个容器来说都是唯一的,我们可以通过容器的id来查看对应的容器发生了什么.</p>
+<p>查看容器有无在运行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021512128.png" alt="image-20220402151202084"></p>
+<ul>
+<li>container id 容器id</li>
+<li>image:使用的镜像</li>
+<li>command:启动容器时运行的命令</li>
+<li>created:容器创建的时间</li>
+<li>status:容器状态<ol>
+<li>created(创建中)</li>
+<li>restarting(重启中)</li>
+<li>running或者up(运行中)</li>
+<li>removing(迁移中)</li>
+<li>paused(暂停中)</li>
+<li>exited(停止)</li>
+<li>dead(死亡)</li>
+</ol>
+</li>
+<li>ports:容器端口信息和使用的连接类型(tcp\udp)</li>
+<li>names:自动分配的容器名称</li>
+</ul>
+<p>原始主机中查看容器内的标准输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logs 52dfdf29ba58</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021517179.png" alt="image-20220402151756127"></p>
+<h2 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stop 52dfdf29ba58</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021520907.png" alt="image-20220402152049867"></p>
+<h1 id="docker容器使用"><a href="#docker容器使用" class="headerlink" title="docker容器使用"></a>docker容器使用</h1><h2 id="docker客户端"><a href="#docker客户端" class="headerlink" title="docker客户端"></a>docker客户端</h2><p>查看docker客户端的所有命令选项</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021522284.png" alt="image-20220402152217230"></p>
+<p>查看具体命令的更深用法,如stats指令的具体用法 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stats --help</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021524708.png" alt="image-20220402152423646"></p>
+<h2 id="容器获取"><a href="#容器获取" class="headerlink" title="容器获取"></a>容器获取</h2><h3 id="来取镜像"><a href="#来取镜像" class="headerlink" title="来取镜像"></a>来取镜像</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021616160.png" alt="image-20220402161637099"></p>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p>使用一个ubuntu镜像启动一个容器,以参数为命令行模式进入该容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021617939.png" alt="image-20220402161714895"></p>
+<ul>
+<li>-i 交互式操作</li>
+<li>-t 终端</li>
+<li>ubuntu: ubuntu镜像</li>
+<li>&#x2F;bin&#x2F;bash:放在镜像名后的是命令,这里我们希望有一个交互式的shell,因此使用的是&#x2F;bin&#x2F;bash</li>
+</ul>
+<h3 id="查看所有容器的命令"><a href="#查看所有容器的命令" class="headerlink" title="查看所有容器的命令"></a>查看所有容器的命令</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021619127.png" alt="image-20220402161953071"></p>
+<h3 id="启动一个已停止的容器"><a href="#启动一个已停止的容器" class="headerlink" title="启动一个已停止的容器"></a>启动一个已停止的容器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker start </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021621688.png" alt="image-20220402162105643"></p>
+<h3 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h3><p>大部分场景下我们是希望docker服务是在后台运行的,我们可以使用-d指定容器的运行模式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name ubuntu-test ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021625363.png" alt="image-20220402162500315"></p>
+<ul>
+<li>-d 默认不会进入该容器,想要进入容器需要使用指令docker exec</li>
+</ul>
+<h3 id="停止一个容器"><a href="#停止一个容器" class="headerlink" title="停止一个容器"></a>停止一个容器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stop [容器id]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021626582.png" alt="image-20220402162657540"></p>
+<h3 id="停止的容器通过docker-restart重启"><a href="#停止的容器通过docker-restart重启" class="headerlink" title="停止的容器通过docker restart重启"></a>停止的容器通过docker restart重启</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker restart [容器id]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021627674.png" alt="image-20220402162756634"></p>
+<h3 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h3><p>在使用-d参数之后,容器启动后会进入后台,此时想要进入容器,可以通过以下指令进入</p>
+<ul>
+<li>docker attach</li>
+<li>docker exec : 推荐使用docker exec命令,因为此退出容器终端,不会导致容器的停止</li>
+</ul>
+<p><strong>attach命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker attach cd2c8040fba6</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021631425.png" alt="image-20220402163101384"></p>
+<p>退出容器,会导致容器停止</p>
+<p><strong>exec命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docekr exec -it cd2c8040fba6 /bin/bash </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021632105.png" alt="image-20220402163247046"></p>
+<h3 id="导出和导入容器"><a href="#导出和导入容器" class="headerlink" title="导出和导入容器"></a>导出和导入容器</h3><p>导出本地容器,使用docker export命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker export cd2c8040fba6 &gt; ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021634668.png" alt="image-20220402163423630"></p>
+<h3 id="导入容器快照"><a href="#导入容器快照" class="headerlink" title="导入容器快照"></a>导入容器快照</h3><p>可以使用docker import从容器快照文件中在导入为镜像,以下将快照文件ubuntu.tar导入到镜像ubuntu:v1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ./ubuntu.tar | docker import - ubuntu:v1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021637298.png" alt="image-20220402163749247"></p>
+<p>也可以通过指定url或者某个目录来导入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker import http://example.com/exampleimage.tgz example/imagerepo</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p>删除容器使用docker rm命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rm -f cd2c8040fba6</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021640261.png" alt="image-20220402164056217"></p>
+<h3 id="清理掉所有处于终止状态的容器"><a href="#清理掉所有处于终止状态的容器" class="headerlink" title="清理掉所有处于终止状态的容器"></a>清理掉所有处于终止状态的容器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021642322.png" alt="image-20220402164208270"></p>
+<h2 id="web应用"><a href="#web应用" class="headerlink" title="web应用"></a>web应用</h2><h3 id="运行一个web应用"><a href="#运行一个web应用" class="headerlink" title="运行一个web应用"></a>运行一个web应用</h3><p>将在docker容器中运行一个python flask应用来运行一个web应用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull training/webapp	#载入镜像</span><br><span class="line">docker run -d -P training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021646808.png" alt="image-20220402164624732"></p>
+<ul>
+<li>-d 让容器在后台运行</li>
+<li>-P 将容器内部使用的网络端口随机映射到我们使用的主机上</li>
+</ul>
+<h3 id="查看web应用容器"><a href="#查看web应用容器" class="headerlink" title="查看web应用容器"></a>查看web应用容器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021647591.png" alt="image-20220402164749541"></p>
+<p>多了端口信息 ports </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0.0.0.0:49153-&gt;5000/tcp, :::49153-&gt;5000/tcp</span><br></pre></td></tr></table></figure>
+
+<p>docker 开放了5000端口(默认python flask端口)映射到主机端口49153上</p>
+<p>我们通过浏览器访问web应用</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021649959.png" alt="image-20220402164958913"></p>
+<p>也可以通过-p参数来设置不一样的端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021651335.png" alt="image-20220402165150285"></p>
+<p>容器内部的5000端口映射到我们本地主机的5000端口上</p>
+<h3 id="网络端口的快捷方式"><a href="#网络端口的快捷方式" class="headerlink" title="网络端口的快捷方式"></a>网络端口的快捷方式</h3><p>通过docker ps命令可以查看到容器的端口映射,docker还提供了另一个快捷方式docker port,使用docker post可以查看指定(id 或者 名字)容器的某个确定端口映射到本机的端口号.上面我们创建的容器id为18b8aa6acac6名字为naughty_kalam.我们可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker port 18b8aa6acac6</span><br><span class="line">docker port naughty_kalam</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021655660.png" alt="image-20220402165526615"></p>
+<h3 id="查看web应用程序日志"><a href="#查看web应用程序日志" class="headerlink" title="查看web应用程序日志"></a>查看web应用程序日志</h3><p>查看容器内部的标准输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logs [id或名字] </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021657533.png" alt="image-20220402165729496"></p>
+<ul>
+<li>-f:让docker logs像使用tail -f 一样来输出容器内部的标准输出,从上面可以看出来应用程序使用的是5000端口并且能够看到应用程序的访问日志</li>
+</ul>
+<h3 id="查看web应用程序容器的进程"><a href="#查看web应用程序容器的进程" class="headerlink" title="查看web应用程序容器的进程"></a>查看web应用程序容器的进程</h3><p>查看容器内部运行的进程</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker top naughty_kalam</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021700938.png" alt="image-20220402170005894"></p>
+<h3 id="检查web应用程序"><a href="#检查web应用程序" class="headerlink" title="检查web应用程序"></a>检查web应用程序</h3><p>使用docker inspect 来查看docker的底层信息,它会返回一个json文件记录着docker容器的配置和状态信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker inspect naughty_kalam</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021701188.png" alt="image-20220402170144100"></p>
+<h3 id="停止web应用容器"><a href="#停止web应用容器" class="headerlink" title="停止web应用容器"></a>停止web应用容器</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stop friendly_perlman</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021703914.png" alt="image-20220402170313865"></p>
+<h3 id="重启web应用"><a href="#重启web应用" class="headerlink" title="重启web应用"></a>重启web应用</h3><p>已经停止的web容器,使用docekr start来启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker start friendly_perlman</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021704072.png" alt="image-20220402170416018"></p>
+<p>查询最后一次创建的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021705609.png" alt="image-20220402170505563"></p>
+<p>重启正在运行的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker restart</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021746908.png" alt="image-20220402174654864"></p>
+<h3 id="移除web应用容器"><a href="#移除web应用容器" class="headerlink" title="移除web应用容器"></a>移除web应用容器</h3><p>删除不需要的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rm friendly_perlman</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021749071.png" alt="image-20220402174957999"></p>
+<p>删除容器时,容器必须是停止状态,否则会报错</p>
+<h1 id="docker镜像使用"><a href="#docker镜像使用" class="headerlink" title="docker镜像使用"></a>docker镜像使用</h1><p>在运行容器时,使用的镜像如果在本地不存在,docker就会自动从docker镜像仓库中下载,默认是从docker hub公共镜像源下载</p>
+<h2 id="列出镜像列表"><a href="#列出镜像列表" class="headerlink" title="列出镜像列表"></a>列出镜像列表</h2><h3 id="列出本地主机上的镜像"><a href="#列出本地主机上的镜像" class="headerlink" title="列出本地主机上的镜像"></a>列出本地主机上的镜像</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021752829.png" alt="image-20220402175248772"></p>
+<ul>
+<li>repository :表示镜像仓库源</li>
+<li>tag :镜像的标签</li>
+<li>image id :镜像id</li>
+<li>created :镜像创建时间</li>
+<li>size :镜像大小</li>
+</ul>
+<p>同一个仓库源可以有多个tag,代表这个仓库源的不同版本,如ubuntu仓库源里,有15.10 14.04等多个不同的版本,我们使用repository:tag来定义不同的镜像.所以当我们要使用版本为15.10的ubuntu系统镜像阿里运行容器时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -t -i ubuntu:15.10 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021756932.png" alt="image-20220402175641892"></p>
+<ul>
+<li>-i :交互式操作</li>
+<li>-t:终端</li>
+<li>ubuntu:15.10 :这里指用ubuntu15.10版本的镜像为基础来启动容器</li>
+<li>&#x2F;bin&#x2F;bash : 放在镜像名后面的是命令.这里我们希望有个交互式shell,因此用的是&#x2F;bin&#x2F;bash</li>
+</ul>
+<p>如果要使用ubuntu14.04版本为系统镜像来运行容器时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t ubuntu:14.04 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021801367.png" alt="image-20220402180136302"></p>
+<p>如果不指定一个镜像的版本标签,例如你只是用ubuntu,docker将默认使用ubuntu:latest镜像</p>
+<h3 id="获取一个新的镜像"><a href="#获取一个新的镜像" class="headerlink" title="获取一个新的镜像"></a>获取一个新的镜像</h3><p>在本地主机上使用一个不存在的镜像时docker就会自动下载这个镜像.如果我们像预先下载这个镜像,我们就可以使用docker pull命令来下载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu:13.10</span><br></pre></td></tr></table></figure>
+
+<p>下完之后就可以直接使用这个镜像来运行docker</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021805946.png" alt="image-20220402180527890"></p>
+<h3 id="查找镜像"><a href="#查找镜像" class="headerlink" title="查找镜像"></a>查找镜像</h3><p>我们可以从docker hub网站来搜索镜像,docker hub网站<a target="_blank" rel="noopener" href="https://hub.docker.com/.%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8docker">https://hub.docker.com/.我们也可以使用docker</a> search命令搜索镜像.比如我们需要一个httpd的镜像来作为我们的web服务.我们可以通过docker search命令搜索httpd来寻找适合我们的镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker search httpd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021808580.png" alt="image-20220402180842513"></p>
+<ul>
+<li>name :镜像仓库源的名称</li>
+<li>description:镜像的描述</li>
+<li>official:是否是docker官方发布</li>
+<li>stars:类似github上的star,表示点赞 喜欢</li>
+<li>automated:自动构建</li>
+</ul>
+<h3 id="拖取镜像"><a href="#拖取镜像" class="headerlink" title="拖取镜像"></a>拖取镜像</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull httpd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021811033.png" alt="image-20220402181132974"></p>
+<p>接着就可以使用这个镜像了</p>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>使用docker rmi命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rmi a4c7cb30a6ff</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021813773.png" alt="image-20220402181344695"></p>
+<p>删除所有镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rim i `docker images -q`</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h3><p>当我们从docker镜像仓库中下载的镜像不能满足我们的需求的时候,我们就可以通过以下两种方式对镜像进行更改</p>
+<ol>
+<li>从已创建的容器中更新镜像,并提交这个镜像</li>
+<li>使用dockerfile指令来创建一个新的镜像</li>
+</ol>
+<h3 id="更新镜像"><a href="#更新镜像" class="headerlink" title="更新镜像"></a>更新镜像</h3><p>更新镜像之前我们需要使用镜像来创建一个容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run  -it ubuntu:15.10 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021818837.png" alt="image-20220402181815783"></p>
+<p>在运行的容器内使用apt-get update命令进行更新,在操作完成之后,输入exit命令来退出容器,此时id为79171d4b8787的容器,是按照我们的需求更改的容器.我们可以通过命令docker commit来提交容器副本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker commit -m=&quot;has update&quot; -a=&quot;wanan&quot; 79171d4b8787 ububtu:v2</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021822361.png" alt="image-20220402182250303"></p>
+<ul>
+<li>-m :提交的描述信息</li>
+<li>-a :指定镜像作者</li>
+<li>79171d4b8787 :容器id</li>
+<li>ubuntu:v2 :指定要创建的目标镜像名</li>
+</ul>
+<p>我们可以使用docker images来查看我们的新镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021824403.png" alt="image-20220402182446336"></p>
+<p>使用我们的新镜像ubuntu:v2来启动一个容器</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021825224.png" alt="image-20220402182546160"></p>
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><p>使用命令docker bulid,从零开始来创建一个新的镜像,为此我们需要创建一个Dockerfile文件,其中包含一组指令来告诉docker如何构建我们的镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@mycentos ~]# cat Dockerfile</span><br><span class="line">FROM    centos:6.7</span><br><span class="line">MAINTAINER      Fisher &quot;fisher@sudops.com&quot;</span><br><span class="line"></span><br><span class="line">RUN     /bin/echo &#x27;root:123456&#x27; |chpasswd</span><br><span class="line">RUN     useradd runoob</span><br><span class="line">RUN     /bin/echo &#x27;runoob:123456&#x27; |chpasswd</span><br><span class="line">RUN     /bin/echo -e &quot;LANG=\&quot;en_US.UTF-8\&quot;&quot; &gt;/etc/default/local</span><br><span class="line">EXPOSE  22</span><br><span class="line">EXPOSE  80</span><br><span class="line">CMD     /usr/sbin/sshd -D</span><br></pre></td></tr></table></figure>
+
+<p>每一个指令都会在镜像上创建一个新的层,每一个指令的前缀必须都是大写的.第一条指令FROM 指定使用那个镜像源,RUN指令告诉docker在镜像内执行命令,安装了什么,然后我们使用Dockerfile文件,通过docker build命令来创建一个镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t wanan/centos:6.7 .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021833491.png" alt="image-20220402183320428"></p>
+<ul>
+<li>-t :指定要创建的目标镜像名</li>
+<li>.  : Dockerfile文件所在的目录,可以指定Dockerfile的绝对路径</li>
+</ul>
+<p>使用docker images查看创建的镜像已经在列表中存在</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021834403.png" alt="image-20220402183453351"></p>
+<p>我们可以使用新的镜像来创建容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it wanan/centos:6.7 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021836937.png" alt="image-20220402183651889"></p>
+<h3 id="设置镜像标签"><a href="#设置镜像标签" class="headerlink" title="设置镜像标签"></a>设置镜像标签</h3><p>我们可以使用docker tag命令,为镜像添加一个新的标签</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag 68bb92d72b8d wanan/centos:dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021840231.png" alt="image-20220402184032156"></p>
+<p>可以看到id为68bb92d72b8d多一个标签</p>
+<h1 id="docker容器连接"><a href="#docker容器连接" class="headerlink" title="docker容器连接"></a>docker容器连接</h1><p>前面我们实现了通过网络端口来访问运行在docker容器内的服务.容器中可以运行一些网络应用,要让外部也可以访问这些应用,可以通过-P或者-p参数来指定端口映射,下面通过端口连接到一个docker容器</p>
+<h2 id="网络端口映射"><a href="#网络端口映射" class="headerlink" title="网络端口映射"></a>网络端口映射</h2><p>创建一个python应用的容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -P training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021845726.png" alt="image-20220402184528674"></p>
+<p>另外,我们可以指定容器绑定的网络地址,比如绑定127.0.0.1.我们使用-P绑定端口号,使用docker ps可以看到容器5000绑定了主机端口49155</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021847649.png" alt="image-20220402184720594"></p>
+<p>我们也可以使用-p标识来指定容器端口绑定到主机端口</p>
+<ul>
+<li>-P :是容器内部端口随机映射到主机的端口</li>
+<li>-p :是容器内部端口绑定到指定的主机端口</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 5000:5000 training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021850316.png" alt="image-20220402185042253"></p>
+<p>可以指定容器绑定的网络地址,比如绑定127.0.0.1</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 127.0.0.1:5001:5000 training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021852115.png" alt="image-20220402185245053"></p>
+<p>这样我们就可以通过访问127.0.0.5001来访问容器5000端口了.之前的都是默认绑定tcp端口,如果要绑定udp端口,可以在端口后面加上&#x2F;udp</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -p 127.0.0.1:5000:5000/udp training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021855273.png" alt="image-20220402185526207"></p>
+<p>docker port 命令可以让我们快捷查看端口的绑定情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker port loving_satoshi 5000/udp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021856594.png" alt="image-20220402185638530"></p>
+<h2 id="docker容器互联"><a href="#docker容器互联" class="headerlink" title="docker容器互联"></a>docker容器互联</h2><p>端口映射并不是唯一把docker连接到另一个容器的方法.docker有一个连接系统允许将多个容器连接在一起,共享连接信息.docker连接会创建一个父子关系,其中父容器可以看到子容器的信息</p>
+<h2 id="容器命名"><a href="#容器命名" class="headerlink" title="容器命名"></a>容器命名</h2><p>当我们创建容器的时候,docker会自动对他进行命名.另外我们也可以使用–name 标识来命名容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d -P --name wanan training/webapp python app.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021901354.png" alt="image-20220402190131290"></p>
+<h2 id="新建网络"><a href="#新建网络" class="headerlink" title="新建网络"></a>新建网络</h2><p>下面创建一个新的docker网络</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker network create -d bridge test-net</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021906077.png" alt="image-20220402190625004"></p>
+<ul>
+<li>-d :参数指定docker网络类型,有bridge overlay</li>
+</ul>
+<p>其中overlay网络类型用于swarm mode</p>
+<h2 id="连接容器"><a href="#连接容器" class="headerlink" title="连接容器"></a>连接容器</h2><p>运行一个容器并连接到新建的test-net网络</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name test1 --network test-net ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>打开一个新的终端,在运行一个容器并加入到test-net网络</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name test2 --network test-net ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021912751.png" alt="image-20220402191201689"></p>
+<p>通过平来证明test1容器和test2容器建立了互联关系,如果test1或者test2容器中无ping命令,则在容器内执行一下命令安装ping(可以在一个容器内按装好,提交到容器镜像,在以新的镜像重新运行以上两个容器)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it test1 /bin/bash</span><br><span class="line">apt-get update</span><br><span class="line">apt install iputils-ping</span><br></pre></td></tr></table></figure>
+
+<p>这样test1容器就和test2容器建立了相互连接,如果有多个容器需要相互连接,推荐使用docker compose</p>
+<h2 id="配置dns"><a href="#配置dns" class="headerlink" title="配置dns"></a>配置dns</h2><p>可以在原始主机中的&#x2F;etc&#x2F;docker&#x2F;daemon.json文件中添加以下内容来设置全部容器的dns</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;dns&quot; : [</span><br><span class="line">    &quot;114.114.114.114&quot;,</span><br><span class="line">    &quot;8.8.8.8&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>设置完之后,启动容器的dns会自动配置为114.114.114.114和8.8.8.8.配置完,需要重启docker才能生效.查看容器的dns是否生效可以使用以下命令,他会输出容器的dns信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it --rm ubuntu cat etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021922594.png" alt="image-20220402192210517"></p>
+<p>手动指定容器的配置</p>
+<p>如果只是想在指定容器设置dns,则可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it --rm -h host_ubuntu --dns=114.114.114.114 --dns-search=test.com ubuntu</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021930085.png" alt="image-20220402193017017"></p>
+<ul>
+<li>–rm :容器退出时自动起立容器内部的文件系统</li>
+<li>-h HOSTNAME 或者 –hostname&#x3D;HOSTNAME :设定容器的主机名,他会被写入到容器内的&#x2F;etc&#x2F;hostname和&#x2F;etc&#x2F;hosts</li>
+<li>–dns&#x3D;IP_ADDRESS:添加dns服务器到容器的&#x2F;etc&#x2F;resolv.conf中,让容器用这个服务器来解析所有不在&#x2F;etc&#x2F;hosts中的主机名</li>
+<li>–dns-search&#x3D;DOMAIN:设定容器的搜索域,当设定搜索域为.example.com时,在搜索一个名为host的主机时,dns不仅搜索host,还会搜索host.example.com</li>
+</ul>
+<p>如果在容器启动时没有指定–nds和–dns-search,docker会默认用原始主机上的&#x2F;etc&#x2F;resolv.conf来配置dns</p>
+<h1 id="docker仓库管理"><a href="#docker仓库管理" class="headerlink" title="docker仓库管理"></a>docker仓库管理</h1><p>先给我去<a target="_blank" rel="noopener" href="https://hub.docker.com免费注册一个账号去/">https://hub.docker.com免费注册一个账号去</a></p>
+<h2 id="登录和退出"><a href="#登录和退出" class="headerlink" title="登录和退出"></a>登录和退出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021939985.png" alt="image-20220402193947914"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logout</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021940039.png" alt="image-20220402194012972"></p>
+<h2 id="推送镜像"><a href="#推送镜像" class="headerlink" title="推送镜像"></a>推送镜像</h2><p>登录之后可以通过docker push命令将自己的镜像推送到docker hub</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204021950542.png" alt="image-20220402195026447"></p>
+<h1 id="docker-Dockerfile"><a href="#docker-Dockerfile" class="headerlink" title="docker Dockerfile"></a>docker Dockerfile</h1><p>dockerfile 是一个用来构建镜像的文本文件,文本内容包含了一条条构建镜像所需要的指令和说明</p>
+<h2 id="使用dockerfile定制镜像"><a href="#使用dockerfile定制镜像" class="headerlink" title="使用dockerfile定制镜像"></a>使用dockerfile定制镜像</h2><h3 id="定制一个nginx镜像"><a href="#定制一个nginx镜像" class="headerlink" title="定制一个nginx镜像"></a>定制一个nginx镜像</h3><p>构建好的镜像内会有一个&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html文件</p>
+<p>在一个空目录下新建一个名为Dockerfile文件,并在文件内添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line">RUN echo &quot;这是一个本地创建的nginx镜像&quot; &gt; /usr/share/nginx/html/index.</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022059319.png" alt="image-20220402205956259"></p>
+<h3 id="FROM和RUN指令的作用"><a href="#FROM和RUN指令的作用" class="headerlink" title="FROM和RUN指令的作用"></a>FROM和RUN指令的作用</h3><ul>
+<li>FROM:定制的镜像都是基于FROM的镜像,这里的nginx就是定制需要的基础镜像,后续的操作都是基于nginx</li>
+<li>RUN: 用于执行后面跟着的命令行命令.有两种格式</li>
+</ul>
+<p>shell格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RUN [命令行命令]</span><br><span class="line"># [命令行命令] 等同于在终端操作的shell命令</span><br></pre></td></tr></table></figure>
+
+<p>exec格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">RUN [&quot;可执行文件&quot;,&quot;参数1&quot;,&quot;参数2&quot;]</span><br><span class="line">#例如:</span><br><span class="line">#RUN [&quot;./test.php&quot;,&quot;dev&quot;,&quot;offline&quot;]等价于 RUN ./test.php dev offline</span><br></pre></td></tr></table></figure>
+
+<p>注意 dockerfile的指令每一次执行都会在docker上新建一层.所以过多无意义的层会造成镜像膨胀过大</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">RUN yum -y install wget</span><br><span class="line">RUN wget -O redis.tar.gz &quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot;</span><br><span class="line">RUN tar -xvf redis.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>以上执行会创建3层镜像.可简化为以下格式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">RUN yum -y install wget \</span><br><span class="line">&amp;&amp; wget -O redis.tar.gz &quot;http://download.redis.io/releases/redis-5.0.3.tar.gz&quot; \</span><br><span class="line">&amp;&amp; tar -xvf redis.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>如上,以&amp;&amp;符号连接命令,这样执行后,只会创建一层镜像</p>
+<h2 id="开始构建镜像"><a href="#开始构建镜像" class="headerlink" title="开始构建镜像"></a>开始构建镜像</h2><p>在dockerfile文件的存放目录下,执行构建动作.以下实例,通过目录下的dcokerfile构建一个nginx:v3(镜像名称:镜像标签)</p>
+<p>最后的.代表本次执行的上下文路径</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t nginx:v3 .</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022208099.png" alt="image-20220402220820026"></p>
+<p>以上显示说明已经构建成功</p>
+<p>上下文路径,有提到指令最后一个.是上下文路径,那么什么是上下文路径呢</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker bulid -t nginx:v3 .</span><br></pre></td></tr></table></figure>
+
+<p>上下文路径,是指docker在构建镜像,有时候想要使用到本机的文件(比如复制),docker build 命令得知这个路径之后,会将路径下的所有内容打包.</p>
+<p>由于docker的运行模式是c&#x2F;s.我们本机是c,docker引擎是s.实际的构建过程是在docker引擎下完成的,所以这个时候无法用到我们本机的文件,这就需要我们本机的指定目录下的文件一起打包提供给docker引擎使用.如果未说明最后一个参数,那么默认上下文路径技术dockerfile所在的位置.</p>
+<p>上下文路径不要放无用的文件,因为会一起打包发送给docker引擎,如果文件过多会造成过程缓慢.</p>
+<h1 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker compose"></a>docker compose</h1><p>compose简介</p>
+<p>compose是用于定义和运行多容器docker应用程序的工具.通过compose,您可以使用yml文件来配置应用程序需要的所有服务,然后使用一个命令就可以从yml文件配置中创建并启动所有服务.</p>
+<p>使用compose的三个步骤</p>
+<ul>
+<li>使用dockerfile定义应用程序的环境</li>
+<li>使用docker-compose.yml定义构成应用程序的服务,这样他们可以在隔离环境中一起运行.</li>
+<li>最后,执行docker-compose up命令来启动并运行整个应用程序</li>
+</ul>
+<p>docker-compose.yml的配置案例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># yaml 配置实例</span><br><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    build: .</span><br><span class="line">    ports:</span><br><span class="line">   - &quot;5000:5000&quot;</span><br><span class="line">    volumes:</span><br><span class="line">   - .:/code</span><br><span class="line">    - logvolume01:/var/log</span><br><span class="line">    links:</span><br><span class="line">   - redis</span><br><span class="line">  redis:</span><br><span class="line">    image: redis</span><br><span class="line">volumes:</span><br><span class="line">  logvolume01: &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="compose安装"><a href="#compose安装" class="headerlink" title="compose安装"></a>compose安装</h2><p>linux上我们可以从github上下载二进制包来使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -L &quot;https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line"> docker-compose --version</span><br></pre></td></tr></table></figure>
+
+<p>对于alpine,需要下载依赖包.py-pip，python-dev，libffi-dev，openssl-dev，gcc，libc-dev，和 make。</p>
+<p>新建一个app.py复制进去以下内容</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">cache = redis.Redis(host=<span class="string">&#x27;redis&#x27;</span>, port=<span class="number">6379</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_hit_count</span>():</span><br><span class="line">    retries = <span class="number">5</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> cache.incr(<span class="string">&#x27;hits&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span> redis.exceptions.ConnectionError <span class="keyword">as</span> exc:</span><br><span class="line">            <span class="keyword">if</span> retries == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">raise</span> exc</span><br><span class="line">            retries -= <span class="number">1</span></span><br><span class="line">            time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    count = get_hit_count()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World! I have been seen &#123;&#125; times.\n&#x27;</span>.<span class="built_in">format</span>(count)</span><br></pre></td></tr></table></figure>
+
+<p>在此实例中,redis是应用程序网络上redis容器的主机名,该主机使用的端口为6379.创建一个requirements.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flask</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
+
+<p>创建dockerfile文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM python:3.7-alpine</span><br><span class="line">WORKDIR /code</span><br><span class="line">ENV FLASK_APP app.py</span><br><span class="line">ENV FLASK_RUN_HOST 0.0.0.0</span><br><span class="line">RUN apk add --no-cache gcc musl-dev linux-headers</span><br><span class="line">COPY requirements.txt requirements.txt</span><br><span class="line">RUN pip install -r requirements.txt</span><br><span class="line">COPY . .</span><br><span class="line">CMD [&quot;flask&quot;, &quot;run&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>FROM python:3.7-alpine:从python3.7映像开始构建镜像</p>
+</li>
+<li><p>WORKDIR&#x2F;code:将工作目录设置为&#x2F;code</p>
+</li>
+<li><pre><code>  ENV FLASK_APP app.py
+  ENV FLASK_RUN_HOST 0.0.0.0
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">    设置flask命令使用的环境变量</span><br><span class="line"></span><br><span class="line">- RUN apk add --no-cache gcc musl-dev linux-headers:安装gcc ,以便诸如MarkupSafe 和 SQLAlchemy 之类的 Python 包可以编译加速。</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">    COPY requirements.txt requirements.txt</span><br><span class="line">    RUN pip install -r requirements</span><br></pre></td></tr></table></figure>
+
+  复制requirements.txt并安装python依赖项
+</code></pre>
+</li>
+<li><p>COPY .:将.项目中的当前目录复制到.镜像中的工作目录</p>
+</li>
+<li><p>CMD[“flask”,”run”]:容器提供默认的执行命令为:flask run</p>
+</li>
+</ul>
+<p>创建docker-compose.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># yaml 配置</span><br><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    build: .</span><br><span class="line">    ports:</span><br><span class="line">     - &quot;5000:5000&quot;</span><br><span class="line">  redis:</span><br><span class="line">    image: &quot;redis:alpine&quot;</span><br></pre></td></tr></table></figure>
+
+<p>该compose定义了两个服务:web和redis</p>
+<ul>
+<li>web:该web服务使用从dockerfile当前目录中构建的镜像,然后,它将容器和主句绑定到暴露的端口5000.此示例服务使用Flask web服务的默认端口5000</li>
+<li>redis:该redis服务使用docker hub的公共redis映像</li>
+</ul>
+<p>使用compose命令构建和运行应用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<h1 id="docker安装ubuntu"><a href="#docker安装ubuntu" class="headerlink" title="docker安装ubuntu"></a>docker安装ubuntu</h1><h2 id="查看可用ubuntu"><a href="#查看可用ubuntu" class="headerlink" title="查看可用ubuntu"></a>查看可用ubuntu</h2><p>访问 Ubuntu 镜像库地址： <a target="_blank" rel="noopener" href="https://hub.docker.com/_/ubuntu?tab=tags&amp;page=1%E3%80%82">https://hub.docker.com/_/ubuntu?tab=tags&amp;page=1。</a></p>
+<p>可以通过 Sort by 查看其他版本的 Ubuntu。默认是最新版本 ubuntu:latest 。</p>
+<h2 id="拉取最新的ubuntu镜像"><a href="#拉取最新的ubuntu镜像" class="headerlink" title="拉取最新的ubuntu镜像"></a>拉取最新的ubuntu镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">docker pull ubuntu:latest</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022250183.png" alt="image-20220402225049119"></p>
+<h2 id="查看本地镜像"><a href="#查看本地镜像" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行容器-并可以通过exec命令进入ubuntu容器"><a href="#运行容器-并可以通过exec命令进入ubuntu容器" class="headerlink" title="运行容器,并可以通过exec命令进入ubuntu容器"></a>运行容器,并可以通过exec命令进入ubuntu容器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name ubuntu-test ubuntu</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022258198.png" alt="image-20220402225805122"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022258738.png" alt="image-20220402225853671"></p>
+<h1 id="安装centos"><a href="#安装centos" class="headerlink" title="安装centos"></a>安装centos</h1><h2 id="拉取指定版本的centos镜像"><a href="#拉取指定版本的centos镜像" class="headerlink" title="拉取指定版本的centos镜像"></a>拉取指定版本的centos镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull centos:centos7</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022302808.png" alt="image-20220402230220726"></p>
+<h2 id="查看本地镜像-1"><a href="#查看本地镜像-1" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022302503.png" alt="image-20220402230227431"></p>
+<h2 id="运行容器并通过exec命令进入centos容器"><a href="#运行容器并通过exec命令进入centos容器" class="headerlink" title="运行容器并通过exec命令进入centos容器"></a>运行容器并通过exec命令进入centos容器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name centos-test centos:centos7</span><br><span class="line">docker exec -it centos-test bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022302823.png" alt="image-20220402230258764"></p>
+<h1 id="docker安装nginx"><a href="#docker安装nginx" class="headerlink" title="docker安装nginx"></a>docker安装nginx</h1><h2 id="找版本"><a href="#找版本" class="headerlink" title="找版本"></a>找版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker search nginx</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220402230406352.png" alt="image-20220402230406352"></p>
+<h2 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022305052.png" alt="image-20220402230527980"></p>
+<h2 id="查看本地镜像-2"><a href="#查看本地镜像-2" class="headerlink" title="查看本地镜像"></a>查看本地镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --name nginx-test -p 8080:80 -d nginx </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>–name nginxe-test :容器名称</li>
+<li>-p 8080:80 :端口映射,将本地8080端口映射到容器内部的80端口</li>
+<li>-d nginx :设置容器在后台一直执行</li>
+</ul>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022307978.png" alt="image-20220402230702908"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it nginx-test bash</span><br></pre></td></tr></table></figure>
+
+<h1 id="nginx-php部署"><a href="#nginx-php部署" class="headerlink" title="nginx+php部署"></a>nginx+php部署</h1><h2 id="拉取php"><a href="#拉取php" class="headerlink" title="拉取php"></a>拉取php</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull php:5.6-fpm</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202204022311568.png" alt="image-20220402231119494"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --name myphp-fpm -v ~/nginx/www:/www -d php:5.6-fpm</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>–name myphp-fpm:将容器命名为myphp-fpm</li>
+<li>-v ~&#x2F;nginx&#x2F;www:&#x2F;www:将主机中项目的目录www挂载到容器的&#x2F;www</li>
+</ul>
+<p>创建~&#x2F;nginx&#x2F;conf&#x2F;conf.d目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir ~/nginx/conf/conf.d</span><br></pre></td></tr></table></figure>
+
+<p>添加 ~&#x2F;nginx&#x2F;conf&#x2F;conf.d&#x2F;runoob-test-php.conf 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">        index  index.html index.htm index.php;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        fastcgi_pass   php:9000;</span><br><span class="line">        fastcgi_index  index.php;</span><br><span class="line">        fastcgi_param  SCRIPT_FILENAME  /www/$fastcgi_script_name;</span><br><span class="line">        include        fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置文件</p>
+<ul>
+<li>php:9000:表示php-fpm服务中的url</li>
+<li>&#x2F;www&#x2F;:是myphp-php中php文件存储路径,映射到本地的~&#x2F;nginx&#x2F;www目录</li>
+</ul>
+<p>启动nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --name runoob-php-nginx -p 8083:80 -d \</span><br><span class="line">    -v ~/nginx/www:/usr/share/nginx/html:ro \</span><br><span class="line">    -v ~/nginx/conf/conf.d:/etc/nginx/conf.d:ro \</span><br><span class="line">    --link myphp-fpm:php \</span><br><span class="line">    nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-p 8083:80:端口映射,把nginx中的80映射到本地的8083端口</li>
+<li>~&#x2F;nginx&#x2F;www:是本地html文件的存储目录,&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html是容器内html文件的存储目录</li>
+<li>~&#x2F;nginx&#x2F;conf&#x2F;conf.d 是本地nginx配置文件的存储目录,&#x2F;etc&#x2F;nginx&#x2F;conf.d是容器内nginx配置文件的存储目录</li>
+<li>–link myphp-fpm:php :是把myphp-fpm的网络并入nginx,并通过修改nginx的&#x2F;etc&#x2F;hosts,把域名php映射成127.0.0.1,让nginx通过php:9000访问php-fpm</li>
+</ul>
+<p>在~&#x2F;nginx&#x2F;www目录下创建index.php</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220403140022917.png" alt="image-20220403140022917"></p>
+<h1 id="docker安装mysql"><a href="#docker安装mysql" class="headerlink" title="docker安装mysql"></a>docker安装mysql</h1><h2 id="拉镜像"><a href="#拉镜像" class="headerlink" title="拉镜像"></a>拉镜像</h2><p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220403140206082.png" alt="image-20220403140206082"></p>
+<h2 id="运行容器-1"><a href="#运行容器-1" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name mysql -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220403140450894.png" alt="image-20220403140450894"></p>
+<ul>
+<li>-p 3307:3306 :映射容器服务的3306端口到原始主机的3307端口上,外部主机可以通过宿主机ip:3306访问到mysql服务</li>
+<li>MYSQL_ROOT_PASSWORD&#x3D;123456:设置mysql服务root用户的密码</li>
+</ul>
+<p><img src="C:/Users/14980/AppData/Roaming/Typora/typora-user-images/image-20220403141235682.png" alt="image-20220403141235682"></p>
+<h1 id="docker安装tomcat"><a href="#docker安装tomcat" class="headerlink" title="docker安装tomcat"></a>docker安装tomcat</h1><h2 id="创建tomact"><a href="#创建tomact" class="headerlink" title="创建tomact"></a>创建tomact</h2><p>创建tomcat,用于存放后面相关的东西</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir -p ~/tomcat/webapps ~/tomcat/logs ~/tomcat/conf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>webapps目录将映射为tomcat容器配置的应用程序目录</li>
+<li>logs目录将映射为tomcat容器的日志目录</li>
+<li>conf目录里的配置文件经映射为tomcat容器的配置文件</li>
+</ul>
+<p>进入tomcat目录,创建Dockerfile文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM openjdk:8-jre</span><br><span class="line"></span><br><span class="line">ENV CATALINA_HOME /usr/local/tomcat</span><br><span class="line">ENV PATH $CATALINA_HOME/bin:$PATH</span><br><span class="line">RUN mkdir -p &quot;$CATALINA_HOME&quot;</span><br><span class="line">WORKDIR $CATALINA_HOME</span><br><span class="line"></span><br><span class="line"># let &quot;Tomcat Native&quot; live somewhere isolated</span><br><span class="line">ENV TOMCAT_NATIVE_LIBDIR $CATALINA_HOME/native-jni-lib</span><br><span class="line">ENV LD_LIBRARY_PATH $&#123;LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:&#125;$TOMCAT_NATIVE_LIBDIR</span><br><span class="line"></span><br><span class="line"># runtime dependencies for Tomcat Native Libraries</span><br><span class="line"># Tomcat Native 1.2+ requires a newer version of OpenSSL than debian:jessie has available</span><br><span class="line"># &gt; checking OpenSSL library version &gt;= 1.0.2...</span><br><span class="line"># &gt; configure: error: Your version of OpenSSL is not compatible with this version of tcnative</span><br><span class="line"># see http://tomcat.10.x6.nabble.com/VOTE-Release-Apache-Tomcat-8-0-32-tp5046007p5046024.html (and following discussion)</span><br><span class="line"># and https://github.com/docker-library/tomcat/pull/31</span><br><span class="line">ENV OPENSSL_VERSION 1.1.0f-3+deb9u2</span><br><span class="line">RUN set -ex; \</span><br><span class="line">    currentVersion=&quot;$(dpkg-query --show --showformat &#x27;$&#123;Version&#125;\n&#x27; openssl)&quot;; \</span><br><span class="line">    if dpkg --compare-versions &quot;$currentVersion&quot; &#x27;&lt;&lt;&#x27; &quot;$OPENSSL_VERSION&quot;; then \</span><br><span class="line">        if ! grep -q stretch /etc/apt/sources.list; then \</span><br><span class="line"># only add stretch if we&#x27;re not already building from within stretch</span><br><span class="line">            &#123; \</span><br><span class="line">                echo &#x27;deb http://deb.debian.org/debian stretch main&#x27;; \</span><br><span class="line">                echo &#x27;deb http://security.debian.org stretch/updates main&#x27;; \</span><br><span class="line">                echo &#x27;deb http://deb.debian.org/debian stretch-updates main&#x27;; \</span><br><span class="line">            &#125; &gt; /etc/apt/sources.list.d/stretch.list; \</span><br><span class="line">            &#123; \</span><br><span class="line"># add a negative &quot;Pin-Priority&quot; so that we never ever get packages from stretch unless we explicitly request them</span><br><span class="line">                echo &#x27;Package: *&#x27;; \</span><br><span class="line">                echo &#x27;Pin: release n=stretch*&#x27;; \</span><br><span class="line">                echo &#x27;Pin-Priority: -10&#x27;; \</span><br><span class="line">                echo; \</span><br><span class="line"># ... except OpenSSL, which is the reason we&#x27;re here</span><br><span class="line">                echo &#x27;Package: openssl libssl*&#x27;; \</span><br><span class="line">                echo &quot;Pin: version $OPENSSL_VERSION&quot;; \</span><br><span class="line">                echo &#x27;Pin-Priority: 990&#x27;; \</span><br><span class="line">            &#125; &gt; /etc/apt/preferences.d/stretch-openssl; \</span><br><span class="line">        fi; \</span><br><span class="line">        apt-get update; \</span><br><span class="line">        apt-get install -y --no-install-recommends openssl=&quot;$OPENSSL_VERSION&quot;; \</span><br><span class="line">        rm -rf /var/lib/apt/lists/*; \</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span><br><span class="line">        libapr1 \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"># see https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/KEYS</span><br><span class="line"># see also &quot;update.sh&quot; (https://github.com/docker-library/tomcat/blob/master/update.sh)</span><br><span class="line">ENV GPG_KEYS 05AB33110949707C93A279E3D3EFE6B686867BA6 07E48665A34DCAFAE522E5E6266191C37C037D42 47309207D818FFD8DCD3F83F1931D684307A10A5 541FBE7D8F78B25E055DDEE13C370389288584E7 61B832AC2F1C5A90F0F9B00A1C506407564C17A3 713DA88BE50911535FE716F5208B0AB1D63011C7 79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED 9BA44C2621385CB966EBA586F72C284D731FABEE A27677289986DB50844682F8ACB77FC2E86E29AC A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243 F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23</span><br><span class="line"></span><br><span class="line">ENV TOMCAT_MAJOR 8</span><br><span class="line">ENV TOMCAT_VERSION 8.5.32</span><br><span class="line">ENV TOMCAT_SHA512 fc010f4643cb9996cad3812594190564d0a30be717f659110211414faf8063c61fad1f18134154084ad3ddfbbbdb352fa6686a28fbb6402d3207d4e0a88fa9ce</span><br><span class="line"></span><br><span class="line">ENV TOMCAT_TGZ_URLS \</span><br><span class="line"># https://issues.apache.org/jira/browse/INFRA-8753?focusedCommentId=14735394#comment-14735394</span><br><span class="line">    https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz \</span><br><span class="line"># if the version is outdated, we might have to pull from the dist/archive :/</span><br><span class="line">    https://www-us.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz \</span><br><span class="line">    https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz \</span><br><span class="line">    https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz</span><br><span class="line"></span><br><span class="line">ENV TOMCAT_ASC_URLS \</span><br><span class="line">    https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc \</span><br><span class="line"># not all the mirrors actually carry the .asc files :&#x27;(</span><br><span class="line">    https://www-us.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc \</span><br><span class="line">    https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc \</span><br><span class="line">    https://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc</span><br><span class="line"></span><br><span class="line">RUN set -eux; \</span><br><span class="line">    \</span><br><span class="line">    savedAptMark=&quot;$(apt-mark showmanual)&quot;; \</span><br><span class="line">    apt-get update; \</span><br><span class="line">    \</span><br><span class="line">    apt-get install -y --no-install-recommends gnupg dirmngr; \</span><br><span class="line">    \</span><br><span class="line">    export GNUPGHOME=&quot;$(mktemp -d)&quot;; \</span><br><span class="line">    for key in $GPG_KEYS; do \</span><br><span class="line">        gpg --keyserver ha.pool.sks-keyservers.net --recv-keys &quot;$key&quot;; \</span><br><span class="line">    done; \</span><br><span class="line">    \</span><br><span class="line">    apt-get install -y --no-install-recommends wget ca-certificates; \</span><br><span class="line">    \</span><br><span class="line">    success=; \</span><br><span class="line">    for url in $TOMCAT_TGZ_URLS; do \</span><br><span class="line">        if wget -O tomcat.tar.gz &quot;$url&quot;; then \</span><br><span class="line">            success=1; \</span><br><span class="line">            break; \</span><br><span class="line">        fi; \</span><br><span class="line">    done; \</span><br><span class="line">    [ -n &quot;$success&quot; ]; \</span><br><span class="line">    \</span><br><span class="line">    echo &quot;$TOMCAT_SHA512 *tomcat.tar.gz&quot; | sha512sum -c -; \</span><br><span class="line">    \</span><br><span class="line">    success=; \</span><br><span class="line">    for url in $TOMCAT_ASC_URLS; do \</span><br><span class="line">        if wget -O tomcat.tar.gz.asc &quot;$url&quot;; then \</span><br><span class="line">            success=1; \</span><br><span class="line">            break; \</span><br><span class="line">        fi; \</span><br><span class="line">    done; \</span><br><span class="line">    [ -n &quot;$success&quot; ]; \</span><br><span class="line">    \</span><br><span class="line">    gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz; \</span><br><span class="line">    tar -xvf tomcat.tar.gz --strip-components=1; \</span><br><span class="line">    rm bin/*.bat; \</span><br><span class="line">    rm tomcat.tar.gz*; \</span><br><span class="line">    rm -rf &quot;$GNUPGHOME&quot;; \</span><br><span class="line">    \</span><br><span class="line">    nativeBuildDir=&quot;$(mktemp -d)&quot;; \</span><br><span class="line">    tar -xvf bin/tomcat-native.tar.gz -C &quot;$nativeBuildDir&quot; --strip-components=1; \</span><br><span class="line">    apt-get install -y --no-install-recommends \</span><br><span class="line">        dpkg-dev \</span><br><span class="line">        gcc \</span><br><span class="line">        libapr1-dev \</span><br><span class="line">        libssl-dev \</span><br><span class="line">        make \</span><br><span class="line">        &quot;openjdk-$&#123;JAVA_VERSION%%[.~bu-]*&#125;-jdk=$JAVA_DEBIAN_VERSION&quot; \</span><br><span class="line">    ; \</span><br><span class="line">    ( \</span><br><span class="line">        export CATALINA_HOME=&quot;$PWD&quot;; \</span><br><span class="line">        cd &quot;$nativeBuildDir/native&quot;; \</span><br><span class="line">        gnuArch=&quot;$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)&quot;; \</span><br><span class="line">        ./configure \</span><br><span class="line">            --build=&quot;$gnuArch&quot; \</span><br><span class="line">            --libdir=&quot;$TOMCAT_NATIVE_LIBDIR&quot; \</span><br><span class="line">            --prefix=&quot;$CATALINA_HOME&quot; \</span><br><span class="line">            --with-apr=&quot;$(which apr-1-config)&quot; \</span><br><span class="line">            --with-java-home=&quot;$(docker-java-home)&quot; \</span><br><span class="line">            --with-ssl=yes; \</span><br><span class="line">        make -j &quot;$(nproc)&quot;; \</span><br><span class="line">        make install; \</span><br><span class="line">    ); \</span><br><span class="line">    rm -rf &quot;$nativeBuildDir&quot;; \</span><br><span class="line">    rm bin/tomcat-native.tar.gz; \</span><br><span class="line">    \</span><br><span class="line"># reset apt-mark&#x27;s &quot;manual&quot; list so that &quot;purge --auto-remove&quot; will remove all build dependencies</span><br><span class="line">    apt-mark auto &#x27;.*&#x27; &gt; /dev/null; \</span><br><span class="line">    [ -z &quot;$savedAptMark&quot; ] || apt-mark manual $savedAptMark; \</span><br><span class="line">    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \</span><br><span class="line">    rm -rf /var/lib/apt/lists/*; \</span><br><span class="line">    \</span><br><span class="line"># sh removes env vars it doesn&#x27;t support (ones with periods)</span><br><span class="line"># https://github.com/docker-library/tomcat/issues/77</span><br><span class="line">    find ./bin/ -name &#x27;*.sh&#x27; -exec sed -ri &#x27;s|^#!/bin/sh$|#!/usr/bin/env bash|&#x27; &#x27;&#123;&#125;&#x27; +</span><br><span class="line"></span><br><span class="line"># verify Tomcat Native is working properly</span><br><span class="line">RUN set -e \</span><br><span class="line">    &amp;&amp; nativeLines=&quot;$(catalina.sh configtest 2&gt;&amp;1)&quot; \</span><br><span class="line">    &amp;&amp; nativeLines=&quot;$(echo &quot;$nativeLines&quot; | grep &#x27;Apache Tomcat Native&#x27;)&quot; \</span><br><span class="line">    &amp;&amp; nativeLines=&quot;$(echo &quot;$nativeLines&quot; | sort -u)&quot; \</span><br><span class="line">    &amp;&amp; if ! echo &quot;$nativeLines&quot; | grep &#x27;INFO: Loaded APR based Apache Tomcat Native library&#x27; &gt;&amp;2; then \</span><br><span class="line">        echo &gt;&amp;2 &quot;$nativeLines&quot;; \</span><br><span class="line">        exit 1; \</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line">CMD [&quot;catalina.sh&quot;, &quot;run&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>通过Dockerfile文件创建一个镜像,换成自己的名字</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t tomcat .</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用tomcat镜像"><a href="#使用tomcat镜像" class="headerlink" title="使用tomcat镜像"></a>使用tomcat镜像</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-p 8080:8080:将主机的8080端口映射到容器的8080端口</li>
+<li>-v $PWD&#x2F;test:&#x2F;usr&#x2F;local&#x2F;tomcat&#x2F;webapps&#x2F;test :将主机中当前目录下的test挂载到容器的&#x2F;test</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docekr/">Docekr</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/fe1aa8c5.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">XSS</div></div></a></div><div class="next-post pull-right"><a href="/1f33ad62.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/11/06/05/36/lake-1802337_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Github学习</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">docker使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-helloworld"><span class="toc-number">2.1.</span> <span class="toc-text">docker helloworld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">交互式容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">后台启动容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">2.4.</span> <span class="toc-text">停止容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">docker容器使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.1.</span> <span class="toc-text">docker客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E8%8E%B7%E5%8F%96"><span class="toc-number">3.2.</span> <span class="toc-text">容器获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A5%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">3.2.1.</span> <span class="toc-text">来取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.2.</span> <span class="toc-text">启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.3.</span> <span class="toc-text">查看所有容器的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E5%B7%B2%E5%81%9C%E6%AD%A2%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.4.</span> <span class="toc-text">启动一个已停止的容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C"><span class="toc-number">3.2.5.</span> <span class="toc-text">后台运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.6.</span> <span class="toc-text">停止一个容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E7%9A%84%E5%AE%B9%E5%99%A8%E9%80%9A%E8%BF%87docker-restart%E9%87%8D%E5%90%AF"><span class="toc-number">3.2.7.</span> <span class="toc-text">停止的容器通过docker restart重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.8.</span> <span class="toc-text">进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.9.</span> <span class="toc-text">导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8%E5%BF%AB%E7%85%A7"><span class="toc-number">3.2.10.</span> <span class="toc-text">导入容器快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.11.</span> <span class="toc-text">删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E7%90%86%E6%8E%89%E6%89%80%E6%9C%89%E5%A4%84%E4%BA%8E%E7%BB%88%E6%AD%A2%E7%8A%B6%E6%80%81%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="toc-number">3.2.12.</span> <span class="toc-text">清理掉所有处于终止状态的容器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web%E5%BA%94%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">web应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AAweb%E5%BA%94%E7%94%A8"><span class="toc-number">3.3.1.</span> <span class="toc-text">运行一个web应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bweb%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">3.3.2.</span> <span class="toc-text">查看web应用容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E7%9A%84%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="toc-number">3.3.3.</span> <span class="toc-text">网络端口的快捷方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bweb%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%97%A5%E5%BF%97"><span class="toc-number">3.3.4.</span> <span class="toc-text">查看web应用程序日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bweb%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AE%B9%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B"><span class="toc-number">3.3.5.</span> <span class="toc-text">查看web应用程序容器的进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.3.6.</span> <span class="toc-text">检查web应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2web%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">3.3.7.</span> <span class="toc-text">停止web应用容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AFweb%E5%BA%94%E7%94%A8"><span class="toc-number">3.3.8.</span> <span class="toc-text">重启web应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E9%99%A4web%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">3.3.9.</span> <span class="toc-text">移除web应用容器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">docker镜像使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="toc-number">4.1.</span> <span class="toc-text">列出镜像列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%87%BA%E6%9C%AC%E5%9C%B0%E4%B8%BB%E6%9C%BA%E4%B8%8A%E7%9A%84%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">列出本地主机上的镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">获取一个新的镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.3.</span> <span class="toc-text">查找镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%96%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.4.</span> <span class="toc-text">拖取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.5.</span> <span class="toc-text">删除镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.6.</span> <span class="toc-text">创建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.7.</span> <span class="toc-text">更新镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="toc-number">4.1.8.</span> <span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%95%9C%E5%83%8F%E6%A0%87%E7%AD%BE"><span class="toc-number">4.1.9.</span> <span class="toc-text">设置镜像标签</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%B9%E5%99%A8%E8%BF%9E%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">docker容器连接</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">5.1.</span> <span class="toc-text">网络端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E5%AE%B9%E5%99%A8%E4%BA%92%E8%81%94"><span class="toc-number">5.2.</span> <span class="toc-text">docker容器互联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%91%BD%E5%90%8D"><span class="toc-number">5.3.</span> <span class="toc-text">容器命名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">5.4.</span> <span class="toc-text">新建网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">5.5.</span> <span class="toc-text">连接容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEdns"><span class="toc-number">5.6.</span> <span class="toc-text">配置dns</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">docker仓库管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E5%92%8C%E9%80%80%E5%87%BA"><span class="toc-number">6.1.</span> <span class="toc-text">登录和退出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F"><span class="toc-number">6.2.</span> <span class="toc-text">推送镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-Dockerfile"><span class="toc-number">7.</span> <span class="toc-text">docker Dockerfile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8dockerfile%E5%AE%9A%E5%88%B6%E9%95%9C%E5%83%8F"><span class="toc-number">7.1.</span> <span class="toc-text">使用dockerfile定制镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E5%88%B6%E4%B8%80%E4%B8%AAnginx%E9%95%9C%E5%83%8F"><span class="toc-number">7.1.1.</span> <span class="toc-text">定制一个nginx镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FROM%E5%92%8CRUN%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">7.1.2.</span> <span class="toc-text">FROM和RUN指令的作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="toc-number">7.2.</span> <span class="toc-text">开始构建镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-compose"><span class="toc-number">8.</span> <span class="toc-text">docker compose</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#compose%E5%AE%89%E8%A3%85"><span class="toc-number">8.1.</span> <span class="toc-text">compose安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%89%E8%A3%85ubuntu"><span class="toc-number">9.</span> <span class="toc-text">docker安装ubuntu</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8F%AF%E7%94%A8ubuntu"><span class="toc-number">9.1.</span> <span class="toc-text">查看可用ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E6%9C%80%E6%96%B0%E7%9A%84ubuntu%E9%95%9C%E5%83%8F"><span class="toc-number">9.2.</span> <span class="toc-text">拉取最新的ubuntu镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F"><span class="toc-number">9.3.</span> <span class="toc-text">查看本地镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8-%E5%B9%B6%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87exec%E5%91%BD%E4%BB%A4%E8%BF%9B%E5%85%A5ubuntu%E5%AE%B9%E5%99%A8"><span class="toc-number">9.4.</span> <span class="toc-text">运行容器,并可以通过exec命令进入ubuntu容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85centos"><span class="toc-number">10.</span> <span class="toc-text">安装centos</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%AC%E7%9A%84centos%E9%95%9C%E5%83%8F"><span class="toc-number">10.1.</span> <span class="toc-text">拉取指定版本的centos镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F-1"><span class="toc-number">10.2.</span> <span class="toc-text">查看本地镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8%E5%B9%B6%E9%80%9A%E8%BF%87exec%E5%91%BD%E4%BB%A4%E8%BF%9B%E5%85%A5centos%E5%AE%B9%E5%99%A8"><span class="toc-number">10.3.</span> <span class="toc-text">运行容器并通过exec命令进入centos容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%89%E8%A3%85nginx"><span class="toc-number">11.</span> <span class="toc-text">docker安装nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E7%89%88%E6%9C%AC"><span class="toc-number">11.1.</span> <span class="toc-text">找版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E5%8F%96"><span class="toc-number">11.2.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F-2"><span class="toc-number">11.3.</span> <span class="toc-text">查看本地镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="toc-number">11.4.</span> <span class="toc-text">运行容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx-php%E9%83%A8%E7%BD%B2"><span class="toc-number">12.</span> <span class="toc-text">nginx+php部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E5%8F%96php"><span class="toc-number">12.1.</span> <span class="toc-text">拉取php</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%89%E8%A3%85mysql"><span class="toc-number">13.</span> <span class="toc-text">docker安装mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E9%95%9C%E5%83%8F"><span class="toc-number">13.1.</span> <span class="toc-text">拉镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8-1"><span class="toc-number">13.2.</span> <span class="toc-text">运行容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker%E5%AE%89%E8%A3%85tomcat"><span class="toc-number">14.</span> <span class="toc-text">docker安装tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAtomact"><span class="toc-number">14.1.</span> <span class="toc-text">创建tomact</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8tomcat%E9%95%9C%E5%83%8F"><span class="toc-number">14.2.</span> <span class="toc-text">使用tomcat镜像</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/6782be63.html'
+    this.page.identifier = '/6782be63.html'
+    this.page.title = 'Docker学习'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
