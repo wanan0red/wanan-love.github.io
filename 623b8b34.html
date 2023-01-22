@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>RSA算法解释 | wanan</title><meta name="keywords" content="Crypto,RSA算法解释"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RSA算法解释加密算法$$c≡ m^e (mod N)$$其中c 作为密文 m 作为明文  也就是说在 e 与 N 作为 RSA加密算法的公钥 也就是 (E,N) 公钥可公开 解密算法$$m ≡ c^d (mod N)$$也就是说 RSA的明文就是代表密文字符 c的 d次方对N求余的结果 那么这里的 (d ,N) 便作为 私钥 其实这里你也许已经发现了 既然公钥与私钥之中都存在有N 那么N不就是代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA算法解释">
+<meta property="og:url" content="https://www.wanan.red/623b8b34.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="RSA算法解释加密算法$$c≡ m^e (mod N)$$其中c 作为密文 m 作为明文  也就是说在 e 与 N 作为 RSA加密算法的公钥 也就是 (E,N) 公钥可公开 解密算法$$m ≡ c^d (mod N)$$也就是说 RSA的明文就是代表密文字符 c的 d次方对N求余的结果 那么这里的 (d ,N) 便作为 私钥 其实这里你也许已经发现了 既然公钥与私钥之中都存在有N 那么N不就是代">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg">
+<meta property="article:published_time" content="2023-01-22T13:02:34.063Z">
+<meta property="article:modified_time" content="2023-01-22T13:04:20.125Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="Crypto">
+<meta property="article:tag" content="RSA算法解释">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/623b8b34"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-h7qMMwh8fd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a85e115f35e16b8da9503b0d77633ca";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RSA算法解释',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-22 21:04:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">120</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">91</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">107</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RSA算法解释</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-22T13:02:34.063Z" title="发表于 2023-01-22 21:02:34">2023-01-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-22T13:04:20.125Z" title="更新于 2023-01-22 21:04:20">2023-01-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Crypto/">Crypto</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Crypto/RSA%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A/">RSA算法解释</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RSA算法解释"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="RSA算法解释"><a href="#RSA算法解释" class="headerlink" title="RSA算法解释"></a>RSA算法解释</h1><p><strong>加密算法</strong><br>$$<br>c≡ m^e (mod N)<br>$$<br>其中c 作为密文 m 作为明文 </p>
+<p>也就是说在 e 与 N 作为 RSA加密算法的公钥 也就是 (E,N) 公钥可公开</p>
+<p><strong>解密算法</strong><br>$$<br>m ≡ c^d (mod N)<br>$$<br>也就是说 RSA的明文就是代表密文字符 c的 d次方对N求余的结果 那么这里的 (d ,N) 便作为 私钥</p>
+<p>其实这里你也许已经发现了 既然公钥与私钥之中都存在有N 那么N不就是代表 公开的吗 那么其中主要保存的其实就是 e(encode 编码) 与 d (decode 解码)</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202301222104391.png" alt="image-20220906162155058"></p>
+<h1 id="生成密钥对"><a href="#生成密钥对" class="headerlink" title="生成密钥对"></a>生成密钥对</h1><p>由上面可知 我们生成密钥对的时候需要三个参数  e d n 那么怎么生成呢?</p>
+<h2 id="求-N"><a href="#求-N" class="headerlink" title="求 N"></a>求 N</h2><p>首先需要准备两个极大的指数 P Q<br>$$<br>P * Q &#x3D; N<br>$$<br>  这样得到了N</p>
+<h2 id="求-φ"><a href="#求-φ" class="headerlink" title="求 φ"></a>求 φ</h2><p>$$<br>φ &#x3D; (P -1 )* (Q - 1)<br>$$</p>
+<p>φ 为啥要这么求?</p>
+<h2 id="求E"><a href="#求E" class="headerlink" title="求E"></a>求E</h2><p>e的求解基于上述的 φ 值 首先需要明确 e的取值范围 1 &lt; e &lt; φ ,并且 gcd(φ , e) &#x3D; 1(即φ 与e的最大公约数为1,即两者互质) 之所以需要添加1 这个值 ,是为了保证存在解密时需要使用的参数 D</p>
+<h2 id="求-D"><a href="#求-D" class="headerlink" title="求 D"></a>求 D</h2><p>首先需要明确 d 的取值范围 1 &lt; d &lt; φ ,并且 gcd(φ , d) &#x3D; 1<br>$$<br>e * d (mod φ) &#x3D;1<br>$$<br><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20220906162206289.png" alt="image-20220906162206289"></p>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><h3 id="求n"><a href="#求n" class="headerlink" title="求n"></a>求n</h3><p>这里取两个素数 p  &#x3D; 3 q &#x3D; 11</p>
+<p>n&#x3D; 33</p>
+<h3 id="求-φ-1"><a href="#求-φ-1" class="headerlink" title="求 φ"></a>求 φ</h3><p>$$<br>φ &#x3D; (3-1)*(11-1) &#x3D; 20<br>$$</p>
+<h3 id="求e"><a href="#求e" class="headerlink" title="求e"></a>求e</h3><p>gcd(φ,e) &#x3D; 1 也就是需要找一个数与20 互质</p>
+<p>3,7,11,13,17,19 这里选择三</p>
+<p>那么我们得到了 e &#x3D; 3</p>
+<h3 id="求d"><a href="#求d" class="headerlink" title="求d"></a>求d</h3><p>$$<br>e * d (mod φ) &#x3D; 1   3 * 7  &#x2F; 20 …..余 1<br>$$</p>
+<p>因此d &#x3D; 7</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>需要加密的明文必须是小于n的,也就是小于33的数 这里便随便取一下为5<br>$$<br>c &#x3D; m ^e (mod N) &#x3D; 5^3 (mod 33) &#x3D; 75 &#x2F; 33 …余 26 &#x3D; 26<br>$$<br>因此 c 就是26 那么密文就是26</p>
+<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p>$$<br>m &#x3D; c^d (mod N) &#x3D; 26^7(mod 33) &#x3D; 5<br>$$</p>
+<h1 id="常见的大整数n的分解方法"><a href="#常见的大整数n的分解方法" class="headerlink" title="常见的大整数n的分解方法"></a>常见的大整数n的分解方法</h1><p>对于上面的 的 数值 其中 公钥 e 与 公共模数 n其实都是我们已知的 ,那么反过来我们需要用 n去获取 p q 也就是两个 质数 还记得 我们是怎么获取的n 吗</p>
+<p>n &#x3D; p * q  </p>
+<p>如果我们现在已经获取了 p 和 q 那么下面的过程就跟正常加密属于一样的了</p>
+<p>如何进行大整数n的分解呢?</p>
+<ol>
+<li>当n的长度较小的时候,采取爆破</li>
+<li>当n满足 因数p q 相差较小 或 相差很大时 ,可以采用离线工具 yafu来分解</li>
+<li>当 n 的位数过大是,并且不满足上述条件,可以采用在线网站 factordb ,改网站类似于彩虹表,将已经被分解的大数的结果存储起来 只需要进行查询</li>
+</ol>
+<p>那么可以发现其实并没有一个特别好的方法破解</p>
+<h1 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h1><p>还记得上面求解私钥指数d 的公式吗<br>$$<br>e * d (mod  φ) &#x3D; 1<br>$$<br>这个公式也可以写成<br>$$<br>e * d ≡ 1(mod φ)<br>$$<br>≡ 代表同余</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>如果一个线性同余方程 ax ≡ 1(mod b),则 x 称为 a(mod b) 的逆元 记作a^-1^ ,一个数有逆元的充分必要条件是 gcd(a,b) &#x3D; 1 ,此时逆元唯一存在</p>
+<p>此处为什么要讨论逆元,其一rsa中有逆元的概念,其二,中国剩余定理(CRT) 可与rsa算法结合来进行加解密,crt又逃不开逆元的概念. </p>
+<p>那么上面的求解私钥指数d,可以说e的逆元是d(mod φ)</p>
+<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>如果p是一个指数,而整数a不是p的倍数,则</p>
+<p>a^p-^^1^ ≡ (mod p)</p>
+<p>可得</p>
+<p>a * a^p^^-^^2^ ≡ 1(mod p)</p>
+<p>那么根据逆元的定理 得到 a的逆元即为 a^p^^-^^2^ (mod p)</p>
+<h3 id="快速幂算法"><a href="#快速幂算法" class="headerlink" title="快速幂算法"></a>快速幂算法</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44002938/article/details/103427778">https://blog.csdn.net/weixin_44002938/article/details/103427778</a> 写的不错</p>
+<p>思想</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3^10 = 3*3*3*3*3*3*3*3*3*3</span><br><span class="line">3^10 = (3 * 3) ^ 5</span><br><span class="line">3^ 10 = 9^5</span><br><span class="line">此时的指数有10缩短了一半变成了5,而低于变成了原来的平法,求3^10原本需要执行10此虚幻操作,而求 9^5却只需要执行5此循环操作,特别是在幂特别大的时候效果非常好,例如2^1000 = 4^500,底数仅仅做了一个小小的平方操作,而指数就从1000变成看500,减少了500次</span><br><span class="line">但是我们如果来看9^5 这样就变成了一个奇数 ,当再次减少一半的时候指数就变成了 2.5 那么我们肯定不能直接减少一半了</span><br><span class="line"></span><br><span class="line">9^5 = (9^4) * (9^1)</span><br><span class="line">这样指数就又变成了偶数了</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展欧几里得"><a href="#扩展欧几里得" class="headerlink" title="扩展欧几里得"></a>扩展欧几里得</h3><p>逆元的含义决定了 ax ≡ 1(mod b) 等价于ax &#x3D; kb + 1</p>
+<h1 id="中国剩余定理-CRT-加速rsa算法"><a href="#中国剩余定理-CRT-加速rsa算法" class="headerlink" title="中国剩余定理(CRT) 加速rsa算法"></a>中国剩余定理(CRT) 加速rsa算法</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/MashiroSky/p/5918158.html">https://www.cnblogs.com/MashiroSky/p/5918158.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">在《孙子算经》中有这样一个问题：“今有物不知其数，三三数之剩二（除以3余2），五五数之剩三（除以5余3），七七数之剩二（除以7余2），问物几何？”这个问题称为“孙子问题”，该问题的一般解法国际上称为“中国剩余定理”。具体解法分三步：</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>找出三个数 从3 和 5的公倍数中找出被7除余1的最小数15 ,从 3和 7的公倍数中找出被5除余1的最小数21,最后从5和7的公倍数中找出除3余1的最小数70</li>
+<li>用15乘以2(2为最终结果除以7的余数),用21乘以3(3为最终结果除以5的余数),同理,用70乘以2(2为最终结果除以3的余数),然后把三个乘积相加 15 * 2 + 21 * 3 + 70 * 2 得到和233</li>
+<li>用233除以3,5,7三个数的最小公倍数105,得到余数23,即 233 % 105 &#x3D; 23 .这个余数23就是符合条件的最小数.</li>
+</ol>
+<p>首先我们假设n<del>1</del> 是满足除以3余2的一个数,比如2,5,8 等等,也就是满足3 * k + 2 (k &gt;&#x3D; 0)的一个任意数.同时 我们假设n<del>2</del> 是满足除以5与3的一个数,n<del>3</del> 是满足除以7余2的一个数 </p>
+<p>我们先从n<del>1</del> 这个角度出发,一直n<del>1</del>满足除以3除2的一个数,比如2,5,8等等,也就是满足3 * k + 2 (k &gt; &#x3D; 0) 的一个任意数,同样我们假设n<del>2</del> 是满足除以5 余3的一个数,n<del>3</del>是满足除以7余2的一个数 </p>
+<p>我们先从n<del>1</del> 这个角度出发,已知 n<del>1</del> 满足除以3余2,能不能是得 n<del>1</del> + n<del>2</del> 的和人满足除以3 余 2 进而使得 n<del>1</del> + n<del>2</del> + n<del>3</del> 的和人满足除以3 余 2</p>
+<p>这就涉及了一个基本的数学定理,如果有 a% b &#x3D; c 则有 (a + k * b) % b &#x3D; c(k为非零整数),换句话说,如果一个出发运算的除数为c ,那被除数与k倍的除数相加(或者相减) 的和 (差) 再与除数相除,余数不变,</p>
+<p>那么 如果n<del>2</del> 是3的倍数, n<del>1</del> + n<del>2</del> 就依然满足除以3余2 同理,如果n<del>3</del> 也是3 的倍数,那么n<del>1</del> + n<del>2</del> + n<del>3</del> 的和就满足除以3 余 2 </p>
+<ol>
+<li>为使n<del>1</del> + n<del>2</del> + n<del>3</del> 的和满足除以3余2,n<del>2</del> 和n<del>3</del>必须是3的倍数</li>
+<li>为使n<del>1</del> + n<del>2</del> + n<del>3</del> 的和满足除以5余3 ,  n<del>1</del>和n<del>3</del>必须是3的倍数</li>
+<li>为使n<del>1</del> + n<del>2</del> + n<del>3</del> 的和满足除以7余3 ,  n<del>1</del>和n<del>2</del>必须是7的倍数</li>
+</ol>
+<p>孙子问题解法的本质是从5和7的公倍数中找到一个除以3 余 2的数n<del>1</del> ,从3和7的公倍数中找到一个除以5余3的数n<del>2</del> ,从 3和 5的公倍数中找到一个除以7余2的数 n<del>3</del> 在将三个数相加得到解,在n<del>1</del> n<del>2</del>  n<del>3</del> 时又用了一个小技巧,以n1为例,并非从5和7的公倍数中直接找到一个除以3余2的数,先是找到一个除以3余1 的数,在乘以2.就是先求出5和7的公倍数模3下的逆元,在用逆元去乘余数</p>
+<p>最后我们还要清楚一点 n<del>1</del> + n<del>2</del> + n<del>3</del> 只是问题的一个解,并不是最小的解,如何求解最小的解,我们只需要从中最大限制的减掉3,5,7的公倍数105即可 </p>
+<p>这样便得到了中国剩余定理</p>
+<p>设正整数m<del>1</del>,m<del>2</del> , … , m<del>k</del><br>    x ≡ a<del>1</del>(mod m<del>1</del>)<br>    x ≡ a<del>2</del>(mod m<del>2</del>)<br>    x ≡ a3<del>(mod m</del>3)<br>            .<br>            .<br>            .<br>    x ≡ a<del>k</del> (mod m<del>k</del>)</p>
+<p>有整数解,并且在模M&#x3D;m<del>1</del> * m<del>2</del> * … *m<del>k</del> 下的解是唯一的</p>
+<p>x ≡ (a<del>1</del> M<del>1</del> M<del>1</del>^-^^1^ + a<del>2</del>M<del>2</del> M<del>2</del>^-^^2^ + … + a<del>k</del>M<del>k</del> M<del>k</del>^-^^k^)mod M</p>
+<p>其中M<del>i</del> &#x3D; M&#x2F;m<del>i</del> 而M<del>i</del>^-^^1^ 为M<del>i</del> 模m<del>i</del> 的逆元</p>
+<h2 id="中国剩余定理扩展-求解模数不互质情况下的线性方程组"><a href="#中国剩余定理扩展-求解模数不互质情况下的线性方程组" class="headerlink" title="中国剩余定理扩展 - 求解模数不互质情况下的线性方程组"></a>中国剩余定理扩展 - 求解模数不互质情况下的线性方程组</h2><p>普通的中国剩余定理要求所有的m<del>i</del> 互素,那么如果不互素呢</p>
+<p>这种情况就需要采用两两合并的思想,假设要合并如下的两个方程<br>    x &#x3D; a<del>1</del> + m<del>1</del> x<del>1</del><br>    x &#x3D; a<del>2</del> + m<del>2</del> x<del>2</del> </p>
+<p>那么得到<br>$$<br>a_1+m_1x_1 &#x3D; a_2 + m_2x_2 &#x3D;&gt; m_1x_1 + m_2x_2 &#x3D; a_2-a_1<br>$$<br>​    我们需要求出一个最小的x使他满足<br>$$<br>x &#x3D; a_1 + m_1x_1 &#x3D; a_2 + m_2x_2<br>$$<br>那么x<del>1</del> 和x<del>2</del> 就要尽可能的小,于是我们用扩展欧几里得算法求出x<del>1</del> 的最小正整数解,将它待会a<del>1</del> + m<del>1</del> x<del>1</del> 得到x的一个特解x^’^ ,当然也是最小正整数解,所以x的通解一定是x′加上lcm(m1,m2)∗k，这样才能保证x模m1和m2的余数是a1和a2。由此，我们把这个x′当做新的方程的余数，把lcm(m1,m2)当做新的方程的模数。（这一段是关键）lcm最小公倍数</p>
+<p>x ≡ x^’^ (mod lcm(m<del>1</del> ,m<del>2</del>))</p>
+<h1 id="简化"><a href="#简化" class="headerlink" title="简化"></a>简化</h1><h2 id="降N"><a href="#降N" class="headerlink" title="降N"></a>降N</h2><p>由中国剩余定理可知,设p和q是相互独立的大素数,n为p*q,对于任意的(m<del>1</del> , m<del>2</del>) ,且 0 &lt;&#x3D; m<del>1</del> &lt; p 0 &lt;&#x3D; m<del>2</del> &lt; q,必然存在一个唯一的m,0 &lt;&#x3D; m &lt;n<br>m<del>1</del> &#x3D; m (mod p)<br>m<del>2</del> &#x3D; m (mod q)</p>
+<p>换句话说,给定一个(m<del>1</del>,m<del>2</del>),其中满足上述等式的m必定唯一存在.所以解密RSA的流程为m &#x3D; c ^d^ (mod n),可以分解为<br>m<del>1</del> &#x3D; c^d^ (mod p)<br>m<del>2</del> &#x3D; c^d^ (mod q)</p>
+<p>然后在计算m, 但是等式c^d (mod p) 或者c^d^ (mod q),模数虽然从n降为p或q了.但是私钥指数d还是比较大,我们还是需要将低指数</p>
+<h2 id="降d"><a href="#降d" class="headerlink" title="降d"></a>降d</h2><p>仔细看等式c^d^ (mod p)</p>
+<p>令d &#x3D; k(p-1) + r 则 c^d^ (mod p)<br>&#x3D; c^k^^(^^p^^-^^1^^)^^+^^r^ (mod p)<br>&#x3D; c^r^ * c^k^^(^^p^^-^^1^^)^ (mod p)<br>因为c^(^^p^^-^^1^^)^(mod p) &#x3D;1<br>&#x3D;c^r^ (mod p)</p>
+<p>r是d除 p-1的余数,即r &#x3D; d(mod (p-1)) 所以c^d^ (mod p) 可以降价为 c ^d^ ^m^^o^^d^ ^p^^-^^1^ (mod p)<br>dp &#x3D; d mod p-1<br>dq &#x3D; d mod q-1</p>
+<p>这样 m<del>1</del> 和 m<del>2</del> 就降为<br>m<del>1</del> &#x3D; c^d^^p^ mod p<br>m<del>2</del> &#x3D; c^d^^q^ mod q</p>
+<h1 id="解密-1"><a href="#解密-1" class="headerlink" title="解密"></a>解密</h1><p>模数都降的差不多了。想要求解明文，除了上述的 p、q、d、dp、dq，我们还需要 q 对 p 的逆元</p>
+<p>q<del>i<del>n</del>v</del> &#x3D; q ^-^^1^ mod p</p>
+<p>最后得到的明文公式</p>
+<p>h &#x3D; q<del>i<del>n</del>v</del>(m<del>1</del>−m<del>2</del>) mod p<br>m &#x3D; m<del>2</del>&#x3D;+hq mod p∗q</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Crypto/">Crypto</a><a class="post-meta__tags" href="/tags/RSA%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A/">RSA算法解释</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/77b05baa.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2018/05/12/17/41/forest-3394066_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">webgoat靶场审计</div></div></a></div><div class="next-post pull-right"><a href="/6f842db3.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Crypto</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/6f842db4.html" title="Crypto"><img class="cover" src="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">Crypto</div></div></a></div><div><a href="/6f842db3.html" title="Crypto"><img class="cover" src="https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-22</div><div class="title">Crypto</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="toc-number">1.</span> <span class="toc-text">RSA算法解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="toc-number">2.</span> <span class="toc-text">生成密钥对</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82-N"><span class="toc-number">2.1.</span> <span class="toc-text">求 N</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82-%CF%86"><span class="toc-number">2.2.</span> <span class="toc-text">求 φ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82E"><span class="toc-number">2.3.</span> <span class="toc-text">求E</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82-D"><span class="toc-number">2.4.</span> <span class="toc-text">求 D</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-number">2.5.</span> <span class="toc-text">举例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82n"><span class="toc-number">2.5.1.</span> <span class="toc-text">求n</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82-%CF%86-1"><span class="toc-number">2.5.2.</span> <span class="toc-text">求 φ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82e"><span class="toc-number">2.5.3.</span> <span class="toc-text">求e</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%82d"><span class="toc-number">2.5.4.</span> <span class="toc-text">求d</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86"><span class="toc-number">2.5.5.</span> <span class="toc-text">加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86"><span class="toc-number">2.5.6.</span> <span class="toc-text">解密</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%A4%A7%E6%95%B4%E6%95%B0n%E7%9A%84%E5%88%86%E8%A7%A3%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">常见的大整数n的分解方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%86%E5%85%83"><span class="toc-number">4.</span> <span class="toc-text">逆元</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86"><span class="toc-number">4.2.</span> <span class="toc-text">费马小定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95"><span class="toc-number">4.2.1.</span> <span class="toc-text">快速幂算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97"><span class="toc-number">4.2.2.</span> <span class="toc-text">扩展欧几里得</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86-CRT-%E5%8A%A0%E9%80%9Frsa%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">中国剩余定理(CRT) 加速rsa算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%E6%89%A9%E5%B1%95-%E6%B1%82%E8%A7%A3%E6%A8%A1%E6%95%B0%E4%B8%8D%E4%BA%92%E8%B4%A8%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84"><span class="toc-number">5.1.</span> <span class="toc-text">中国剩余定理扩展 - 求解模数不互质情况下的线性方程组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8C%96"><span class="toc-number">6.</span> <span class="toc-text">简化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%8DN"><span class="toc-number">6.1.</span> <span class="toc-text">降N</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%8Dd"><span class="toc-number">6.2.</span> <span class="toc-text">降d</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86-1"><span class="toc-number">7.</span> <span class="toc-text">解密</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/623b8b34.html'
+    this.page.identifier = '/623b8b34.html'
+    this.page.title = 'RSA算法解释'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

